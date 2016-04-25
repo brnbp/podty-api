@@ -35,7 +35,7 @@ Routes:
 ```
 ###### GET:
 ```
-    api.podcast.com/name/{PodcastName}<br>
+    api.podcast.com/name/{PodcastName}
     retrieve episodes previously saved
 ```
 
