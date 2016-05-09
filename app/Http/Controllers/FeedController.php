@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Episode;
-use App\Feed;
-use Illuminate\Http\Request;
-use App\Http\Requests;
+use App\Models\Feed;
+use Illuminate\Http\Response;
+use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
+
 
 use App\Services\Itunes\Finder as ItunesFinder;
 
 class FeedController extends Controller
 {
+    /**
+     * @var Feed
+     */
     private $Feed;
 
     public function __construct()
@@ -19,29 +23,32 @@ class FeedController extends Controller
         $this->Feed = new Feed();
     }
 
-    public function create($name)
+    public function create(string $name)
     {
-        $this->createFeeds($name);
+        if ($this->createFeeds($name) == false) {
+            return (new Response())->setStatusCode(404);
+        }
 
         $feed = $this->Feed->getContent();
 
-        // DISPATCH JOB TO SAVE ON 'EPISODES TABLE' ALL EPISODES OF FEED
-        // MAKE IT ASYNC/BACKGROUND
-        (new Episode())
-            ->storage($feed['id'], $feed['url']);
+        if ($feed == false) {
+            return (new Response())->setStatusCode(404);
+        }
+
+        $this->dispatch(new RegisterEpisodesFeed($feed));
     }
 
     /**
      * Salva o podcast pesquisado no banco
      * @param string $name nome do podcast
      */
-    private function createFeeds($name)
+    private function createFeeds(string $name)
     {
         $results = (new ItunesFinder($name))
             ->all();
 
         if ($results == false) {
-            die(header('not faunded', '', 404));
+            return false;
         }
 
         $this->Feed->storage($results);

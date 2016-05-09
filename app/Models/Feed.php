@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +22,10 @@ class Feed extends Model
     public function getContent()
     {
         $content = array_filter($this->content);
+        
+        if (empty($content)) {
+            return false;
+        }
         $arr = reset($content);
         return is_array(current($arr)) ? current($arr) : $arr;
     }

@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Feed;
+use App\Models\Feed;
 use App\Episode;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Illuminate\Http\Response;
+use App\Jobs\RegisterEpisodesFeed;
+use App\Http\Controllers\Controller;
 
 class EpisodeController extends Controller
 {
@@ -13,29 +15,26 @@ class EpisodeController extends Controller
         $Feed = new Feed();
 
         if (!$Feed->checkExists($feed)) {
-            die(header('not faunded', '', 404));
+            // criar feed?
+            return (new Response())->setStatusCode(404);
         }
 
         $ret = (new Episode())
             ->getBy('feed_id', $Feed->getContent()['id']);
 
-
-        printrx($ret);
-
+        return $ret;
     }
 
     /**
-     *
-     * Usar para job async
-     * Salva episodios de podcast no banco, se nao existe ainda
-     * @param Request $request
+     * Utilizado em Cron
+     * Busca por episodios de podcast, a partir de feeds salvos no banco
      */
-    public function save(Request $request)
+    public function update()
     {
-        $feed_id = $request->get('id');
-        $feed_url = (new Feed())->getUrlById($feed_id);
+        $episodes = Feed::all(['url', 'id'])->toArray();
 
-        (new Episode())
-            ->storage($feed_id, $feed_url);
+        foreach ($episodes as $episode) {
+            $this->dispatch(new RegisterEpisodesFeed($episode));
+        }
     }
 }
