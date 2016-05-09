@@ -20,6 +20,10 @@ class Episode extends Model
         $content = (new XML($feed_url))
             ->retrieve();
 
+        if ($content === false) {
+            return false;
+        }
+
         $this->insert([
             'feed_id' => $feed_id,
             'episodes' => $content['channel']['item']

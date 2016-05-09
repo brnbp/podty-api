@@ -8,8 +8,6 @@
 
 namespace App;
 
-use App\Episode;
-
 class EpisodeEntity
 {
     public $feedId;
