@@ -11,7 +11,7 @@ use GuzzleHttp\Client as GuzzleClient;
  */
 class Finder
 {
-    const base_uri = 'https://itunes.apple.com/search';
+    const BASE_URL = 'https://itunes.apple.com/search';
 
     const REQUEST_METHOD = 'GET';
 
@@ -67,8 +67,10 @@ class Finder
 
     private function makeRequest()
     {
-        $this->treatResponse($this->GuzzleClient
-            ->request(self::REQUEST_METHOD, self::base_uri, $this->getProperties())
+        $this->treatResponse(
+            $this->GuzzleClient->request(
+                self::REQUEST_METHOD, self::BASE_URL, $this->getProperties()
+            )
             ->getBody()
             ->getContents()
         );
