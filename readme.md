@@ -2,6 +2,8 @@
 
 ## Requirements
 - [Composer](https://getcomposer.org)
+- PHP >= 7.0
+- MySQL >= 5.6
 
 ## Getting Started
 ##### Download and install
