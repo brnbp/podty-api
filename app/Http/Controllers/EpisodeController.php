@@ -25,7 +25,7 @@ class EpisodeController extends Controller
         $Feed = new Feed();
 
         if (!$Feed->checkExists($feed)) {
-            // criar feed?
+            (new FeedController())->create($feed);
             return (new Response())->setStatusCode(404);
         }
 
