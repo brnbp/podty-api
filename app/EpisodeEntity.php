@@ -1,24 +1,56 @@
 <?php
 namespace App;
 
+/**
+ * Class EpisodeEntity
+ *
+ * @package App
+ */
 class EpisodeEntity
 {
+    /**
+     * @var
+     */
     public $feedId;
 
+    /**
+     * @var
+     */
     public $title;
 
+    /**
+     * @var
+     */
     public $link;
 
+    /**
+     * @var
+     */
     public $publishedDate;
 
+    /**
+     * @var
+     */
     public $content;
 
+    /**
+     * @var
+     */
     public $mediaUrl;
 
+    /**
+     * @var
+     */
     public $mediaLength;
 
+    /**
+     * @var
+     */
     public $mediaType;
 
+    /**
+     * @return Episode
+     */
     public function toObject()
     {
         $ep = new Episode();
@@ -35,6 +67,9 @@ class EpisodeEntity
         return $ep;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return [
