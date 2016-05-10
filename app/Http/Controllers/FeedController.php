@@ -38,6 +38,8 @@ class FeedController extends Controller
         }
 
         $this->dispatch(new RegisterEpisodesFeed($feed));
+
+        return (new Response())->setStatusCode(204);
     }
 
     /**
