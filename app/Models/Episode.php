@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\EpisodeEntity;
 use App\Services\Parser\XML;
@@ -64,9 +64,12 @@ class Episode extends Model
      * @param integer $id id do podcast
      * @return mixed
      */
-    public function getBy($field, $value)
+    public function getBy($field, $value, $filters)
     {
-        $episodes = self::where($field, $value)->get();
+        $episodes = self::where($field, $value)
+            ->skip($filters['offset'])
+            ->take($filters['limit'])
+            ->get();
 
         return $episodes->toArray();
     }
