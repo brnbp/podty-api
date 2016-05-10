@@ -60,7 +60,17 @@
                 <div class="subtitle">
                     GET:<br>
                     api.podcast.com/name/{PodcastName}<br>
-                    retrieve episodes previously saved
+                    retrieve episodes previously saved<br>
+                    <br><br>
+                    more:<br>
+                    by default, returns the last X episodes from the podcast<br>
+                    <br><br>
+                    its possible to add some filters like:<br>
+                     - limit = integer<br>
+                     - offset = integer<br>
+                     - order = string (desc/asc)<br>
+
+
                 </div><br><br><br><br><br>
             </div>
         </div>
