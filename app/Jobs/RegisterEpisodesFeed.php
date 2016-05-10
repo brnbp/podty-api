@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Episode;
+use App\Models\Episode;
 use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

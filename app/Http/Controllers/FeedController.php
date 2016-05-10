@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Episode;
 use App\Models\Feed;
 use Illuminate\Http\Response;
 use App\Jobs\RegisterEpisodesFeed;
