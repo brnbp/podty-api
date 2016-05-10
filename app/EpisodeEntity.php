@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bruno2546
- * Date: 24/04/16
- * Time: 14:43
- */
-
 namespace App;
 
 class EpisodeEntity
@@ -55,5 +48,4 @@ class EpisodeEntity
           'media_url' => $this->mediaUrl
         ];
     }
-
 }
