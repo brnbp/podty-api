@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendLogToWarehouse;
 use App\Models\Feed;
+use App\Services\Logger\Warehouse;
 use Illuminate\Http\Response;
 use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
@@ -28,6 +30,7 @@ class FeedController extends Controller
     public function create(string $name)
     {
         if ($this->createFeeds($name) == false) {
+            (new Warehouse())->setWarning($name, 'not_found', ['error' => true]);
             return (new Response())->setStatusCode(404);
         }
 
@@ -39,7 +42,7 @@ class FeedController extends Controller
 
         $this->dispatch(new RegisterEpisodesFeed($feed));
 
-        return (new Response())->setStatusCode(204);
+        return (new Response())->setStatusCode(202);
     }
 
     /**
@@ -59,5 +62,12 @@ class FeedController extends Controller
         $this->Feed->storage($results);
 
         return true;
+    }
+
+    public function retrieve(string $name)
+    {
+        $this->Feed->findLikeName($name);
+
+        return $this->Feed->getContent();
     }
 }

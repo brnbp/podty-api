@@ -5,11 +5,13 @@ Route::get('/', function () {
 });
 
 // inclui podcast em feeds
-Route::post('/name/{name}', 'FeedController@create');
+Route::post('/feed/{name}', 'FeedController@create');
 
-// busca episodios a partir do nome do podcast
-Route::get('/name/{name}', 'EpisodeController@retrieve');
+// search for podcast main informations
+Route::get('/feed/{name}', 'FeedController@retrieve');
 
+// search for episodes from podcast name
+Route::get('/episodes/{name}', 'EpisodeController@retrieve');
 
 
 /*
