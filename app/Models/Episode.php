@@ -36,13 +36,13 @@ class Episode extends Model
      */
     public function insert(array $content)
     {
-        foreach ($content['episodes'] as $episode) {
+        foreach (array_reverse($content['episodes']) as $episode) {
 
             $ep = new EpisodeEntity();
             $ep->feedId = $content['feed_id'];
             $ep->title = $episode['title'];
             $ep->link = $episode['link'];
-            $ep->publishedDate = (new \DateTime($episode['pubDate']))->format('d/m/Y H:i:s');
+            $ep->publishedDate = (new \DateTime($episode['pubDate']))->format('Y-m-d H:i:s');
             $ep->content = $episode['description'];
 
             $this->validateMediaFields($episode['enclosure']['@attributes']);
@@ -69,6 +69,7 @@ class Episode extends Model
         $episodes = self::where($field, $value)
             ->skip($filters['offset'])
             ->take($filters['limit'])
+            ->orderBy('id', 'desc')
             ->get();
 
         return $episodes->toArray();
