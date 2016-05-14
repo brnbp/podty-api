@@ -13,7 +13,6 @@ Route::get('/feed/{name}', 'FeedController@retrieve');
 // search for episodes from podcast name
 Route::get('/episodes/{name}', 'EpisodeController@retrieve');
 
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
