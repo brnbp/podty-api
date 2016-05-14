@@ -26,7 +26,7 @@ class EpisodeController extends Controller
 
         if (!$Feed->checkExists($feed)) {
             (new FeedController())->create($feed);
-            return (new Response())->setStatusCode(404);
+            return (new Response())->setStatusCode(202);
         }
 
         $ret = (new Episode())
