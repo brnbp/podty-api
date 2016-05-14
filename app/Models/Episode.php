@@ -67,6 +67,10 @@ class Episode extends Model
     public function getBy($field, $value, $filters)
     {
         $episodes = self::where($field, $value)
+            ->select(
+                'id', 'feed_id', 'title', 'link', 'published_date',
+                'media_url', 'media_type', 'media_length', 'content'
+            )
             ->skip($filters['offset'])
             ->take($filters['limit'])
             ->orderBy('id', 'desc')
