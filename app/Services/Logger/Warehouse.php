@@ -19,7 +19,7 @@ class Warehouse
     const LOG_INFO_CODE = 3;
 
     /** URI for HTTP request */
-    const API_URI = 'localhost:8088/v1/log';
+    const API_URI = 'localhost:83/v1/log';
 
     /** API AUTHENTICATION */
     const API_AUTH = 'abs';
