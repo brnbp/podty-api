@@ -22,7 +22,7 @@ class Feed extends Model
     public function getContent()
     {
         $content = array_filter($this->content);
-        
+
         if (empty($content)) {
             return false;
         }
@@ -42,12 +42,29 @@ class Feed extends Model
                 'thumbnail_600' => $feed['artworkUrl600']
             ];
 
-            $row_content = self::updateOrCreate([
+            $row_content = $this->upsert($table_content, [
                 'url' => $feed['feedUrl']
-            ], $table_content);
+            ], true);
 
             $this->setContent($row_content->getAttributes());
         }
+    }
+
+    /**
+     * Update or Create content
+     * @param array $content array of contents being ['field' => 'value']
+     * @param array $filter array of filters being ['field' => 'value']
+     * @param bool $insert sets for insert if not exists, default is false
+     *
+     * @return bool|int
+     */
+    public function upsert(array $content, array $filter, bool $insert = false)
+    {
+        if ($insert) {
+            return self::updateOrCreate($filter, $content);
+        }
+
+        return self::update($content, $filter);
     }
 
     public function findLikeName($name)
