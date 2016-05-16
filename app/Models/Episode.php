@@ -14,8 +14,9 @@ class Episode extends Model
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
      * @param integer $feed_id id do feed
      * @param string $feed_url url do feed
+     * @return bool
      */
-    public function storage($feed_id, $feed_url)
+    public function storage($feed_id, string $feed_url)
     {
         $content = (new XML($feed_url))
             ->retrieve();
@@ -28,6 +29,21 @@ class Episode extends Model
             'feed_id' => $feed_id,
             'episodes' => $content['channel']['item']
         ]);
+
+        $this->updateTotalEpisodes($feed_id);
+
+        return true;
+    }
+
+    /**
+     * Update on Feed's table the total of episodes
+     * @param integer $feed_id id of feed
+     */
+    private function updateTotalEpisodes($feed_id)
+    {
+        (new Feed())
+            ->where('id', $feed_id)
+            ->update(['total_episodes' => self::where('feed_id', $feed_id)->count()]);
     }
 
     /**
@@ -64,8 +80,15 @@ class Episode extends Model
      * @param integer $id id do podcast
      * @return mixed
      */
-    public function getBy($field, $value, $filters)
+    public function getBy($field, $value, $filters = null)
     {
+        if (empty($filters)) {
+            $filters = [
+                'offset' => 0,
+                'limit' => 10
+            ];
+        }
+
         $episodes = self::where($field, $value)
             ->select(
                 'id', 'feed_id', 'title', 'link', 'published_date',
