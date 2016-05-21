@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Http\Controllers\EpisodeController;
+use App\Models\Episode;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule
             ->call(function(){
-                (new EpisodeController())->update();
+                (new Episode())->getNew();
             })
             ->twiceDaily(1, 13);
     }
