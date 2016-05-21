@@ -62,18 +62,13 @@ notes:
 
 
 - Routes:
-###### POST:
-```
-    api.podcast.com/feed/{PodcastName}
-    creates new feed and add episodes
-```
 ###### GET:
 ```
     api.podcast.com/feed/{PodcastName}
     retrieve podcast main informations
 ```
 ```
-    api.podcast.com/episodes/{PodcastName}
+    api.podcast.com/episodes/{feedId}
     retrieve episodes previously saved
 ```
 
