@@ -99,8 +99,8 @@ class Warehouse
     {
         $exec = 'curl -H "Content-Type: application/json" -H "auth: '.self::API_AUTH.'" -H "Accept: application/json" ';
         $exec .= self::API_URI . ' -X POST -d \''.$container.'\' &> /dev/null &';
-        sleep(1);
-        dispatch(new SendLogToWarehouse($exec));
+        //sleep(1);
+        //dispatch(new SendLogToWarehouse($exec));
 
         //shell_exec($exec);
     }
