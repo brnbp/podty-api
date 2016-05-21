@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Jobs\RegisterEpisodesFeed;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class Feed extends Model
 {
+    use DispatchesJobs;
+
     /** @var array $content */
     private $content = [];
 
@@ -19,15 +23,16 @@ class Feed extends Model
         'url', 'name', 'thumbnail_30', 'thumbnail_60', 'thumbnail_100', 'thumbnail_600'
     ];
 
+    public function episodes()
+    {
+        return $this->hasMany('App\Models\Episode');
+    }
+
     public function getContent()
     {
         $content = array_filter($this->content);
 
-        if (empty($content)) {
-            return false;
-        }
-        $arr = reset($content);
-        return is_array(current($arr)) ? current($arr) : $arr;
+        return empty($content) ? $content : reset($content);
     }
 
     public function storage($feeds)
@@ -95,4 +100,10 @@ class Feed extends Model
         return reset($content)['url'];
     }
 
+    public function sendToQueueUpdate(array $feeds)
+    {
+        foreach ($feeds as $feed) {
+            $this->dispatch(new RegisterEpisodesFeed($feed));    
+        }
+    }
 }
