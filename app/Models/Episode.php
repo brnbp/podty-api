@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use App\EpisodeEntity;
+use App\Jobs\RegisterEpisodesFeed;
+use App\Services\Filter;
 use App\Services\Parser\XML;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class Episode extends Model
 {
@@ -36,6 +39,28 @@ class Episode extends Model
     }
 
     /**
+     * Armazena os episodios no branco de dados
+     * @param array $content array de episodios para salvar no banco
+     */
+    public function insert(array $content)
+    {
+        foreach (array_reverse($content['episodes']) as $episode) {
+            $this->validateMediaFields($episode['enclosure']['@attributes']);
+            (new EpisodeEntity())
+                ->setFeedId($content['feed_id'])
+                ->setTitle($episode['title'])
+                ->setLink($episode['link'])
+                ->setPublishedDate($episode['pubDate'])
+                ->setContent($episode['description'])
+                ->setMediaUrl($episode['enclosure']['@attributes']['url'] ?: '')
+                ->setMediaLength($episode['enclosure']['@attributes']['length'] ?: '')
+                ->setMediaType($episode['enclosure']['@attributes']['type'] ?: '')
+                ->persist();
+        }
+    }
+
+
+    /**
      * Update on Feed's table the total of episodes
      * @param integer $feed_id id of feed
      */
@@ -43,36 +68,9 @@ class Episode extends Model
     {
         (new Feed())
             ->where('id', $feed_id)
-            ->update(['total_episodes' => self::where('feed_id', $feed_id)->count()]);
-    }
-
-    /**
-     * Armazena os episodios no branco de dados
-     * @param array $content array de episodios para salvar no banco
-     */
-    public function insert(array $content)
-    {
-        foreach (array_reverse($content['episodes']) as $episode) {
-
-            $ep = new EpisodeEntity();
-            $ep->feedId = $content['feed_id'];
-            $ep->title = $episode['title'];
-            $ep->link = $episode['link'];
-            $ep->publishedDate = (new \DateTime($episode['pubDate']))->format('Y-m-d H:i:s');
-            $ep->content = $episode['description'];
-
-            $this->validateMediaFields($episode['enclosure']['@attributes']);
-
-            $ep->mediaUrl = $episode['enclosure']['@attributes']['url'];
-            $ep->mediaLength = $episode['enclosure']['@attributes']['length'];
-            $ep->mediaType = $episode['enclosure']['@attributes']['type'];
-
-            try {
-                $ep->toObject()->save();
-                unset($ep);
-            } catch (\Exception $e) {
-            }
-        }
+            ->update([
+                'total_episodes' => self::where('feed_id', $feed_id)->count()
+            ]);
     }
 
     /**
@@ -80,26 +78,34 @@ class Episode extends Model
      * @param integer $id id do podcast
      * @return mixed
      */
-    public function getBy($field, $value, $filters = null)
+    public function getByFeedId($feedId, Filter $filter)
     {
-        if (empty($filters)) {
-            $filters = [
-                'offset' => 0,
-                'limit' => 10
-            ];
+        $feed = Feed::find($feedId);
+
+        if (is_null($feed)) {
+            return [];
         }
 
-        $episodes = self::where($field, $value)
+        return $feed
+            ->episodes()
             ->select(
                 'id', 'feed_id', 'title', 'link', 'published_date',
                 'media_url', 'media_type', 'media_length', 'content'
             )
-            ->skip($filters['offset'])
-            ->take($filters['limit'])
-            ->orderBy('id', 'desc')
-            ->get();
+            ->skip($filter->offset)
+            ->take($filter->limit)
+            ->orderBy('id', $filter->order)
+            ->get()
+            ->toArray();
+    }
 
-        return $episodes->toArray();
+    /**
+     * Utilizado em Cron
+     * Coloca na fila todos os feeds existentes para busca de novos episodios
+     */
+    public function getNew()
+    {
+        (new Feed())->sendToQueueUpdate(Feed::all(['url', 'id'])->toArray());
     }
 
     /**

@@ -12,12 +12,9 @@ use Illuminate\Http\Request;
 
 class Filter
 {
-    /** @var array $query_filters Default filter limit and order */
-    public $query_filters = [
-        'limit'  => 5,
-        'offset' => 0,
-        'order'  => 'DESC'
-    ];
+    public $limit = 5;
+    public $offset = 0;
+    public $order = 'DESC';
 
     public function validateFilters()
     {
@@ -46,12 +43,14 @@ class Filter
             }
         }
 
-        if (is_numeric($filters['offset']) == false) {
-                return false;
+        if (isset($filters['offset']) && !is_numeric($filters['offset'])) {
+            return false;
         }
 
         if (empty($filters) == false) {
-            $this->query_filters = array_merge($this->query_filters, $filters);
+            foreach($filters as $name => $value) {
+                $this->$name = $value;
+            }
         }
 
         return true;
