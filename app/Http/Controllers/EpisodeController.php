@@ -20,34 +20,10 @@ class EpisodeController extends Controller
         }
     }
 
-    public function retrieve(string $feed)
+    public function retrieve(int $feedId)
     {
-        $Feed = new Feed();
-
-        if (!$Feed->checkExists($feed)) {
-            (new FeedController())->create($feed);
-            return (new Response())->setStatusCode(202);
-        }
-
-        $ret = (new Episode())
-            ->getBy('feed_id', $Feed->getContent()['id'], [
-                'limit' => $this->Filter->query_filters['limit'],
-                'offset' => $this->Filter->query_filters['offset']
-            ]);
-
-        return $ret;
-    }
-
-    /**
-     * Utilizado em Cron
-     * Busca por episodios de podcast, a partir de feeds salvos no banco
-     */
-    public function update()
-    {
-        $episodes = Feed::all(['url', 'id'])->toArray();
-
-        foreach ($episodes as $episode) {
-            $this->dispatch(new RegisterEpisodesFeed($episode));
-        }
+        return
+            (new Episode())->getByFeedId($feedId, $this->Filter) ?:
+                (new Response())->setStatusCode(404);
     }
 }

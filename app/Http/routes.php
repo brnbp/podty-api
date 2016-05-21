@@ -4,14 +4,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// inclui podcast em feeds
-Route::post('/feed/{name}', 'FeedController@create');
-
 // search for podcast main informations
 Route::get('/feed/{name}', 'FeedController@retrieve');
 
-// search for episodes from podcast name
-Route::get('/episodes/{name}', 'EpisodeController@retrieve');
+// search for episodes from podcast id
+Route::get('/episodes/{feedId}', 'EpisodeController@retrieve');
 
 /*
 |--------------------------------------------------------------------------
