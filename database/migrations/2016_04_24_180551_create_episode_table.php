@@ -13,17 +13,16 @@ class CreateEpisodeTable extends Migration
     public function up()
     {
         Schema::create('episodes', function(Blueprint $table){
-            $table->increments('id');
+            $table->increments('id')->unique();
             $table->integer('feed_id');
             $table->string('title');
             $table->string('link');
             $table->dateTime('published_date');
             $table->mediumText('content');
-            $table->string('media_url');
+            $table->string('media_url')->unique();
             $table->integer('media_length');
             $table->string('media_type');
             $table->timestamps();
-            $table->unique(['id','media_url']);
             $table->index('feed_id');
         });
     }
