@@ -49,9 +49,9 @@ class Episode extends Model
             (new EpisodeEntity())
                 ->setFeedId($content['feed_id'])
                 ->setTitle($episode['title'])
-                ->setLink($episode['link'])
-                ->setPublishedDate($episode['pubDate'])
-                ->setContent($episode['description'])
+                ->setLink($this->getDefault($episode, 'link'))
+                ->setPublishedDate($this->getDefault($episode, 'pubDate'))
+                ->setContent($this->getDefault($episode, 'description'))
                 ->setMediaUrl($episode['enclosure']['@attributes']['url'] ?: '')
                 ->setMediaLength($episode['enclosure']['@attributes']['length'] ?: '')
                 ->setMediaType($episode['enclosure']['@attributes']['type'] ?: '')
@@ -127,5 +127,14 @@ class Episode extends Model
             $attributes['length'] = 0;
         }
         return $attributes;
+    }
+
+    private function getDefault($arr, $key)
+    {
+        if (isset($arr[$key])) {
+            return $arr[$key];
+        }
+
+        return '';
     }
 }
