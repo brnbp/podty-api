@@ -12,15 +12,18 @@ class RegisterEpisodesFeed extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    /** @var integer $id feed id */
     public $id;
+
+    /** @var string $url feed url */
     public $url;
 
     /**
-     * Create a new job instance.
+     * RegisterEpisodesFeed constructor.
      *
-     * @param $feed
+     * @param array $feed
      */
-    public function __construct($feed)
+    public function __construct(array $feed)
     {
         $this->id = $feed['id'];
         $this->url = $feed['url'];
