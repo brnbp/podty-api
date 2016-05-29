@@ -23,7 +23,7 @@ class FeedController extends Controller
         $this->Feed = new Feed();
     }
 
-    public function retrieve(string $name)
+    public function retrieve($name)
     {
         $this->Feed->findLikeName($name);
 
@@ -37,7 +37,7 @@ class FeedController extends Controller
      * @param string $name nome do podcast a ser criado
      * @return Response
      */
-    private function create(string $name)
+    private function create($name)
     {
         if ($this->createFeeds($name) == false) {
             return (new Response())->setStatusCode(404);
@@ -59,7 +59,7 @@ class FeedController extends Controller
      * @param string $name nome do podcast
      * @return bool
      */
-    private function createFeeds(string $name)
+    private function createFeeds($name)
     {
         $results = (new ItunesFinder($name))
             ->all();

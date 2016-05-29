@@ -20,7 +20,7 @@ class EpisodeController extends Controller
         }
     }
 
-    public function retrieve(int $feedId)
+    public function retrieve($feedId)
     {
         return
             (new Episode())->getByFeedId($feedId, $this->Filter) ?:
