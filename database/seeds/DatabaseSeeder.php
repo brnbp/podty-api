@@ -27,7 +27,10 @@ class DatabaseSeeder extends Seeder
             'thumbnail_30' => 'www.podcast.com.br/30/cover_feed.jpg',
             'thumbnail_60' => 'www.podcast.com.br/60/cover_feed.jpg',
             'thumbnail_100' => 'www.podcast.com.br/100/cover_feed.jpg',
-            'thumbnail_600' => 'www.podcast.com.br/600/cover_feed.jpg'
+            'thumbnail_600' => 'www.podcast.com.br/600/cover_feed.jpg',
+            'created_at' => '2016-05-20 16:30:01',
+            'updated_at' => '2016-05-25 19:10:00',
+            'total_episodes' => 7
         ]);
     }
 
@@ -171,7 +174,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'user_feed_id' => 1,
-                'episode_id' => 3,
+                'episode_id' => 4,
                 'hide' => 0,
                 'heard' => 0,
                 'downloaded' => 1,
@@ -179,7 +182,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'user_feed_id' => 1,
-                'episode_id' => 4,
+                'episode_id' => 5,
                 'hide' => 0,
                 'heard' => 0,
                 'downloaded' => 0,
@@ -187,7 +190,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'user_feed_id' => 1,
-                'episode_id' => 5,
+                'episode_id' => 6,
                 'hide' => 0,
                 'heard' => 0,
                 'downloaded' => 0,
