@@ -12,7 +12,7 @@ class CreateUserEpisodesTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_episodes', function (Blueprint $table) {
+        Schema::create('user_episodes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_feed_id');
             $table->integer('episode_id')->unique();

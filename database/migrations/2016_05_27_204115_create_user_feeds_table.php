@@ -12,7 +12,7 @@ class CreateUserFeedsTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_feeds', function (Blueprint $table) {
+        Schema::create('user_feeds', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->string('feed_id')->unique();
