@@ -30,7 +30,7 @@ class XML
      *
      * @param string $xml_path
      */
-    public function __construct(string $xml_path)
+    public function __construct($xml_path)
     {
         $this->xmlPath = $xml_path;
     }
