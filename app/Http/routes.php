@@ -1,14 +1,14 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
+$version = '/v1';
+
+Route::get($version . '/', function () { return view('welcome'); });
 
 // search for podcast main informations
-Route::get('/feed/{name}', 'FeedController@retrieve');
+Route::get($version . '/feed/{name}', 'FeedController@retrieve');
 
 // search for episodes from podcast id
-Route::get('/episodes/{feedId}', 'EpisodeController@retrieve');
+Route::get($version . '/episodes/{feedId}', 'EpisodeController@retrieve');
 
 /*
 |--------------------------------------------------------------------------
