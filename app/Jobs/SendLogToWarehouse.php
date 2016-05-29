@@ -12,12 +12,13 @@ class SendLogToWarehouse extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    /** @var string $exec command to shell exec */
     public $exec;
 
     /**
-     * Create a new job instance.
+     * SendLogToWarehouse constructor.
      *
-     * @return void
+     * @param string $exec command to shell exec
      */
     public function __construct($exec)
     {
@@ -31,7 +32,7 @@ class SendLogToWarehouse extends Job implements ShouldQueue
      */
     public function handle()
     {
-        
+
         shell_exec($this->exec);
     }
 }
