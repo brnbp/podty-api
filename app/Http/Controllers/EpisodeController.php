@@ -20,6 +20,10 @@ class EpisodeController extends Controller
         }
     }
 
+    /**
+     * @param integer $feedId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function retrieve($feedId)
     {
         return
