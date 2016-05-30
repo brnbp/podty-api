@@ -17,6 +17,12 @@ Route::get($version . '/queue', function(){
         ->get();
 });
 
+Route::delete($version . '/queue/{id}', function($id){
+   return DB::table('jobs')
+       ->where('id', $id)
+       ->delete();
+});
+
 Route::get($version . '/queue/reserved', function(){
     return DB::table('jobs')
         ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
