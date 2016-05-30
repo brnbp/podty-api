@@ -10,6 +10,11 @@ Route::get($version . '/feed/{name}', 'FeedController@retrieve');
 // search for episodes from podcast id
 Route::get($version . '/episodes/{feedId}', 'EpisodeController@retrieve');
 
+/**
+ * TODO
+ * create class to treat queue functions bellow !!!
+ */
+
 Route::get($version . '/queue', function(){
     $data = DB::table('jobs')
         ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
@@ -28,13 +33,11 @@ Route::get($version . '/queue', function(){
     }
     return $returned;
 });
-
 Route::delete($version . '/queue/{id}', function($id){
    return DB::table('jobs')
        ->where('id', $id)
        ->delete();
 });
-
 Route::get($version . '/queue/reserved', function(){
     return DB::table('jobs')
         ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
