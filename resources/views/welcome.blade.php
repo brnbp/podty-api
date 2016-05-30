@@ -71,7 +71,27 @@
                      - order = string (desc/asc)<br>
 
 
-                </div><br><br><br><br><br>
+                </div>
+                <div class="subtitle">
+                    GET:<br>
+                    api.podcast.com/v1/queue<br>
+                    retrieve queued tasks
+                </div>
+                <br>
+                <hr><br>
+                <div class="subtitle">
+                    GET:<br>
+                    api.podcast.com/v1/queue/reserved<br>
+                    retrieve queued task that is reserved
+                </div>
+                <br>
+                <hr><br>
+                <div class="subtitle">
+                    DELETE:<br>
+                    api.podcast.com/v1/queue/{queueId}<br>
+                    delete task from queue that is not reserved
+                </div>
+                <br><br><br><br><br>
             </div>
         </div>
     </body>
