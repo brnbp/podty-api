@@ -72,6 +72,19 @@ notes:
     retrieve episodes previously saved
 ```
 
+```
+    api.podcast.com/v1/queue
+    retrieve queued tasks
+```
+```
+    api.podcast.com/v1/queue/reserved
+    retrieve queued task that is reserved
+```
+###### DELETE
+```
+    api.podcast.com/v1/queue/{queueId}
+    delete task from queue that is not reserved
+```
 
 
 ##### listen queuing:
