@@ -11,10 +11,22 @@ Route::get($version . '/feed/{name}', 'FeedController@retrieve');
 Route::get($version . '/episodes/{feedId}', 'EpisodeController@retrieve');
 
 Route::get($version . '/queue', function(){
-    return DB::table('jobs')
+    $data = DB::table('jobs')
         ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
         ->take(15)
         ->get();
+    $returned = [];
+    if(!$data){return $returned;}
+    foreach ($data as $job) {
+        $returned[] = [
+            'id' => $job->id,
+            'queue' => $job->queue,
+            'payload' => json_decode($job->payload, true)['data']['command'],
+            'attempts' => $job->attempts,
+            'reserved' => $job->reserved
+        ];
+    }
+    return $returned;
 });
 
 Route::delete($version . '/queue/{id}', function($id){
