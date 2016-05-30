@@ -64,11 +64,11 @@ notes:
 - Routes:
 ###### GET:
 ```
-    api.podcast.com/feed/{PodcastName}
+    api.podcast.com/v1/feed/{PodcastName}
     retrieve podcast main informations
 ```
 ```
-    api.podcast.com/episodes/{feedId}
+    api.podcast.com/v1/episodes/{feedId}
     retrieve episodes previously saved
 ```
 
