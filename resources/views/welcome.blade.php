@@ -52,14 +52,14 @@
                 <br><br>
                 <div class="subtitle">
                     GET:<br>
-                    api.podcast.com/feed/{podcastName}<br>
+                    api.podcast.com/v1/feed/{podcastName}<br>
                     creates new feed and add episodes
                 </div>
                 <br>
                 <hr><br>
                 <div class="subtitle">
                     GET:<br>
-                    api.podcast.com/episodes/{feedId}<br>
+                    api.podcast.com/v1/episodes/{feedId}<br>
                     retrieve episodes previously saved<br>
                     <br><br>
                     more:<br>
