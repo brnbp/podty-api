@@ -83,16 +83,14 @@ class QueueController extends Controller
             return $returned;
         }
 
-        foreach ($resultQuery as $job) {
-            $returned[] = [
+        return array_map(function($job){
+            return [
                 'id' => $job->id,
                 'queue' => $job->queue,
                 'payload' => json_decode($job->payload, true)['data']['command'],
                 'attempts' => $job->attempts,
                 'reserved' => $job->reserved
             ];
-        }
-
-        return $returned;
+        }, $resultQuery);
     }
 }
