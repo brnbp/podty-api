@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Services\Filter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 
@@ -19,9 +20,16 @@ class QueueController extends Controller
      */
     public function index()
     {
+        $Filter = new Filter();
+
+        if ($Filter->validateFilters() === false) {
+            return (new Response())->setStatusCode(400);
+        }
+
         $data = DB::table(self::TABLE_NAME)
             ->select($this->select_fields)
-            ->take(15)
+            ->skip($Filter->offset)
+            ->take($Filter->limit)
             ->get();
 
         return $this->formatResponse($data);
