@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
+        <title>Podcast Api</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -31,21 +31,15 @@
             }
 
             .title {
-                font-size: 80px;
+                font-size: 40px;
             }
 
             .subtitle {
-                font-size: 40px;
+                font-size: 30px;
             }
         </style>
     </head>
     <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Podcast API</div>
-            </div>
-        </div>
-<br>
         <div class="container">
             <div class="content">
                 <h2>Routes</h2>
@@ -72,6 +66,8 @@
 
 
                 </div>
+                <br>
+                <hr><br>
                 <div class="subtitle">
                     GET:<br>
                     api.podcast.com/v1/queue<br>
