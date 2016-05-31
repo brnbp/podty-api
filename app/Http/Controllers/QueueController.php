@@ -10,6 +10,12 @@ class QueueController extends Controller
     /** @var string TABLE_NAME nome da tabela de queue */
     const TABLE_NAME = 'jobs';
 
+    /** @var string NOT_RESERVED queue nao reservada */
+    const NOT_RESERVED = 0;
+
+    /** @var string RESERVED queue reservada */
+    const RESERVED = 1;
+
     /** @var array $select_fields fields to return on query */
     private $select_fields = ['id', 'queue', 'payload', 'attempts', 'reserved'];
 
@@ -46,8 +52,8 @@ class QueueController extends Controller
     {
         $data = DB::table(self::TABLE_NAME)
             ->select($this->select_fields)
-            ->where('reserved', 1)
-            ->take(15)
+            ->where('reserved', self::RESERVED)
+            ->take(10)
             ->get();
 
         return $this->formatResponse($data);
@@ -64,7 +70,7 @@ class QueueController extends Controller
         $deleted = DB::table(self::TABLE_NAME)
             ->where([
                 ['id', $id],
-                ['reserved', 0]
+                ['reserved', self::NOT_RESERVED]
             ])
             ->delete();
 
