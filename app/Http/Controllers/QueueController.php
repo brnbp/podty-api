@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 class QueueController extends Controller
 {
@@ -71,6 +72,6 @@ class QueueController extends Controller
                 ['reserved', 0]
             ])
             ->delete();
-        return $deleted ? response('', 200) : response('', 400);
+        return (new Response())->setStatusCode($deleted ? 200 : 400);
     }
 }
