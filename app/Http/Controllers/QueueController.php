@@ -2,8 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\Filter;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class QueueController extends Controller
 {
@@ -20,9 +20,7 @@ class QueueController extends Controller
     private $select_fields = ['id', 'queue', 'payload', 'attempts', 'reserved'];
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display jobs in queue to process
      */
     public function index()
     {
@@ -39,14 +37,10 @@ class QueueController extends Controller
             ->get();
 
         return $this->formatResponse($data);
-
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display jobs that are reserved to process
      */
     public function reserved()
     {
@@ -60,10 +54,9 @@ class QueueController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Remove job from queue, except if its not reserved to process
+     * @param integer $id id da queue
+     * @return Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -77,6 +70,11 @@ class QueueController extends Controller
         return (new Response())->setStatusCode($deleted ? 200 : 400);
     }
 
+    /**
+     * Formata retorno de solicitação para melhorar visualização
+     * @param array|boolean $resultQuery retorno da query
+     * @return array retorna array formatado ou vazio se nao foi passado nenhum resultado
+     */
     private function formatResponse($resultQuery)
     {
         $returned = [];
