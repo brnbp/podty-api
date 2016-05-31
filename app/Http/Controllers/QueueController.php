@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 class QueueController extends Controller
 {
     /** @var string TABLE_NAME nome da tabela de queue */
-    const TABLE_NAME = 20;
+    const TABLE_NAME = 'jobs';
 
     /** @var array $select_fields fields to return on query */
     private $select_fields = ['id', 'queue', 'payload', 'attempts', 'reserved'];
