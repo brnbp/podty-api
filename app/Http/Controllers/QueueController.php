@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\DB;
 
 class QueueController extends Controller
 {
+    /** @var string TABLE_NAME nome da tabela de queue */
+    const TABLE_NAME = 20;
+
+    /** @var array $select_fields fields to return on query */
+    private $select_fields = ['id', 'queue', 'payload', 'attempts', 'reserved'];
+
     /**
      * Display a listing of the resource.
      *
@@ -12,8 +18,8 @@ class QueueController extends Controller
      */
     public function index()
     {
-        $data = DB::table('jobs')
-            ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
+        $data = DB::table(self::TABLE_NAME)
+            ->select($this->select_fields)
             ->take(15)
             ->get();
 
@@ -44,8 +50,8 @@ class QueueController extends Controller
      */
     public function reserved()
     {
-        return DB::table('jobs')
-            ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
+        return DB::table(self::TABLE_NAME)
+            ->select($this->select_fields)
             ->where('reserved', 1)
             ->take(15)
             ->get();
@@ -59,7 +65,7 @@ class QueueController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = DB::table('jobs')
+        $deleted = DB::table(self::TABLE_NAME)
             ->where([
                 ['id', $id],
                 ['reserved', 0]
