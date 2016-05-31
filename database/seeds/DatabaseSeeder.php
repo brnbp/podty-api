@@ -116,15 +116,42 @@ class DatabaseSeeder extends Seeder
 
     public function seedJobs()
     {
-        DB::table('jobs')->insert([
-            'queue' => 'feeds',
-            'payload' => 'payload',
-            'attempts' => 2,
-            'reserved' => 1,
-            'reserved_at' => 16213,
-            'available_at' => 15132,
-            'created_at' => 14324
-        ]);
+        $jobs = [
+            [
+                'queue' => 'feeds',
+                'payload' => json_encode(['data' => ['command' => 'payload one']]),
+                'attempts' => 2,
+                'reserved' => 1,
+            ],
+            [
+                'queue' => 'feeds',
+                'payload' => json_encode(['data' => ['command' => 'payload two']]),
+                'attempts' => 1,
+                'reserved' => 1,
+            ],
+            [
+                'queue' => 'feeds',
+                'payload' => json_encode(['data' => ['command' => 'payload three']]),
+                'attempts' => 0,
+                'reserved' => 0,
+            ],
+            [
+                'queue' => 'feeds',
+                'payload' => json_encode(['data' => ['command' => 'payload four']]),
+                'attempts' => 0,
+                'reserved' => 0,
+            ],
+            [
+                'queue' => 'feeds',
+                'payload' => json_encode(['data' => ['command' => 'payload five']]),
+                'attempts' => 0,
+                'reserved' => 0,
+            ]
+        ];
+
+        foreach ($jobs as $job) {
+            DB::table('jobs')->insert($job);
+        }
     }
 
     public function seedUsers()
