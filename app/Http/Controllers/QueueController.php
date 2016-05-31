@@ -24,23 +24,8 @@ class QueueController extends Controller
             ->take(15)
             ->get();
 
-        $returned = [];
+        return $this->formatResponse($data);
 
-        if(!$data){
-            return $returned;
-        }
-
-        foreach ($data as $job) {
-            $returned[] = [
-                'id' => $job->id,
-                'queue' => $job->queue,
-                'payload' => json_decode($job->payload, true)['data']['command'],
-                'attempts' => $job->attempts,
-                'reserved' => $job->reserved
-            ];
-        }
-
-        return $returned;
     }
 
     /**
@@ -51,11 +36,13 @@ class QueueController extends Controller
      */
     public function reserved()
     {
-        return DB::table(self::TABLE_NAME)
+        $data = DB::table(self::TABLE_NAME)
             ->select($this->select_fields)
             ->where('reserved', 1)
             ->take(15)
             ->get();
+
+        return $this->formatResponse($data);
     }
 
     /**
@@ -72,6 +59,28 @@ class QueueController extends Controller
                 ['reserved', 0]
             ])
             ->delete();
+
         return (new Response())->setStatusCode($deleted ? 200 : 400);
+    }
+
+    private function formatResponse($resultQuery)
+    {
+        $returned = [];
+
+        if(!$resultQuery){
+            return $returned;
+        }
+
+        foreach ($resultQuery as $job) {
+            $returned[] = [
+                'id' => $job->id,
+                'queue' => $job->queue,
+                'payload' => json_decode($job->payload, true)['data']['command'],
+                'attempts' => $job->attempts,
+                'reserved' => $job->reserved
+            ];
+        }
+
+        return $returned;
     }
 }
