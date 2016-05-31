@@ -146,6 +146,18 @@ class DatabaseSeeder extends Seeder
                 'payload' => json_encode(['data' => ['command' => 'payload five']]),
                 'attempts' => 0,
                 'reserved' => 0,
+            ],
+            [
+                'queue' => 'feeds',
+                'payload' => json_encode(['data' => ['command' => 'payload six']]),
+                'attempts' => 0,
+                'reserved' => 0,
+            ],
+            [
+                'queue' => 'feeds',
+                'payload' => json_encode(['data' => ['command' => 'payload seven']]),
+                'attempts' => 0,
+                'reserved' => 0,
             ]
         ];
 
