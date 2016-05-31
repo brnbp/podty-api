@@ -11,7 +11,6 @@ Route::get($version . '/feed/{name}', 'FeedController@retrieve');
 Route::get($version . '/episodes/{feedId}', 'EpisodeController@retrieve');
 
 
-
 /**
  * TODO
  * create class to treat queue functions bellow !!!
@@ -35,15 +34,8 @@ Route::get($version . '/queue', function(){
     }
     return $returned;
 });
-Route::delete($version . '/queue/{id}', function($id){
-    $deleted = DB::table('jobs')
-        ->where([
-            ['id', $id],
-            ['reserved', 0]
-        ])
-        ->delete();
-   return $deleted ? response('', 200) : response('', 400);
-});
+Route::delete($version . '/queue/{id}', 'QueueController@destroy');
+
 Route::get($version . '/queue/reserved', function(){
     return DB::table('jobs')
         ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])

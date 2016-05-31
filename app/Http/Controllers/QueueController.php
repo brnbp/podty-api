@@ -32,5 +32,12 @@ class QueueController extends Controller
      */
     public function destroy($id)
     {
+        $deleted = DB::table('jobs')
+            ->where([
+                ['id', $id],
+                ['reserved', 0]
+            ])
+            ->delete();
+        return $deleted ? response('', 200) : response('', 400);
     }
 }
