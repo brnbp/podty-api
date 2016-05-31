@@ -22,6 +22,11 @@ class QueueController extends Controller
      */
     public function reserved()
     {
+        return DB::table('jobs')
+            ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
+            ->where('reserved', 1)
+            ->take(15)
+            ->get();
     }
 
     /**

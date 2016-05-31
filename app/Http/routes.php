@@ -35,15 +35,7 @@ Route::get($version . '/queue', function(){
     return $returned;
 });
 Route::delete($version . '/queue/{id}', 'QueueController@destroy');
-
-Route::get($version . '/queue/reserved', function(){
-    return DB::table('jobs')
-        ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
-        ->where('reserved', 1)
-        ->take(15)
-        ->get();
-});
-
+Route::get($version . '/queue/reserved', 'QueueController@reserved');
 
 
 /*
