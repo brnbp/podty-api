@@ -11,29 +11,7 @@ Route::get($version . '/feed/{name}', 'FeedController@retrieve');
 Route::get($version . '/episodes/{feedId}', 'EpisodeController@retrieve');
 
 
-/**
- * TODO
- * create class to treat queue functions bellow !!!
- */
-
-Route::get($version . '/queue', function(){
-    $data = DB::table('jobs')
-        ->select(['id', 'queue', 'payload', 'attempts', 'reserved'])
-        ->take(15)
-        ->get();
-    $returned = [];
-    if(!$data){return $returned;}
-    foreach ($data as $job) {
-        $returned[] = [
-            'id' => $job->id,
-            'queue' => $job->queue,
-            'payload' => json_decode($job->payload, true)['data']['command'],
-            'attempts' => $job->attempts,
-            'reserved' => $job->reserved
-        ];
-    }
-    return $returned;
-});
+Route::get($version . '/queue', 'QueueController@index');
 Route::delete($version . '/queue/{id}', 'QueueController@destroy');
 Route::get($version . '/queue/reserved', 'QueueController@reserved');
 
