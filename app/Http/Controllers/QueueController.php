@@ -5,6 +5,11 @@ use App\Services\Filter;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class QueueController
+ *
+ * @author Bruno Pereira <bruno9pereira@gmail.com>
+ */
 class QueueController extends Controller
 {
     /** @var string TABLE_NAME nome da tabela de queue */
