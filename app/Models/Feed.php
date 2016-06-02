@@ -103,7 +103,39 @@ class Feed extends Model
     public function sendToQueueUpdate(array $feeds)
     {
         foreach ($feeds as $feed) {
-            $this->dispatch(new RegisterEpisodesFeed($feed));    
+            $this->dispatch(new RegisterEpisodesFeed($feed));
         }
+    }
+
+    public function getLatestsUpdated()
+    {
+        return self::take(2)
+            ->orderBy('last_episode_at', 'DESC')
+            ->get();
+    }
+
+    /**
+     * Atualiza em feeds a data do ultimo episodio lançado
+     * @param $feedId
+     * @param $publisedDate
+     */
+    public function updateLastEpisodeAt($feedId, $publisedDate)
+    {
+        self::where('id', $feedId)
+            ->update([
+                'last_episode_at' => $publisedDate
+            ]);
+    }
+
+    /**
+     * Update on Feed's table the total of episodes
+     * @param integer $feed_id id of feed
+     */
+    public function updateTotalEpisodes($feedId)
+    {
+        self::where('id', $feedId)
+            ->update([
+                'total_episodes' => (new Episode())->getTotalEpisodes($feedId)
+            ]);
     }
 }
