@@ -8,15 +8,17 @@ Route::get(
 );
 // search for podcast main informations
 Route::get(
-    $version . '/feeds/{name}',
+    $version . '/feeds/name/{name}',
     'FeedController@retrieve'
 );
 
 // search for episodes from podcast id
 Route::get(
-    $version . '/episodes/{feedId}',
+    $version . '/episodes/feedId/{feedId}',
     'EpisodeController@retrieve'
-);
+    );
+
+
 
 
 Route::get($version . '/queue', 'QueueController@index');
