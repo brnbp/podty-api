@@ -30,4 +30,9 @@ class EpisodeController extends Controller
             (new Episode())->getByFeedId($feedId, $this->Filter) ?:
                 (new Response())->setStatusCode(404);
     }
+
+    public function latest()
+    {
+        return (new Episode())->getLatests();
+    }
 }
