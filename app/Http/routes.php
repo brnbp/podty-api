@@ -6,6 +6,13 @@ Route::get(
     $version . '/',
     function() { return view('welcome'); }
 );
+
+// search feeds that recently post new episodes
+Route::get(
+    $version . '/feeds/latest',
+    'FeedController@latest'
+);
+
 // search for podcast main informations
 Route::get(
     $version . '/feeds/name/{name}',
@@ -18,6 +25,10 @@ Route::get(
     'EpisodeController@retrieve'
     );
 
+Route::get(
+    $version . '/episodes/latest',
+    'EpisodeController@latest'
+);
 
 
 
