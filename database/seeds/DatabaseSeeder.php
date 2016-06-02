@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
                 'thumbnail_100' => 'www.podcast.com.br/100/cover_feed.jpg',
                 'thumbnail_600' => 'www.podcast.com.br/600/cover_feed.jpg',
                 'created_at' => '2016-05-20 16:30:01',
-                'updated_at' => '2016-05-25 19:10:00',
+                'updated_at' => '2016-06-02 19:10:00',
+                'last_episode_at' => '2016-06-01 19:10:00',
                 'total_episodes' => 550
             ],
             [
@@ -41,7 +42,8 @@ class DatabaseSeeder extends Seeder
                 'thumbnail_100' => 'www.podcast.com.br/100/cover_feed.jpg',
                 'thumbnail_600' => 'www.podcast.com.br/600/cover_feed.jpg',
                 'created_at' => '2016-04-20 16:30:01',
-                'updated_at' => '2016-05-25 19:10:00',
+                'updated_at' => '2016-06-01 19:10:00',
+                'last_episode_at' => '2016-05-15 11:23:00',
                 'total_episodes' => 190
             ],
             [
@@ -52,7 +54,8 @@ class DatabaseSeeder extends Seeder
                 'thumbnail_100' => 'www.podcast.com.br/100/cover_feed.jpg',
                 'thumbnail_600' => 'www.podcast.com.br/600/cover_feed.jpg',
                 'created_at' => '2016-05-30 16:30:01',
-                'updated_at' => '2016-05-30 19:10:00',
+                'updated_at' => '2016-06-01 19:10:00',
+                'last_episode_at' => '2016-05-27 00:12:04',
                 'total_episodes' => 55
             ]
         ];
