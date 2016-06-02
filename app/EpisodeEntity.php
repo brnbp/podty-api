@@ -51,6 +51,8 @@ class EpisodeEntity
      */
     public $mediaType;
 
+    public $saved;
+
     /**
      * @param mixed $feedId
      *
@@ -93,6 +95,14 @@ class EpisodeEntity
     {
         $this->publishedDate = (new \DateTime($publishedDate))->format('Y-m-d H:i:s');
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublishedDate()
+    {
+        return $this->publishedDate;
     }
 
     /**
@@ -190,10 +200,13 @@ class EpisodeEntity
         $ep->media_type = $this->mediaType;
         $ep->media_url = $this->mediaUrl;
 
-        try {
-            $ep->save();
-        } catch (\Exception $e) {
-
+        if ($ep->exists()) {
+            $this->saved = false;
+            return false;
         }
+
+        $ep->save();
+        $this->saved = true;
+        return true;
     }
 }
