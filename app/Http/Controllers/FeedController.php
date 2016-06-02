@@ -72,4 +72,9 @@ class FeedController extends Controller
 
         return true;
     }
+
+    public function latest()
+    {
+        return (new Feed())->getLatestsUpdated();
+    }
 }
