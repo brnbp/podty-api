@@ -30,6 +30,34 @@ Route::get(
     'EpisodeController@latest'
 );
 
+Route::post(
+    $version . '/user',
+    function(){}
+);
+
+Route::get(
+    $version . '/users/{username}',
+    'UserController@show'
+);
+
+Route::get(
+    $version . '/users/{username}/feeds',
+    'UserController@showFeed'
+);
+
+Route::get(
+    $version . '/users/{username}/feeds/{feedId}',
+    'UserController@showEpisodes'
+);
+
+Route::post(
+    $version . '/users/feed',
+    function(){}
+);
+Route::post(
+    $version . '/users/episodes',
+    function(){}
+);
 
 
 Route::get($version . '/queue', 'QueueController@index');
