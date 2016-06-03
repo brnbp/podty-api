@@ -138,9 +138,9 @@ class Episode extends Model
 
     public function getLatests()
     {
-        return self::take(2)
+        return self::take(5)
             ->select($this->fieldsToReturn)
-            ->orderBy('id', 'DESC')
+            ->orderBy('published_date', 'DESC')
             ->get();
     }
 
