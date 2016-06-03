@@ -1,7 +1,7 @@
 <?php
 
 $version = '/v1';
-
+Route::get('/', function() { return view('welcome'); });
 Route::get(
     $version . '/',
     function() { return view('welcome'); }
