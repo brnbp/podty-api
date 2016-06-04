@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\Jobs\RegisterEpisodesFeed;
@@ -8,6 +7,11 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
+/**
+ * Class Feed
+ *
+ * @author Bruno Pereira <bruno9pereira@gmail.com>
+ */
 class Feed extends Model
 {
     use DispatchesJobs;
@@ -18,12 +22,18 @@ class Feed extends Model
     /** @var bool $has_content */
     public $has_content = false;
 
+    /** @var string $table nome da tabela referente a model */
     protected $table = 'feeds';
 
     protected $fillable = [
         'url', 'name', 'thumbnail_30', 'thumbnail_60', 'thumbnail_100', 'thumbnail_600'
     ];
 
+    /**
+     * Define relação com a model Episodes, sendo que Feed possui varios episodios
+     * ligados a ele
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function episodes()
     {
         return $this->hasMany('App\Models\Episode');
@@ -108,9 +118,13 @@ class Feed extends Model
         }
     }
 
-    public function getLatestsUpdated()
+    /**
+     * Busca pelos feeds que recentemente publicaram novos episodios
+     * @param integer $limit limite de quantidade de retorno, por padrao, 10
+     */
+    public function getLatestsUpdated($limit = 10)
     {
-        return self::take(10)
+        return self::take($limit)
             ->orderBy('last_episode_at', 'DESC')
             ->get();
     }
