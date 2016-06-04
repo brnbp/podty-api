@@ -38,8 +38,8 @@ class Filter
                 return false;
             }
 
-            if ($filters['limit'] > 10) {
-                $filters['limit'] = 10;
+            if ($filters['limit'] > 30) {
+                $filters['limit'] = 30;
             }
         }
 
@@ -94,5 +94,10 @@ class Filter
         }
 
         return array_intersect_key($array, $filters_allowed);
+    }
+    
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
     }
 }
