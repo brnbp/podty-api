@@ -63,7 +63,7 @@ class Feed extends Model
      *
      * @return bool|int
      */
-    public function upsert(array $content, array $filter, bool $insert = false)
+    private function upsert(array $content, array $filter, bool $insert = false)
     {
         if ($insert) {
             return self::updateOrCreate($filter, $content);
