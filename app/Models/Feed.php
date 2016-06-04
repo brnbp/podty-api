@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Jobs\RegisterEpisodesFeed;
+use App\Services\Filter;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -116,15 +117,20 @@ class Feed extends Model
 
     /**
      * Atualiza em feeds a data do ultimo episodio lançado
-     * @param $feedId
-     * @param $publishedDate
      */
-    public function updateLastEpisodeAt($feedId, $publishedDate)
+    public function updateLastEpisodeAt()
     {
-        self::where('id', $feedId)
+        $Filter = new Filter();
+        $Filter->setLimit(10);
+
+        ((new Episode())->getLatests($Filter))
+            ->unique('feed_id')
+            ->map(function($episode){
+                self::where('id', $episode->feed_id)
             ->update([
-                'last_episode_at' => $publishedDate
+                        'last_episode_at' => $episode->published_date
             ]);
+            });
     }
 
     /**
