@@ -116,6 +116,19 @@ class Feed extends Model
     }
 
     /**
+     * Atualiza em feeds a data do ultimo episodio lançado
+     * @param $feedId
+     * @param $publishedDate
+     */
+    public function updateLastEpisodeAt($feedId, $publishedDate)
+    {
+        self::where('id', $feedId)
+            ->update([
+                'last_episode_at' => $publishedDate
+            ]);
+    }
+
+    /**
      * Update on Feed's table the total of episodes
      * @param integer $feed_id id of feed
      */
