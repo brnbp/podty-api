@@ -20,6 +20,6 @@ class Kernel extends ConsoleKernel
             ->call(function(){
                 (new Episode())->getNew();
             })
-            ->hourly();
+            ->hourly()->withoutOverlapping();
     }
 }
