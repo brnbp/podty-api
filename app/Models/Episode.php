@@ -19,12 +19,6 @@ class Episode extends Model
     /** @var string $table nome da tabela referente a model */
     protected $table = 'episodes';
 
-    /** @var array $hidden The attributes that should be hidden for arrays. */
-    protected $hidden = [
-        'created_at',
-        'updated_at'
-    ];
-
     /**
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
      * @param integer $feed_id id do feed
