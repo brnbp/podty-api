@@ -140,10 +140,11 @@ class Episode extends Model
         return !$ret->isEmpty();
     }
 
-    public function getLatests()
+    public function getLatests(Filter $filter)
     {
-        return self::take(5)
-            ->orderBy('published_date', 'DESC')
+        return self::take($filter->limit)
+            ->skip($filter->offset)
+            ->orderBy('published_date', $filter->order)
             ->get();
     }
 
