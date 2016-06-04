@@ -53,17 +53,17 @@ class Episode extends Model
     {
         foreach (array_reverse($content['episodes']) as $episode) {
             $this->validateMediaFields($episode['enclosure']['@attributes']);
-            $ep = new EpisodeEntity();
-            $ep->setFeedId($content['feed_id'])
+
+            (new EpisodeEntity())
+                ->setFeedId($content['feed_id'])
                 ->setTitle($episode['title'])
                 ->setLink($this->getDefault($episode, 'link'))
                 ->setPublishedDate($this->getDefault($episode, 'pubDate'))
                 ->setContent($this->getDefault($episode, 'description'))
                 ->setMediaUrl($episode['enclosure']['@attributes']['url'] ?: '')
                 ->setMediaLength($episode['enclosure']['@attributes']['length'] ?: '')
-                ->setMediaType($episode['enclosure']['@attributes']['type'] ?: '');
-
-            $ep->persist();
+                ->setMediaType($episode['enclosure']['@attributes']['type'] ?: '')
+                ->persist();
         }
     }
 
