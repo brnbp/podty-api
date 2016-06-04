@@ -13,23 +13,32 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class EpisodeController extends Controller
 {
     /**
-     * @param Filter  $filter
+     * @var Filter
+     */
+    private $filter;
+
+    public function __construct(Filter $filter)
+    {
+        $this->filter = $filter;
+        if ($this->filter->validateFilters() === false) {
+            return (new Response())->setStatusCode(400);
+        }
+    }
+
+
+    /**
      * @param integer $feedId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function retrieve(Filter $filter, $feedId)
+    public function retrieve($feedId)
     {
-        if ($filter->validateFilters() === false) {
-            die(http_response_code(400));
-        }
-
         return
-            (new Episode())->getByFeedId($feedId, $filter) ?:
+            (new Episode())->getByFeedId($feedId, $this->filter) ?:
                 (new Response())->setStatusCode(404);
     }
 
     public function latest()
     {
-        return (new Episode())->getLatests();
+        return (new Episode())->getLatests($this->filter);
     }
 }
