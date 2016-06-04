@@ -109,7 +109,7 @@ class Feed extends Model
 
     public function getLatestsUpdated()
     {
-        return self::take(2)
+        return self::take(10)
             ->orderBy('last_episode_at', 'DESC')
             ->get();
     }

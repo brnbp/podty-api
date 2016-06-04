@@ -14,9 +14,10 @@ class Episode extends Model
 {
     protected $table = 'episodes';
 
-    private $fieldsToReturn = [
-        'id', 'feed_id', 'title', 'link', 'published_date',
-        'media_url', 'media_type', 'media_length', 'content'
+    /** @var array $hidden The attributes that should be hidden for arrays. */
+    protected $hidden = [
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -85,15 +86,14 @@ class Episode extends Model
      */
     public function getByFeedId($feedId, Filter $filter)
     {
-        $feed = Feed::find($feedId);
+        $Feed = Feed::find($feedId);
 
-        if (is_null($feed)) {
+        if (is_null($Feed )) {
             return [];
         }
 
-        return $feed
+        return $Feed
             ->episodes()
-            ->select($this->fieldsToReturn)
             ->skip($filter->offset)
             ->take($filter->limit)
             ->orderBy('id', $filter->order)
@@ -143,7 +143,6 @@ class Episode extends Model
     public function getLatests()
     {
         return self::take(5)
-            ->select($this->fieldsToReturn)
             ->orderBy('published_date', 'DESC')
             ->get();
     }
