@@ -8,26 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EpisodeController extends Controller
 {
-    public function __construct()
-    {
-        $this->Filter = new Filter();
-
-        if ($this->Filter->validateFilters() === false) {
-            die(http_response_code(400));
-        }
-    }
-
     /**
+     * @param Filter  $filter
      * @param integer $feedId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function retrieve($feedId)
+    public function retrieve(Filter $filter, $feedId)
     {
+        if ($filter->validateFilters() === false) {
+            die(http_response_code(400));
+        }
+
         return
-            (new Episode())->getByFeedId($feedId, $this->Filter) ?:
+            (new Episode())->getByFeedId($feedId, $filter) ?:
                 (new Response())->setStatusCode(404);
     }
 
