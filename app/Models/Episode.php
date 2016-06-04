@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\EpisodeEntity;
@@ -10,8 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use PhpSpec\Exception\Fracture\PropertyNotFoundException;
 
+/**
+ * Class Episode
+ *
+ * @author Bruno Pereira <bruno9pereira@gmail.com>
+ */
 class Episode extends Model
 {
+    /** @var string $table nome da tabela referente a model */
     protected $table = 'episodes';
 
     /** @var array $hidden The attributes that should be hidden for arrays. */
@@ -127,8 +132,20 @@ class Episode extends Model
         return $attributes;
     }
 
-    public function exists()
+    /**
+     * Verifica se existe episodio a partir de mediaUrl property
+     * @param string $mediaUrl opcional, caso nao tenha sido setado na classe ainda
+     * @return boolean retorna true se existe e falso caso nao exista
+     *
+     * @throws PropertyNotFoundException
+     * caso nao seja informado o parametro e a propriedade nao tenha sido definida ainda
+     */
+    public function exists($mediaUrl = null)
     {
+        if ($mediaUrl) {
+            $this->media_url = $mediaUrl;
+        }
+
         if (!$this->media_url) {
             throw new PropertyNotFoundException('property media_url not defined', $this, 'media_url');
         }
@@ -136,6 +153,10 @@ class Episode extends Model
         return !$ret->isEmpty();
     }
 
+    /**
+     * Busca pelos ultimos episodios publicados pelos podcasts
+     * @param Filter $filter
+     */
     public function getLatests(Filter $filter)
     {
         return self::take($filter->limit)
@@ -144,6 +165,13 @@ class Episode extends Model
             ->get();
     }
 
+    /**
+     * Valida se existe a chave no array
+     * caso nao exista, retorna string vazia
+     * caso exista, retorna o valor da chave
+     * @param array $arr
+     * @param string $key
+     */
     private function getDefault($arr, $key)
     {
         if (isset($arr[$key])) {
