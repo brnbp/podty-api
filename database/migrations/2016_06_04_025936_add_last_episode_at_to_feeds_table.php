@@ -25,7 +25,7 @@ class AddLastEpisodeAtToFeedsTable extends Migration
     public function down()
     {
         Schema::table('feeds', function (Blueprint $table) {
-            $table->dropColumn('last_episode_at');  
+            $table->dropColumn('last_episode_at');
         });
     }
 }

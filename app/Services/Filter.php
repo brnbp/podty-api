@@ -47,10 +47,12 @@ class Filter
             return false;
         }
 
-        if (empty($filters) == false) {
-            foreach($filters as $name => $value) {
-                $this->$name = $value;
-            }
+        if (empty($filters)) {
+            return false;
+        }
+
+        foreach($filters as $name => $value) {
+            $this->$name = $value;
         }
 
         return true;
