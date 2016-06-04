@@ -123,13 +123,14 @@ class Feed extends Model
         $Filter = new Filter();
         $Filter->setLimit(10);
 
-        ((new Episode())->getLatests($Filter))
+        $Episodes = ((new Episode())->getLatests($Filter));
+        $Episodes
             ->unique('feed_id')
             ->map(function($episode){
                 self::where('id', $episode->feed_id)
-            ->update([
+                    ->update([
                         'last_episode_at' => $episode->published_date
-            ]);
+                    ]);
             });
     }
 
