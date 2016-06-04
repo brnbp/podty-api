@@ -64,6 +64,10 @@ class Episode extends Model
 
             $ep->persist();
         }
+
+        if ($ep->saved) {
+            (new Feed())->updateLastEpisodeAt($content['feed_id'], $ep->getPublishedDate());
+        }
     }
 
     /**
