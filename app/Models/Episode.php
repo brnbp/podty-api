@@ -26,7 +26,7 @@ class Episode extends Model
      * @param string $feed_url url do feed
      * @return bool
      */
-    public function storage($feed_id, string $feed_url)
+    public function storage($feed_id, $feed_url)
     {
         $content = (new XML($feed_url))
             ->retrieve();
