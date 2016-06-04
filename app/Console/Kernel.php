@@ -23,6 +23,6 @@ class Kernel extends ConsoleKernel
                 (new Episode())->getNew();
                 (new Feed())->updateLastEpisodeAt();
             })
-            ->hourly()->withoutOverlapping();
+            ->hourly()->name('default-cron')->withoutOverlapping();
     }
 }
