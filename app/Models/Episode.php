@@ -16,9 +16,6 @@ use PhpSpec\Exception\Fracture\PropertyNotFoundException;
  */
 class Episode extends Model
 {
-    /** @var string $table nome da tabela referente a model */
-    protected $table = 'episodes';
-
     /**
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
      * @param integer $feed_id id do feed
@@ -154,8 +151,10 @@ class Episode extends Model
     public function getLatests(Filter $filter)
     {
         return self::take($filter->limit)
+            ->join('feeds', 'episodes.feed_id', '=', 'feeds.id')
             ->skip($filter->offset)
             ->orderBy('published_date', $filter->order)
+            ->select('episodes.*', 'feeds.thumbnail_30')
             ->get();
     }
 

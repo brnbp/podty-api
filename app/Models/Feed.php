@@ -22,9 +22,6 @@ class Feed extends Model
     /** @var bool $has_content */
     public $has_content = false;
 
-    /** @var string $table nome da tabela referente a model */
-    protected $table = 'feeds';
-
     protected $fillable = [
         'url', 'name', 'thumbnail_30', 'thumbnail_60', 'thumbnail_100', 'thumbnail_600'
     ];
