@@ -50,7 +50,6 @@ class QueueController extends Controller
     public function failed()
     {
         $data = DB::table('failed_jobs')
-            ->select($this->select_fields)
             ->take(10)
             ->get();
 
