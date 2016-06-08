@@ -13,10 +13,16 @@ Route::get(
     'FeedController@latest'
 );
 
-// search for podcast main informations
+// search for podcast main informations from name
 Route::get(
     $version . '/feeds/name/{name}',
     'FeedController@retrieve'
+);
+
+// search for podcast main informations from feedId
+Route::get(
+    $version . '/feeds/id/{feedId}',
+    'FeedController@retrieveById'
 );
 
 // search for episodes from podcast id
