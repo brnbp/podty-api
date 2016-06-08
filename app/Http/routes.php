@@ -62,7 +62,7 @@ Route::post(
 
 Route::get($version . '/queue', 'QueueController@index');
 Route::delete($version . '/queue/{id}', 'QueueController@destroy');
-Route::get($version . '/queue/reserved', 'QueueController@reserved');
+Route::get($version . '/queue/failed', 'QueueController@failed');
 
 
 /*

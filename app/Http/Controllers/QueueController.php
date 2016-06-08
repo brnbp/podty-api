@@ -47,11 +47,10 @@ class QueueController extends Controller
     /**
      * Display jobs that are reserved to process
      */
-    public function reserved()
+    public function failed()
     {
-        $data = DB::table(self::TABLE_NAME)
+        $data = DB::table('failed_jobs')
             ->select($this->select_fields)
-            ->where('reserved', self::RESERVED)
             ->take(10)
             ->get();
 
