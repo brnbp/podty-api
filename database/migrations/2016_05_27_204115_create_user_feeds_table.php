@@ -14,8 +14,10 @@ class CreateUserFeedsTable extends Migration
     {
         Schema::create('user_feeds', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('feed_id')->unique();
+            $table->integer('user_id')->unsigned();
+            $table->integer('feed_id')->unsigned()->unique();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('feed_id')->references('id')->on('feeds');
         });
     }
 
