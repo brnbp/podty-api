@@ -53,7 +53,11 @@ class QueueController extends Controller
             ->take(10)
             ->get();
 
-        return $this->formatResponse($data);
+        if (!$data) {
+            return [];
+        }
+
+        return $data;
     }
 
     /**
