@@ -16,7 +16,7 @@ use PhpSpec\Exception\Fracture\PropertyNotFoundException;
  */
 class Episode extends Model
 {
-    protected $timestamps  = false;
+    public $timestamps  = false;
 
     /**
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
