@@ -32,6 +32,11 @@ class FeedController extends Controller
             $this->create($name);
     }
 
+    public function retrieveById($id)
+    {
+        return Feed::where('id', $id)->get();
+    }
+
     /**
      * Cria feed e adiciona em fila a importação de episodios
      * @param string $name nome do podcast a ser criado
