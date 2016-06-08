@@ -7,3 +7,8 @@ Homestead.json
 # Laravel 5 & Lumen specific
 bootstrap/cache/
 storage/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
