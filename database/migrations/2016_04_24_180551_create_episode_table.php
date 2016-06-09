@@ -22,6 +22,7 @@ class CreateEpisodeTable extends Migration
             $table->string('media_url')->unique();
             $table->integer('media_length');
             $table->string('media_type');
+            $table->timestamps();
             $table->index('feed_id');
             $table->foreign('feed_id')->references('id')->on('feeds');
         });
