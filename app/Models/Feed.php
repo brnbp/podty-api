@@ -109,20 +109,10 @@ class Feed extends Model
     }
 
     /**
-     * TODO Mover metodo para uma classe handler
-     * que envia para queue e possa ser usado em qualquer
-     * lugar
-     */
-    public function sendToQueue()
-    {
-        $this->searchForNewEpisodes();
-    }
-
-    /**
      * Utilizado em Cron
      * Coloca na fila todos os feeds existentes para busca de novos episodios
      */
-    private function searchForNewEpisodes()
+    public function searchForNewEpisodes()
     {
         $feeds = self::all(['url', 'id'])->toArray();
         foreach ($feeds as $feed) {

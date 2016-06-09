@@ -2,9 +2,8 @@
 
 namespace App\Console;
 
-use App\Models\Episode;
 use App\Models\Feed;
-use App\Services\Filter;
+use App\Services\Queue;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -20,7 +19,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule
             ->call(function(){
-                (new Feed)->sendToQueue();
+                (new Queue)->send();
                 (new Feed())->updateLastEpisodeAt();
             })
             ->hourly()->name('default-cron')->withoutOverlapping();
