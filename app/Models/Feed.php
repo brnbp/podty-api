@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Jobs\RegisterEpisodesFeed;
+use App\Jobs\UpdateLastEpisodeFeed;
 use App\Services\Filter;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -109,17 +110,18 @@ class Feed extends Model
     }
 
     /**
-     * Utilizado em Cron
-     * Coloca na fila todos os feeds existentes para busca de novos episodios
+     * Coloca na fila todos os feeds existentes
+     * para busca de novos episodios
      */
-    public function searchForNewEpisodes()
+    public function cronSearchForNewEpisodes()
     {
         $feeds = self::all(['url', 'id'])->toArray();
         foreach ($feeds as $feed) {
             $this->dispatch(new RegisterEpisodesFeed($feed));
         }
-    }
 
+        return $this;
+    }
 
     /**
      * Busca pelos feeds que recentemente publicaram novos episodios
@@ -133,22 +135,14 @@ class Feed extends Model
     }
 
     /**
-     * Atualiza em feeds a data do ultimo episodio lançado
+     * Atualiza a data do ultimo episodio lançado para cada feed
+     * registrado no sistema
      */
-    public function updateLastEpisodeAt()
+    public function cronUpdateLastEpisodeAt()
     {
-        $Filter = new Filter();
-        $Filter->setLimit(10);
+        $this->dispatch(new UpdateLastEpisodeFeed);
 
-        $Episodes = ((new Episode())->getLatests($Filter));
-        $Episodes
-            ->unique('feed_id')
-            ->map(function($episode){
-                self::where('id', $episode->feed_id)
-                    ->update([
-                        'last_episode_at' => $episode->published_date
-                    ]);
-            });
+        return $this;
     }
 
     /**
