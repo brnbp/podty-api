@@ -8,6 +8,11 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class RegisterEpisodesFeed
+ * Coloca na fila todos os feeds existentes para busca de novos episodios
+ * @package App\Jobs
+ */
 class RegisterEpisodesFeed extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
@@ -19,9 +24,7 @@ class RegisterEpisodesFeed extends Job implements ShouldQueue
     public $url;
 
     /**
-     * RegisterEpisodesFeed constructor.
-     *
-     * @param array $feed
+     * @param array $feed array com $feed['id'] and $feed['url'] indices
      */
     public function __construct(array $feed)
     {
@@ -30,8 +33,7 @@ class RegisterEpisodesFeed extends Job implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
+     * Busca por novos episodios a partir de feed
      * @param Episode $episode
      */
     public function handle(Episode $episode)
