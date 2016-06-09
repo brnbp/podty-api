@@ -95,16 +95,7 @@ class Episode extends Model
             ->get()
             ->toArray();
     }
-
-    /**
-     * Utilizado em Cron
-     * Coloca na fila todos os feeds existentes para busca de novos episodios
-     */
-    public function getNew()
-    {
-        (new Feed())->sendToQueueUpdate(Feed::all(['url', 'id'])->toArray());
-    }
-
+    
     /**
      * Valida se os campos de media existem, senao cria valores padrão
      * @param $attributes

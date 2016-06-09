@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule
             ->call(function(){
-                (new Episode())->getNew();
+                (new Feed)->sendToQueue();
                 (new Feed())->updateLastEpisodeAt();
             })
             ->hourly()->name('default-cron')->withoutOverlapping();
