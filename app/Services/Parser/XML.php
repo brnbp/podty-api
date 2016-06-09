@@ -5,6 +5,7 @@ namespace App\Services\Parser;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use Http\Client\Exception\RequestException;
 
 /**
@@ -63,7 +64,10 @@ class XML
             return false;
         } catch (RequestException $Exception) {
             return false;
+        } catch (ServerException $Exception) {
+            return false;
         }
+
         return $response->getBody()->getContents();
     }
 
