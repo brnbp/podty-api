@@ -21,7 +21,7 @@ class EpisodeController extends Controller
     {
         $this->filter = $filter;
         if ($this->filter->validateFilters() === false) {
-            return (new Response())->setStatusCode(400);
+            return (new Response)->setStatusCode(400);
         }
     }
 
@@ -33,12 +33,12 @@ class EpisodeController extends Controller
     public function retrieve($feedId)
     {
         return
-            (new Episode())->getByFeedId($feedId, $this->filter) ?:
-                (new Response())->setStatusCode(404);
+            (new Episode)->getByFeedId($feedId, $this->filter) ?:
+                (new Response)->setStatusCode(404);
     }
 
     public function latest()
     {
-        return (new Episode())->getLatests($this->filter);
+        return (new Episode)->getLatests($this->filter);
     }
 }

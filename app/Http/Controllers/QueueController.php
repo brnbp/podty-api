@@ -29,10 +29,10 @@ class QueueController extends Controller
      */
     public function index()
     {
-        $Filter = new Filter();
+        $Filter = new Filter;
 
         if ($Filter->validateFilters() === false) {
-            return (new Response())->setStatusCode(400);
+            return (new Response)->setStatusCode(400);
         }
 
         $data = DB::table(self::TABLE_NAME)
@@ -74,7 +74,7 @@ class QueueController extends Controller
             ])
             ->delete();
 
-        return (new Response())->setStatusCode($deleted ? 200 : 400);
+        return (new Response)->setStatusCode($deleted ? 200 : 400);
     }
 
     /**

@@ -20,7 +20,7 @@ class FeedController extends Controller
 
     public function __construct()
     {
-        $this->Feed = new Feed();
+        $this->Feed = new Feed;
     }
 
     public function retrieve($name)
@@ -45,18 +45,18 @@ class FeedController extends Controller
     private function create($name)
     {
         if ($this->createFeeds($name) == false) {
-            return (new Response())->setStatusCode(404);
+            return (new Response)->setStatusCode(404);
         }
 
         $feed = $this->Feed->getContent();
 
         if (empty($feed)) {
-            return (new Response())->setStatusCode(404);
+            return (new Response)->setStatusCode(404);
         }
 
         $this->Feed->sendToQueueUpdate([$feed]);
 
-        return (new Response())->setStatusCode(202);
+        return (new Response)->setStatusCode(202);
     }
 
     /**
@@ -66,8 +66,7 @@ class FeedController extends Controller
      */
     private function createFeeds($name)
     {
-        $results = (new ItunesFinder($name))
-            ->all();
+        $results = (new ItunesFinder($name))->all();
 
         if ($results == false) {
             return false;
@@ -80,6 +79,6 @@ class FeedController extends Controller
 
     public function latest()
     {
-        return (new Feed())->getLatestsUpdated();
+        return (new Feed)->getLatestsUpdated();
     }
 }
