@@ -20,6 +20,14 @@ class Episode extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     /**
+     * Define relação com a model Feeds, sendo que Episode pertence a um feed
+     */
+    public function feed()
+    {
+        $this->belongsTo(Feed::class);
+    }
+
+    /**
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
      * @param integer $feed_id id do feed
      * @param string $feed_url url do feed
@@ -95,7 +103,7 @@ class Episode extends Model
             ->get()
             ->toArray();
     }
-    
+
     /**
      * Valida se os campos de media existem, senao cria valores padrão
      * @param $attributes
