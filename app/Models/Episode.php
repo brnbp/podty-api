@@ -42,10 +42,7 @@ class Episode extends Model
             return false;
         }
 
-        $this->insert([
-            'feed_id' => $feed_id,
-            'episodes' => $content['channel']['item']
-        ]);
+        $this->insert($feed_id, $content['channel']['item']);
 
         (new Feed())->updateTotalEpisodes($feed_id);
 
@@ -53,16 +50,17 @@ class Episode extends Model
     }
 
     /**
-     * Armazena os episodios no branco de dados
-     * @param array $content array de episodios para salvar no banco
+     * Armazena os episodios no banco
+     * @param integer $feedId id do feed
+     * @param array $episodes array de episodios
      */
-    private function insert(array $content)
+    private function insert($feedId, array $episodes)
     {
-        foreach (array_reverse($content['episodes']) as $episode) {
+        foreach (array_reverse($episodes) as $episode) {
             $this->validateMediaFields($episode['enclosure']['@attributes']);
 
             (new EpisodeEntity())
-                ->setFeedId($content['feed_id'])
+                ->setFeedId($feedId)
                 ->setTitle($episode['title'])
                 ->setLink($this->getDefault($episode, 'link'))
                 ->setPublishedDate($this->getDefault($episode, 'pubDate'))
