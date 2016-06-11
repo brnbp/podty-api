@@ -15,11 +15,15 @@ class Queue
             ->cronSearchForNewEpisodes($feeds);
     }
 
+    public function updateLastEpisodeAt()
+    {
+        (new Feed)->cronUpdateLastEpisodeAt();
+    }
+
     public function send()
     {
-        (new Feed)
-            ->cronSearchForNewEpisodes()
-            ->cronUpdateLastEpisodeAt();
+        $this->searchNewEpisodes();
+        $this->updateLastEpisodeAt();
     }
 
 }
