@@ -34,7 +34,8 @@ class FeedController extends Controller
 
     public function retrieveById($id)
     {
-        return Feed::where('id', $id)->get();
+        $feed = Feed::where('id', $id)->get();
+        return  $feed->count() ? $feed : (new Response)->setStatusCode(404);
     }
 
     /**
@@ -56,7 +57,7 @@ class FeedController extends Controller
 
         $this->Feed->sendToQueueUpdate([$feed]);
 
-        return (new Response)->setStatusCode(202);
+        return (new Response())->setStatusCode(202);
     }
 
     /**
@@ -66,7 +67,8 @@ class FeedController extends Controller
      */
     private function createFeeds($name)
     {
-        $results = (new ItunesFinder($name))->all();
+        $results = (new ItunesFinder($name))
+            ->all();
 
         if ($results == false) {
             return false;
@@ -79,6 +81,6 @@ class FeedController extends Controller
 
     public function latest()
     {
-        return (new Feed)->getLatestsUpdated();
+        return (new Feed())->getLatestsUpdated();
     }
 }
