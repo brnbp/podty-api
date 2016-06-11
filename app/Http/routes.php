@@ -1,5 +1,8 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header( 'Access-Control-Allow-Headers: Authorization, Content-Type' );
+
 $version = '/v1';
 Route::get('/', function() { return view('welcome'); });
 Route::get(
