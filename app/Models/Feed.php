@@ -113,9 +113,12 @@ class Feed extends Model
      * Coloca na fila todos os feeds existentes
      * para busca de novos episodios
      */
-    public function cronSearchForNewEpisodes()
+    public function cronSearchForNewEpisodes($feeds = null)
     {
-        $feeds = self::all(['url', 'id'])->toArray();
+        if (!$feeds) {
+            $feeds = self::all(['url', 'id'])->toArray();
+        }
+
         foreach ($feeds as $feed) {
             $this->dispatch(new RegisterEpisodesFeed($feed));
         }

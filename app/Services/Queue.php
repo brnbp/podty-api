@@ -9,6 +9,12 @@ class Queue
 {
     use DispatchesJobs;
 
+    public function searchNewEpisodes($feeds = null)
+    {
+        (new Feed)
+            ->cronSearchForNewEpisodes($feeds);
+    }
+
     public function send()
     {
         (new Feed)

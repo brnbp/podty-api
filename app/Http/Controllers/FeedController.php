@@ -6,6 +6,7 @@ use App\Jobs\SendLogToWarehouse;
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Services\Logger\Warehouse;
+use App\Services\Queue;
 use Illuminate\Http\Response;
 use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
@@ -55,7 +56,7 @@ class FeedController extends Controller
             return (new Response)->setStatusCode(404);
         }
 
-        $this->Feed->sendToQueueUpdate([$feed]);
+        (new Queue)->searchNewEpisodes([$feed]);
 
         return (new Response())->setStatusCode(202);
     }
