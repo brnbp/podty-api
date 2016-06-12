@@ -56,8 +56,11 @@ class Episode extends Model
      */
     private function insert($feedId, array $episodes)
     {
+        //$feed = Feed::find($feedId);
         foreach (array_reverse($episodes) as $episode) {
-            $this->validateMediaFields($episode['enclosure']['@attributes']);
+            if (!$this->validateMediaFields($episode['enclosure']['@attributes'])) {
+                continue;
+            }
 
             (new EpisodeEntity())
                 ->setFeedId($feedId)
@@ -70,6 +73,43 @@ class Episode extends Model
                 ->setMediaType($episode['enclosure']['@attributes']['type'] ?: '')
                 ->persist();
         }
+    }
+
+    /**
+     * Valida se os campos de media existem, senao cria valores padrão
+     * @param $attributes
+     * @return mixed
+     */
+    private function validateMediaFields(&$attributes)
+    {
+        if (!key_exists('url', $attributes)) {
+            return false;
+        }
+
+        if (!$this->validateMp3($attributes['url'])) {
+            return false;
+        }
+
+        if (!key_exists('type', $attributes)) {
+            $attributes['type'] = 'audio/mpeg';
+        }
+
+        if (!key_exists('length', $attributes)) {
+            $attributes['length'] = 0;
+        }
+        return $attributes;
+    }
+
+    private function validateMp3(&$url)
+    {
+        if (substr($url, -4, 1) != '.') {
+            $filtered = preg_replace('/\?.*/', '', $url);
+            if (substr($filtered, -4, 1) != '.') {
+                return false;
+            }
+        }
+
+        return $url;
     }
 
     /**
@@ -103,27 +143,6 @@ class Episode extends Model
     }
 
     /**
-     * Valida se os campos de media existem, senao cria valores padrão
-     * @param $attributes
-     * @return mixed
-     */
-    private function validateMediaFields(&$attributes)
-    {
-        if (!key_exists('url', $attributes)) {
-            $attributes['url'] = 'empty';
-        }
-
-        if (!key_exists('type', $attributes)) {
-            $attributes['type'] = 'audio/mpeg';
-        }
-
-        if (!key_exists('length', $attributes)) {
-            $attributes['length'] = 0;
-        }
-        return $attributes;
-    }
-
-    /**
      * Verifica se existe episodio a partir de mediaUrl property
      * @param string $mediaUrl opcional, caso nao tenha sido setado na classe ainda
      * @return boolean retorna true se existe e falso caso nao exista
@@ -154,7 +173,7 @@ class Episode extends Model
             ->join('feeds', 'episodes.feed_id', '=', 'feeds.id')
             ->skip($filter->offset)
             ->orderBy('published_date', $filter->order)
-            ->select('episodes.*', 'feeds.thumbnail_30')
+            ->select('episodes.*', 'feeds.name', 'feeds.thumbnail_30', 'feeds.thumbnail_60')
             ->get();
     }
 
