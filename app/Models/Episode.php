@@ -82,6 +82,10 @@ class Episode extends Model
      */
     private function validateMediaFields(&$attributes)
     {
+        if (!is_array($attributes)) {
+            return false;
+        }
+
         if (!key_exists('url', $attributes)) {
             return false;
         }
