@@ -103,8 +103,8 @@ class Episode extends Model
     private function validateMp3(&$url)
     {
         if (substr($url, -4, 1) != '.') {
-            $filtered = preg_replace('/\?.*/', '', $url);
-            if (substr($filtered, -4, 1) != '.') {
+            $url = preg_replace('/\?.*/', '', $url);
+            if (substr($url, -4, 1) != '.') {
                 return false;
             }
         }
