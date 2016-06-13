@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bruno2546
- * Date: 09/05/16
- * Time: 21:19
- */
-
 namespace App\Services;
 
 use Illuminate\Http\Request;
@@ -58,7 +51,7 @@ class Filter
         if (empty($filters)) {
             return false;
         }
-        
+
         foreach($filters as $name => $value) {
             $this->$name = $value;
         }
@@ -76,6 +69,9 @@ class Filter
         $master_filter = [];
         foreach ($parameter as $filters) {
             $filter = explode('=', $filters);
+            if (count($filter) != 2) {
+                break;
+            }
             $master_filter[$filter[0]] = $filter[1];
         }
 
