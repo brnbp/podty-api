@@ -21,6 +21,9 @@ class Filter
     /** @var string $order*/
     public $order = 'DESC';
 
+    /** @var string $term */
+    public $term;
+
     public function validateFilters()
     {
         if (!Request()->getQueryString()) {
@@ -55,7 +58,7 @@ class Filter
         if (empty($filters)) {
             return false;
         }
-
+        
         foreach($filters as $name => $value) {
             $this->$name = $value;
         }
@@ -89,7 +92,8 @@ class Filter
         $filters_allowed = array_flip([
             'limit',
             'offset',
-            'order'
+            'order',
+            'term'
         ]);
 
         $ret = array_intersect_key($array, $filters_allowed);

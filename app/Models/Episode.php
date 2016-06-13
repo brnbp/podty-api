@@ -142,6 +142,7 @@ class Episode extends Model
             ->skip($filter->offset)
             ->take($filter->limit)
             ->orderBy('id', $filter->order)
+            ->where('title', 'LIKE', "%$filter->term%")
             ->get()
             ->toArray();
     }
