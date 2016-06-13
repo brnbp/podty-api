@@ -23,40 +23,76 @@ class DatabaseSeeder extends Seeder
     {
         $feeds = [
             [
-                'name' => 'nerdcast',
-                'url' => 'http://www.podcast.com.br/feed',
-                'thumbnail_30' => 'www.podcast.com.br/30/cover_feed.jpg',
-                'thumbnail_60' => 'www.podcast.com.br/60/cover_feed.jpg',
-                'thumbnail_100' => 'www.podcast.com.br/100/cover_feed.jpg',
-                'thumbnail_600' => 'www.podcast.com.br/600/cover_feed.jpg',
-                'created_at' => '2016-05-20 16:30:01',
-                'updated_at' => '2016-06-02 19:10:00',
-                'last_episode_at' => '2016-06-01 19:10:00',
-                'total_episodes' => 550
+                'name' => 'Nerdcast ? Jovem Nerd',
+                'url' => 'https://jovemnerd.com.br/categoria/nerdcast/feed/',
+                'thumbnail_30' => 'http://is4.mzstatic.com/image/thumb/Music/v4/53/c4/c2/53c4c2b6-60f4-96b7-42d7-f8068b8b4323/source/30x30bb.jpg',
+                'thumbnail_60' => 'http://is4.mzstatic.com/image/thumb/Music/v4/53/c4/c2/53c4c2b6-60f4-96b7-42d7-f8068b8b4323/source/60x60bb.jpg',
+                'thumbnail_100' => 'http://is4.mzstatic.com/image/thumb/Music/v4/53/c4/c2/53c4c2b6-60f4-96b7-42d7-f8068b8b4323/source/100x100bb.jpg',
+                'thumbnail_600' => 'http://is4.mzstatic.com/image/thumb/Music/v4/53/c4/c2/53c4c2b6-60f4-96b7-42d7-f8068b8b4323/source/100x100bb.jpg',
+                'created_at' => '2016-06-08 03:17:42',
+                'updated_at' => '2016-06-13 06:02:43',
+                'last_episode_at' => '2016-06-10 13:30:22',
+                'total_episodes' => 559
             ],
             [
-                'name' => 'braincast',
-                'url' => 'http://www.podcast.com.br/feed2',
-                'thumbnail_30' => 'www.podcast.com.br/30/cover_feed.jpg',
-                'thumbnail_60' => 'www.podcast.com.br/60/cover_feed.jpg',
-                'thumbnail_100' => 'www.podcast.com.br/100/cover_feed.jpg',
-                'thumbnail_600' => 'www.podcast.com.br/600/cover_feed.jpg',
-                'created_at' => '2016-04-20 16:30:01',
-                'updated_at' => '2016-06-01 19:10:00',
-                'last_episode_at' => '2016-05-15 11:23:00',
-                'total_episodes' => 190
+                'name' => 'Braincast',
+                'url' => 'http://feeds.feedburner.com/braincastmp3',
+                'thumbnail_30' => 'http://is2.mzstatic.com/image/thumb/Music49/v4/db/ac/76/dbac7679-d76d-9283-7d29-9d1a40f923b1/source/30x30bb.jpg',
+                'thumbnail_60' => 'http://is2.mzstatic.com/image/thumb/Music49/v4/db/ac/76/dbac7679-d76d-9283-7d29-9d1a40f923b1/source/60x60bb.jpg',
+                'thumbnail_100' => 'http://is2.mzstatic.com/image/thumb/Music49/v4/db/ac/76/dbac7679-d76d-9283-7d29-9d1a40f923b1/source/60x60bb.jpg',
+                'thumbnail_600' => 'http://is2.mzstatic.com/image/thumb/Music49/v4/db/ac/76/dbac7679-d76d-9283-7d29-9d1a40f923b1/source/60x60bb.jpg',
+                'created_at' => '2016-06-08 03:18:33',
+                'updated_at' => '2016-06-13 06:02:17',
+                'last_episode_at' => '2016-06-09 20:04:38',
+                'total_episodes' => 181
             ],
             [
-                'name' => 'devnaestrada',
-                'url' => 'http://www.podcast.com.br/feed3',
-                'thumbnail_30' => 'www.podcast.com.br/30/cover_feed.jpg',
-                'thumbnail_60' => 'www.podcast.com.br/60/cover_feed.jpg',
-                'thumbnail_100' => 'www.podcast.com.br/100/cover_feed.jpg',
-                'thumbnail_600' => 'www.podcast.com.br/600/cover_feed.jpg',
-                'created_at' => '2016-05-30 16:30:01',
-                'updated_at' => '2016-06-01 19:10:00',
-                'last_episode_at' => '2016-05-27 00:12:04',
-                'total_episodes' => 55
+                'name' => 'DevNaEstrada - desenvolvimento web',
+                'url' => 'http://devnaestrada.com.br/feed.xml',
+                'thumbnail_30' => 'http://is5.mzstatic.com/image/thumb/Music5/v4/18/1d/65/181d655f-9161-8a4f-65e4-75ec9587b709/source/30x30bb.jpg',
+                'thumbnail_60' => 'http://is5.mzstatic.com/image/thumb/Music5/v4/18/1d/65/181d655f-9161-8a4f-65e4-75ec9587b709/source/60x60bb.jpg',
+                'thumbnail_100' => 'http://is5.mzstatic.com/image/thumb/Music5/v4/18/1d/65/181d655f-9161-8a4f-65e4-75ec9587b709/source/60x60bb.jpg',
+                'thumbnail_600' => 'http://is5.mzstatic.com/image/thumb/Music5/v4/18/1d/65/181d655f-9161-8a4f-65e4-75ec9587b709/source/60x60bb.jpg',
+                'created_at' => '2016-06-08 03:16:43',
+                'updated_at' => '2016-06-13 06:02:15',
+                'last_episode_at' => '2016-06-10 00:00:00',
+                'total_episodes' => 58
+            ],
+            [
+                'name' => 'CodeNewbie',
+                'url' => 'http://feeds.podtrac.com/q8s8ba9YtM6r',
+                'thumbnail_30' => 'http://is1.mzstatic.com/image/thumb/Music5/v4/dd/4f/96/dd4f9671-eb88-655f-3b3c-495552912e52/source/30x30bb.jpg',
+                'thumbnail_60' => 'http://is1.mzstatic.com/image/thumb/Music5/v4/dd/4f/96/dd4f9671-eb88-655f-3b3c-495552912e52/source/60x60bb.jpg',
+                'thumbnail_100' => 'http://is1.mzstatic.com/image/thumb/Music5/v4/dd/4f/96/dd4f9671-eb88-655f-3b3c-495552912e52/source/60x60bb.jpg',
+                'thumbnail_600' => 'http://is1.mzstatic.com/image/thumb/Music5/v4/dd/4f/96/dd4f9671-eb88-655f-3b3c-495552912e52/source/60x60bb.jpg',
+                'created_at' => '2016-06-08 03:17:23',
+                'updated_at' => '2016-06-13 06:02:43',
+                'last_episode_at' => '2016-06-13 04:14:07',
+                'total_episodes' => 92
+            ],
+            [
+                'name' => 'Mamilos',
+                'url' => 'http://feeds.feedburner.com/mamilos',
+                'thumbnail_30' => 'http://is3.mzstatic.com/image/thumb/Music69/v4/f4/e4/24/f4e424c7-0e34-7e38-4440-9beb8f6b975b/source/30x30bb.jpg',
+                'thumbnail_60' => 'http://is3.mzstatic.com/image/thumb/Music69/v4/f4/e4/24/f4e424c7-0e34-7e38-4440-9beb8f6b975b/source/60x60bb.jpg',
+                'thumbnail_100' => 'http://is3.mzstatic.com/image/thumb/Music69/v4/f4/e4/24/f4e424c7-0e34-7e38-4440-9beb8f6b975b/source/60x60bb.jpg',
+                'thumbnail_600' => 'http://is3.mzstatic.com/image/thumb/Music69/v4/f4/e4/24/f4e424c7-0e34-7e38-4440-9beb8f6b975b/source/60x60bb.jpg',
+                'created_at' => '2016-06-08 03:18:26',
+                'updated_at' => '2016-06-13 06:02:43',
+                'last_episode_at' => '2016-06-10 20:56:04',
+                'total_episodes' => 73
+            ],
+            [
+                'name' => 'Mupoca',
+                'url' => 'http://feeds.soundcloud.com/users/soundcloud:users:85493181/sounds.rss',
+                'thumbnail_30' => 'http://is4.mzstatic.com/image/thumb/Music3/v4/8a/57/52/8a5752f9-1c4e-bd82-917d-4d4b7d340ee4/source/30x30bb.jpg',
+                'thumbnail_60' => 'http://is4.mzstatic.com/image/thumb/Music3/v4/8a/57/52/8a5752f9-1c4e-bd82-917d-4d4b7d340ee4/source/60x60bb.jpg',
+                'thumbnail_100' => 'http://is4.mzstatic.com/image/thumb/Music3/v4/8a/57/52/8a5752f9-1c4e-bd82-917d-4d4b7d340ee4/source/60x60bb.jpg',
+                'thumbnail_600' => 'http://is4.mzstatic.com/image/thumb/Music3/v4/8a/57/52/8a5752f9-1c4e-bd82-917d-4d4b7d340ee4/source/60x60bb.jpg',
+                'created_at' => '2016-06-08 03:18:29',
+                'updated_at' => '2016-06-13 06:02:31',
+                'last_episode_at' => '2016-06-02 22:59:55',
+                'total_episodes' => 48
             ]
         ];
 
@@ -70,124 +106,372 @@ class DatabaseSeeder extends Seeder
         $episodes = [
             [
                 'feed_id' => 1,
-                'title' => '01 - his prima eligendi',
+                'title' => '01 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0101/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'consequat elit nisi non magna. Aliquam erat volutpat. Morbi quis tincidunt risus, nec sagittis elit. Suspendisse malesuada hendrerit',
+                'published_date' => '2016-05-20 10:01:43',
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0101/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
             [
                 'feed_id' => 1,
-                'title' => '02 - his prima eligendi',
+                'title' => '02 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0102/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Vivamus nec tincidunt neque. Mauris ornare diam nec urna dapibus, quis finibus nisi condimentum. Integer lacinia ac justo id iaculis.',
+                'published_date' => '2016-05-27 12:15:17',
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0102/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
             [
                 'feed_id' => 1,
-                'title' => '03 - his prima eligendi',
+                'title' => '03 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0103/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Integer fringilla erat risus, et facilisis dui vehicula vitae. Cras tincidunt rutrum magna. Aenean convallis sem ut quam lobortis, sed facilisis lectus commodo.',
+                'published_date' => '2016-05-27 12:21:23',
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0103/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
+
             ],
             [
                 'feed_id' => 1,
-                'title' => '04 - his prima eligendi',
+                'title' => '04 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0104/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Nulla eget mauris id lacus tristique efficitur ut ac sem. Duis vulputate eu neque at pretium. Pellentesque vestibulum mollis massa id imperdiet.',
+                'published_date' => '2016-06-03 13:20:26',
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0104/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
             [
+
                 'feed_id' => 1,
-                'title' => '05 - his prima eligendi',
+                'title' => '05 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0105/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Maecenas sem nisi, venenatis eget convallis id, mattis sed dolor. Sed viverra ante id nisl consequat aliquet. Morbi commodo vel ligula non viverra.',
+                'published_date' => '2016-06-03 13:25:14',
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0105/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
             [
+
                 'feed_id' => 1,
-                'title' => '06 - his prima eligendi',
+                'title' => '06 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0106/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Quisque sit amet dui dui. Integer commodo, nisl vel dignissim scelerisque, augue mi dictum nunc, vitae condimentum mauris nibh volutpat diam.',
+                'published_date' => '2016-06-10 13:30:22',
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0106/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
             [
                 'feed_id' => 2,
-                'title' => '01 - his prima eligendi',
+                'title' => '01 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0201/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Donec semper tempor est, in vehicula tellus. Curabitur et eros ut mi pulvinar euismod quis ut nisi. Aliquam erat volutpat.',
+                'published_date' => "2016-05-06 08:21:17",
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0201/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
             [
+
                 'feed_id' => 2,
-                'title' => '02 - his prima eligendi',
+                'title' => '02 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0202/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Curabitur ut massa sit amet ante consequat tincidunt quis non dui. Aliquam vitae scelerisque sem, eu blandit purus.',
+                'published_date' => "2016-05-13 03:35:42",
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0202/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
             [
-                'feed_id' => 1,
-                'title' => '07 - his prima eligendi',
-                'link' => 'podcast.com.br/0107/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Fusce ante turpis, laoreet eu consectetur vestibulum, commodo nec nulla. Nulla tincidunt lectus vitae mauris laoreet, ultricies convallis eros pulvinar.',
-                'media_url' => 'podcast.com.br/0107/his-prima-eligendi.mp3',
-                'media_length' => '3423',
-                'media_type' => 'audio/mpeg'
-            ],
-            [
-                'feed_id' => 3,
-                'title' => '01 - his prima eligendi',
-                'link' => 'podcast.com.br/0301/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Nunc malesuada tempus lectus ut euismod. Donec efficitur lacus condimentum lacus dignissim tempus. Cras iaculis viverra felis et tempor.',
-                'media_url' => 'podcast.com.br/0301/his-prima-eligendi.mp3',
-                'media_length' => '3423',
-                'media_type' => 'audio/mpeg'
-            ],
-            [
+
                 'feed_id' => 2,
-                'title' => '03 - his prima eligendi',
+                'title' => '03 - ' . Faker\Provider\Lorem::sentence(3),
                 'link' => 'podcast.com.br/0203/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Aenean convallis sem ut quam lobortis, sed facilisis lectus commodo. Mauris dictum quam et est posuere venenatis. Mauris interdum libero imperdiet, porttitor nibh vitae, feugiat nulla.',
+                'published_date' => "2016-05-19 19:15:31",
+                'content' => Faker\Provider\Lorem::sentence(17),
                 'media_url' => 'podcast.com.br/0203/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+
+                'feed_id' => 2,
+                'title' => '04 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0204/his-prima-eligendi.html',
+                'published_date' => "2016-05-26 23:01:00",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0204/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+
+                'feed_id' => 2,
+                'title' => '05 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0205/his-prima-eligendi.html',
+                'published_date' => "2016-06-03 02:11:04",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0205/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+
+                'feed_id' => 2,
+                'title' => '06 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0206/his-prima-eligendi.html',
+                'published_date' => "2016-06-09 20:04:38",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0206/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
             [
                 'feed_id' => 3,
-                'title' => '02 - his prima eligendi',
-                'link' => 'podcast.com.br/0302/his-prima-eligendi.html',
-                'published_date' => '0000-00-00 00:00:00',
-                'content' => 'Praesent id urna eu est facilisis tempor. Praesent bibendum efficitur nisi, ac scelerisque augue molestie eu. Nullam viverra nisi sed tortor molestie efficitur.',
-                'media_url' => 'podcast.com.br/0302/his-prima-eligendi.mp3',
-                'media_length' => '3423',
+                'title' => '01 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0301/his-prima-eligendi.html',
+                'published_date' => "2016-05-06 00:00:00",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0301/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
                 'media_type' => 'audio/mpeg'
             ],
+            [
+                'feed_id' => 3,
+                'title' => '02 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0302/his-prima-eligendi.html',
+                'published_date' => "2016-05-13 00:00:00",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0302/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 3,
+                'title' => '03 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0303/his-prima-eligendi.html',
+                'published_date' => "2016-05-20 00:00:00",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0303/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 3,
+                'title' => '04 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0304/his-prima-eligendi.html',
+                'published_date' => "2016-05-27 00:00:00",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0304/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 3,
+                'title' => '05 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0305/his-prima-eligendi.html',
+                'published_date' => "2016-06-03 00:00:00",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0305/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 3,
+                'title' => '06 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0306/his-prima-eligendi.html',
+                'published_date' => "2016-06-10 00:00:00",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0306/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 4,
+                'title' => '01 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0401/his-prima-eligendi.html',
+                'published_date' => "2016-05-09 06:03:59",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0401/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 4,
+                'title' => '02 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0402/his-prima-eligendi.html',
+                'published_date' => "2016-05-16 04:27:11",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0402/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 4,
+                'title' => '03 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0403/his-prima-eligendi.html',
+                'published_date' => "2016-05-23 05:39:27",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0403/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 4,
+                'title' => '04 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0404/his-prima-eligendi.html',
+                'published_date' => "2016-05-30 07:14:15",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0404/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 4,
+                'title' => '05 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0405/his-prima-eligendi.html',
+                'published_date' => "2016-06-06 06:49:57",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0405/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 4,
+                'title' => '06 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0406/his-prima-eligendi.html',
+                'published_date' => "2016-06-13 04:14:07",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0406/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 5,
+                'title' => '01 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0501/his-prima-eligendi.html',
+                'published_date' => "2016-05-14 12:41:00",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0501/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 5,
+                'title' => '02 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0502/his-prima-eligendi.html',
+                'published_date' => "2016-05-20 18:38:26",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0502/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 5,
+                'title' => '03 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0503/his-prima-eligendi.html',
+                'published_date' => "2016-05-24 16:10:16",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0503/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 5,
+                'title' => '04 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0504/his-prima-eligendi.html',
+                'published_date' => "2016-05-27 16:37:25",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0504/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 5,
+                'title' => '05 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0505/his-prima-eligendi.html',
+                'published_date' => "2016-06-04 13:29:24",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0505/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 5,
+                'title' => '06 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0506/his-prima-eligendi.html',
+                'published_date' => "2016-06-10 20:56:04",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0506/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 6,
+                'title' => '01 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0601/his-prima-eligendi.html',
+                'published_date' => "2016-03-20 19:38:05",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0601/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 6,
+                'title' => '02 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0602/his-prima-eligendi.html',
+                'published_date' => "2016-03-31 22:14:07",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0602/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 6,
+                'title' => '03 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0603/his-prima-eligendi.html',
+                'published_date' => "2016-04-12 04:12:54",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0603/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 6,
+                'title' => '04 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0604/his-prima-eligendi.html',
+                'published_date' => "2016-04-28 14:37:06",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0604/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 6,
+                'title' => '05 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0605/his-prima-eligendi.html',
+                'published_date' => "2016-05-19 20:31:20",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0605/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ],
+            [
+                'feed_id' => 6,
+                'title' => '06 - ' . Faker\Provider\Lorem::sentence(3),
+                'link' => 'podcast.com.br/0606/his-prima-eligendi.html',
+                'published_date' => "2016-06-02 22:59:55",
+                'content' => Faker\Provider\Lorem::sentence(17),
+                'media_url' => 'podcast.com.br/0606/his-prima-eligendi.mp3',
+                'media_length' => Faker\Provider\Lorem::numberBetween(34534, 78678),
+                'media_type' => 'audio/mpeg'
+            ]
         ];
 
         foreach ($episodes as $episode) {
@@ -250,10 +534,18 @@ class DatabaseSeeder extends Seeder
     public function seedUsers()
     {
         DB::table('users')->insert([
-            'username' => 'bruno2546',
-            'email' => 'bruno2546@brnbp.me',
-            'password' => bcrypt('bruno2546'),
-            'remember_token' => md5('bruno2546')
+            [
+                'username' => 'bruno2546',
+                'email' => 'bruno2546@brnbp.me',
+                'password' => bcrypt('bruno2546'),
+                'remember_token' => md5('bruno2546')
+            ],
+            [
+                'username' => 'brnbp',
+                'email' => 'brnbp@brnbp.me',
+                'password' => bcrypt('brnbp'),
+                'remember_token' => md5('brnbp')
+            ]
         ]);
     }
 
@@ -267,6 +559,30 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id' => 1,
                 'feed_id' => 2
+            ],
+            [
+                'user_id' => 1,
+                'feed_id' => 3
+            ],
+            [
+                'user_id' => 1,
+                'feed_id' => 4
+            ],
+            [
+                'user_id' => 1,
+                'feed_id' => 6
+            ],
+            [
+                'user_id' => 2,
+                'feed_id' => 2
+            ],
+            [
+                'user_id' => 2,
+                'feed_id' => 4
+            ],
+            [
+                'user_id' => 2,
+                'feed_id' => 5
             ]
         ];
 
@@ -280,17 +596,9 @@ class DatabaseSeeder extends Seeder
         $episodes = [
             [
                 'user_feed_id' => 1,
-                'episode_id' => 1,
-                'hide' => 0,
-                'heard' => 1,
-                'downloaded' => 0,
-                'paused_at' => 0
-            ],
-            [
-                'user_feed_id' => 1,
                 'episode_id' => 2,
                 'hide' => 0,
-                'heard' => 0,
+                'heard' => 1,
                 'downloaded' => 0,
                 'paused_at' => 0
             ],
@@ -299,7 +607,7 @@ class DatabaseSeeder extends Seeder
                 'episode_id' => 3,
                 'hide' => 0,
                 'heard' => 0,
-                'downloaded' => 1,
+                'downloaded' => 0,
                 'paused_at' => 0
             ],
             [
@@ -311,15 +619,111 @@ class DatabaseSeeder extends Seeder
                 'paused_at' => 0
             ],
             [
+                'user_feed_id' => 1,
+                'episode_id' => 5,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 1,
+                'paused_at' => 0
+            ],
+            [
                 'user_feed_id' => 2,
-                'episode_id' => 1,
+                'episode_id' => 3,
                 'hide' => 0,
                 'heard' => 0,
                 'downloaded' => 0,
                 'paused_at' => 0
             ],
             [
-                'user_feed_id' => 1,
+                'user_feed_id' => 2,
+                'episode_id' => 4,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 2,
+                'episode_id' => 5,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 2,
+                'episode_id' => 6,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 3,
+                'episode_id' => 4,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 3,
+                'episode_id' => 5,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 3,
+                'episode_id' => 6,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 4,
+                'episode_id' => 5,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 4,
+                'episode_id' => 6,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 5,
+                'episode_id' => 3,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 4,
+                'episode_id' => 4,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 4,
+                'episode_id' => 5,
+                'hide' => 0,
+                'heard' => 0,
+                'downloaded' => 0,
+                'paused_at' => 0
+            ],
+            [
+                'user_feed_id' => 4,
                 'episode_id' => 6,
                 'hide' => 0,
                 'heard' => 0,
