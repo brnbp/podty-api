@@ -52,6 +52,10 @@ class Filter
             return false;
         }
 
+        if (!empty($filters['term'])) {
+            $filters['term'] = urldecode($filters['term']);
+        }
+
         foreach($filters as $name => $value) {
             $this->$name = $value;
         }
