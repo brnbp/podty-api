@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -20,9 +21,11 @@ class UserController extends Controller
      */
     public function show($username)
     {
-        return DB::table('users')
+        $data = DB::table('users')
             ->where('username', $username)
             ->get();
+
+        return $this->responseData($data);
     }
 
     /**
@@ -31,12 +34,14 @@ class UserController extends Controller
      */
     public function showFeed($username)
     {
-        return DB::table('users')
+        $data = DB::table('users')
             ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
             ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
             ->where('users.username', $username)
             ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30')
             ->get();
+
+        return $this->responseData($data);
     }
 
     /**
@@ -46,14 +51,14 @@ class UserController extends Controller
      */
     public function showEpisodes($username, $feedId)
     {
-        return DB::table('users')
+        $data = DB::table('users')
             ->join('user_feeds', function($join) use ($feedId) {
                 $join->on('users.id', '=', 'user_feeds.user_id')
                     ->where('user_feeds.feed_id', '=', $feedId);
             })
             ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
             ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
-            ->join('episodes', 'episodes.id', '=', 'user_episodes.id')
+            ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
             ->where('users.username', $username)
             ->select(
                 'feeds.name as feed_name',
@@ -68,5 +73,12 @@ class UserController extends Controller
                 'episodes.content'
             )
             ->get();
+
+        return $this->responseData($data);
+    }
+
+    private function responseData($data)
+    {
+        return empty($data) ? (new Response)->setStatusCode(404) : $data;
     }
 }
