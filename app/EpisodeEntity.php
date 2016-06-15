@@ -161,7 +161,7 @@ class EpisodeEntity
         $ep->feed_id = $this->feedId;
         $ep->title = $this->title;
         $ep->published_date = $this->publishedDate;
-        $ep->content = 'empty content for now';
+        $ep->content = $this->content;
         $ep->link = $this->link;
         $ep->media_length = $this->mediaLength;
         $ep->media_type = $this->mediaType;
@@ -179,7 +179,7 @@ class EpisodeEntity
           'feed_id' => $this->feedId,
           'title' => $this->title,
           'published_date' => $this->publishedDate,
-          'content' => 'empty content for now',
+          'content' => $this->content,
           'link' => $this->link,
           'media_length' => $this->mediaLength,
           'media_type' => $this->mediaType,
@@ -194,7 +194,7 @@ class EpisodeEntity
         $ep->feed_id = $this->feedId;
         $ep->title = $this->title;
         $ep->published_date = $this->publishedDate;
-        $ep->content = 'empty content for now';
+        $ep->content = $this->content;
         $ep->link = $this->link;
         $ep->media_length = $this->mediaLength;
         $ep->media_type = $this->mediaType;
