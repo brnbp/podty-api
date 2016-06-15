@@ -7,7 +7,7 @@ namespace App\Transform;
  *
  * @package App\Transform
  */
-abstract class Transformer
+abstract class TransformerAbstract
 {
     /**
      * Itera sob um array de itens e transforma cada item
@@ -20,5 +20,5 @@ abstract class Transformer
         return array_map([$this, 'transform'], $itens);
     }
 
-    public abstract function transform(array $item);
+    public abstract function transform($item);
 }

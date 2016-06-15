@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Services\Filter;
+use App\Filter\Filter;
+use App\Transform\QueueTransformer;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -26,22 +27,30 @@ class QueueController extends Controller
 
     /**
      * Display jobs in queue to process
+     *
+     * @param Filter           $filter
+     *
+     * @param QueueTransformer $queueTransformer
+     *
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function index()
+    public function index(Filter $filter, QueueTransformer $queueTransformer)
     {
-        $Filter = new Filter;
-
-        if ($Filter->validateFilters() === false) {
+        if ($filter->validateFilters() === false) {
             return (new Response)->setStatusCode(400);
         }
 
         $data = DB::table(self::TABLE_NAME)
             ->select($this->select_fields)
-            ->skip($Filter->offset)
-            ->take($Filter->limit)
+            ->skip($filter->offset)
+            ->take($filter->limit)
             ->get();
 
-        return $this->formatResponse($data);
+        if(!$data){
+            return [];
+        }
+
+        return $queueTransformer->transformCollection($data);
     }
 
     /**
@@ -75,29 +84,5 @@ class QueueController extends Controller
             ->delete();
 
         return (new Response)->setStatusCode($deleted ? 200 : 400);
-    }
-
-    /**
-     * Formata retorno de solicitação para melhorar visualização
-     * @param array|boolean $resultQuery retorno da query
-     * @return array retorna array formatado ou vazio se nao foi passado nenhum resultado
-     */
-    private function formatResponse($resultQuery)
-    {
-        $returned = [];
-
-        if(!$resultQuery){
-            return $returned;
-        }
-
-        return array_map(function($job){
-            return [
-                'id' => $job->id,
-                'queue' => $job->queue,
-                'payload' => json_decode($job->payload, true)['data']['command'],
-                'attempts' => $job->attempts,
-                'reserved' => $job->reserved
-            ];
-        }, $resultQuery);
     }
 }

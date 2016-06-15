@@ -7,6 +7,7 @@ use App\Models\Episode;
 use App\Models\Feed;
 use App\Services\Logger\Warehouse;
 use App\Services\Queue;
+use App\Transform\FeedTransformer;
 use Illuminate\Http\Response;
 use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
@@ -19,24 +20,41 @@ class FeedController extends Controller
      */
     private $Feed;
 
-    public function __construct()
+    /**
+     * @var FeedTransformer
+     */
+    private $feedTransformer;
+
+    public function __construct(Feed $feed, FeedTransformer $feedTransformer)
     {
-        $this->Feed = new Feed;
+        $this->Feed = $feed;
+        $this->feedTransformer = $feedTransformer;
     }
 
     public function retrieve($name)
     {
         $this->Feed->findLikeName($name);
 
-        return $this->Feed->has_content ?
-            $this->Feed->getContent() :
-            $this->create($name);
+        if ($this->Feed->has_content) {
+            return $this->feedTransformer->transformCollection($this->Feed->getContent());
+        }
+
+        return $this->create($name);
     }
 
+    /**
+     * @param $id
+     *
+     */
     public function retrieveById($id)
     {
         $feed = Feed::where('id', $id)->get();
-        return  $feed->count() ? $feed : (new Response)->setStatusCode(404);
+
+        if ($feed->count()) {
+            return $this->feedTransformer->transformCollection($feed->toArray());
+        }
+
+        return  (new Response)->setStatusCode(404);
     }
 
     /**
@@ -82,6 +100,11 @@ class FeedController extends Controller
 
     public function latest()
     {
-        return (new Feed())->getLatestsUpdated();
+        $latestsFeeds = (new Feed())->getLatestsUpdated()->toArray();
+
+        if (empty($latestsFeeds)) {
+            return (new Response)->setStatusCode(404);
+        }
+        return $this->feedTransformer->transformCollection($latestsFeeds);
     }
 }
