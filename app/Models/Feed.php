@@ -27,6 +27,9 @@ class Feed extends Model
         'url', 'name', 'thumbnail_30', 'thumbnail_60', 'thumbnail_100', 'thumbnail_600'
     ];
 
+    /** @var array $hidden The attributes that should be hidden for arrays. */
+    protected $hidden = ['created_at'];
+
     /**
      * Define relação com a model Episodes, sendo que Feed possui varios episodios
      * ligados a ele
