@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Feed;
 use App\Models\Episode;
-use App\Services\Filter;
+use App\Filter\Filter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Jobs\RegisterEpisodesFeed;

@@ -3,7 +3,7 @@ namespace App\Models;
 
 use App\EpisodeEntity;
 use App\Jobs\RegisterEpisodesFeed;
-use App\Services\Filter;
+use App\Filter\Filter;
 use App\Services\Parser\XML;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
