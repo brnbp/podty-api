@@ -15,6 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \App\Http\Middleware\BasicAuth::class
     ];
 
     /**
@@ -24,7 +25,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'api' => [
-            'throttle:300,1',
+            'throttle:300,1'
         ]
     ];
 
@@ -37,7 +38,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.basic' => \App\Http\Middleware\BasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
