@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 
 
 
+use Illuminate\Http\Response;
+
 class ApiController extends Controller
 {
-    protected $statusCode = 200;
+    protected $statusCode = Response::HTTP_OK;
 
     /**
      * @return mixed
@@ -42,13 +44,13 @@ class ApiController extends Controller
 
     public function respondAcceptedRequest()
     {
-        return $this->setStatusCode(202)->respond([]);
+        return $this->setStatusCode(Response::HTTP_ACCEPTED)->respond([]);
     }
 
 
     public function respondBadRequest($message = 'Bad Request')
     {
-        return $this->setStatusCode(400)->respondError($message);
+        return $this->setStatusCode(Response::HTTP_BAD_REQUEST)->respondError($message);
     }
 
     public function respondInvalidFilter()
@@ -58,7 +60,7 @@ class ApiController extends Controller
 
     public function respondNotFound($message = 'Not Found')
     {
-        return $this->setStatusCode(404)->respondError($message);
+        return $this->setStatusCode(Response::HTTP_NOT_FOUND)->respondError($message);
     }
 
     public function respondError($message)
