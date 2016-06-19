@@ -10,7 +10,7 @@ use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class EpisodeController extends Controller
+class EpisodeController extends ApiController
 {
     /**
      * @var Filter
@@ -20,9 +20,6 @@ class EpisodeController extends Controller
     public function __construct(Filter $filter)
     {
         $this->filter = $filter;
-        if ($this->filter->validateFilters() === false) {
-            return (new Response)->setStatusCode(400);
-        }
     }
 
 
@@ -32,13 +29,30 @@ class EpisodeController extends Controller
      */
     public function retrieve($feedId)
     {
-        return
-            (new Episode)->getByFeedId($feedId, $this->filter) ?:
-                (new Response)->setStatusCode(404);
+        if ($this->filter->validateFilters() === false) {
+            return $this->respondInvalidFilter();
+        }
+        $episodes = (new Episode)->getByFeedId($feedId, $this->filter);
+
+        if ($episodes) {
+            return $this->respond($episodes);
+        }
+
+        return $this->respondNotFound();
     }
 
     public function latest()
     {
-        return (new Episode)->getLatests($this->filter);
+        if ($this->filter->validateFilters() === false) {
+            return $this->respondInvalidFilter();
+        }
+
+        $episodes = (new Episode)->getLatests($this->filter);
+
+        if ($episodes->count()) {
+            return $this->respond($episodes);
+        }
+
+        return $this->respondNotFound();
     }
 }

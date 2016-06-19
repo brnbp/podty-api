@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @package App\Http\Controllers
  */
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * Get user data from specific username.
@@ -79,6 +79,6 @@ class UserController extends Controller
 
     private function responseData($data)
     {
-        return empty($data) ? (new Response)->setStatusCode(404) : $data;
+        return empty($data) ? $this->respondNotFound() : $this->respond($data);
     }
 }

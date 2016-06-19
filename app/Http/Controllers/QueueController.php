@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @author Bruno Pereira <bruno9pereira@gmail.com>
  */
-class QueueController extends Controller
+class QueueController extends ApiController
 {
     /** @var string TABLE_NAME nome da tabela de queue */
     const TABLE_NAME = 'jobs';
@@ -37,7 +37,7 @@ class QueueController extends Controller
     public function index(Filter $filter, QueueTransformer $queueTransformer)
     {
         if ($filter->validateFilters() === false) {
-            return (new Response)->setStatusCode(400);
+            return $this->respondInvalidFilter();
         }
 
         $data = DB::table(self::TABLE_NAME)
@@ -46,8 +46,8 @@ class QueueController extends Controller
             ->take($filter->limit)
             ->get();
 
-        if(!$data){
-            return [];
+        if(empty($data)){
+            return $this->respondNotFound();
         }
 
         return $queueTransformer->transformCollection($data);
@@ -62,8 +62,8 @@ class QueueController extends Controller
             ->take(10)
             ->get();
 
-        if (!$data) {
-            return [];
+        if (empty($data)) {
+            return $this->respondNotFound();
         }
 
         return $data;

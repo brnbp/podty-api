@@ -13,7 +13,7 @@ use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
 use App\Services\Itunes\Finder as ItunesFinder;
 
-class FeedController extends Controller
+class FeedController extends ApiController
 {
     /**
      * @var Feed
@@ -36,7 +36,9 @@ class FeedController extends Controller
         $this->Feed->findLikeName($name);
 
         if ($this->Feed->has_content) {
-            return $this->feedTransformer->transformCollection($this->Feed->getContent());
+            return $this->respond(
+                $this->feedTransformer->transformCollection($this->Feed->getContent())
+            );
         }
 
         return $this->create($name);
@@ -51,32 +53,32 @@ class FeedController extends Controller
         $feed = Feed::where('id', $id)->get();
 
         if ($feed->count()) {
-            return $this->feedTransformer->transformCollection($feed->toArray());
+            return $this->respond($this->feedTransformer->transformCollection($feed->toArray()));
         }
 
-        return  (new Response)->setStatusCode(404);
+        return $this->respondNotFound();
     }
 
     /**
-     * Cria feed e adiciona em fila a importação de episodios
+     * Cria feed e adiciona em fila a importaÃ§Ã£o de episodios
      * @param string $name nome do podcast a ser criado
      * @return Response
      */
     private function create($name)
     {
         if ($this->createFeeds($name) == false) {
-            return (new Response)->setStatusCode(404);
+            return $this->respondNotFound();
         }
 
         $feed = $this->Feed->getContent();
 
         if (empty($feed)) {
-            return (new Response)->setStatusCode(404);
+            return $this->respondNotFound();
         }
 
         (new Queue)->searchNewEpisodes([$feed]);
 
-        return (new Response())->setStatusCode(202);
+        return $this->respondAcceptedRequest();
     }
 
     /**
@@ -103,8 +105,10 @@ class FeedController extends Controller
         $latestsFeeds = (new Feed())->getLatestsUpdated()->toArray();
 
         if (empty($latestsFeeds)) {
-            return (new Response)->setStatusCode(404);
+            return $this->respondNotFound();
         }
-        return $this->feedTransformer->transformCollection($latestsFeeds);
+
+
+        return $this->respond($this->feedTransformer->transformCollection($latestsFeeds));
     }
 }
