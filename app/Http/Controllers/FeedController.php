@@ -43,10 +43,11 @@ class FeedController extends ApiController
 
         return $this->create($name);
     }
-
+    
     /**
      * @param $id
      *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function retrieveById($id)
     {
