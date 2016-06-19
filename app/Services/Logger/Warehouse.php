@@ -2,8 +2,6 @@
 
 namespace App\Services\Logger;
 
-use App\Jobs\SendLogToWarehouse;
-
 class Warehouse
 {
     /** Log Level Critical */
@@ -92,7 +90,7 @@ class Warehouse
     }
 
     /**
-     * Envia requisição para a serviço de logs via CURL
+     * Envia requisiï¿½ï¿½o para a serviï¿½o de logs via CURL
      * @param string $container json com logs a serem enviados
      */
     private static function sendRequest($container)
@@ -106,7 +104,7 @@ class Warehouse
     }
 
     /**
-     * Cria pacote com todas informações referente ao log
+     * Cria pacote com todas informaï¿½ï¿½es referente ao log
      * @param bool $to_json true caso deseje retorno em formato json ou false caso deseje retorno em array
      * @return array|string retorna array ou json
      */

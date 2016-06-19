@@ -31,7 +31,7 @@ class Feed extends Model
     protected $hidden = ['created_at'];
 
     /**
-     * Define relação com a model Episodes, sendo que Feed possui varios episodios
+     * Define relaÃ§Ã£o com a model Episodes, sendo que Feed possui varios episodios
      * ligados a ele
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -141,7 +141,7 @@ class Feed extends Model
     }
 
     /**
-     * Atualiza a data do ultimo episodio lançado para cada feed
+     * Atualiza a data do ultimo episodio lanÃ§ado para cada feed
      * registrado no sistema
      */
     public function cronUpdateLastEpisodeAt()

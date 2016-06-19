@@ -20,7 +20,7 @@ class Episode extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     /**
-     * Define relação com a model Feeds, sendo que Episode pertence a um feed
+     * Define relaÃ§Ã£o com a model Feeds, sendo que Episode pertence a um feed
      */
     public function feed()
     {
@@ -76,7 +76,7 @@ class Episode extends Model
     }
 
     /**
-     * Valida se os campos de media existem, senao cria valores padrão
+     * Valida se os campos de media existem, senao cria valores padrï¿½o
      * @param $attributes
      * @return mixed
      */
