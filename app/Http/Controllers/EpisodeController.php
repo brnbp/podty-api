@@ -34,11 +34,17 @@ class EpisodeController extends ApiController
         }
         $episodes = (new Episode)->getByFeedId($feedId, $this->filter);
 
-        if ($episodes) {
-            return $this->respond($episodes);
+        if (!$episodes) {
+            return $this->respondNotFound();
         }
 
-        return $this->respondNotFound();
+        $totalEpisodes = Feed::where('id', $feedId)->get()->toArray();
+        $meta_data = [
+            'total_episodes'  => $totalEpisodes[0]['total_episodes'],
+            'feed' => '/v1/feeds/id/' . $feedId
+        ];
+
+        return $this->respondSuccess($episodes, $meta_data);
     }
 
     public function latest()
@@ -50,7 +56,7 @@ class EpisodeController extends ApiController
         $episodes = (new Episode)->getLatests($this->filter);
 
         if ($episodes->count()) {
-            return $this->respond($episodes);
+            return $this->respondSuccess($episodes);
         }
 
         return $this->respondNotFound();

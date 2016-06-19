@@ -36,7 +36,7 @@ class FeedController extends ApiController
         $this->Feed->findLikeName($name);
 
         if ($this->Feed->has_content) {
-            return $this->respond(
+            return $this->respondSuccess(
                 $this->feedTransformer->transformCollection($this->Feed->getContent())
             );
         }
@@ -53,7 +53,7 @@ class FeedController extends ApiController
         $feed = Feed::where('id', $id)->get();
 
         if ($feed->count()) {
-            return $this->respond($this->feedTransformer->transformCollection($feed->toArray()));
+            return $this->respondSuccess($this->feedTransformer->transformCollection($feed->toArray()));
         }
 
         return $this->respondNotFound();
@@ -109,6 +109,6 @@ class FeedController extends ApiController
         }
 
 
-        return $this->respond($this->feedTransformer->transformCollection($latestsFeeds));
+        return $this->respondSuccess($this->feedTransformer->transformCollection($latestsFeeds));
     }
 }

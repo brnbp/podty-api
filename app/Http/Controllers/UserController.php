@@ -79,6 +79,6 @@ class UserController extends ApiController
 
     private function responseData($data)
     {
-        return empty($data) ? $this->respondNotFound() : $this->respond($data);
+        return empty($data) ? $this->respondNotFound() : $this->respondSuccess($data);
     }
 }

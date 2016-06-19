@@ -50,7 +50,7 @@ class QueueController extends ApiController
             return $this->respondNotFound();
         }
 
-        return $queueTransformer->transformCollection($data);
+        return $this->respondSuccess($queueTransformer->transformCollection($data));
     }
 
     /**
@@ -66,7 +66,7 @@ class QueueController extends ApiController
             return $this->respondNotFound();
         }
 
-        return $data;
+        return $this->respondSuccess($data);
     }
 
     /**
