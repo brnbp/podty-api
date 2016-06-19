@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         DB::table('episodes')->truncate();
         DB::table('feeds')->truncate();
         DB::table('jobs')->truncate();
+        DB::table('customers')->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call('UserFeedsTableSeeder');
         $this->call('UserEpisodesTableSeeder');
         $this->call('JobsTableSeeder');
+        $this->call('CustomersTableSeeder');
     }
 }
