@@ -29,13 +29,17 @@ class ApiController extends Controller
         return $this;
     }
 
-    public function respondSuccess($data)
+    public function respondSuccess($data, $meta = [])
     {
-        return $this->respond([
-            'data' => $data
-        ]);
+        if (!empty($meta)) {
+            $content['meta'] = $meta;
+        }
+
+        $content['data'] = $data;
+
+        return $this->respond($content);
     }
-    
+
     public function respondAcceptedRequest()
     {
         return $this->setStatusCode(202)->respond([]);
