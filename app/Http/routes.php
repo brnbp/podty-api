@@ -18,21 +18,18 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('episodes/latest', 'EpisodeController@latest');
 
 
-    Route::get('/users/{username}', 'UserController@show');
-    Route::post('/users', 'UserController@create');
+    Route::get('users/{username}', 'UserController@show');
+    Route::post('users', 'UserController@create');
+    Route::delete('users/{username}', 'UserController@delete');
+    Route::get('users/{username}/authenticate', 'UserController@authenticate');
 
-    Route::get('/users/{username}/feeds','UserController@showFeed');
+    Route::post('users/{username}/feeds', 'UserFeedsController@create');
+    Route::get('users/{username}/feeds','UserFeedsController@showAll');
+    Route::get('users/{username}/feeds/latests', 'UserFeedsController@latests');
 
-
-    Route::get('/users/{username}/feeds/{feedId}', 'UserController@showEpisodes');
-    Route::get('/users/{username}/feeds/latests', 'UserController@');
-    Route::get('/users/{username}/episodes/latests', 'UserController@');
-
-
-    Route::post('/users/feed', function(){});
-
-    Route::post('/users/episodes', function(){});
-
+    Route::post('users/episodes', 'UserEpisodesController@create');
+    Route::get('users/{username}/feeds/{feedId}', 'UserEpisodesController@show');
+    Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
 
 
     Route::get('queue', 'QueueController@index');

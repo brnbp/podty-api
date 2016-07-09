@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use Illuminate\Http\Response;
+use App\Models\User;
+use App\Repositories\UserRepository;
+use App\Transform\UserTransformer;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class UserController
@@ -13,6 +15,13 @@ use Illuminate\Support\Facades\DB;
  */
 class UserController extends ApiController
 {
+    private $userTransformer;
+
+    public function __construct(UserTransformer $userTransformer)
+    {
+        $this->userTransformer = $userTransformer;
+    }
+
     /**
      * Get user data from specific username.
      *
@@ -21,60 +30,43 @@ class UserController extends ApiController
      */
     public function show($username)
     {
-        $data = DB::table('users')
-            ->where('username', $username)
-            ->get();
+        $user = UserRepository::getFirst($username);
 
-        return $this->responseData($data);
+        if ($user) {
+            $user = $this->userTransformer->transform($user);
+        }
+        return $this->responseData($user);
     }
 
-    /**
-     * Get all feeds from specific user
-     * @param string $username
-     */
-    public function showFeed($username)
+    public function create()
     {
-        $data = DB::table('users')
-            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
-            ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-            ->where('users.username', $username)
-            ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30')
-            ->get();
+        $validator = Validator::make(Input::all(), User::$rules);
 
-        return $this->responseData($data);
-    }
+        if ($validator->fails()) {
+            return $this->respondErrorValidator($validator);
+        }
 
-    /**
-     * Get episodes from feedId
-     * @param string $username
-     * @param integer $feedId
-     */
-    public function showEpisodes($username, $feedId)
-    {
-        $data = DB::table('users')
-            ->join('user_feeds', function($join) use ($feedId) {
-                $join->on('users.id', '=', 'user_feeds.user_id')
-                    ->where('user_feeds.feed_id', '=', $feedId);
-            })
-            ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-            ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
-            ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
-            ->where('users.username', $username)
-            ->select(
-                'feeds.name as feed_name',
-                'episodes.title as episode_title',
-                'user_episodes.heard',
-                'user_episodes.hide',
-                'user_episodes.downloaded',
-                'user_episodes.paused_at',
-                'episodes.media_url',
-                'episodes.media_type',
-                'episodes.published_date',
-                'episodes.content'
+        return $this->responseData(
+            $this->userTransformer->transform(
+                UserRepository::create(Input::all())
             )
-            ->get();
+        );
+    }
 
-        return $this->responseData($data);
+    public function delete($username)
+    {
+        $user = UserRepository::getFirst($username);
+
+        if (!$user) {
+            return $this->responseData($user);
+        }
+
+        return $this->responseData(['removed' => $user->delete()]);
+    }
+
+    public function authenticate($username)
+    {
+        dd($username, Input::all());
     }
 
     private function responseData($data)
