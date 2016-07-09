@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Transform\UserTransformer;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -64,9 +65,23 @@ class UserController extends ApiController
         return $this->responseData(['removed' => $user->delete()]);
     }
 
-    public function authenticate($username)
+    public function authenticate()
     {
-        dd($username, Input::all());
+        $validator = Validator::make(Input::all(), [
+            'username' => 'bail|required|alpha_num|min:3|max:20',
+            'password' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->respondErrorValidator($validator);
+        }
+
+        if (UserRepository::verifyAuthentication(Input::all())) {
+            return $this->respondSuccess(['message' => 'user authenticated']);
+        }
+
+        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)
+            ->respondError('user not authenticated');
     }
 
     private function responseData($data)

@@ -15,8 +15,17 @@ class UserRepository
         ]);
 
         $user->save();
-        
+
         return $user;
+    }
+
+    public static function verifyAuthentication($userData)
+    {
+        $user = User::whereUsername($userData['username'])
+                    ->wherePassword($userData['password'])
+                    ->get();
+
+        return $user->count();
     }
 
     public static function getFirst($username)

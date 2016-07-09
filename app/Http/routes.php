@@ -21,7 +21,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('users/{username}', 'UserController@show');
     Route::post('users', 'UserController@create');
     Route::delete('users/{username}', 'UserController@delete');
-    Route::get('users/{username}/authenticate', 'UserController@authenticate');
+    Route::post('users/authenticate', 'UserController@authenticate');
 
     Route::post('users/{username}/feeds', 'UserFeedsController@create');
     Route::get('users/{username}/feeds','UserFeedsController@showAll');
