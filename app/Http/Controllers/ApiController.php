@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Response;
+use Illuminate\Validation\Validator;
 
 class ApiController extends Controller
 {
@@ -71,6 +72,12 @@ class ApiController extends Controller
                 'status_code' => $this->getStatusCode()
             ]
         ]);
+    }
+
+    public function respondErrorValidator(Validator $validator)
+    {
+        $this->setStatusCode(Response::HTTP_BAD_REQUEST);
+        return $this->respondError($validator->errors()->all());
     }
 
     public function respond($data)
