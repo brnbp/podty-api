@@ -21,6 +21,6 @@ class Kernel extends ConsoleKernel
             ->call(function(){
                 (new Queue)->send();
             })
-            ->everyThirtyMinutes()->name('default-cron')->withoutOverlapping();
+            ->everyTenMinutes()->name('default-cron')->withoutOverlapping();
     }
 }
