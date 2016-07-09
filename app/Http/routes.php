@@ -1,31 +1,25 @@
 <?php
 
+DB::listen(function($query) {
+    //var_dump($query->sql, $query->bindings);
+});
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Authorization, Content-Type' );
 
 Route::get('/', function() { return view('welcome'); });
 Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('/', function() { return view('welcome'); });
-    Route::get('/', function() { return view('welcome'); });
 
-    // search feeds that recently post new episodes
-    Route::get('/feeds/latest', 'FeedController@latest');
-
-    // search for podcast main informations from name
-    Route::get('/feeds/name/{name}', 'FeedController@retrieve');
-
-    // search for podcast main informations from feedId
-    Route::get('/feeds/id/{feedId}', 'FeedController@retrieveById');
-
-    // search for episodes from podcast id
-    Route::get('/episodes/feedId/{feedId}', 'EpisodeController@retrieve');
-
-    Route::get('/episodes/latest', 'EpisodeController@latest');
-
+    Route::get('feeds/latest', 'FeedController@latest');
+    Route::get('feeds/name/{name}', 'FeedController@retrieve');
+    Route::get('feeds/id/{feedId}', 'FeedController@retrieveById');
+    Route::get('episodes/feedId/{feedId}', 'EpisodeController@retrieve');
+    Route::get('episodes/latest', 'EpisodeController@latest');
 
 
     Route::get('/users/{username}', 'UserController@show');
-    Route::post('/user', function(){});
+    Route::post('/users', 'UserController@create');
 
     Route::get('/users/{username}/feeds','UserController@showFeed');
 
@@ -41,7 +35,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
 
 
-    Route::get('/queue', 'QueueController@index');
-    Route::delete('/queue/{id}', 'QueueController@destroy');
-    Route::get('/queue/failed', 'QueueController@failed');
+    Route::get('queue', 'QueueController@index');
+    Route::delete('queue/{id}', 'QueueController@destroy');
+    Route::get('queue/failed', 'QueueController@failed');
 });
