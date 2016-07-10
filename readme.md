@@ -84,7 +84,7 @@ Filters available
 ##### GET
 ```
     api.podcast.com/v1/users/{Username}
-    retrieve users
+    retrieve user
 ```
 
 ##### POST
@@ -108,7 +108,7 @@ Filters available
 ###### POST
 ```
     api.podcast.com/v1/users/authenticate
-    delete user
+    test authentication for given payload user
     payload:
     {
         "username": "foo",
@@ -117,6 +117,39 @@ Filters available
 ```
 
 
+- User Feeeds
+
+##### GET
+```
+    api.podcast.com/v1/users/{Username}/feeds
+    retrieve all user feeds
+```
+
+##### GET
+```
+    api.podcast.com/v1/users/{Username}/feeds/{FeedId}
+    retrieve one user feeds
+```
+
+###### POST
+```
+    api.podcast.com/v1/users/{Username}/feeds
+    attach feeds on user list
+    payload:
+    {
+        "feeds": [
+            {feedId},
+            {feedId},
+            {feedId}
+        ]
+    }
+```
+
+###### DELETE
+```
+    api.podcast.com/v1/users/{Username}/feeds/{FeedId}
+    detach feed on user list
+```
 
 
 - Queue
