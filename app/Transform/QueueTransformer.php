@@ -17,10 +17,10 @@ class QueueTransformer extends TransformerAbstract
     public function transform($queue)
     {
         return [
-            'id' => $queue->id,
-            'payload' => json_decode($queue->payload, true)['data']['command'],
-            'attempts' => $queue->attempts,
-            'reserved' => $queue->reserved
+            'id' => $queue['id'],
+            'payload' => json_decode($queue['payload'], true)['data']['command'],
+            'attempts' => $queue['attempts'],
+            'reserved' => $queue['reserved']
         ];
 
     }
