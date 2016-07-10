@@ -64,11 +64,11 @@ class UserController extends ApiController
             return $this->responseData($user);
         }
 
-        try {
-            $user->delete();
-        } catch (QueryException $e) {
+        $deleted = UserRepository::delete($user);
+
+        if (!$deleted) {
             return $this->setStatusCode(Response::HTTP_BAD_REQUEST)
-                    ->respondError('excluding user with existing feeds');
+                ->respondError('excluding user with existing feeds');
         }
 
         return $this->responseData(['removed' => true]);

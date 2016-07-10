@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Services\Password;
+use Illuminate\Database\QueryException;
 
 class UserRepository
 {
@@ -32,5 +33,16 @@ class UserRepository
     public static function first($username)
     {
         return User::whereUsername($username)->first();
+    }
+
+    public static function delete(User $user)
+    {
+        try {
+            $deleted = $user->delete();
+        } catch (QueryException $e) {
+            return false;
+        }
+        
+        return $deleted;
     }
 }
