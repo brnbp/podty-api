@@ -4,26 +4,21 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Models\UserFeed;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserFeedsRepository
 {
     public static function all($username)
     {
-        return User::whereUsername($username)
-            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
-            ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-            ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30')
-            ->get();
+        return self::buildQuery(User::whereUsername($username))->get();
     }
 
     public static function one($username, $feedId)
     {
-        return User::whereUsername($username)
-            ->whereFeedId($feedId)
-            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
-            ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-            ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30')
-            ->get();
+        return self::buildQuery(User::whereUsername($username)
+                    ->whereFeedId($feedId))
+                    ->get();
     }
 
     public static function first($feedId, $userId)
@@ -56,5 +51,12 @@ class UserFeedsRepository
         }
 
         return $userFeed->delete();
+    }
+
+    private static function buildQuery(Builder $builder)
+    {
+        return $builder->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
+                ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
+                ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30');
     }
 }
