@@ -43,23 +43,93 @@ $ php artisan serve
 
 
 - Routes:
+
+Filters available
+ - limit
+ - offset
+ - order 
+    - DESC
+    - ASC
+
+- Feeds: 
+
 ###### GET:
 ```
-    api.podcast.com/v1/feed/{PodcastName}
+    api.podcast.com/v1/feeds/name/{FeedName}
     retrieve podcast main informations
 ```
+
 ```
-    api.podcast.com/v1/episodes/{feedId}
-    retrieve episodes previously saved
+    api.podcast.com/v1/feeds/id/{FeedId}
+    retrieve podcast main informations
 ```
 
+```
+    api.podcast.com/v1/feeds/latest
+    retrieve latests podcasts updated
+```
+
+```
+    api.podcast.com/v1/episodes/feedId/{FeedId}
+    retrieve episodes from given podcast
+```
+
+```
+    api.podcast.com/v1/episodes/latest
+    retrieve latests episode updated
+```
+
+- Users
+
+##### GET
+```
+    api.podcast.com/v1/users/{Username}
+    retrieve users
+```
+
+##### POST
+```
+    api.podcast.com/v1/users/
+    create user
+    payload:
+    {
+        "username": "foo",
+        "email": "bar",
+        "password": "baz"
+    }
+```
+
+###### DELETE
+```
+    api.podcast.com/v1/users/{Username}
+    delete user
+```
+
+###### POST
+```
+    api.podcast.com/v1/users/authenticate
+    delete user
+    payload:
+    {
+        "username": "foo",
+        "password": "bar"
+    }
+```
+
+
+
+
+- Queue
+
+###### GET
 ```
     api.podcast.com/v1/queue
     retrieve queued tasks
 ```
+
 ```
-    api.podcast.com/v1/queue/reserved
-    retrieve queued task that is reserved
+    api.podcast.com/v1/queue/failed
+    retrieve queued task that have failed
 ```
 ###### DELETE
 ```
