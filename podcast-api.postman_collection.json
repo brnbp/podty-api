@@ -1,250 +1,567 @@
 {
-	"id": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-	"name": "Podcast API",
-	"description": "",
-	"order": [],
-	"folders": [
+	"variables": [],
+	"info": {
+		"name": "Podcast API",
+		"_postman_id": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "9448d778-96fd-0c14-77b7-6dd796f9b893",
 			"name": "feeds",
 			"description": "",
-			"order": [
-				"59799119-7d84-2198-8ffe-acc33cfe04e5",
-				"4dff1a83-27b1-7626-5827-65f6c0ac7207",
-				"34a0d385-6165-cbcc-8efe-ba3dd063b779",
-				"148b42a6-1b4f-0f27-800b-f163207510f7"
-			],
-			"owner": "644685"
+			"item": [
+				{
+					"name": "feed (by name)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/feeds/name/devnaestrada",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "feed (by id)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/feeds/id/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "episodes",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/episodes/feedId/4",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "latests feeds",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/feeds/latest",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "latests episodes",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/episodes/latest?limit=1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"id": "0b50f40c-5477-98c8-e97d-abee5e7f07be",
 			"name": "queue",
 			"description": "",
-			"order": [
-				"21cd0023-c515-5211-c198-eb7272a4ccb0",
-				"78227600-9a73-1773-e174-1171207a24fe",
-				"dd966568-9d3b-b20f-bd47-30ac34c3a2f1"
-			],
-			"owner": "644685"
+			"item": [
+				{
+					"name": "queues",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/queue",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "queues failed",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/queue/failed",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "queue",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/queue/QUEUEID",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"id": "53c5925e-fdb1-d3b9-c6eb-9e9bef5a4ce2",
-			"name": "users",
-			"description": "",
-			"order": [
-				"b3443a29-4a82-19ea-d7d6-9384efa5ec6e",
-				"6e96b576-0190-8f6b-12fa-0c1b7fc548a1",
-				"6e96c851-3d28-2b49-0157-77daef447012"
-			],
-			"owner": "644685"
-		}
-	],
-	"timestamp": 1464556096894,
-	"owner": "644685",
-	"remoteLink": "",
-	"public": false,
-	"requests": [
-		{
-			"id": "148b42a6-1b4f-0f27-800b-f163207510f7",
-			"headers": "",
-			"url": "{{url}}/v1/episodes/latest",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"data": null,
-			"dataMode": "params",
-			"name": "latests episodes",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1464848296633,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"folder": "9448d778-96fd-0c14-77b7-6dd796f9b893"
-		},
-		{
-			"id": "21cd0023-c515-5211-c198-eb7272a4ccb0",
-			"headers": "",
-			"url": "{{url}}/v1/queue",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"data": null,
-			"dataMode": "params",
-			"name": "queues",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1464848194011,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"folder": "0b50f40c-5477-98c8-e97d-abee5e7f07be"
-		},
-		{
-			"id": "34a0d385-6165-cbcc-8efe-ba3dd063b779",
-			"headers": "",
-			"url": "{{url}}/v1/feeds/latest",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"data": null,
-			"dataMode": "params",
-			"name": "latests feeds",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1464848286977,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"folder": "9448d778-96fd-0c14-77b7-6dd796f9b893"
-		},
-		{
-			"id": "4dff1a83-27b1-7626-5827-65f6c0ac7207",
-			"headers": "",
-			"url": "{{url}}/v1/episodes/feedId/1",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"data": null,
-			"dataMode": "params",
-			"name": "episodes",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1464848275524,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"folder": "9448d778-96fd-0c14-77b7-6dd796f9b893"
-		},
-		{
-			"id": "59799119-7d84-2198-8ffe-acc33cfe04e5",
-			"headers": "",
-			"url": "{{url}}/v1/feeds/name/devnaestrada",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"data": null,
-			"dataMode": "params",
-			"name": "feed",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1464848263982,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"folder": "9448d778-96fd-0c14-77b7-6dd796f9b893"
-		},
-		{
-			"id": "6e96b576-0190-8f6b-12fa-0c1b7fc548a1",
-			"headers": "",
-			"url": "{{url}}/v1/users/USERNAME/feeds",
-			"preRequestScript": null,
-			"pathVariables": {},
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1464848409287,
-			"name": "user feeds",
-			"description": "",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"responses": []
-		},
-		{
-			"id": "6e96c851-3d28-2b49-0157-77daef447012",
-			"headers": "",
-			"url": "{{url}}/v1/users/USERNAME/feeds/FEEDID",
-			"preRequestScript": null,
-			"pathVariables": {},
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1464848416159,
 			"name": "user episodes",
 			"description": "",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"responses": []
+			"item": [
+				{
+					"name": "user episodes",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/bruno2546/feeds/",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"id": "78227600-9a73-1773-e174-1171207a24fe",
-			"headers": "",
-			"url": "{{url}}/v1/queue/reserved",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"data": null,
-			"dataMode": "params",
-			"name": "queues reserved",
+			"name": "user feeds",
 			"description": "",
-			"descriptionFormat": "html",
-			"time": 1464848202952,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"folder": "0b50f40c-5477-98c8-e97d-abee5e7f07be"
+			"item": [
+				{
+					"name": "one",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp/feeds/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp/feeds",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "user feeds",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp/feeds",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"feeds\": [\n        1,\n        5,\n        6\n    ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete user feed",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp/feeds/6",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"id": "b3443a29-4a82-19ea-d7d6-9384efa5ec6e",
-			"headers": "",
-			"url": "{{url}}/v1/users/USERNAME",
-			"preRequestScript": null,
-			"pathVariables": {},
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1464848403377,
-			"name": "user data",
+			"name": "users",
 			"description": "",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"responses": []
+			"item": [
+				{
+					"name": "user",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"brnbp\",\n    \"email\": \"brnbp@icloud.com\",\n    \"password\": \"brnbp\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"brnbp\",\n    \"email\": \"brnbp@icloud.com\",\n    \"password\": \"brnbp\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"brnbp\",\n    \"email\": \"brnbp@icloud.com\",\n    \"password\": \"brnbp\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "authenticate user",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "brnbp",
+								"password": "brnbp",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/authenticate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YnJuYnA6YnJuYnA=",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"brnbp\",\n    \"password\": \"$2y$10$OLaQd.e/8CpqPUNmzEYZfOwwYfjLqBYimzVU0V7e.4gVUQNGuKkxS\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"id": "dd966568-9d3b-b20f-bd47-30ac34c3a2f1",
-			"headers": "",
-			"url": "{{url}}/v1/queue/QUEUEID",
-			"preRequestScript": null,
-			"pathVariables": {},
-			"method": "DELETE",
-			"data": null,
-			"dataMode": "params",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1464848430431,
-			"name": "queue",
-			"description": "",
-			"collectionId": "d2f6710f-2b34-ba6d-e642-9b09baf2cc8b",
-			"responses": []
+			"name": "welcome",
+			"request": {
+				"url": "{{url}}/v1",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
