@@ -32,13 +32,17 @@ class UserFeedsController extends ApiController
         if (!$user) {
             return $this->respondNotFound();
         }
+        
+        if (!Input::get('feeds')) {
+            return $this->respondBadRequest();
+        }
 
         UserFeedsRepository::batchCreate(Input::get('feeds'), $user);
     }
 
     public function delete($username, $feedId)
     {
-        $user = UserRepository::getFirst($username);
+        $user = UserRepository::first($username);
         if (!$user) {
             return $this->respondNotFound();
         }

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Transform\UserTransformer;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Mockery\CountValidator\Exception;
 
 /**
  * Class UserController
@@ -31,7 +33,7 @@ class UserController extends ApiController
      */
     public function show($username)
     {
-        $user = UserRepository::getFirst($username);
+        $user = UserRepository::first($username);
 
         if ($user) {
             $user = $this->userTransformer->transform($user);
@@ -56,13 +58,20 @@ class UserController extends ApiController
 
     public function delete($username)
     {
-        $user = UserRepository::getFirst($username);
+        $user = UserRepository::first($username);
 
         if (!$user) {
             return $this->responseData($user);
         }
 
-        return $this->responseData(['removed' => $user->delete()]);
+        try {
+            $user->delete();
+        } catch (QueryException $e) {
+            return $this->setStatusCode(Response::HTTP_BAD_REQUEST)
+                    ->respondError('excluding user with existing feeds');
+        }
+
+        return $this->responseData(['removed' => true]);
     }
 
     public function authenticate()

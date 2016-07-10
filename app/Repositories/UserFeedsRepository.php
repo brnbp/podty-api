@@ -45,7 +45,7 @@ class UserFeedsRepository
 
     public static function delete($feedId, User $user)
     {
-        $userFeed = self::getFirst($feedId, $user->id);
+        $userFeed = self::first($feedId, $user->id);
         if (!$userFeed) {
             return false;
         }

@@ -29,7 +29,7 @@ class UserRepository
         return $user->count();
     }
 
-    public static function getFirst($username)
+    public static function first($username)
     {
         return User::whereUsername($username)->first();
     }
