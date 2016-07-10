@@ -31,17 +31,6 @@ $ php artisan serve
 
 -------
 
-notes:
-
-    - Queue: on .env file, by default, sets QUEUE_DRIVER=database
-        if you want to collaborate, the goal is to use REDIS
-    - Crons: we only have one, that runs every 1am and 13pm
-        per day, updating all episodes of existing feeds
-    - Tests: for now, only the XML class have tests
-        the goal is to create for every class, we accept help on that
--------
-
-
 - Collaborate:
 
     - Queue:
@@ -51,14 +40,6 @@ notes:
     - Tests:
         - now:  only the XML class have tests
         - goal: create for every class
-
-    - Authentication:
-        - now:  none.
-        - goal: basic auth.
-
-    - Refactor:
-        - now:  Poor Entities, controllers with highly coupled logic
-        - goal: open for suggestions
 
 
 - Routes:
@@ -87,13 +68,21 @@ notes:
 ```
 
 
-##### listen queuing:
+### On Production Env.
+
+##### queuing:
 ```bash
-$ php artisan queue:listen
+$ php artisan queue:work --daemon --sleep 120 --tries 3 -q & 
 ```
-##### run crons
+
+##### run crons (put this on crontab, run every minute)
 ```bash
-$ php artisan schedule:run
+* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1
+```
+
+###### giving the correctly rights
+```bash
+sudo chmod 777 -R storage/
 ```
 
 
