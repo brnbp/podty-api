@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Services\Password;
 
 class UserRepository
 {
@@ -11,7 +12,7 @@ class UserRepository
         $user = new User([
             'username' => $userData['username'],
             'email' => $userData['email'],
-            'password' => User::encryptPassword($userData['password']),
+            'password' => Password::encrypt($userData['password']),
         ]);
 
         $user->save();

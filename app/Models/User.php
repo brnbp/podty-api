@@ -15,11 +15,6 @@ class User extends Model
         'password' => 'bail|required|string|min:5'
     ];
 
-    public static function encryptPassword($password)
-    {
-        return bcrypt($password);
-    }
-
     public function feeds()
     {
         return $this->hasMany('App\Models\UserFeed');
