@@ -1,12 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Repositories\UserFeedsRepository;
 use App\Repositories\UserRepository;
-use App\Transform\UserTransformer;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * Class UserController
@@ -19,18 +16,36 @@ class UserFeedsController extends ApiController
      * Get all feeds from specific user
      * @param string $username
      */
-    public function show($username)
+    public function all($username)
     {
-        $data = DB::table('users')
-            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
-            ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-            ->where('users.username', $username)
-            ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30')
-            ->get();
-
-        return $this->responseData($data);
+        return $this->responseData(UserFeedsRepository::all($username));
     }
-    
+
+    public function one($username, $feedId)
+    {
+        return $this->responseData(UserFeedsRepository::one($username, $feedId));
+    }
+
+    public function create($username)
+    {
+        $user = UserRepository::first($username);
+        if (!$user) {
+            return $this->respondNotFound();
+        }
+
+        UserFeedsRepository::batchCreate(Input::get('feeds'), $user);
+    }
+
+    public function delete($username, $feedId)
+    {
+        $user = UserRepository::getFirst($username);
+        if (!$user) {
+            return $this->respondNotFound();
+        }
+        return UserFeedsRepository::delete($feedId, $user) ?
+            $this->respondSuccess(['removed' => true]) : $this->respondNotFound();
+    }
+
     private function responseData($data)
     {
         return empty($data) ? $this->respondNotFound() : $this->respondSuccess($data);

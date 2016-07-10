@@ -14,7 +14,6 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('episodes/feedId/{feedId}', 'EpisodeController@retrieve');
     Route::get('episodes/latest', 'EpisodeController@latest');
 
-
     Route::get('users/{username}', 'UserController@show');
     Route::post('users', 'UserController@create');
     Route::delete('users/{username}', 'UserController@delete');
@@ -22,13 +21,12 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::post('users/{username}/feeds', 'UserFeedsController@create');
     Route::delete('users/{username}/feeds/{feedId}', 'UserFeedsController@delete');
-    Route::get('users/{username}/feeds','UserFeedsController@show');
-    //Route::get('users/{username}/feeds/latests', 'UserFeedsController@latests');
+    Route::get('users/{username}/feeds','UserFeedsController@all');
+    Route::get('users/{username}/feeds/{feedId}','UserFeedsController@one');
 
     //Route::post('users/episodes', 'UserEpisodesController@create');
     //Route::get('users/{username}/feeds/{feedId}', 'UserEpisodesController@show');
     //Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
-
 
     Route::get('queue', 'QueueController@index');
     Route::delete('queue/{id}', 'QueueController@destroy');

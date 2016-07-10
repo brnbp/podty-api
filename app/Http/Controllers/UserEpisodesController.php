@@ -2,11 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Repositories\UserRepository;
-use App\Transform\UserTransformer;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
 
 class UserEpisodesController extends ApiController
 {
@@ -18,7 +14,7 @@ class UserEpisodesController extends ApiController
      */
     public function show($username, $feedId)
     {
-        $data = DB::table('users')
+        $data = User::whereUsername($username)
             ->join('user_feeds', function($join) use ($feedId) {
                 $join->on('users.id', '=', 'user_feeds.user_id')
                     ->where('user_feeds.feed_id', '=', $feedId);
@@ -26,7 +22,6 @@ class UserEpisodesController extends ApiController
             ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
             ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
             ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
-            ->where('users.username', $username)
             ->select(
                 'feeds.name as feed_name',
                 'episodes.title as episode_title',
