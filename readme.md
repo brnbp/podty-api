@@ -117,7 +117,7 @@ Filters available
 ```
 
 
-- User Feeeds
+- User Feeds
 
 ##### GET
 ```
