@@ -2,8 +2,6 @@
 namespace App\Models;
 
 use App\EpisodeEntity;
-use App\Jobs\RegisterEpisodesFeed;
-use App\Filter\Filter;
 use App\Repositories\FeedRepository;
 use App\Services\Parser\XML;
 use Illuminate\Database\Eloquent\Model;
@@ -116,7 +114,7 @@ class Episode extends Model
 
         return $url;
     }
-    
+
     /**
      * Verifica se existe episodio a partir de mediaUrl property
      * @param string $mediaUrl opcional, caso nao tenha sido setado na classe ainda
@@ -144,6 +142,7 @@ class Episode extends Model
      * caso exista, retorna o valor da chave
      * @param array $arr
      * @param string $key
+     * @return array|string
      */
     private function getDefault($arr, $key)
     {

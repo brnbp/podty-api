@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendLogToWarehouse;
-use App\Models\Episode;
 use App\Models\Feed;
 use App\Repositories\FeedRepository;
-use App\Services\Logger\Warehouse;
-use App\Services\Queue;
 use App\Transform\FeedTransformer;
 use Illuminate\Http\Response;
-use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
-use App\Services\Itunes\Finder as ItunesFinder;
 
 class FeedController extends ApiController
 {

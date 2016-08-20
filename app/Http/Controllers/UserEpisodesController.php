@@ -1,11 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Episode;
-use App\Models\Feed;
 use App\Models\User;
-use App\Models\UserEpisode;
-use App\Models\UserFeed;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;

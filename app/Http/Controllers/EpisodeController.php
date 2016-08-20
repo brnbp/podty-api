@@ -1,14 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Feed;
-use App\Models\Episode;
 use App\Filter\Filter;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Jobs\RegisterEpisodesFeed;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
