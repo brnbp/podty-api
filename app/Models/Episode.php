@@ -72,7 +72,7 @@ class Episode extends Model
             if (!$this->validateMediaFields($episode['enclosure']['@attributes'])) {
                 return;
             }
-            $episode = (new EpisodeEntity())
+            (new EpisodesRepository)->save((new EpisodeEntity)
                 ->setFeedId($feedId)
                 ->setTitle($episode['title'])
                 ->setLink($this->getDefault($episode, 'link'))
@@ -80,8 +80,7 @@ class Episode extends Model
                 ->setContent($this->getDefault($episode, 'description'))
                 ->setMediaUrl($episode['enclosure']['@attributes']['url'] ?: '')
                 ->setMediaLength($episode['enclosure']['@attributes']['length'] ?: '')
-                ->setMediaType($episode['enclosure']['@attributes']['type'] ?: '');
-            (new EpisodesRepository)->save($episode);
+                ->setMediaType($episode['enclosure']['@attributes']['type'] ?: ''));
         });
     }
 

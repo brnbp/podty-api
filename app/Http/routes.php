@@ -8,15 +8,6 @@ DB::listen(function($query) {
     //var_dump($query->sql, $query->bindings);
 });
 
-Route::get('/test', function(){
-
-    $feed = (new \App\Repositories\FeedRepository())->latests(1);
-
-    (new \App\Models\Episode)->storage($feed->first()->id, $feed->first()->url);
-
-});
-
-
 Route::get('/', function() { return view('welcome'); });
 Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('/', function() { return view('welcome'); });
