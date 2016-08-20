@@ -17,6 +17,6 @@ class User extends Model
 
     public function feeds()
     {
-        return $this->hasMany('App\Models\UserFeed');
+        return $this->hasMany(UserFeed::class);
     }
 }

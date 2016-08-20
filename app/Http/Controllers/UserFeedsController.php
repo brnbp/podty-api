@@ -26,7 +26,7 @@ class UserFeedsController extends ApiController
         return $this->responseData(UserFeedsRepository::one($username, $feedId));
     }
 
-    public function create($username)
+    public function attach($username)
     {
         $user = UserRepository::first($username);
         if (!$user) {
@@ -40,7 +40,7 @@ class UserFeedsController extends ApiController
         UserFeedsRepository::batchCreate(Input::get('feeds'), $user);
     }
 
-    public function delete($username, $feedId)
+    public function detach($username, $feedId)
     {
         $user = UserRepository::first($username);
         if (!$user) {

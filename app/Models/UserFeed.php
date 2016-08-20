@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class UserFeed extends Model
@@ -12,6 +11,16 @@ class UserFeed extends Model
 
     public function user()
     {
-        return $this->belongsTo('user');
+        return $this->belongsTo(User::class);
+    }
+
+    public function feed()
+    {
+        return $this->belongsTo(Feed::class);
+    }
+
+    public function episodes()
+    {
+        return $this->hasMany(UserEpisode::class);
     }
 }

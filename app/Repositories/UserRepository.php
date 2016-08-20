@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Models\UserFeed;
 use App\Services\Password;
 use Illuminate\Database\QueryException;
 
@@ -42,7 +43,32 @@ class UserRepository
         } catch (QueryException $e) {
             return false;
         }
-        
+
         return $deleted;
+    }
+
+    public static function getId($username)
+    {
+        $user = static::first($username);
+        if (!$user) {
+            return false;
+        }
+        return $user->id;
+    }
+
+    public static function incrementsPodcastsCount(UserFeed $userFeed)
+    {
+        if ($userFeed->wasRecentlyCreated) {
+            return User::whereId($userFeed->user_id)->increment('podcasts_count');
+        }
+        return false;
+    }
+
+    public static function decrementsPodcastCount(UserFeed $userFeed)
+    {
+        if ($userFeed->wasRecentlyCreated) {
+            return User::whereId($userFeed->user_id)->decrement('podcast_count');
+        }
+        return false;
     }
 }

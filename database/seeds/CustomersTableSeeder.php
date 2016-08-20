@@ -23,6 +23,6 @@ class CustomersTableSeeder extends Seeder
                 'email' => 'brnbp@brnbp.me',
                 'password' => bcrypt('brnbp'),
             ]
-        ]);    
+        ]);
     }
 }

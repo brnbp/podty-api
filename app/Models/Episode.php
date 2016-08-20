@@ -178,7 +178,14 @@ class Episode extends Model
             ->join('feeds', 'episodes.feed_id', '=', 'feeds.id')
             ->skip($filter->offset)
             ->orderBy('published_date', $filter->order)
-            ->select('episodes.*', 'feeds.name', 'feeds.thumbnail_30', 'feeds.thumbnail_60')
+            ->select(
+                'episodes.*',
+                'feeds.name',
+                'feeds.thumbnail_30',
+                'feeds.thumbnail_60',
+                'feeds.thumbnail_100',
+                'feeds.thumbnail_600'
+            )
             ->get();
     }
 

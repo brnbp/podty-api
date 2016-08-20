@@ -24,7 +24,8 @@ class CreateEpisodeTable extends Migration
             $table->string('media_type');
             $table->timestamps();
             $table->index('feed_id');
-            $table->foreign('feed_id')->references('id')->on('feeds');
+
+            $table->foreign('feed_id')->references('id')->on('feeds')->onDelete('cascade');
         });
     }
 

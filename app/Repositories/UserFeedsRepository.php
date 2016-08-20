@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Models\UserFeed;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 
 class UserFeedsRepository
@@ -32,6 +31,8 @@ class UserFeedsRepository
             'user_id' => $user->id,
             'feed_id' => $feedId
         ]);
+        
+        UserRepository::incrementsPodcastsCount($userFeed);
 
         return $userFeed;
     }
@@ -49,6 +50,8 @@ class UserFeedsRepository
         if (!$userFeed) {
             return false;
         }
+
+        UserRepository::decrementsPodcastCount($userFeed);
 
         return $userFeed->delete();
     }

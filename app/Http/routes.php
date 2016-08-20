@@ -1,5 +1,9 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+
 DB::listen(function($query) {
     //var_dump($query->sql, $query->bindings);
 });
@@ -11,7 +15,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('feeds/latest', 'FeedController@latest');
     Route::get('feeds/name/{name}', 'FeedController@retrieve');
     Route::get('feeds/id/{feedId}', 'FeedController@retrieveById');
-    Route::get('episodes/feedId/{feedId}', 'EpisodeController@retrieve');
+    Route::get('episodes/feed/{feedId}', 'EpisodeController@retrieve');
     Route::get('episodes/latest', 'EpisodeController@latest');
 
     Route::get('users/{username}', 'UserController@show');
@@ -19,14 +23,36 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::delete('users/{username}', 'UserController@delete');
     Route::post('users/authenticate', 'UserController@authenticate');
 
-    Route::post('users/{username}/feeds', 'UserFeedsController@create');
-    Route::delete('users/{username}/feeds/{feedId}', 'UserFeedsController@delete');
+    Route::post('users/{username}/feeds', 'UserFeedsController@attach');
+    Route::delete('users/{username}/feeds/{feedId}', 'UserFeedsController@detach');
     Route::get('users/{username}/feeds','UserFeedsController@all');
     Route::get('users/{username}/feeds/{feedId}','UserFeedsController@one');
 
-    //Route::post('users/episodes', 'UserEpisodesController@create');
-    //Route::get('users/{username}/feeds/{feedId}', 'UserEpisodesController@show');
-    //Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
+
+    Route::get('users/{username}/episodes/feed/{feedId}', 'UserEpisodesController@show');
+    Route::post('users/{username}/episodes/feed/{feedId}', 'UserEpisodesController@attach');
+    Route::delete('users/{username}/episodes/{episodeId}', 'UserEpisodesController@detach');
+    Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
+
+    
+    Route::put('users/{username}/episodes/');
+
+
+
+
+
+
+    Route::post('users/{username}/friends/{friendId}', 'UserFriends@attach');
+    Route::delete('users/{username}/friends/{friendId}', 'UserFriends@detach');
+    Route::get('users/{username}/friends', 'UserFriends@all');
+
+
+
+
+
+
+
+
 
     Route::get('queue', 'QueueController@index');
     Route::delete('queue/{id}', 'QueueController@destroy');

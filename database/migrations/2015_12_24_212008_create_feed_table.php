@@ -15,7 +15,7 @@ class CreateFeedTable extends Migration
         Schema::create('feeds', function(Blueprint $table){
             $table->increments('id');
             $table->string('name')->index();
-            $table->string('url')->index();
+            $table->string('url');
             $table->string('thumbnail_30');
             $table->string('thumbnail_60');
             $table->string('thumbnail_100');
