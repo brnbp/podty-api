@@ -3,10 +3,13 @@ namespace App\Models;
 
 use App\Jobs\RegisterEpisodesFeed;
 use App\Jobs\UpdateLastEpisodeFeed;
+use App\Repositories\FeedRepository;
 use App\Services\Filter;
+use App\Services\Queue;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Services\Itunes\Finder as ItunesFinder;
 
 /**
  * Class Feed
@@ -16,12 +19,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class Feed extends Model
 {
     use DispatchesJobs;
-
-    /** @var array $content */
-    private $content = [];
-
-    /** @var bool $has_content */
-    public $has_content = false;
 
     protected $fillable = [
         'url', 'name', 'thumbnail_30', 'thumbnail_60', 'thumbnail_100', 'thumbnail_600'
@@ -40,31 +37,42 @@ class Feed extends Model
         return $this->hasMany('App\Models\Episode');
     }
 
-    public function getContent()
+    public function persist($name)
     {
-        $content = array_filter($this->content);
+        $newFeed = $this->createFeeds($name);
 
-        return empty($content) ? $content : reset($content);
+        if (!$newFeed) {
+            return false;
+        }
+
+        $feeds = array_map(function($feed){
+            return $feed->toArray();
+        }, $newFeed);
+
+        (new Queue)->searchNewEpisodes($feeds);
+
+        return true;
     }
 
-    public function storage($feeds)
+    /**
+     * Salva o podcast pesquisado no banco
+     * @param string $name nome do podcast
+     * @return bool
+     */
+    private function createFeeds($name)
     {
-        foreach($feeds as $feed) {
+        $results = (new ItunesFinder($name))
+            ->all();
 
-            $table_content = [
-                'name' => $feed['collectionName'],
-                'thumbnail_30' => $feed['artworkUrl30'],
-                'thumbnail_60' => $feed['artworkUrl60'],
-                'thumbnail_100' => $feed['artworkUrl100'],
-                'thumbnail_600' => $feed['artworkUrl600']
-            ];
-
-            $row_content = $this->upsert($table_content, [
-                'url' => $feed['feedUrl']
-            ], true);
-
-            $this->setContent($row_content->getAttributes());
+        if ($results == false) {
+            return false;
         }
+
+        $response = array_map(function($feed){
+            return (new FeedRepository)->updateOrCreate($feed);
+        }, $results);
+
+        return count($response) ? $response : false;
     }
 
     /**
@@ -75,32 +83,13 @@ class Feed extends Model
      *
      * @return bool|int
      */
-    private function upsert(array $content, array $filter, $insert = false)
+    public function upsert(array $content, array $filter, $insert = false)
     {
         if ($insert) {
             return self::updateOrCreate($filter, $content);
         }
 
         return self::update($content, $filter);
-    }
-
-    public function findLikeName($name)
-    {
-        $feed = self::where('name', 'LIKE', "%$name%")->take(5)->get();
-
-        $this->setContent($feed->toArray());
-    }
-
-    public function checkExists($name)
-    {
-        $this->findLikeName($name);
-        return $this->has_content;
-    }
-
-    private function setContent(array $content)
-    {
-        $this->content[] = $content;
-        $this->has_content = count($content) ? true : false;
     }
 
     public function getUrlById($id)
@@ -130,17 +119,6 @@ class Feed extends Model
     }
 
     /**
-     * Busca pelos feeds que recentemente publicaram novos episodios
-     * @param integer $limit limite de quantidade de retorno, por padrao, 10
-     */
-    public function getLatestsUpdated($limit = 10)
-    {
-        return self::take($limit)
-            ->orderBy('last_episode_at', 'DESC')
-            ->get();
-    }
-
-    /**
      * Atualiza a data do ultimo episodio lançado para cada feed
      * registrado no sistema
      */
@@ -149,17 +127,5 @@ class Feed extends Model
         $this->dispatch(new UpdateLastEpisodeFeed);
 
         return $this;
-    }
-
-    /**
-     * Update on Feed's table the total of episodes
-     * @param integer $feed_id id of feed
-     */
-    public function updateTotalEpisodes($feedId)
-    {
-        self::where('id', $feedId)
-            ->update([
-                'total_episodes' => (new Episode())->getTotalEpisodes($feedId)
-            ]);
     }
 }

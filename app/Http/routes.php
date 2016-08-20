@@ -34,7 +34,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::delete('users/{username}/episodes/{episodeId}', 'UserEpisodesController@detach');
     Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
 
-    
+
     Route::put('users/{username}/episodes/');
 
 

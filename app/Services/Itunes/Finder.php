@@ -17,9 +17,7 @@ class Finder
 
     private $properties = [
         'media' => 'podcast',
-        'country' => 'BR',
-        'lang' => 'pt_br',
-        'limit' => '2',
+        'limit' => '5',
         'term' => '',
         'attribute' => 'titleTerm'
     ];
@@ -55,14 +53,14 @@ class Finder
     public function all()
     {
         $this->obtain();
-        return $this->results;
+        return array_map([$this, 'transform'], $this->results);
     }
 
     private function obtain()
     {
         $this->makeRequest();
 
-        $this->results = $this->results ? : false;
+        $this->results = $this->results ? : [];
     }
 
     private function makeRequest()
@@ -100,6 +98,18 @@ class Finder
         foreach ($results as $result) {
             $this->results[] = array_intersect_key($result, array_flip($this->return_fields));
         }
+    }
+
+    private function transform(array $feed)
+    {
+        return [
+            'name' => $feed['collectionName'],
+            'url' => $feed['feedUrl'],
+            'thumbnail_30' => $feed['artworkUrl30'],
+            'thumbnail_60' => $feed['artworkUrl60'],
+            'thumbnail_100' => $feed['artworkUrl100'],
+            'thumbnail_600' => $feed['artworkUrl600']
+        ];
     }
 }
 

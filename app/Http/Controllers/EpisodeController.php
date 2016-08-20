@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Feed;
 use App\Models\Episode;
 use App\Filter\Filter;
+use App\Repositories\EpisodesRepository;
+use App\Repositories\FeedRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Jobs\RegisterEpisodesFeed;
@@ -22,7 +24,6 @@ class EpisodeController extends ApiController
         $this->filter = $filter;
     }
 
-
     /**
      * @param integer $feedId
      * @return \Symfony\Component\HttpFoundation\Response
@@ -32,19 +33,19 @@ class EpisodeController extends ApiController
         if ($this->filter->validateFilters() === false) {
             return $this->respondInvalidFilter();
         }
-        $episodes = (new Episode)->getByFeedId($feedId, $this->filter);
+
+        $episodes = (new EpisodesRepository)->retriveByFeedId($feedId, $this->filter);
 
         if (!$episodes) {
             return $this->respondNotFound();
         }
 
-        $totalEpisodes = Feed::where('id', $feedId)->get()->toArray();
         $meta_data = [
-            'total_episodes'  => $totalEpisodes[0]['total_episodes'],
+            'total_episodes'  => (new FeedRepository)->totalEpisodes($feedId)['total_episodes'],
             'feed' => '/v1/feeds/id/' . $feedId
         ];
 
-        return $this->respondSuccess($episodes, $meta_data);
+        return $this->respondSuccess($episodes->toArray(), $meta_data);
     }
 
     public function latest()
@@ -53,7 +54,7 @@ class EpisodeController extends ApiController
             return $this->respondInvalidFilter();
         }
 
-        $episodes = (new Episode)->getLatests($this->filter);
+        $episodes = (new EpisodesRepository)->latests($this->filter);
 
         if ($episodes->count()) {
             return $this->respondSuccess($episodes);

@@ -6,6 +6,8 @@ use App\Jobs\Job;
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Filter\Filter;
+use App\Repositories\EpisodesRepository;
+use App\Repositories\FeedRepository;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,15 +23,13 @@ class UpdateLastEpisodeFeed extends Job implements ShouldQueue
     public function handle(Filter $filter)
     {
         $filter->setLimit(10);
-
-        $Episodes = ((new Episode)->getLatests($filter));
+        
+        $Episodes = (new EpisodesRepository)->latests($filter);
         $Episodes
             ->unique('feed_id')
             ->map(function($episode){
-                Feed::where('id', $episode->feed_id)
-                    ->update([
-                        'last_episode_at' => $episode->published_date
-                    ]);
+                (new FeedRepository)
+                    ->updateLastEpisodeDate($episode->feed_id, $episode->published_date);
             });
     }
 }

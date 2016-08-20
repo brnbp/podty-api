@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\SendLogToWarehouse;
 use App\Models\Episode;
 use App\Models\Feed;
+use App\Repositories\FeedRepository;
 use App\Services\Logger\Warehouse;
 use App\Services\Queue;
 use App\Transform\FeedTransformer;
@@ -21,29 +22,28 @@ class FeedController extends ApiController
     private $Feed;
 
     /**
-     * @var FeedTransformer
+     * @var FeedRepository
      */
-    private $feedTransformer;
+    private $feedRepository;
 
-    public function __construct(Feed $feed, FeedTransformer $feedTransformer)
+    public function __construct(Feed $feed, FeedRepository $feedRepository)
     {
         $this->Feed = $feed;
         $this->feedTransformer = $feedTransformer;
+        $this->feedRepository = $feedRepository;
     }
 
     public function retrieve($name)
     {
-        $this->Feed->findLikeName($name);
+        $feed = $this->feedRepository->findByName($name);
 
-        if ($this->Feed->has_content) {
-            return $this->respondSuccess(
-                $this->feedTransformer->transformCollection($this->Feed->getContent())
-            );
+        if ($feed->isEmpty()) {
+            $this->Feed->persist($name);
         }
 
-        return $this->create($name);
+        return $this->response($feed);
     }
-    
+
     /**
      * @param $id
      *
@@ -51,65 +51,26 @@ class FeedController extends ApiController
      */
     public function retrieveById($id)
     {
-        $feed = Feed::where('id', $id)->get();
+        $feed = $this->feedRepository->findById($id);
 
-        if ($feed->count()) {
-            return $this->respondSuccess($this->feedTransformer->transformCollection($feed->toArray()));
-        }
-
-        return $this->respondNotFound();
-    }
-
-    /**
-     * Cria feed e adiciona em fila a importação de episodios
-     * @param string $name nome do podcast a ser criado
-     * @return Response
-     */
-    private function create($name)
-    {
-        if ($this->createFeeds($name) == false) {
-            return $this->respondNotFound();
-        }
-
-        $feed = $this->Feed->getContent();
-
-        if (empty($feed)) {
-            return $this->respondNotFound();
-        }
-
-        (new Queue)->searchNewEpisodes([$feed]);
-
-        return $this->respondAcceptedRequest();
-    }
-
-    /**
-     * Salva o podcast pesquisado no banco
-     * @param string $name nome do podcast
-     * @return bool
-     */
-    private function createFeeds($name)
-    {
-        $results = (new ItunesFinder($name))
-            ->all();
-
-        if ($results == false) {
-            return false;
-        }
-
-        $this->Feed->storage($results);
-
-        return true;
+        return $this->response($feed);
     }
 
     public function latest()
     {
-        $latestsFeeds = (new Feed())->getLatestsUpdated()->toArray();
+        $latestsFeeds = $this->feedRepository->latests();
 
-        if (empty($latestsFeeds)) {
+        return $this->response($latestsFeeds);
+    }
+
+    public function response($collection)
+    {
+        if ($collection->isEmpty()) {
             return $this->respondNotFound();
         }
 
-
-        return $this->respondSuccess($this->feedTransformer->transformCollection($latestsFeeds));
+        return $this->respondSuccess(
+            (new FeedTransformer)->transformCollection($collection->toArray())
+        );
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 use App\EpisodeEntity;
 use App\Jobs\RegisterEpisodesFeed;
 use App\Filter\Filter;
+use App\Repositories\FeedRepository;
 use App\Services\Parser\XML;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -44,7 +45,7 @@ class Episode extends Model
 
         $this->insert($feed_id, $content['channel']['item']);
 
-        (new Feed())->updateTotalEpisodes($feed_id);
+        (new FeedRepository())->updateTotalEpisodes($feed_id);
 
         return true;
     }
@@ -115,38 +116,7 @@ class Episode extends Model
 
         return $url;
     }
-
-    /**
-     * @param integer $feed_id id of feed
-     */
-    public function getTotalEpisodes($feed_id)
-    {
-        return self::where('feed_id', $feed_id)->count();
-    }
-
-    /**
-     * Busca por episodios a partir de campo na tabela episodes
-     * @param integer $id id do podcast
-     * @return mixed
-     */
-    public function getByFeedId($feedId, Filter $filter)
-    {
-        $Feed = Feed::find($feedId);
-
-        if (is_null($Feed )) {
-            return [];
-        }
-
-        return $Feed
-            ->episodes()
-            ->skip($filter->offset)
-            ->take($filter->limit)
-            ->orderBy('id', $filter->order)
-            ->where('title', 'LIKE', "%$filter->term%")
-            ->get()
-            ->toArray();
-    }
-
+    
     /**
      * Verifica se existe episodio a partir de mediaUrl property
      * @param string $mediaUrl opcional, caso nao tenha sido setado na classe ainda
@@ -166,27 +136,6 @@ class Episode extends Model
         }
         $ret = self::where('media_url', $this->media_url)->select('id')->get();
         return !$ret->isEmpty();
-    }
-
-    /**
-     * Busca pelos ultimos episodios publicados pelos podcasts
-     * @param Filter $filter
-     */
-    public function getLatests(Filter $filter)
-    {
-        return self::take($filter->limit)
-            ->join('feeds', 'episodes.feed_id', '=', 'feeds.id')
-            ->skip($filter->offset)
-            ->orderBy('published_date', $filter->order)
-            ->select(
-                'episodes.*',
-                'feeds.name',
-                'feeds.thumbnail_30',
-                'feeds.thumbnail_60',
-                'feeds.thumbnail_100',
-                'feeds.thumbnail_600'
-            )
-            ->get();
     }
 
     /**
