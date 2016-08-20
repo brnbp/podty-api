@@ -14,7 +14,7 @@ class EpisodeEntity
     /**
      * @var
      */
-    public $feedId;
+    public $feed_id;
 
     /**
      * @var
@@ -29,7 +29,7 @@ class EpisodeEntity
     /**
      * @var
      */
-    public $publishedDate;
+    public $published_date;
 
     /**
      * @var
@@ -39,20 +39,18 @@ class EpisodeEntity
     /**
      * @var
      */
-    public $mediaUrl;
+    public $media_url;
 
     /**
      * @var
      */
-    public $mediaLength;
+    public $media_length;
 
     /**
      * @var
      */
-    public $mediaType;
-
-    public $saved;
-
+    public $media_type;
+    
     /**
      * @param mixed $feedId
      *
@@ -60,7 +58,7 @@ class EpisodeEntity
      */
     public function setFeedId($feedId)
     {
-        $this->feedId = $feedId;
+        $this->feed_id = $feedId;
         return $this;
     }
 
@@ -93,7 +91,7 @@ class EpisodeEntity
      */
     public function setPublishedDate($publishedDate)
     {
-        $this->publishedDate = (new \DateTime($publishedDate))->format('Y-m-d H:i:s');
+        $this->published_date = (new \DateTime($publishedDate))->format('Y-m-d H:i:s');
         return $this;
     }
 
@@ -102,7 +100,7 @@ class EpisodeEntity
      */
     public function getPublishedDate()
     {
-        return $this->publishedDate;
+        return $this->published_date;
     }
 
     /**
@@ -123,7 +121,7 @@ class EpisodeEntity
      */
     public function setMediaUrl($mediaUrl)
     {
-        $this->mediaUrl = $mediaUrl ?: 'empty';
+        $this->media_url = $mediaUrl ?: 'empty';
         return $this;
     }
 
@@ -134,7 +132,7 @@ class EpisodeEntity
      */
     public function setMediaLength($mediaLength)
     {
-        $this->mediaLength = $mediaLength ?: 0;
+        $this->media_length = $mediaLength ?: 0;
         return $this;
     }
 
@@ -145,29 +143,8 @@ class EpisodeEntity
      */
     public function setMediaType($mediaType)
     {
-        $this->mediaType = $mediaType ?: 'audio/mpeg';
+        $this->media_type = $mediaType ?: 'audio/mp3';
         return $this;
-    }
-
-
-
-    /**
-     * @return Episode
-     */
-    public function toObject()
-    {
-        $ep = new Episode();
-
-        $ep->feed_id = $this->feedId;
-        $ep->title = $this->title;
-        $ep->published_date = $this->publishedDate;
-        $ep->content = $this->content;
-        $ep->link = $this->link;
-        $ep->media_length = $this->mediaLength;
-        $ep->media_type = $this->mediaType;
-        $ep->media_url = $this->mediaUrl;
-
-        return $ep;
     }
 
     /**
@@ -176,37 +153,14 @@ class EpisodeEntity
     public function toArray()
     {
         return [
-          'feed_id' => $this->feedId,
+          'feed_id' => $this->feed_id,
           'title' => $this->title,
-          'published_date' => $this->publishedDate,
+          'published_date' => $this->published_date,
           'content' => $this->content,
           'link' => $this->link,
-          'media_length' => $this->mediaLength,
-          'media_type' => $this->mediaType,
-          'media_url' => $this->mediaUrl
+          'media_length' => $this->media_length,
+          'media_type' => $this->media_type,
+          'media_url' => $this->media_url
         ];
-    }
-
-    public function persist()
-    {
-        $ep = new Episode();
-
-        $ep->feed_id = $this->feedId;
-        $ep->title = $this->title;
-        $ep->published_date = $this->publishedDate;
-        $ep->content = $this->content;
-        $ep->link = $this->link;
-        $ep->media_length = $this->mediaLength;
-        $ep->media_type = $this->mediaType;
-        $ep->media_url = $this->mediaUrl;
-
-        if ($ep->exists()) {
-            $this->saved = false;
-            return false;
-        }
-
-        $ep->save();
-        $this->saved = true;
-        return true;
     }
 }

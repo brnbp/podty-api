@@ -23,7 +23,6 @@ class FeedController extends ApiController
     public function __construct(Feed $feed, FeedRepository $feedRepository)
     {
         $this->Feed = $feed;
-        $this->feedTransformer = $feedTransformer;
         $this->feedRepository = $feedRepository;
     }
 

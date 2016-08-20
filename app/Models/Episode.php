@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\EpisodeEntity;
+use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use App\Services\Parser\XML;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,17 @@ use PhpSpec\Exception\Fracture\PropertyNotFoundException;
  */
 class Episode extends Model
 {
+    protected $fillable = [
+        'feed_id',
+        'title',
+        'published_date',
+        'content',
+        'link',
+        'media_length',
+        'media_type',
+        'media_url'
+    ];
+
     /** @var array $hidden The attributes that should be hidden for arrays. */
     protected $hidden = ['created_at', 'updated_at'];
 
@@ -55,13 +67,12 @@ class Episode extends Model
      */
     private function insert($feedId, array $episodes)
     {
-        //$feed = Feed::find($feedId);
-        foreach (array_reverse($episodes) as $episode) {
+        $episodes = array_reverse($episodes);
+        array_walk($episodes, function($episode) use($feedId) {
             if (!$this->validateMediaFields($episode['enclosure']['@attributes'])) {
-                continue;
+                return;
             }
-
-            (new EpisodeEntity())
+            $episode = (new EpisodeEntity())
                 ->setFeedId($feedId)
                 ->setTitle($episode['title'])
                 ->setLink($this->getDefault($episode, 'link'))
@@ -69,9 +80,9 @@ class Episode extends Model
                 ->setContent($this->getDefault($episode, 'description'))
                 ->setMediaUrl($episode['enclosure']['@attributes']['url'] ?: '')
                 ->setMediaLength($episode['enclosure']['@attributes']['length'] ?: '')
-                ->setMediaType($episode['enclosure']['@attributes']['type'] ?: '')
-                ->persist();
-        }
+                ->setMediaType($episode['enclosure']['@attributes']['type'] ?: '');
+            (new EpisodesRepository)->save($episode);
+        });
     }
 
     /**
@@ -94,7 +105,7 @@ class Episode extends Model
         }
 
         if (!key_exists('type', $attributes)) {
-            $attributes['type'] = 'audio/mpeg';
+            $attributes['type'] = 'audio/mp3';
         }
 
         if (!key_exists('length', $attributes)) {
@@ -113,27 +124,6 @@ class Episode extends Model
         }
 
         return $url;
-    }
-
-    /**
-     * Verifica se existe episodio a partir de mediaUrl property
-     * @param string $mediaUrl opcional, caso nao tenha sido setado na classe ainda
-     * @return boolean retorna true se existe e falso caso nao exista
-     *
-     * @throws PropertyNotFoundException
-     * caso nao seja informado o parametro e a propriedade nao tenha sido definida ainda
-     */
-    public function exists($mediaUrl = null)
-    {
-        if ($mediaUrl) {
-            $this->media_url = $mediaUrl;
-        }
-
-        if (!$this->media_url) {
-            throw new PropertyNotFoundException('property media_url not defined', $this, 'media_url');
-        }
-        $ret = self::where('media_url', $this->media_url)->select('id')->get();
-        return !$ret->isEmpty();
     }
 
     /**

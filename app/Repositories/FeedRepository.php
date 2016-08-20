@@ -5,11 +5,6 @@ use App\Models\Feed;
 
 class FeedRepository
 {
-    public function __construct()
-    {
-        $this->feed = new Feed;
-    }
-
     public function findByName($name)
     {
         return Feed::where('name', 'like', "%$name%")->get();
@@ -18,6 +13,11 @@ class FeedRepository
     public function first($id)
     {
         return $this->findById($id)->first();
+    }
+
+    public function all()
+    {
+        return Feed::all();
     }
 
     public function findById($id)
@@ -43,7 +43,9 @@ class FeedRepository
 
     public function updateOrCreate(array $feed)
     {
-        return $this->feed->upsert($feed, ['url' => $feed['url']], true);
+        return Feed::updateOrCreate([
+            'url' => $feed['url']
+        ], $feed);
     }
 
     public function updateTotalEpisodes($id)

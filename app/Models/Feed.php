@@ -39,17 +39,13 @@ class Feed extends Model
 
     public function persist($name)
     {
-        $newFeed = $this->createFeeds($name);
+        $newFeeds = $this->createFeeds($name);
 
-        if (!$newFeed) {
+        if (!$newFeeds) {
             return false;
         }
 
-        $feeds = array_map(function($feed){
-            return $feed->toArray();
-        }, $newFeed);
-
-        (new Queue)->searchNewEpisodes($feeds);
+        $this->cronSearchForNewEpisodes($newFeeds);
 
         return true;
     }
@@ -72,33 +68,7 @@ class Feed extends Model
             return (new FeedRepository)->updateOrCreate($feed);
         }, $results);
 
-        return count($response) ? $response : false;
-    }
-
-    /**
-     * Update or Create content
-     * @param array $content array of contents being ['field' => 'value']
-     * @param array $filter array of filters being ['field' => 'value']
-     * @param bool $insert sets for insert if not exists, default is false
-     *
-     * @return bool|int
-     */
-    public function upsert(array $content, array $filter, $insert = false)
-    {
-        if ($insert) {
-            return self::updateOrCreate($filter, $content);
-        }
-
-        return self::update($content, $filter);
-    }
-
-    public function getUrlById($id)
-    {
-        $feed = self::where('id', $id)->get();
-
-        $content = $feed->toArray();
-
-        return reset($content)['url'];
+        return count($response) ? collect($response) : false;
     }
 
     /**
@@ -108,14 +78,15 @@ class Feed extends Model
     public function cronSearchForNewEpisodes($feeds = null)
     {
         if (!$feeds) {
-            $feeds = self::all(['url', 'id'])->toArray();
+            $feeds = (new FeedRepository)->all();
         }
 
-        foreach ($feeds as $feed) {
-            $this->dispatch(new RegisterEpisodesFeed($feed));
-        }
-
-        return $this;
+        $feeds->map(function($feed){
+            $this->dispatch(new RegisterEpisodesFeed([
+                'id' => $feed->id,
+                'url' => $feed->url
+            ]));
+        });
     }
 
     /**
@@ -125,7 +96,5 @@ class Feed extends Model
     public function cronUpdateLastEpisodeAt()
     {
         $this->dispatch(new UpdateLastEpisodeFeed);
-
-        return $this;
     }
 }

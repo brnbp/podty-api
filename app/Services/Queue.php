@@ -9,10 +9,9 @@ class Queue
 {
     use DispatchesJobs;
 
-    public function searchNewEpisodes($feeds = null)
+    public function searchNewEpisodes()
     {
-        (new Feed)
-            ->cronSearchForNewEpisodes($feeds);
+        (new Feed)->cronSearchForNewEpisodes();
     }
 
     public function updateLastEpisodeAt()

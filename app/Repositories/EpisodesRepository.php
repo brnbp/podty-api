@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\EpisodeEntity;
 use App\Filter\Filter;
 use App\Models\Episode;
 use App\Models\Feed;
@@ -53,5 +54,14 @@ class EpisodesRepository
                 'feeds.thumbnail_600'
             )
             ->get();
+    }
+
+    public function save(EpisodeEntity $episodeEntity)
+    {
+        $episode = Episode::updateOrCreate([
+            'media_url' => $episodeEntity->media_url
+        ], $episodeEntity->toArray());
+
+        return $episode->exists;
     }
 }
