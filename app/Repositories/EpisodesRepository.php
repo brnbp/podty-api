@@ -65,4 +65,13 @@ class EpisodesRepository
 
         return $episode->exists;
     }
+
+    public static function getIdsByFeed($feedId)
+    {
+        $episodes = Episode::whereFeedId($feedId)->select('id')->get();
+
+        return $episodes->map(function($item){
+            return $item->id;
+        });
+    }
 }

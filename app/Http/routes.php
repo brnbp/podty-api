@@ -18,13 +18,16 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('episodes/feed/{feedId}', 'EpisodeController@retrieve');
     Route::get('episodes/latest', 'EpisodeController@latest');
 
+
     Route::get('users/{username}', 'UserController@show');
     Route::post('users', 'UserController@create');
     Route::delete('users/{username}', 'UserController@delete');
     Route::post('users/authenticate', 'UserController@authenticate');
 
-    Route::post('users/{username}/feeds', 'UserFeedsController@attach');
+
+    Route::post('users/{username}/feeds/{feedId}', 'UserFeedsController@attach');
     Route::delete('users/{username}/feeds/{feedId}', 'UserFeedsController@detach');
+    
     Route::get('users/{username}/feeds','UserFeedsController@all');
     Route::get('users/{username}/feeds/{feedId}','UserFeedsController@one');
 
@@ -37,8 +40,6 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
 
     Route::put('users/{username}/episodes/{episodeId}/paused', 'UserEpisodesController@paused');
-
-
 
 
 

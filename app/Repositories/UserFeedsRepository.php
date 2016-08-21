@@ -25,6 +25,28 @@ class UserFeedsRepository
         return UserFeed::whereFeedId($feedId)->whereUserId($userId)->first();
     }
 
+    public static function idByEpisodeAndUsername($episodeId, $username)
+    {
+        $userId = UserRepository::getId($username);
+        if (!$userId) {
+            return false;
+        }
+        
+        return self::idByEpisodeAndUser($episodeId, $userId);
+    }
+    
+    public static function idByEpisodeAndUser($episodeId, $userId)
+    {
+        $feedId = EpisodesRepository::feedId($episodeId);
+        if (!$feedId) {
+            return false;
+        }
+
+        $userFeed = UserFeedsRepository::first($feedId, $userId);
+
+        return $userFeed ? $userFeed->id : false;
+    }
+
     public static function create($feedId, User $user)
     {
        $userFeed = UserFeed::firstOrCreate([
@@ -54,6 +76,16 @@ class UserFeedsRepository
         UserRepository::decrementsPodcastCount($userFeed);
 
         return $userFeed->delete();
+    }
+
+    public static function markAllListened($id, $boolean = true)
+    {
+        return UserFeed::whereId($id)->update(['listen_all' => $boolean]);
+    }
+
+    public static function markAllNotListened($id)
+    {
+        return UserFeed::whereId($id)->update(['listen_all' => false]);
     }
 
     private static function buildQuery(Builder $builder)

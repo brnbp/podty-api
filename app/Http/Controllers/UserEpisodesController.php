@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserEpisode;
+use App\Models\UserFeed;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
@@ -40,22 +42,28 @@ class UserEpisodesController extends ApiController
         return $this->responseData($data);
     }
 
-
     public function attach($username)
     {
         $userId = UserRepository::getId($username);
+        if (!$userId) {
+            return $this->respondNotFound('user not found');
+        }
+
+        $content = Input::get('content');
+        if (!$content) {
+            return $this->respondBadRequest('payload not acceptable');
+        }
 
         $userEpisodes = [];
-        foreach (Input::get('content') as $userEpisode) {
-            $feedId = EpisodesRepository::feedId($userEpisode['episode_id']);
-            $userFeed = UserFeedsRepository::first($feedId, $userId);
-            if (!$userFeed) {
+        foreach ($content as $episode) {
+            $userFeedId = UserFeedsRepository::idByEpisodeAndUser($episode['id'], $userId);
+            if (!$userFeedId) {
                 continue;
             }
             $userEpisodes[] = [
-                'user_feed_id' => $userFeed->id,
-                'episode_id' => $userEpisode['episode_id'],
-                'paused_at' => $userEpisode['paused_at'],
+                'user_feed_id' => $userFeedId,
+                'episode_id' => $episode['id'],
+                'paused_at' => $episode['paused_at'],
             ];
         }
 
@@ -65,39 +73,30 @@ class UserEpisodesController extends ApiController
 
         UserEpisodesRepository::batchCreate($userEpisodes);
 
+        if (UserEpisodesRepository::hasEpisodes($userFeedId)) {
+            UserFeedsRepository::markAllListened($userFeedId, false);
+        }
+
         return $this->responseData(['created' => true]);
     }
 
     public function detach($username, $episodeId)
     {
-        $feedId = EpisodesRepository::feedId($episodeId);
-
-        if (!$feedId) {
-            return $this->respondNotFound();
+        $userFeedId = UserFeedsRepository::idByEpisodeAndUsername($episodeId, $username);
+        if (!$userFeedId) {
+            return $this->respondNotFound('User not follow feed from episodes passed');
         }
 
-        $userId = UserRepository::getId($username);
+        $deleted = UserEpisodesRepository::delete($userFeedId, $episodeId);
 
-        if (!$userId) {
-            return $this->respondNotFound();
+        if (UserEpisodesRepository::hasEpisodes($userFeedId) == false) {
+            UserFeedsRepository::markAllListened($userFeedId);
         }
-
-        $userFeed = UserFeedsRepository::first($feedId, $userId);
-
-        if (!$userFeed) {
-            return $this->respondNotFound();
-        }
-
-        $deleted = UserEpisodesRepository::delete($userFeed->id, $episodeId);
-
-        // TODO verificar se existe algum episodio ainda para este feed-user
-        //      caso nao exista mais, marcar em user_feed, listen_all como true
 
         return  $deleted ?
             $this->respondSuccess(['removed' => true]) :
             $this->respondNotFound();
     }
-
 
     public function latests($username)
     {
@@ -124,6 +123,23 @@ class UserEpisodesController extends ApiController
 
     }
 
+    public function paused($username, $episodeId)
+    {
+        $userFeedId = UserFeedsRepository::idByEpisodeAndUsername($episodeId, $username);
+        if (!$userFeedId) {
+            return $this->respondNotFound('User not follow feed from episodes passed');
+        }
+
+        $time = Input::get('time');
+
+        if (!$time) {
+            return $this->respondBadRequest();
+        }
+
+        UserEpisodesRepository::markAsPaused($userFeedId, $episodeId, $time);
+
+        return $this->respondSuccess(['updated' => true]);
+    }
 
     private function responseData($data)
     {
