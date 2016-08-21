@@ -12,7 +12,8 @@ class EpisodesRepository
 {
     public static function feedId($episodeId)
     {
-        return Episode::whereId($episodeId)->first()->feed_id;
+        $episode = Episode::whereId($episodeId)->first();
+        return $episode ? $episode->feed_id : false;
     }
 
     public function retriveByFeedId($feedId, Filter $filter)

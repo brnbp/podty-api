@@ -7,6 +7,8 @@ class UserFeed extends Model
 {
     protected $fillable = ['user_id', 'feed_id'];
 
+    protected $casts = ['listen_all' => 'boolean'];
+
     public $timestamps = false;
 
     public function user()

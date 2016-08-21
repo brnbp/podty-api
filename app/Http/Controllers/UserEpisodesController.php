@@ -41,17 +41,26 @@ class UserEpisodesController extends ApiController
     }
 
 
-    public function attach($username, $feedId)
+    public function attach($username)
     {
         $userId = UserRepository::getId($username);
-        $userFeed = UserFeedsRepository::first($feedId, $userId);
 
+        $userEpisodes = [];
         foreach (Input::get('content') as $userEpisode) {
+            $feedId = EpisodesRepository::feedId($userEpisode['episode_id']);
+            $userFeed = UserFeedsRepository::first($feedId, $userId);
+            if (!$userFeed) {
+                continue;
+            }
             $userEpisodes[] = [
                 'user_feed_id' => $userFeed->id,
                 'episode_id' => $userEpisode['episode_id'],
                 'paused_at' => $userEpisode['paused_at'],
             ];
+        }
+
+        if (!$userEpisodes) {
+            return $this->respondBadRequest('User not follow feed from episodes passed');
         }
 
         UserEpisodesRepository::batchCreate($userEpisodes);
@@ -61,13 +70,32 @@ class UserEpisodesController extends ApiController
 
     public function detach($username, $episodeId)
     {
-        $userFeed = UserFeedsRepository::first(
-            EpisodesRepository::feedId($episodeId),
-            UserRepository::getId($username)
-        );
+        $feedId = EpisodesRepository::feedId($episodeId);
 
-        return UserEpisodesRepository::delete($userFeed->id, $episodeId) ?
-            $this->respondSuccess(['removed' => true]) : $this->respondNotFound();
+        if (!$feedId) {
+            return $this->respondNotFound();
+        }
+
+        $userId = UserRepository::getId($username);
+
+        if (!$userId) {
+            return $this->respondNotFound();
+        }
+
+        $userFeed = UserFeedsRepository::first($feedId, $userId);
+
+        if (!$userFeed) {
+            return $this->respondNotFound();
+        }
+
+        $deleted = UserEpisodesRepository::delete($userFeed->id, $episodeId);
+
+        // TODO verificar se existe algum episodio ainda para este feed-user
+        //      caso nao exista mais, marcar em user_feed, listen_all como true
+
+        return  $deleted ?
+            $this->respondSuccess(['removed' => true]) :
+            $this->respondNotFound();
     }
 
 

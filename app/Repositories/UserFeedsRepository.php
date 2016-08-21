@@ -31,7 +31,7 @@ class UserFeedsRepository
             'user_id' => $user->id,
             'feed_id' => $feedId
         ]);
-        
+
         UserRepository::incrementsPodcastsCount($userFeed);
 
         return $userFeed;
@@ -60,6 +60,6 @@ class UserFeedsRepository
     {
         return $builder->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
                 ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-                ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30');
+                ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30', 'user_feeds.listen_all');
     }
 }

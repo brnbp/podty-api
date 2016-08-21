@@ -38,7 +38,7 @@ class UserEpisodesRepository
         if (!$userEpisode) {
             return false;
         }
-        
+
         return $userEpisode->delete();
     }
 }

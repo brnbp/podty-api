@@ -32,7 +32,7 @@ class UserFeedsController extends ApiController
         if (!$user) {
             return $this->respondNotFound();
         }
-        
+
         if (!Input::get('feeds')) {
             return $this->respondBadRequest();
         }
@@ -46,8 +46,14 @@ class UserFeedsController extends ApiController
         if (!$user) {
             return $this->respondNotFound();
         }
-        return UserFeedsRepository::delete($feedId, $user) ?
-            $this->respondSuccess(['removed' => true]) : $this->respondNotFound();
+
+        $deleted = UserFeedsRepository::delete($feedId, $user);
+
+        // TODO apagar tudo de UserEpisodes
+
+        return $deleted ?
+            $this->respondSuccess(['removed' => true]) :
+            $this->respondNotFound();
     }
 
     private function responseData($data)
