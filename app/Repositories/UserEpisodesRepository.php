@@ -71,7 +71,10 @@ class UserEpisodesRepository
 
     public static function createAllEpisodesFromUserFeed(UserFeed $userFeed)
     {
-        $episodes = (new EpisodesRepository)->retriveByFeedId($userFeed->feed_id, new Filter);
+        $filter = new Filter;
+        $filter->limit = 9999;
+
+        $episodes = (new EpisodesRepository)->retriveByFeedId($userFeed->feed_id, $filter);
 
         $episodes = $episodes->map(function($item) use ($userFeed) {
             return [

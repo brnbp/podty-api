@@ -20,6 +20,8 @@ class UserTransformer extends TransformerAbstract
             'id' => $user->id,
             'username' => $user->username,
             'email' => $user->email,
+            'friends_count' => $user->friends_count,
+            'podcasts_count' => $user->podcasts_count,
             'joined_at' => $user->created_at->toDateTimeString(),
             'last_update' => $user->updated_at->toDateTimeString()
         ];

@@ -19,7 +19,6 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'customer_id' => 1,
                 'username' => 'bruno2546',
                 'email' => 'bruno2546@brnbp.me',
                 'password' => bcrypt('bruno2546'),
@@ -30,7 +29,6 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => \Carbon\Carbon::now()
             ],
             [
-                'customer_id' => 1,
                 'username' => 'brnbp',
                 'email' => 'brnbp@brnbp.me',
                 'password' => bcrypt('brnbp'),

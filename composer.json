@@ -47,7 +47,8 @@
         ],
         "post-update-cmd": [
             "php artisan optimize"
-        ]
+        ],
+        "test": "./vendor/bin/phpunit --testsuite integration"
     },
     "config": {
         "preferred-install": "dist"

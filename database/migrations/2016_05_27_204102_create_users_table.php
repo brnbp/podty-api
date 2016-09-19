@@ -14,7 +14,6 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('customer_id')->unsigned();
             $table->string('username')->unique()->index();
             $table->string('email')->unique()->index();
             $table->string('password');
@@ -22,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->integer('podcasts_count')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
 

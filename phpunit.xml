@@ -9,8 +9,14 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./tests/</directory>
+        <testsuite name="unit">
+            <directory>./tests/unit/</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory suffix="Test.php">./tests/integration/</directory>
+        </testsuite>
+        <testsuite name="contract">
+            <directory>./tests/contract/</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -23,5 +29,8 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+
+        <env name="DB_DATABASE" value="brnpod-test"/>
+
     </php>
 </phpunit>
