@@ -31,10 +31,10 @@ class UserFeedsRepository
         if (!$userId) {
             return false;
         }
-        
+
         return self::idByEpisodeAndUser($episodeId, $userId);
     }
-    
+
     public static function idByEpisodeAndUser($episodeId, $userId)
     {
         $feedId = EpisodesRepository::feedId($episodeId);
@@ -92,6 +92,14 @@ class UserFeedsRepository
     {
         return $builder->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
                 ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-                ->select('feeds.id', 'feeds.name', 'feeds.thumbnail_30', 'user_feeds.listen_all');
+                ->select(
+                    'feeds.id',
+                    'feeds.name',
+                    'feeds.thumbnail_30',
+                    'feeds.thumbnail_600',
+                    'feeds.total_episodes',
+                    'feeds.last_episode_at',
+                    'user_feeds.listen_all'
+                );
     }
 }
