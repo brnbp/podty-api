@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique()->index();
             $table->string('email')->unique()->index();
             $table->string('password');
-            $table->integer('friends_count')->nullable();
-            $table->integer('podcasts_count')->nullable();
+            $table->integer('friends_count')->default('0');
+            $table->integer('podcasts_count')->default('0');
             $table->rememberToken();
             $table->timestamps();
         });
