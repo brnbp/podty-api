@@ -5,7 +5,8 @@ namespace App\Repositories;
 use App\EpisodeEntity;
 use App\Filter\Filter;
 use App\Models\Episode;
-use App\Models\Feed;
+use App\Models\User;
+use App\Models\UserFeed;
 use Illuminate\Database\Eloquent\Builder;
 
 class EpisodesRepository
@@ -63,6 +64,12 @@ class EpisodesRepository
             'media_url' => $episodeEntity->media_url
         ], $episodeEntity->toArray());
 
+        if ($episode->wasRecentlyCreated) {
+
+            $this->updateAllUsersWhoFollowsIt($episode);
+
+        }
+
         return $episode->exists;
     }
 
@@ -73,5 +80,18 @@ class EpisodesRepository
         return $episodes->map(function($item){
             return $item->id;
         });
+    }
+
+    private function updateAllUsersWhoFollowsIt($episode)
+    {
+        $usersFeed = UserFeed::whereFeedId($episode->feed_id)->get();
+
+        foreach ($usersFeed as $userFeed) {
+            UserEpisodesRepository::create([
+                'user_feed_id' => $userFeed->id,
+                'episode_id' => $episode->id,
+                'paused_at' => 0
+            ]);
+        }
     }
 }
