@@ -67,7 +67,7 @@ class UserRepository
     public static function decrementsPodcastCount(UserFeed $userFeed)
     {
         if ($userFeed->wasRecentlyCreated) {
-            return User::whereId($userFeed->user_id)->decrement('podcast_count');
+            return User::whereId($userFeed->user_id)->decrement('podcasts_count');
         }
         return false;
     }
