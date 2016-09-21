@@ -22,8 +22,8 @@ class UpdateLastEpisodeFeed extends Job implements ShouldQueue
      */
     public function handle(Filter $filter)
     {
-        $filter->setLimit(10);
-        
+        $filter->setLimit(100);
+
         $Episodes = (new EpisodesRepository)->latests($filter);
         $Episodes
             ->unique('feed_id')

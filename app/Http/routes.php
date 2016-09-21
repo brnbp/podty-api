@@ -19,6 +19,8 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('episodes/latest', 'EpisodeController@latest');
 
 
+    Route::get('/users/find/{term}', 'UserController@find');
+
     Route::get('users/{username}', 'UserController@show');
     Route::post('users', 'UserController@create');
     Route::delete('users/{username}', 'UserController@delete');

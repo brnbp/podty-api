@@ -93,6 +93,21 @@ class UserController extends ApiController
             ->respondError('user not authenticated');
     }
 
+    public function find($term)
+    {
+        $users = User::where('username', 'LIKE', "%$term%")
+            ->select('id', 'username', 'friends_count', 'podcasts_count')
+            ->get();
+
+        if (!$users->count()) {
+            return $this->respondNotFound();
+        }
+
+        return $this->respondSuccess($users->toArray(), [
+            'total_matches' => $users->count()
+        ]);
+    }
+
     private function responseData($data)
     {
         return empty($data) ? $this->respondNotFound() : $this->respondSuccess($data);
