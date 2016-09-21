@@ -11,11 +11,11 @@ class UserFriend extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
 
     public function friend()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
 }

@@ -9,6 +9,11 @@ use Illuminate\Database\QueryException;
 
 class UserRepository
 {
+    public static function byId($id)
+    {
+        return User::whereId($id)->get();
+    }
+
     public static function create($userData)
     {
         $user = new User([

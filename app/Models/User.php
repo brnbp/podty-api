@@ -19,4 +19,14 @@ class User extends Model
     {
         return $this->hasMany(UserFeed::class);
     }
+
+    public function friends()
+    {
+        return $this->hasMany(UserFriend::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
 }

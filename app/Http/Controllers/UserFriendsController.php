@@ -1,26 +1,38 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Repositories\UserFriendsRepository;
 use App\Repositories\UserRepository;
 
-class UserFriendsController extends Controller
+class UserFriendsController extends ApiController
 {
-    public function follow($username, $friendUsername)
+    public function all(User $user)
     {
-        $userId = UserRepository::getId($username);
-        $friendUserId = UserRepository::getId($friendUsername);
+        $data = $user->friends()->get()->map(function($friend){
+            $find = UserRepository::byId($friend->friend_user_id)->toArray();
+            if ($find) {
+                return reset($find);
+            }
+            return [];
+        });
+        
+        if (!$data || !$data->count()) {
+            return $this->respondNotFound();
+        }
 
-        UserFriendsRepository::follow($userId, $friendUserId);
-        UserRepository::incrementsFriendsCount($userId);
+        return $this->respondSuccess($data);
     }
 
-    public function unfollow($username, $friendUsername)
+    public function follow(User $user, User $friend)
     {
-        $userId = UserRepository::getId($username);
-        $friendUserId = UserRepository::getId($friendUsername);
+        UserFriendsRepository::follow($user->id, $friend->id);
+        UserRepository::incrementsFriendsCount($user->id);
+    }
 
-        UserFriendsRepository::unfollow($userId, $friendUserId);
-        UserRepository::decrementsFriendsCount($userId);
+    public function unfollow(User $user, User $friend)
+    {
+        UserFriendsRepository::unfollow($user->id, $friend->id);
+        UserRepository::decrementsFriendsCount($user->id);
     }
 }
