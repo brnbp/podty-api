@@ -42,16 +42,9 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::put('users/{username}/episodes/{episodeId}/paused', 'UserEpisodesController@paused');
 
 
-
-    Route::post('users/{username}/friends/{friendId}', 'UserFriends@attach');
-    Route::delete('users/{username}/friends/{friendId}', 'UserFriends@detach');
-    Route::get('users/{username}/friends', 'UserFriends@all');
-
-
-
-
-
-
+    
+    Route::post('users/{username}/friends/{friendUsername}', 'UserFriendsController@follow');
+    Route::delete('users/{username}/friends/{friendUsername}', 'UserFriendsController@unfollow');
 
 
 
