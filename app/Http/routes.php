@@ -25,6 +25,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::post('users', 'UserController@create');
     Route::delete('users/{username}', 'UserController@delete');
     Route::post('users/authenticate', 'UserController@authenticate');
+    Route::patch('users/{username}/touch', 'UserController@touch');
 
     Route::post('users/{username}/feeds/{feedId}', 'UserFeedsController@attach');
     Route::delete('users/{username}/feeds/{feedId}', 'UserFeedsController@detach');

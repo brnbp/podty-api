@@ -108,6 +108,16 @@ class UserController extends ApiController
         ]);
     }
 
+    public function touch($username)
+    {
+        $user = UserRepository::first($username);
+        if (!$user) {
+            return $this->respondNotFound();
+        }
+        $user->touch();
+        return response('', 200);
+    }
+
     private function responseData($data)
     {
         return empty($data) ? $this->respondNotFound() : $this->respondSuccess($data);
