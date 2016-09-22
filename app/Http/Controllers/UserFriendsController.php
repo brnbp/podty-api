@@ -16,13 +16,13 @@ class UserFriendsController extends ApiController
                 return (new UserTransformer)->transform($find);
             }
             return [];
-        });
+        })->sortByDesc('last_update')->toArray();
 
-        if (!$data || !$data->count()) {
+        if (!$data) {
             return $this->respondNotFound();
         }
 
-        return $this->respondSuccess($data);
+        return $this->respondSuccess(array_values($data));
     }
 
     public function follow(User $user, User $friend)
