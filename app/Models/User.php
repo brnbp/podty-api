@@ -5,9 +5,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $fillable = ['username', 'email', 'password'];
+    protected $fillable = ['username', 'email', 'password', 'friends_count', 'podcasts_count'];
 
-    protected $hidden = ['password', 'remember_token', 'created_at', 'updated_at'];
+    protected $hidden = ['password', 'remember_token'];
 
     public static $rules = [
         'username' => 'bail|required|alpha_num|unique:users|min:3|max:20',

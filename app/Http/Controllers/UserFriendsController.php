@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Repositories\UserFriendsRepository;
 use App\Repositories\UserRepository;
+use App\Transform\UserTransformer;
 
 class UserFriendsController extends ApiController
 {
     public function all(User $user)
     {
         $data = $user->friends()->get()->map(function($friend){
-            $find = UserRepository::byId($friend->friend_user_id)->toArray();
+            $find = User::whereId($friend->friend_user_id)->first();
             if ($find) {
-                return reset($find);
+                return (new UserTransformer)->transform($find);
             }
             return [];
         });
-        
+
         if (!$data || !$data->count()) {
             return $this->respondNotFound();
         }

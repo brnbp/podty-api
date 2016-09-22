@@ -10,7 +10,7 @@ class UserTransformer extends TransformerAbstract
 {
     /**
      * Transforma um feed para um retorno padrao
-     * @param $feed
+     * @param $user
      *
      * @return array
      */
@@ -25,6 +25,5 @@ class UserTransformer extends TransformerAbstract
             'joined_at' => $user->created_at->toDateTimeString(),
             'last_update' => $user->updated_at->toDateTimeString()
         ];
-
     }
 }
