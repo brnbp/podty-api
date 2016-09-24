@@ -7,6 +7,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class XML
@@ -48,11 +49,19 @@ class XML
         if ($this->xmlContent === false) {
             return false;
         }
-        
+
         libxml_use_internal_errors(true);
         $sxe = simplexml_load_string($this->xmlContent, null, LIBXML_NOCDATA);
 
         if ($sxe === false) {
+            $errors = [];
+            foreach(libxml_get_errors() as $error) {
+                $errors[] = $error->message;
+            }
+            Log::info(json_encode([
+                'xml_path' => $this->xmlPath,
+                'error' => $errors
+            ]));
             return false;
         }
 
