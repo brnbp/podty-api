@@ -48,8 +48,20 @@ class XML
         if ($this->xmlContent === false) {
             return false;
         }
+        
+        libxml_use_internal_errors(true);
+        $sxe = simplexml_load_string($this->xmlContent, null, LIBXML_NOCDATA);
 
-        return $this->getXMLData();
+        if ($sxe === false) {
+            return false;
+        }
+
+        return $sxe;
+    }
+
+    private function removeCDATA()
+    {
+        $this->xmlContent = str_replace(["<![CDATA[", "]]>"], "", $this->xmlContent);
     }
 
     /**
@@ -70,34 +82,5 @@ class XML
         }
 
         return $response->getBody()->getContents();
-    }
-
-    /**
-     * obtains xml content with array format
-     * @return array|boolean  returns an array of content or false if not possible
-     */
-    private function getXMLData()
-    {
-        return $this->xmlStringToObject();
-    }
-
-    /**
-     * Parse xml string to SimpleXMLElement object
-     * @return mixed
-     */
-    private function xmlStringToObject()
-    {
-        return simplexml_load_string($this->xmlContent);
-    }
-
-    /**
-     * Parse XML Object to Array
-     * @param \SimpleXMLElement $object
-     *
-     * @return mixed
-     */
-    private function objectToArray(\SimpleXMLElement $object)
-    {
-        return json_decode(json_encode($object), true);
     }
 }

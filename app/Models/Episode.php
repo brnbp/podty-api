@@ -5,9 +5,9 @@ use App\EpisodeEntity;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use App\Services\Parser\XML;
+use App\Transform\XMLTransformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use PhpSpec\Exception\Fracture\PropertyNotFoundException;
 
 /**
  * Class Episode
@@ -20,7 +20,10 @@ class Episode extends Model
         'feed_id',
         'title',
         'published_date',
+        'summary',
         'content',
+        'image',
+        'duration',
         'link',
         'media_length',
         'media_type',
@@ -53,8 +56,9 @@ class Episode extends Model
             return false;
         }
 
-        $this->insert($feed_id, $content['channel']['item']);
+        $content = (new XMLTransformer)->transform($content);
 
+        $this->insert($feed_id, $content);
         (new FeedRepository())->updateTotalEpisodes($feed_id);
 
         return true;
@@ -68,19 +72,20 @@ class Episode extends Model
     private function insert($feedId, array $episodes)
     {
         $episodes = array_reverse($episodes);
+
         array_walk($episodes, function($episode) use($feedId) {
-            if (!$this->validateMediaFields($episode['enclosure']['@attributes'])) {
-                return;
-            }
             (new EpisodesRepository)->save((new EpisodeEntity)
                 ->setFeedId($feedId)
                 ->setTitle($episode['title'])
-                ->setLink($this->getDefault($episode, 'link'))
-                ->setPublishedDate($this->getDefault($episode, 'pubDate'))
-                ->setContent($this->getDefault($episode, 'description'))
-                ->setMediaUrl($episode['enclosure']['@attributes']['url'] ?: '')
-                ->setMediaLength($episode['enclosure']['@attributes']['length'] ?: '')
-                ->setMediaType($episode['enclosure']['@attributes']['type'] ?: ''));
+                ->setLink($episode['link'])
+                ->setPublishedDate($episode['published_date'])
+                ->setSummary($episode['summary'])
+                ->setDuration($episode['duration'])
+                ->setImage($episode['image'])
+                ->setContent($episode['content'])
+                ->setMediaUrl($episode['media_url'])
+                ->setMediaLength($episode['media_length'])
+                ->setMediaType($episode['media_type']));
         });
     }
 
