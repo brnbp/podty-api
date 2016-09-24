@@ -6,7 +6,7 @@ namespace App\Services\Parser;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
-use Http\Client\Exception\RequestException;
+use GuzzleHttp\Exception\RequestException;
 
 /**
  * Class XML
@@ -48,6 +48,7 @@ class XML
         if ($this->xmlContent === false) {
             return false;
         }
+
         return $this->getXMLData();
     }
 
@@ -77,13 +78,7 @@ class XML
      */
     private function getXMLData()
     {
-        $object = $this->xmlStringToObject();
-
-        if ($object == false) {
-            return false;
-        }
-
-        return $this->objectToArray($object);
+        return $this->xmlStringToObject();
     }
 
     /**
@@ -92,7 +87,7 @@ class XML
      */
     private function xmlStringToObject()
     {
-        return simplexml_load_string($this->xmlContent, null, LIBXML_NOCDATA);
+        return simplexml_load_string($this->xmlContent);
     }
 
     /**
