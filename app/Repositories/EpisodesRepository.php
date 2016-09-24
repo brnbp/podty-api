@@ -21,7 +21,7 @@ class EpisodesRepository
     {
         $episodes = Episode::take($filter->limit)
                 ->skip($filter->offset)
-                ->orderBy('id', $filter->order)
+                ->orderBy('published_date', $filter->order)
                 ->whereFeedId($feedId)
                 ->where('title', 'LIKE', "%$filter->term%")
                 ->get();
