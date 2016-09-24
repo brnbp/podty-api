@@ -28,9 +28,9 @@ class XMLTransformer extends TransformerAbstract
                 'link' => array_first($entry->link) ?? '',
                 'published_date' => array_first($entry->pubDate) ?? '',
                 'content' => array_first($entry->description) ?? '',
-                'summary' => array_first($nsElements->summary) ?? '',
+                'summary' => array_first($nsElements->summary ?? []) ?? '',
                 'image' => $this->getImageUrl($nsElements),
-                'duration' => array_first($nsElements->duration) ?? '',
+                'duration' => array_first($nsElements->duration ?? []) ?? '',
                 'media_url' => $enclosure['@attributes']['url'] ?? '',
                 'media_length' => $enclosure['@attributes']['length'] ?? 0,
                 'media_type' => $enclosure['@attributes']['type'] ?? 'audio/mp3',
@@ -44,7 +44,7 @@ class XMLTransformer extends TransformerAbstract
     {
         $namespaces = $entry->getNameSpaces(true);
 
-        return $entry->children($namespaces['itunes']);
+        return $entry->children($namespaces['itunes'] ?? array_first($namespaces));
     }
 
     private function getImageUrl($nsElements)
