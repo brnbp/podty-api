@@ -1,9 +1,6 @@
 <?php
 namespace App;
 
-use App\Models\Episode;
-use Doctrine\DBAL\Query\QueryException;
-
 /**
  * Class EpisodeEntity
  *
@@ -36,6 +33,12 @@ class EpisodeEntity
      */
     public $content;
 
+    public $summary;
+
+    public $image;
+
+    public $duration;
+
     /**
      * @var
      */
@@ -50,7 +53,65 @@ class EpisodeEntity
      * @var
      */
     public $media_type;
-    
+
+    /**
+     * @return mixed
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param mixed $summary
+     *
+     * @return EpisodeEntity
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     *
+     * @return EpisodeEntity
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @param mixed $duration
+     *
+     * @return EpisodeEntity
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+        return $this;
+    }
+
+
     /**
      * @param mixed $feedId
      *
@@ -121,7 +182,7 @@ class EpisodeEntity
      */
     public function setMediaUrl($mediaUrl)
     {
-        $this->media_url = $mediaUrl ?: 'empty';
+        $this->media_url = $mediaUrl ?? 'empty';
         return $this;
     }
 
@@ -132,7 +193,7 @@ class EpisodeEntity
      */
     public function setMediaLength($mediaLength)
     {
-        $this->media_length = $mediaLength ?: 0;
+        $this->media_length = $mediaLength ?? 0;
         return $this;
     }
 
@@ -143,7 +204,7 @@ class EpisodeEntity
      */
     public function setMediaType($mediaType)
     {
-        $this->media_type = $mediaType ?: 'audio/mp3';
+        $this->media_type = $mediaType ?? 'audio/mp3';
         return $this;
     }
 
@@ -156,6 +217,9 @@ class EpisodeEntity
           'feed_id' => $this->feed_id,
           'title' => $this->title,
           'published_date' => $this->published_date,
+          'summary' => $this->summary,
+          'image' => $this->image,
+          'duration' => $this->duration,
           'content' => $this->content,
           'link' => $this->link,
           'media_length' => $this->media_length,
