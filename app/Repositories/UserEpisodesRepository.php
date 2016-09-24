@@ -76,6 +76,10 @@ class UserEpisodesRepository
 
         $episodes = (new EpisodesRepository)->retriveByFeedId($userFeed->feed_id, $filter);
 
+        if (!$episodes) {
+            return false;
+        }
+
         $episodes = $episodes->map(function($item) use ($userFeed) {
             return [
                 'user_feed_id' => $userFeed->id,
