@@ -21,7 +21,7 @@ class XMLTransformer extends TransformerAbstract
 
             $nsElements = $this->getNamespaceChildren($entry);
 
-            $enclosure = $this->getEnclosureAttributes($entry);
+            $enclosure = $this->getEnclosureAttributes($entry->enclosure->attributes());
 
             $episodes[] = [
                 'title' => array_first($entry->title),
@@ -60,8 +60,8 @@ class XMLTransformer extends TransformerAbstract
         return reset($nsElements->image->attributes()->href);
     }
 
-    private function getEnclosureAttributes($entry)
+    private function getEnclosureAttributes($attrs = [])
     {
-        return json_decode(json_encode($entry->enclosure->attributes()), true);
+        return json_decode(json_encode($attrs), true);
     }
 }
