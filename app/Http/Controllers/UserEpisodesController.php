@@ -37,6 +37,7 @@ class UserEpisodesController extends ApiController
                 'episodes.published_date',
                 'episodes.content'
             )
+            ->orderBy('episodes.published_date', 'desc')
             ->get();
 
         return $this->responseData($data);
