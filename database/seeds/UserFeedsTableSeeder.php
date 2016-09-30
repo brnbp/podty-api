@@ -1,12 +1,6 @@
 <?php
 use Illuminate\Database\Seeder;
 
-/**
- * Created by PhpStorm.
- * User: brnbp
- * Date: 6/14/16
- * Time: 10:22 PM
- */
 class UserFeedsTableSeeder extends Seeder
 {
 
