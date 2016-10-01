@@ -7,7 +7,10 @@ class FeedRepository
 {
     public function findByName($name)
     {
-        return Feed::where('name', 'like', "%$name%")->get();
+        return Feed::where('name', 'like', "%$name%")
+            ->orderBy('listeners', 'DESC')
+            ->orderBy('last_episode_at', 'DESC')
+            ->get();
     }
 
     public function first($id)
