@@ -8,11 +8,11 @@ DB::listen(function($query) {
     //var_dump($query->sql, $query->bindings);
 });
 
-Route::get('/', function() { return view('welcome'); });
 Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
-    Route::get('/', function() { return view('welcome'); });
+
 
     Route::get('feeds/latest', 'FeedController@latest');
+    Route::get('feeds/top/{count?}', 'FeedController@top');
     Route::get('feeds/name/{name}', 'FeedController@retrieve');
     Route::get('feeds/id/{feedId}', 'FeedController@retrieveById');
     Route::get('episodes/feed/{feedId}', 'EpisodeController@retrieve');

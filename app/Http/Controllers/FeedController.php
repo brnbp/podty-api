@@ -56,6 +56,11 @@ class FeedController extends ApiController
         return $this->response($latestsFeeds);
     }
 
+    public function top(int $count = 20)
+    {
+        return $this->response($this->feedRepository->top($count));
+    }
+
     public function response($collection)
     {
         if ($collection->isEmpty()) {

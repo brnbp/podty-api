@@ -57,6 +57,7 @@ class UserFeedsRepository
         ]);
 
         UserRepository::incrementsPodcastsCount($userFeed);
+        FeedRepository::incrementsListeners($feedId);
 
         return $userFeed;
     }
@@ -76,6 +77,7 @@ class UserFeedsRepository
         }
 
         UserRepository::decrementsPodcastCount($userFeed);
+        FeedRepository::decrementsListeners($feedId);
 
         return $userFeed->delete();
     }

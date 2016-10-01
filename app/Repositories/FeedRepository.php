@@ -36,6 +36,14 @@ class FeedRepository
             ->get();
     }
 
+    public function top($count)
+    {
+        return Feed::take($count)
+            ->orderBy('listeners', 'DESC')
+            ->orderBy('last_episode_at', 'DESC')
+            ->get();
+    }
+
     public function totalEpisodes($id)
     {
         return Feed::whereId($id)->select('total_episodes')->first()->toArray();
@@ -60,5 +68,15 @@ class FeedRepository
         Feed::whereId($id)->update([
                 'last_episode_at' => $date
             ]);
+    }
+
+    public static function incrementsListeners($feedId)
+    {
+        return Feed::whereId($feedId)->increment('listeners');
+    }
+
+    public static function decrementsListeners($feedId)
+    {
+        return Feed::whereId($feedId)->decrement('listeners');
     }
 }
