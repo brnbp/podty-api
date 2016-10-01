@@ -71,9 +71,4 @@ class FeedController extends ApiController
             (new FeedTransformer)->transformCollection($collection->toArray())
         );
     }
-
-    public function forceSearch($term)
-    {
-        $this->Feed->persist($term);
-    }
 }

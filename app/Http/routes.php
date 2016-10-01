@@ -1,5 +1,4 @@
 <?php
-
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -14,7 +13,6 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('feeds/latest', 'FeedController@latest');
     Route::get('feeds/top/{count?}', 'FeedController@top');
     Route::get('feeds/name/{name}', 'FeedController@retrieve');
-    Route::get('feeds/name/{name}/force', 'FeedController@forceSearch');
     Route::get('feeds/id/{feedId}', 'FeedController@retrieveById');
     Route::get('episodes/feed/{feedId}', 'EpisodeController@retrieve');
     Route::get('episodes/latest', 'EpisodeController@latest');

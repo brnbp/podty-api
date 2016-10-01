@@ -17,9 +17,10 @@ class Finder
 
     private $properties = [
         'media' => 'podcast',
-        'limit' => '5',
+        'limit' => '15',
         'term' => '',
-        'attribute' => 'titleTerm'
+        'attribute' => 'titleTerm',
+        'country' => 'BR'
     ];
 
     private $return_fields = [
