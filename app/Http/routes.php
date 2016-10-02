@@ -1,11 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
-
-DB::listen(function($query) {
-    //var_dump($query->sql, $query->bindings);
-});
 
 Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
