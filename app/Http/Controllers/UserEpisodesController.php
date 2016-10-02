@@ -124,17 +124,11 @@ class UserEpisodesController extends ApiController
 
     }
 
-    public function paused($username, $episodeId)
+    public function paused($username, $episodeId, $time)
     {
         $userFeedId = UserFeedsRepository::idByEpisodeAndUsername($episodeId, $username);
         if (!$userFeedId) {
             return $this->respondNotFound('User not follow feed from episodes passed');
-        }
-
-        $time = Input::get('time');
-
-        if (!$time) {
-            return $this->respondBadRequest();
         }
 
         UserEpisodesRepository::markAsPaused($userFeedId, $episodeId, $time);
