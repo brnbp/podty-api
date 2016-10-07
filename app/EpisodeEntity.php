@@ -1,11 +1,6 @@
 <?php
 namespace App;
 
-/**
- * Class EpisodeEntity
- *
- * @package App
- */
 class EpisodeEntity
 {
     /**
