@@ -3,19 +3,10 @@ namespace App;
 
 class EpisodeEntity
 {
-    /**
-     * @var
-     */
     public $feed_id;
-
-    /**
-     * @var
-     */
+    
     public $title;
 
-    /**
-     * @var
-     */
     public $link;
 
     /**
