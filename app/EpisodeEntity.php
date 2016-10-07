@@ -11,9 +11,6 @@ class EpisodeEntity
 
     public $published_date;
 
-    /**
-     * @var
-     */
     public $content;
 
     public $summary;
