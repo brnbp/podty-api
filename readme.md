@@ -177,8 +177,3 @@ $ php artisan queue:work --daemon --sleep 120 --tries 3 -q &
 ```bash
 sudo chmod 777 -R storage/
 ```
-
-
-### License
-
-The BrnPod API is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
