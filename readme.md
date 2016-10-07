@@ -31,16 +31,6 @@ $ php artisan serve
 
 -------
 
-- Collaborate:
-
-    - Queue:
-        - now:  it uses database mysql.
-        - goal: use redis.
-
-    - Tests:
-        - now:  only the XML class have tests
-        - goal: create for every class
-
 
 - Routes:
 
