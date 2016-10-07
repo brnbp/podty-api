@@ -9,9 +9,6 @@ class EpisodeEntity
 
     public $link;
 
-    /**
-     * @var
-     */
     public $published_date;
 
     /**
