@@ -25,7 +25,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::put('users/{username}/feeds/{feedId}/listenAll', 'UserFeedsController@listenAll');
 
-    Route::get('users/{username}/episodes/feed/{feedId}', 'UserEpisodesController@show');
+    Route::get('users/{username}/feeds/{feedId}/episodes', 'UserEpisodesController@show');
     Route::post('users/{username}/episodes', 'UserEpisodesController@attach');
     Route::delete('users/{username}/episodes/{episodeId}', 'UserEpisodesController@detach');
     Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
