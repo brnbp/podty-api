@@ -26,10 +26,6 @@ class Filter extends FilterAbstract
             if (is_numeric($filters['limit']) == false) {
                 return false;
             }
-
-            if ($filters['limit'] > 30) {
-                $filters['limit'] = 30;
-            }
         }
 
         if (isset($filters['offset']) && !is_numeric($filters['offset'])) {
