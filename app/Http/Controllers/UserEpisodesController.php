@@ -20,7 +20,7 @@ class UserEpisodesController extends ApiController
     {
         $this->filter = $filter;
     }
-    
+
     /**
      * Get episodes from feedId
      * @param string $username
@@ -112,7 +112,7 @@ class UserEpisodesController extends ApiController
         if ($this->filter->validateFilters() === false) {
             return $this->respondInvalidFilter();
         }
-        
+
         $data = User::whereUsername($username)
             ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
             ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
@@ -122,6 +122,7 @@ class UserEpisodesController extends ApiController
                 'episodes.*',
                 'feeds.id as feed_id',
                 'feeds.name as feed_name',
+                'feeds.thumbnail_600 as feed_image',
                 'user_episodes.paused_at'
             )
             ->orderBy('episodes.published_date', 'desc')
