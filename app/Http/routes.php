@@ -34,10 +34,10 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
 
 
-    Route::get('users/{user}/followers', 'UserFriendsController@all');
+    Route::get('users/{user}/friends', 'UserFriendsController@all');
 
-    Route::post('users/{user}/follow/{friend}', 'UserFriendsController@follow');
-    Route::delete('users/{user}/unfollow/{friend}', 'UserFriendsController@unfollow');
+    Route::post('users/{user}/friends/{friend}', 'UserFriendsController@follow');
+    Route::delete('users/{user}/friends/{friend}', 'UserFriendsController@unfollow');
 
 
 
