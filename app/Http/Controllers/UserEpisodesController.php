@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Filter\Filter;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Input;
 
 class UserEpisodesController extends ApiController
 {
+    private $filter;
+
+    public function __construct(Filter $filter)
+    {
+        $this->filter = $filter;
+    }
+    
     /**
      * Get episodes from feedId
      * @param string $username
@@ -101,6 +109,10 @@ class UserEpisodesController extends ApiController
 
     public function latests($username)
     {
+        if ($this->filter->validateFilters() === false) {
+            return $this->respondInvalidFilter();
+        }
+        
         $data = User::whereUsername($username)
             ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
             ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
@@ -113,6 +125,8 @@ class UserEpisodesController extends ApiController
                 'user_episodes.paused_at'
             )
             ->orderBy('episodes.published_date', 'desc')
+            ->take($this->filter->limit)
+            ->skip($this->filter->offset)
             ->get();
 
         return $this->responseData($data);
