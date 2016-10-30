@@ -107,15 +107,10 @@ class UserEpisodesController extends ApiController
             ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
             ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
             ->select(
-                'feeds.name as feed_name',
+                'episodes.*',
                 'feeds.id as feed_id',
-                'feeds.thumbnail_600 as feed_thumbnail',
-                'episodes.title as episode_title',
-                'user_episodes.paused_at',
-                'episodes.media_url',
-                'episodes.media_type',
-                'episodes.published_date',
-                'episodes.content'
+                'feeds.name as feed_name',
+                'user_episodes.paused_at'
             )
             ->orderBy('episodes.published_date', 'desc')
             ->get();
