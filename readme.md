@@ -31,16 +31,6 @@ $ php artisan serve
 
 -------
 
-- Collaborate:
-
-    - Queue:
-        - now:  it uses database mysql.
-        - goal: use redis.
-
-    - Tests:
-        - now:  only the XML class have tests
-        - goal: create for every class
-
 
 - Routes:
 
@@ -187,8 +177,3 @@ $ php artisan queue:work --daemon --sleep 120 --tries 3 -q &
 ```bash
 sudo chmod 777 -R storage/
 ```
-
-
-### License
-
-The BrnPod API is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

@@ -1,36 +1,16 @@
 <?php
 namespace App;
 
-/**
- * Class EpisodeEntity
- *
- * @package App
- */
 class EpisodeEntity
 {
-    /**
-     * @var
-     */
     public $feed_id;
-
-    /**
-     * @var
-     */
+    
     public $title;
 
-    /**
-     * @var
-     */
     public $link;
 
-    /**
-     * @var
-     */
     public $published_date;
 
-    /**
-     * @var
-     */
     public $content;
 
     public $summary;
