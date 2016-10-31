@@ -100,6 +100,7 @@ class UserFeedsRepository
                     'feeds.id',
                     'feeds.name',
                     'feeds.thumbnail_30',
+                    'feeds.thumbnail_100',
                     'feeds.thumbnail_600',
                     'feeds.total_episodes',
                     'feeds.last_episode_at',
