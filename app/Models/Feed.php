@@ -21,7 +21,10 @@ class Feed extends Model
     use DispatchesJobs;
 
     protected $fillable = [
-        'url', 'name', 'thumbnail_30', 'thumbnail_60', 'thumbnail_100', 'thumbnail_600', 'total_episodes', 'listeners','last_episode_at'
+        'url', 'name', 'slug', 'thumbnail_30',
+        'thumbnail_60', 'thumbnail_100',
+        'thumbnail_600', 'total_episodes',
+        'listeners','last_episode_at',
     ];
 
     /** @var array $hidden The attributes that should be hidden for arrays. */
@@ -63,7 +66,7 @@ class Feed extends Model
         if ($results == false) {
             return false;
         }
-        
+
         $response = array_map(function($feed){
             return (new FeedRepository)->updateOrCreate($feed);
         }, $results);
@@ -96,5 +99,10 @@ class Feed extends Model
     public function cronUpdateLastEpisodeAt()
     {
         $this->dispatch(new UpdateLastEpisodeFeed);
+    }
+
+    public static function slugfy($feedId, $feedName)
+    {
+        return $feedId . '-' . rtrim(str_limit(str_slug($feedName), 30, ''), '-');
     }
 }

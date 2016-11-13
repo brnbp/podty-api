@@ -59,7 +59,7 @@ class FeedRepository
         ], $feed);
 
         if ($feed->wasRecentlyCreated) {
-            $feed->slug = $feed->id . '-' . rtrim(str_limit(str_slug($feed->name), 30, ''), '-');
+            $feed->slug = Feed::slugfy($feed->id, $feed->name);
             $feed->save();
         }
 
