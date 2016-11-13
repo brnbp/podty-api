@@ -50,6 +50,7 @@ class EpisodesRepository
             ->select(
                 'episodes.*',
                 'feeds.name',
+                'feeds.slug',
                 'feeds.thumbnail_30',
                 'feeds.thumbnail_60',
                 'feeds.thumbnail_100',
