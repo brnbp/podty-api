@@ -54,9 +54,16 @@ class FeedRepository
 
     public function updateOrCreate(array $feed)
     {
-        return Feed::updateOrCreate([
+        $feed = Feed::updateOrCreate([
             'url' => $feed['url']
         ], $feed);
+
+        if ($feed->wasRecentlyCreated) {
+            $feed->slug = $feed->id . '-' . rtrim(str_limit(str_slug($feed->name), 30, ''), '-');
+            $feed->save();
+        }
+
+        return $feed;
     }
 
     public function updateTotalEpisodes($id)
