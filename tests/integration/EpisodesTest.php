@@ -2,7 +2,7 @@
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class FeedsTest extends TestCase
+class EpisodesTest extends TestCase
 {
     use WithoutMiddleware;
 
@@ -15,32 +15,6 @@ class FeedsTest extends TestCase
                     $this->getDefaultFeedStructure()
                 ]
             ]);
-    }
-
-
-    public function testReturnOneFeedById()
-    {
-        $this->json('GET', '/v1/feeds/15')
-            ->seeStatusCode(200)
-            ->seeJsonStructure([
-                'data' => [
-                    $this->getDefaultFeedStructure()
-                ]
-            ]);
-    }
-
-    public function testReturnLatestsFeeds()
-    {
-        $this->json('GET', '/v1/feeds/latest')
-            ->seeStatusCode(200)
-            ->seeJsonStructure($this->getDefaultStructure());
-    }
-
-    public function testReturnTopestsFeeds()
-    {
-        $this->json('GET', '/v1/feeds/latest')
-            ->seeStatusCode(200)
-            ->seeJsonStructure($this->getDefaultStructure());
     }
 
     private function getDefaultStructure()
