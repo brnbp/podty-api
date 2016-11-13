@@ -39,7 +39,7 @@ class EpisodeController extends ApiController
 
         $meta_data = [
             'total_episodes'  => (new FeedRepository)->totalEpisodes($feedId)['total_episodes'],
-            'feed' => '/v1/feeds/id/' . $feedId
+            'feed' => '/v1/feeds/' . $feedId
         ];
 
         return $this->respondSuccess($episodes->toArray(), $meta_data);
