@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Filter\Filter;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
+use App\Transform\EpisodeTransformer;
+use App\Transform\FeedTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -37,12 +39,11 @@ class EpisodeController extends ApiController
             return $this->respondNotFound();
         }
 
-        $meta_data = [
-            'total_episodes'  => (new FeedRepository)->totalEpisodes($feedId)['total_episodes'],
-            'feed' => '/v1/feeds/' . $feedId
-        ];
+        $feed = (new FeedRepository)->first($feedId);
 
-        return $this->respondSuccess($episodes->toArray(), $meta_data);
+        $response = $this->transform($episodes, $feed);
+
+        return $this->respondSuccess($response);
     }
 
     public function latest()
@@ -53,10 +54,26 @@ class EpisodeController extends ApiController
 
         $episodes = (new EpisodesRepository)->latests($this->filter);
 
-        if ($episodes->count()) {
-            return $this->respondSuccess($episodes);
+        if ($episodes->isEmpty()) {
+            return $this->respondNotFound();
         }
 
-        return $this->respondNotFound();
+        $response = $episodes->map(function ($episode){
+            $feed = (new FeedRepository)->first($episode->feed_id);
+            $feed = (new FeedTransformer)->transform($feed);
+            $feed['episodes'] = array((new EpisodeTransformer)->transform($episode));
+            return $feed;
+        });
+        
+        return $this->respondSuccess($response);
+    }
+
+    private function transform($episodes, $feed)
+    {
+        $feed = (new FeedTransformer)->transform($feed);
+
+        $feed['episodes'] = (new EpisodeTransformer)
+                                ->transformCollection($episodes->toArray());
+        return $feed;
     }
 }

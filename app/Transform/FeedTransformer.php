@@ -28,7 +28,6 @@ class FeedTransformer extends TransformerAbstract
             'total_episodes' => $feed['total_episodes'],
             'listeners' => $feed['listeners'],
             'last_episode_at' => $feed['last_episode_at'],
-            'last_search' => $feed['updated_at'],
             'episodes' => []
         ];
 

@@ -44,18 +44,8 @@ class EpisodesRepository
     public function latests(Filter $filter)
     {
         return Episode::take($filter->limit)
-            ->join('feeds', 'episodes.feed_id', '=', 'feeds.id')
             ->skip($filter->offset)
             ->orderBy('published_date', $filter->order)
-            ->select(
-                'episodes.*',
-                'feeds.name',
-                'feeds.slug',
-                'feeds.thumbnail_30',
-                'feeds.thumbnail_60',
-                'feeds.thumbnail_100',
-                'feeds.thumbnail_600'
-            )
             ->get();
     }
 
