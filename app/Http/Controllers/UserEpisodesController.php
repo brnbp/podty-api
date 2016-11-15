@@ -10,6 +10,7 @@ use App\Repositories\FeedRepository;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
 use App\Repositories\UserRepository;
+use App\Transform\EpisodeTransformer;
 use App\Transform\FeedTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -39,6 +40,24 @@ class UserEpisodesController extends ApiController
 
 
         return $this->responseData($feed);
+    }
+
+    public function latests($username)
+    {
+        if ($this->filter->validateFilters() === false) {
+            return $this->respondInvalidFilter();
+        }
+
+        $latestsEpisodes = (new UserEpisodesRepository)->latests($username, $this->filter);
+
+        $response = $latestsEpisodes->map(function($episode){
+            $feed = (new FeedRepository)->first($episode->feed_id);
+            $feed = (new FeedTransformer)->transform($feed);
+            $feed['episodes'] = array((new EpisodeTransformer)->transform($episode));
+            return $feed;
+        });
+
+        return $this->responseData($response);
     }
 
     public function attach($username)
@@ -95,33 +114,6 @@ class UserEpisodesController extends ApiController
         return  $deleted ?
             $this->respondSuccess(['removed' => true]) :
             $this->respondNotFound();
-    }
-
-    public function latests($username)
-    {
-        if ($this->filter->validateFilters() === false) {
-            return $this->respondInvalidFilter();
-        }
-
-        $data = User::whereUsername($username)
-            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
-            ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-            ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
-            ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
-            ->select(
-                'episodes.*',
-                'feeds.id as feed_id',
-                'feeds.name as feed_name',
-                'feeds.thumbnail_600 as feed_image',
-                'user_episodes.paused_at'
-            )
-            ->orderBy('episodes.published_date', 'desc')
-            ->take($this->filter->limit)
-            ->skip($this->filter->offset)
-            ->get();
-
-        return $this->responseData($data);
-
     }
 
     public function paused($username, $episodeId, $time)

@@ -10,7 +10,7 @@ class UserEpisodesRepository
 {
     public static function retrieve(string $username, $feedId)
     {
-        $data = User::whereUsername($username)
+        return User::whereUsername($username)
             ->join('user_feeds', function($join) use ($feedId) {
                 $join->on('users.id', '=', 'user_feeds.user_id')
                     ->where('user_feeds.feed_id', '=', $feedId);
@@ -27,6 +27,32 @@ class UserEpisodesRepository
                 'user_episodes.paused_at'
             )
             ->orderBy('episodes.published_date', 'desc')
+            ->get();
+    }
+
+    public static function latests(string $username, Filter $filter)
+    {
+        $data = User::whereUsername($username)
+            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
+            ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
+            ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
+            ->select(
+                'episodes.feed_id as feed_id',
+                'episodes.id as id',
+                'episodes.title as title',
+                'episodes.duration as duration',
+                'episodes.media_url as media_url',
+                'episodes.media_type as media_type',
+                'episodes.media_length as media_length',
+                'episodes.duration as duration',
+                'episodes.image as image',
+                'episodes.published_date as published_date',
+                'episodes.content as content',
+                'user_episodes.paused_at'
+            )
+            ->orderBy('episodes.published_date', 'desc')
+            ->take($filter->limit)
+            ->skip($filter->offset)
             ->get();
 
         return $data;

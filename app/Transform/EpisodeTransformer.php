@@ -14,14 +14,14 @@ class EpisodeTransformer extends TransformerAbstract
         return [
             'id' => $episode['id'],
             'title' => $episode['title'],
-            'link' => $episode['link'],
+            'link' => $episode['link'] ?? '',
             'published_at' => $episode['published_date'],
-            'summary' => $episode['summary'],
-            'image' => $episode['image'],
-            'duration' => $episode['duration'],
-            'media_url' => $episode['media_url'],
-            'media_length' => $episode['media_length'],
-            'media_type' => $episode['media_type']
+            'summary' => $episode['summary'] ?? '',
+            'image' => $episode['image'] ?? '',
+            'duration' => $episode['duration'] ?? '',
+            'media_url' => $episode['media_url'] ?? '',
+            'media_length' => $episode['media_length'] ?? '',
+            'media_type' => $episode['media_type'] ?? ''
         ];
     }
 }
