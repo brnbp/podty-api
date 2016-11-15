@@ -41,7 +41,7 @@ class EpisodeController extends ApiController
 
         $feed = (new FeedRepository)->first($feedId);
 
-        $response = $this->transform($episodes, $feed);
+        $response = $this->transformAll($episodes, $feed);
 
         return $this->respondSuccess($response);
     }
@@ -64,11 +64,36 @@ class EpisodeController extends ApiController
             $feed['episodes'] = array((new EpisodeTransformer)->transform($episode));
             return $feed;
         });
-        
+
         return $this->respondSuccess($response);
     }
 
-    private function transform($episodes, $feed)
+    public function one($episodeId)
+    {
+        $episode = (new EpisodesRepository)->one($episodeId);
+
+        if (!$episode) {
+            return $this->respondNotFound();
+        }
+
+        $feed = (new FeedRepository)->first($episode->feed_id);
+
+        $response = $this->transformOne($episode, $feed);
+
+        return $this->respondSuccess($response);
+    }
+
+    private function transformOne($episode, $feed)
+    {
+        $feed = (new FeedTransformer)->transform($feed);
+
+        $feed['episodes'] = (new EpisodeTransformer)
+                                 ->transform($episode->toArray());
+
+        return $feed;
+    }
+
+    private function transformAll($episodes, $feed)
     {
         $feed = (new FeedTransformer)->transform($feed);
 
