@@ -2,17 +2,34 @@
 namespace App\Repositories;
 
 use App\Filter\Filter;
+use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
 
 class UserEpisodesRepository
 {
-    public static function all()
+    public static function retrieve(string $username, $feedId)
     {
-    }
+        $data = User::whereUsername($username)
+            ->join('user_feeds', function($join) use ($feedId) {
+                $join->on('users.id', '=', 'user_feeds.user_id')
+                    ->where('user_feeds.feed_id', '=', $feedId);
+            })
+            ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
+            ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
+            ->select(
+                'episodes.id as id',
+                'episodes.title as title',
+                'episodes.media_url as media_url',
+                'episodes.media_type as media_type',
+                'episodes.published_date as published_date',
+                'episodes.content as content',
+                'user_episodes.paused_at'
+            )
+            ->orderBy('episodes.published_date', 'desc')
+            ->get();
 
-    public static function one()
-    {
+        return $data;
     }
 
     public static function first($userFeedId, $episodeId)

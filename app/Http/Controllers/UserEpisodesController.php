@@ -6,9 +6,11 @@ use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
 use App\Repositories\EpisodesRepository;
+use App\Repositories\FeedRepository;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
 use App\Repositories\UserRepository;
+use App\Transform\FeedTransformer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -28,27 +30,15 @@ class UserEpisodesController extends ApiController
      */
     public function show($username, $feedId)
     {
-        $data = User::whereUsername($username)
-            ->join('user_feeds', function($join) use ($feedId) {
-                $join->on('users.id', '=', 'user_feeds.user_id')
-                    ->where('user_feeds.feed_id', '=', $feedId);
-            })
-            ->join('feeds', 'user_feeds.feed_id', '=', 'feeds.id')
-            ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
-            ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
-            ->select(
-                'feeds.name as feed_name',
-                'episodes.title as episode_title',
-                'user_episodes.paused_at',
-                'episodes.media_url',
-                'episodes.media_type',
-                'episodes.published_date',
-                'episodes.content'
-            )
-            ->orderBy('episodes.published_date', 'desc')
-            ->get();
+        $data = (new UserEpisodesRepository)
+            ->retrieve($username, $feedId);
 
-        return $this->responseData($data);
+        $feed = (new FeedRepository)->first($feedId);
+        $feed = (new FeedTransformer)->transform($feed);
+        $feed['episodes'] =  $data;
+
+
+        return $this->responseData($feed);
     }
 
     public function attach($username)
