@@ -99,6 +99,7 @@ class UserFeedsRepository
                 ->select(
                     'feeds.id',
                     'feeds.name',
+                    'feeds.slug',
                     'feeds.thumbnail_30',
                     'feeds.thumbnail_100',
                     'feeds.thumbnail_600',

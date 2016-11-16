@@ -16,6 +16,7 @@ class EpisodeTransformer extends TransformerAbstract
             'title' => $episode['title'],
             'link' => $episode['link'] ?? '',
             'published_at' => $episode['published_date'],
+            'content' => $episode['content'] ?? '',
             'summary' => $episode['summary'] ?? '',
             'image' => $episode['image'] ?? '',
             'duration' => $episode['duration'] ?? '',
