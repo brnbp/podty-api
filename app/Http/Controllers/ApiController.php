@@ -28,6 +28,13 @@ class ApiController extends Controller
         return $this;
     }
 
+    public function respondCreated($data = [])
+    {
+        $content['data'] = $data;
+
+        return $this->setStatusCode(Response::HTTP_CREATED)->respond($content);
+    }
+
     public function respondSuccess($data, $meta = [])
     {
         if (!empty($meta)) {
