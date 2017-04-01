@@ -11,14 +11,24 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EpisodesRepository
 {
-    public function one(int $episodeId)
+    public static function first($episodeId)
+    {
+        return Episode::whereId($episodeId)->first();
+    }
+    
+    public function one($episodeId)
     {
         return Episode::whereId($episodeId)->first();
     }
 
+    public static function exists($episodeId)
+    {
+        return self::first($episodeId) ? true : false;
+    }
+
     public static function feedId($episodeId)
     {
-        $episode = Episode::whereId($episodeId)->first();
+        $episode = self::first($episodeId);
         return $episode ? $episode->feed_id : false;
     }
 

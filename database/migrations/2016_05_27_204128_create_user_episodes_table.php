@@ -23,7 +23,7 @@ class CreateUserEpisodesTable extends Migration
 
             // determina que nao podera haver dois registros iguais na tabela,
             // dois registros com a mesma relacao de user_feed_id e episode_id
-            // um user só podera ter um unico registro de determinado episodio para determinado feed
+            // um user sÃ³ podera ter um unico registro de determinado episodio para determinado feed
             $table->unique(['user_feed_id', 'episode_id']);
         });
     }

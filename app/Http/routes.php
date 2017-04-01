@@ -35,6 +35,9 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::put('users/{username}/episodes/{episodeId}/paused/{time}', 'UserEpisodesController@paused');
 
 
+    Route::post('users/{username}/episodes/{episodeId}/favorite', 'UserEpisodeFavoriteController@favorite');
+    Route::delete('users/{username}/episodes/{episodeId}/favorite', 'UserEpisodeFavoriteController@unfavorite');
+
 
     Route::get('users/{user}/friends', 'UserFriendsController@all');
 
