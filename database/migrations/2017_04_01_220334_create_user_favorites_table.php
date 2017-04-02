@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserEpisodeFavoritesTable extends Migration
+class CreateUserFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateUserEpisodeFavoritesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_episode_favorites', function (Blueprint $table) {
+        Schema::create('user_favorites', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
             $table->integer('episode_id')->unsigned()->index();
@@ -33,6 +33,6 @@ class CreateUserEpisodeFavoritesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_episode_favorites');
+        Schema::drop('user_favorites');
     }
 }

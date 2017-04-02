@@ -2,13 +2,13 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use App\Models\UserEpisodeFavorite;
+use App\Models\UserFavorite;
 
-class UserEpisodeFavoriteRepository
+class UserFavoritesRepository
 {
     public static function first($userId, $episodeId)
     {
-        return UserEpisodeFavorite::whereUserId($userId)
+        return UserFavorite::whereUserId($userId)
                     ->whereEpisodeId($episodeId)
                     ->first() ?: false;
     }
@@ -34,6 +34,10 @@ class UserEpisodeFavoriteRepository
 
     public static function all(User $user)
     {
-        return $user->favorites()->with('Episode')->orderBy('id', 'desc')->get();
+        return $user->favorites()
+                    ->with('Episode')
+                    //->with('Feeds')
+                    ->orderBy('id', 'desc')
+                    ->get();
     }
 }
