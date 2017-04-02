@@ -6,13 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 class UserFavorite extends Model
 {
     protected $fillable = [
-        'user_id', 'episode_id'
+        'user_id', 'episode_id', 'feed_id'
     ];
 
     protected $hidden = ['updated_at'];
-    
+
     public function episode()
     {
         return $this->belongsTo(Episode::class);
+    }
+
+    public function feed()
+    {
+        return $this->belongsTo(Feed::class);
     }
 }

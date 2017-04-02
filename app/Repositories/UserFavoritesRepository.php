@@ -15,12 +15,13 @@ class UserFavoritesRepository
 
     public static function create(User $user, $episodeId)
     {
-        if (!EpisodesRepository::exists($episodeId)) {
-            return false;
-        }
+        $episode = EpisodesRepository::first($episodeId);
 
         return $user->favorites()
-                    ->firstOrCreate(['episode_id' => $episodeId]);
+                    ->firstOrCreate([
+                        'feed_id' => $episode->feed_id,
+                        'episode_id' => $episodeId
+                    ]);
     }
 
     public static function delete(User $user, $episodeId)
@@ -36,7 +37,7 @@ class UserFavoritesRepository
     {
         return $user->favorites()
                     ->with('Episode')
-                    //->with('Feeds')
+                    ->with('Feed')
                     ->orderBy('id', 'desc')
                     ->get();
     }

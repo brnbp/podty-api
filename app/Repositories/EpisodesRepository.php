@@ -13,7 +13,7 @@ class EpisodesRepository
 {
     public static function first($episodeId)
     {
-        return Episode::whereId($episodeId)->first();
+        return Episode::whereId($episodeId)->firstOrFail();
     }
     
     public function one($episodeId)
