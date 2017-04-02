@@ -34,22 +34,9 @@ class UserEpisodesRepository
     {
         $data = User::whereUsername($username)
             ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
+            ->join('feeds', 'feeds.id', '=', 'user_feeds.feed_id')
             ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
             ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
-            ->select(
-                'episodes.feed_id as feed_id',
-                'episodes.id as id',
-                'episodes.title as title',
-                'episodes.duration as duration',
-                'episodes.media_url as media_url',
-                'episodes.media_type as media_type',
-                'episodes.media_length as media_length',
-                'episodes.duration as duration',
-                'episodes.image as image',
-                'episodes.published_date as published_date',
-                'episodes.content as content',
-                'user_episodes.paused_at'
-            )
             ->orderBy('episodes.published_date', 'desc')
             ->take($filter->limit)
             ->skip($filter->offset)
