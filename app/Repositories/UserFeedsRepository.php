@@ -92,7 +92,7 @@ class UserFeedsRepository
         return UserFeed::whereId($id)->update(['listen_all' => false]);
     }
 
-    public static function usersByFeedId($feedId, $userId = 12)
+    public static function usersByFeedId($feedId)
     {
         return User::where('user_feeds.feed_id', $feedId)
                         ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
@@ -109,6 +109,7 @@ class UserFeedsRepository
                     'feeds.name',
                     'feeds.slug',
                     'feeds.thumbnail_30',
+                    'feeds.thumbnail_60',
                     'feeds.thumbnail_100',
                     'feeds.thumbnail_600',
                     'feeds.total_episodes',
