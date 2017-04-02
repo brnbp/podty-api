@@ -92,9 +92,12 @@ class UserFeedsRepository
         return UserFeed::whereId($id)->update(['listen_all' => false]);
     }
 
-    public static function usersByFeedId($feedId)
+    public static function usersByFeedId($feedId, $userId = 12)
     {
-        return UserFeed::with('User')->whereFeedId($feedId)->get();   
+        return User::where('user_feeds.feed_id', $feedId)
+                        ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
+                        ->orderBy('user_feeds.id', 'desc')
+                        ->get();
     }
 
     private static function buildQuery(Builder $builder)
