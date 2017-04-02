@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\User;
 use App\Models\UserEpisodeFavorite;
 
 class UserEpisodeFavoriteRepository
@@ -12,46 +13,27 @@ class UserEpisodeFavoriteRepository
                     ->first() ?: false;
     }
 
-    public static function create($username, $episodeId)
+    public static function create(User $user, $episodeId)
     {
-        $userId = UserRepository::getId($username);
-
-        if (!$userId) {
-            return false;
-        }
-
         if (!EpisodesRepository::exists($episodeId)) {
             return false;
         }
 
-        try {
-            return UserEpisodeFavorite::create([
-                'user_id' => $userId,
-                'episode_id' => $episodeId,
-            ]);
-        } catch (\Exception $e) {
-            return false;
-        }
+        return $user->favorites()
+                    ->firstOrCreate(['episode_id' => $episodeId]);
     }
 
-    public static function delete($username, $episodeId)
+    public static function delete(User $user, $episodeId)
     {
-        $userId = UserRepository::getId($username);
-
-        if (!$userId) {
-            return false;
-        }
-
         if (!EpisodesRepository::exists($episodeId)) {
             return false;
         }
 
-        $userEpisodeFavorited = self::first($userId, $episodeId);
+        return $user->favorites()->whereEpisodeId($episodeId)->delete() ? true : false;
+    }
 
-        if (!$userEpisodeFavorited) {
-            return false;
-        }
-
-        return $userEpisodeFavorited->delete();
+    public static function all(User $user)
+    {
+        return $user->favorites()->with('Episode')->orderBy('id', 'desc')->get();
     }
 }

@@ -25,6 +25,11 @@ class User extends Model
         return $this->hasMany(UserFriend::class);
     }
 
+    public function favorites()
+    {
+        return $this->hasMany(UserEpisodeFavorite::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'username';

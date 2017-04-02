@@ -10,4 +10,9 @@ class UserEpisodeFavorite extends Model
     ];
 
     protected $hidden = ['updated_at'];
+    
+    public function episode()
+    {
+        return $this->belongsTo(Episode::class);
+    }
 }
