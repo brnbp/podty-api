@@ -31,7 +31,7 @@ class UserEpisodesController extends ApiController
 
         $userEpisode = UserEpisodesRepository::first($userFeed, $episode->id);
 
-        $episode = $episode->toArray();
+        $episode = (new EpisodeTransformer)->transform($episode->toArray());
         $episode['paused_at'] = $userEpisode['paused_at'];
 
         return $this->responseData($episode);
