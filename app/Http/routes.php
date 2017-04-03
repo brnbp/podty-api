@@ -31,6 +31,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::get('users/{username}/feeds/{feedId}/episodes', 'UserEpisodesController@show');
     Route::post('users/{username}/episodes', 'UserEpisodesController@attach');
+    Route::get('users/{username}/episodes/{episode}', 'UserEpisodesController@one');
     Route::delete('users/{username}/episodes/{episodeId}', 'UserEpisodesController@detach');
     Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
 

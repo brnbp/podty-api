@@ -49,7 +49,7 @@ class UserEpisodesRepository
     {
         return UserEpisode::whereUserFeedId($userFeedId)
             ->whereEpisodeId($episodeId)
-            ->first();
+            ->firstOrFail();
     }
 
     public static function create($data)

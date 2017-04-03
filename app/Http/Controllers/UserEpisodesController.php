@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Filter\Filter;
+use App\Models\Episode;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
@@ -22,6 +23,18 @@ class UserEpisodesController extends ApiController
     public function __construct(Filter $filter)
     {
         $this->filter = $filter;
+    }
+
+    public function one(User $username, Episode $episode)
+    {
+        $userFeed = UserFeedsRepository::idByEpisodeAndUser($episode->id, $username->id);
+
+        $userEpisode = UserEpisodesRepository::first($userFeed, $episode->id);
+
+        $episode = $episode->toArray();
+        $episode['paused_at'] = $userEpisode['paused_at'];
+
+        return $this->responseData($episode);
     }
 
     /**
