@@ -67,7 +67,8 @@ class EpisodesRepository
     public function save(EpisodeEntity $episodeEntity)
     {
         $episode = Episode::updateOrCreate([
-            'media_url' => $episodeEntity->media_url
+            'media_url' => $episodeEntity->media_url,
+	    'title'     => $episodeEntity->title
         ], $episodeEntity->toArray());
 
         if ($episode->wasRecentlyCreated) {
