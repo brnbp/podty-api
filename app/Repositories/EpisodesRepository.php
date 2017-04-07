@@ -15,7 +15,7 @@ class EpisodesRepository
     {
         return Episode::whereId($episodeId)->firstOrFail();
     }
-    
+
     public function one($episodeId)
     {
         return Episode::whereId($episodeId)->first();
@@ -67,8 +67,8 @@ class EpisodesRepository
     public function save(EpisodeEntity $episodeEntity)
     {
         $episode = Episode::updateOrCreate([
-            'media_url' => $episodeEntity->media_url,
-	    'title'     => $episodeEntity->title
+	        'title'     => $episodeEntity->title,
+	        'feed_id'     => $episodeEntity->feed_id,
         ], $episodeEntity->toArray());
 
         if ($episode->wasRecentlyCreated) {
