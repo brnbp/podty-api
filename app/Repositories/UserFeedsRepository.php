@@ -5,14 +5,17 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Models\UserFeed;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 
 class UserFeedsRepository
 {
     public static function all($username)
     {
-        return self::buildQuery(User::whereUsername($username))
-                    ->orderBy('last_episode_at', 'DESC')
-                    ->get();
+        return Cache::remember('user_feeds_' . $username, 60, function() use ($username) {
+            return self::buildQuery(User::whereUsername($username))
+                ->orderBy('last_episode_at', 'DESC')
+                ->get();
+            });
     }
 
     public static function one($username, $feedId)
@@ -78,7 +81,7 @@ class UserFeedsRepository
 
         UserRepository::decrementsPodcastCount($userFeed);
         FeedRepository::decrementsListeners($feedId);
-
+        Cache::forget('user_feeds_' . $user->username);
         return $userFeed->delete();
     }
 
