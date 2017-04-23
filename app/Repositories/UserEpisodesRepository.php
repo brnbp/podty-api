@@ -5,6 +5,7 @@ use App\Filter\Filter;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
+use Illuminate\Support\Facades\Cache;
 
 class UserEpisodesRepository
 {
@@ -32,17 +33,20 @@ class UserEpisodesRepository
 
     public static function latests(string $username, Filter $filter)
     {
-        $data = User::whereUsername($username)
-            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
-            ->join('feeds', 'feeds.id', '=', 'user_feeds.feed_id')
-            ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
-            ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
-            ->orderBy('episodes.published_date', 'desc')
-            ->take($filter->limit)
-            ->skip($filter->offset)
-            ->get();
-
-        return $data;
+        $limit = $filter->limit;
+        $offset = $filter->offset;
+        
+        return Cache::remember('user_episodes_latests_' . $username, 10, function() use ($username, $limit, $offset) {
+            return User::whereUsername($username)
+                ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
+                ->join('feeds', 'feeds.id', '=', 'user_feeds.feed_id')
+                ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
+                ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
+                ->orderBy('episodes.published_date', 'desc')
+                ->take($limit)
+                ->skip($offset)
+                ->get();
+        });
     }
 
     public static function first($userFeedId, $episodeId)
