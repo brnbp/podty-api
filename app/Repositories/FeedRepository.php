@@ -2,6 +2,8 @@
 namespace App\Repositories;
 
 use App\Models\Feed;
+use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class FeedRepository
 {
@@ -88,5 +90,15 @@ class FeedRepository
     public static function decrementsListeners($feedId)
     {
         return Feed::whereId($feedId)->decrement('listeners');
+    }
+
+    public static function listeners($feedId)
+    {
+        return Cache::remember('feeds_listeners_' . $feedId, 120, function() use ($feedId) {
+            return User::where('user_feeds.feed_id', $feedId)
+                ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
+                ->orderBy('user_feeds.id', 'desc')
+                ->get();
+        });
     }
 }

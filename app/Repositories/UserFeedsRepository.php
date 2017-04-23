@@ -61,6 +61,7 @@ class UserFeedsRepository
             'feed_id' => $feedId
         ]);
 
+        Cache::forget('feeds_listeners_' . $feedId);
         UserRepository::incrementsPodcastsCount($userFeed);
         FeedRepository::incrementsListeners($feedId);
 
@@ -83,6 +84,7 @@ class UserFeedsRepository
 
         UserRepository::decrementsPodcastCount($userFeed);
         FeedRepository::decrementsListeners($feedId);
+        Cache::forget('feeds_listeners_' . $feedId);
         Cache::forget('user_feeds_' . $user->username);
         Cache::forget('user_feeds_' . $feedId . '_' . $user->username);
         return $userFeed->delete();
@@ -96,14 +98,6 @@ class UserFeedsRepository
     public static function markAllNotListened($id)
     {
         return UserFeed::whereId($id)->update(['listen_all' => false]);
-    }
-
-    public static function usersByFeedId($feedId)
-    {
-        return User::where('user_feeds.feed_id', $feedId)
-                        ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
-                        ->orderBy('user_feeds.id', 'desc')
-                        ->get();
     }
 
     private static function buildQuery(Builder $builder)
