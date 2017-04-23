@@ -10,12 +10,8 @@ class UserFriendsController extends ApiController
 {
     public function all(User $user)
     {
-        $data = $user->friends()->get()->map(function($friend){
-            $find = User::whereId($friend->friend_user_id)->first();
-            if ($find) {
-                return (new UserTransformer)->transform($find);
-            }
-            return [];
+        $data = $user->friends->map(function($friendship){
+            return (new UserTransformer)->transform($friendship->friend);
         })->sortByDesc('last_update')->toArray();
 
         if (!$data) {

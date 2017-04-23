@@ -9,13 +9,15 @@ class UserFriend extends Model
 
     public $timestamps = false;
 
+    protected $with = ['friend'];
+
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function friend()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'friend_user_id');
     }
 }
