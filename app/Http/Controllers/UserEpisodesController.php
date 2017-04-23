@@ -71,7 +71,7 @@ class UserEpisodesController extends ApiController
             unset($feed['episodes']);
             return $feed;
         });
-
+        
         return $this->responseData($response);
     }
 
