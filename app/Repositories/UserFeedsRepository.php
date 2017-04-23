@@ -20,9 +20,11 @@ class UserFeedsRepository
 
     public static function one($username, $feedId)
     {
-        return self::buildQuery(User::whereUsername($username)
-                    ->whereFeedId($feedId))
-                    ->get();
+        return Cache::remember('user_feeds_' . $feedId . '_' . $username, 60, function() use ($username, $feedId) {
+            return self::buildQuery(User::whereUsername($username)
+                ->whereFeedId($feedId))
+                ->get();
+        });
     }
 
     public static function first($feedId, $userId)
@@ -82,6 +84,7 @@ class UserFeedsRepository
         UserRepository::decrementsPodcastCount($userFeed);
         FeedRepository::decrementsListeners($feedId);
         Cache::forget('user_feeds_' . $user->username);
+        Cache::forget('user_feeds_' . $feedId . '_' . $user->username);
         return $userFeed->delete();
     }
 
