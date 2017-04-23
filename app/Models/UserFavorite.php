@@ -10,6 +10,8 @@ class UserFavorite extends Model
     ];
 
     protected $hidden = ['updated_at'];
+    
+    protected $with = ['episode', 'feed'];
 
     public function episode()
     {

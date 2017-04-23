@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Models\UserFavorite;
+use Illuminate\Support\Facades\Cache;
 
 class UserFavoritesRepository
 {
@@ -17,6 +18,8 @@ class UserFavoritesRepository
     {
         $episode = EpisodesRepository::first($episodeId);
 
+        Cache::forget('user_favorites_' . $user->username);
+
         return $user->favorites()
                     ->firstOrCreate([
                         'feed_id' => $episode->feed_id,
@@ -30,15 +33,15 @@ class UserFavoritesRepository
             return false;
         }
 
+        Cache::forget('user_favorites_' . $user->username);
+
         return $user->favorites()->whereEpisodeId($episodeId)->delete() ? true : false;
     }
 
     public static function all(User $user)
     {
-        return $user->favorites()
-                    ->with('Episode')
-                    ->with('Feed')
-                    ->orderBy('id', 'desc')
-                    ->get();
+        return Cache::remember('user_favorites_' . $user->username, 120, function() use ($user) {
+            return $user->favorites()->orderBy('id', 'desc')->get();
+        });
     }
 }
