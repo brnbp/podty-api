@@ -13,6 +13,7 @@ use App\Repositories\UserFeedsRepository;
 use App\Repositories\UserRepository;
 use App\Transform\EpisodeTransformer;
 use App\Transform\FeedTransformer;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -104,6 +105,9 @@ class UserEpisodesController extends ApiController
             return $this->respondBadRequest('User not follow feed from episodes passed');
         }
 
+        Cache::forget('user_episodes_latests_' . $username);
+        Cache::forget('user_episodes_' . $username);
+
         UserEpisodesRepository::batchCreate($userEpisodes);
 
         if (UserEpisodesRepository::hasEpisodes($userFeedId)) {
@@ -125,6 +129,9 @@ class UserEpisodesController extends ApiController
         if (UserEpisodesRepository::hasEpisodes($userFeedId) == false) {
             UserFeedsRepository::markAllListened($userFeedId);
         }
+
+        Cache::forget('user_episodes_latests_' . $username);
+        Cache::forget('user_episodes_' . $username);
 
         return  $deleted ?
             $this->respondSuccess(['removed' => true]) :
