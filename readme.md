@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/brnbp/podty-api.svg?style=svg)](https://circleci.com/gh/brnbp/podty-api)
+
 ## Podcast API
 
 ## Requirements
