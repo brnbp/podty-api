@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Console;
-
-use App\Models\Feed;
 use App\Services\Queue;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -21,6 +19,6 @@ class Kernel extends ConsoleKernel
             ->call(function(){
                 (new Queue)->send();
             })
-            ->everyThirtyMinutes()->name('updateFeeds')->withoutOverlapping();
+            ->dailyAt('08:00')->name('updateFeeds')->withoutOverlapping();
     }
 }

@@ -1,0 +1,15 @@
+machine:
+  php:
+    version: 7.1.0
+test:
+  pre:
+    - php -l app/
+  post:
+    - mkdir $CIRCLE_ARTIFACTS/tests
+    - php vendor/bin/phpunit --coverage-html $CIRCLE_ARTIFACTS/tests
+deployment:
+  production:
+    branch: master
+    commands:
+      - curl $DEPLOY_ENDPOINT
+
