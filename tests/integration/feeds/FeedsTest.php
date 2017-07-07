@@ -64,8 +64,7 @@ class FeedsTest extends TestCase
             'thumbnail_600',
             'total_episodes',
             'listeners',
-            'last_episode_at',
-            'last_search'
+            'last_episode_at'
         ];
     }
 

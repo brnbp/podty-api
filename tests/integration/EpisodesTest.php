@@ -39,7 +39,6 @@ class EpisodesTest extends TestCase
             'total_episodes',
             'listeners',
             'last_episode_at',
-            'last_search'
         ];
     }
 
