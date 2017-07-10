@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/brnbp/podty-api.svg?style=svg)](https://circleci.com/gh/brnbp/podty-api)
+[![CircleCI](https://circleci.com/gh/brnbp/podty-api.svg?style=svg&circle-token=120eaa9768f28a5ae58d7c3b88e66fe628c304d0)](https://circleci.com/gh/brnbp/podty-api)
 
 ## Podcast API
 
