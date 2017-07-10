@@ -19,6 +19,6 @@ class Kernel extends ConsoleKernel
             ->call(function(){
                 (new Queue)->send();
             })
-            ->dailyAt('08:00')->name('updateFeeds')->withoutOverlapping();
+            ->twiceDaily(8, 18)->name('updateFeeds')->withoutOverlapping();
     }
 }
