@@ -43,10 +43,12 @@ class FeedRepository
 
     public function top($count)
     {
-        return Feed::take($count)
-            ->orderBy('listeners', 'DESC')
-            ->orderBy('last_episode_at', 'DESC')
-            ->get();
+        return Cache::remember('feeds_top_' . $count, 120, function() use ($count) {
+            return Feed::take($count)
+                ->orderBy('listeners', 'DESC')
+                ->orderBy('last_episode_at', 'DESC')
+                ->get();
+        });
     }
 
     public function totalEpisodes($id)
