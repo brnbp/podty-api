@@ -84,11 +84,13 @@ class FeedRepository
 
     public static function incrementsListeners($feedId)
     {
+        Cache::forget('feeds_listeners_' . $feedId);
         return Feed::whereId($feedId)->increment('listeners');
     }
 
     public static function decrementsListeners($feedId)
     {
+        Cache::forget('feeds_listeners_' . $feedId);
         return Feed::whereId($feedId)->decrement('listeners');
     }
 
