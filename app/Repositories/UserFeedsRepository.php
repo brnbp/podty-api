@@ -60,7 +60,8 @@ class UserFeedsRepository
             'user_id' => $user->id,
             'feed_id' => $feedId
         ]);
-
+    
+        Cache::forget('user_feeds_' . $feedId . '_' . $user->username);
         Cache::forget('feeds_listeners_' . $feedId);
         UserRepository::incrementsPodcastsCount($userFeed);
         FeedRepository::incrementsListeners($feedId);
