@@ -1,9 +1,5 @@
 <?php
 
-Route::get('/', function(){
-   echo "running";
-});
-
 Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::get('feeds/latest', 'FeedController@latest');
