@@ -40,7 +40,7 @@ $factory->define(Feed::class, function (Faker\Generator $faker) {
 $factory->define(Episode::class, function (Faker\Generator $faker) {
     return [
         'feed_id' => function(){
-            return factory(Feed::class)->create();
+            return factory(Feed::class)->create()->id;
         },
         'title' => $faker->words(3, true),
         'published_date' => $faker->dateTime,
@@ -58,10 +58,10 @@ $factory->define(Episode::class, function (Faker\Generator $faker) {
 $factory->define(UserFeed::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function(){
-            return factory(User::class)->create();
+            return factory(User::class)->create()->id;
         },
         'feed_id' => function(){
-            return factory(Feed::class)->create();
+            return factory(Feed::class)->create()->id;
         },
         'listen_all' => $faker->boolean(25),
     ];
@@ -85,10 +85,10 @@ $factory->define(UserEpisode::class, function (Faker\Generator $faker) {
 $factory->define(UserFriend::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function(){
-            return factory(User::class)->create();
+            return factory(User::class)->create()->id;
         },
         'friends_user_id' => function(){
-            return factory(User::class)->create();
+            return factory(User::class)->create()->id;
         },
     ];
 });
