@@ -85,10 +85,10 @@ $factory->define(UserEpisode::class, function (Faker\Generator $faker) {
 $factory->define(UserFriend::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function(){
-            return factory(User::class)->create()
+            return factory(User::class)->create();
         },
         'friends_user_id' => function(){
-            return factory(User::class)->create()
+            return factory(User::class)->create();
         },
     ];
 });
