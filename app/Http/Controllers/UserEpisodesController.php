@@ -75,6 +75,23 @@ class UserEpisodesController extends ApiController
         
         return $this->responseData($response);
     }
+    
+    public function listening($username)
+    {
+        $listening = (new UserEpisodesRepository)->listening($username);
+        
+        $response = $listening->map(function($episode) {
+            $feed = (new FeedTransformer)->transform($episode);
+            $ep = (new EpisodeTransformer)->transform($episode);
+            $ep['paused_at'] = $episode['paused_at'];
+            $feed['episode'] = $ep;
+            unset($feed['episodes']);
+            return $feed;
+        });
+    
+    
+        return $this->responseData($response);
+    }
 
     public function attach($username)
     {

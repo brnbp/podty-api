@@ -121,4 +121,15 @@ class UserEpisodesRepository
 
         self::batchCreate($episodes->toArray());
     }
+    
+    public function listening($username)
+    {
+        return User::whereUsername($username)
+            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
+            ->join('feeds', 'feeds.id', '=', 'user_feeds.feed_id')
+            ->join('user_episodes', 'user_feeds.id','=', 'user_episodes.user_feed_id')
+            ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
+            ->where('user_episodes.paused_at', '>', 0)
+            ->get();
+    }
 }
