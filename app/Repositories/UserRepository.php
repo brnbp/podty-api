@@ -38,7 +38,7 @@ class UserRepository
 
     public static function first($username)
     {
-        return User::whereUsername($username)->first();
+        return User::whereUsername($username)->firstOrFail();
     }
 
     public static function delete(User $user)

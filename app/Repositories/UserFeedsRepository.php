@@ -29,7 +29,7 @@ class UserFeedsRepository
 
     public static function first($feedId, $userId)
     {
-        return UserFeed::whereFeedId($feedId)->whereUserId($userId)->first();
+        return UserFeed::whereFeedId($feedId)->whereUserId($userId)->firstOrFail();
     }
 
     public static function idByEpisodeAndUsername($episodeId, $username)
