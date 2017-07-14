@@ -38,9 +38,6 @@ class UserFeedsController extends ApiController
             return $this->setStatusCode(Response::HTTP_BAD_GATEWAY)->respondError('');
         }
 
-        UserEpisodesRepository::createAllEpisodesFromUserFeed($userFeed);
-        UserFeedsRepository::markAllNotListened($userFeed->id);
-
         return $this->respondSuccess(['created' => true]);
     }
 

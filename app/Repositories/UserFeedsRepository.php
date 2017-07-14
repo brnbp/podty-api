@@ -45,10 +45,7 @@ class UserFeedsRepository
     public static function idByEpisodeAndUser($episodeId, $userId)
     {
         $feedId = EpisodesRepository::feedId($episodeId);
-        if (!$feedId) {
-            return false;
-        }
-
+        
         $userFeed = UserFeedsRepository::first($feedId, $userId);
 
         return $userFeed ? $userFeed->id : false;
@@ -61,10 +58,18 @@ class UserFeedsRepository
             'feed_id' => $feedId
         ]);
     
+        if (!$userFeed) {
+            return false;
+        }
+    
         Cache::forget('user_feeds_' . $feedId . '_' . $user->username);
         Cache::forget('feeds_listeners_' . $feedId);
         UserRepository::incrementsPodcastsCount($userFeed);
         FeedRepository::incrementsListeners($feedId);
+        
+        self::markAllNotListened($feedId);
+        
+        UserEpisodesRepository::createAllEpisodesFromUserFeed($userFeed);
 
         return $userFeed;
     }
