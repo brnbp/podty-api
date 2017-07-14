@@ -9,7 +9,6 @@ class EpisodesTest extends TestCase
 
     public function testReturnOneFeedByName()
     {
-    
         $feed = factory(\App\Models\Feed::class)->create([
             'name' => 'devnaestrada',
             'slug' => 'devnaestrada',
