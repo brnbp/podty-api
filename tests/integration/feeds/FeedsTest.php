@@ -1,13 +1,23 @@
 <?php
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class FeedsTest extends TestCase
 {
-    use WithoutMiddleware;
-
+    use DatabaseMigrations, WithoutMiddleware;
+    
     public function testReturnOneFeedByName()
     {
+        $feed = factory(\App\Models\Feed::class)->create([
+            'name' => 'devnaestrada',
+            'slug' => 'devnaestrada',
+        ]);
+        
+        factory(\App\Models\Episode::class)->times(6)->create([
+            'feed_id' => $feed->id
+        ]);
+        
         $this->json('GET', '/v1/feeds/name/devnaestrada')
             ->seeStatusCode(200)
             ->seeJsonStructure([
@@ -20,7 +30,16 @@ class FeedsTest extends TestCase
 
     public function testReturnOneFeedById()
     {
-        $this->json('GET', '/v1/feeds/15')
+        $feed = factory(\App\Models\Feed::class)->create([
+            'name' => 'devnaestrada',
+            'slug' => 'devnaestrada',
+        ]);
+    
+        factory(\App\Models\Episode::class)->times(6)->create([
+            'feed_id' => $feed->id
+        ]);
+        
+        $this->json('GET', '/v1/feeds/1')
             ->seeStatusCode(200)
             ->seeJsonStructure([
                 'data' => [
@@ -31,6 +50,8 @@ class FeedsTest extends TestCase
 
     public function testReturnLatestsFeeds()
     {
+        factory(\App\Models\Episode::class)->times(6)->create();
+        
         $this->json('GET', '/v1/feeds/latest')
             ->seeStatusCode(200)
             ->seeJsonStructure($this->getDefaultStructure());
@@ -38,6 +59,7 @@ class FeedsTest extends TestCase
 
     public function testReturnTopestsFeeds()
     {
+        factory(\App\Models\Episode::class)->times(6)->create();
         $this->json('GET', '/v1/feeds/latest')
             ->seeStatusCode(200)
             ->seeJsonStructure($this->getDefaultStructure());

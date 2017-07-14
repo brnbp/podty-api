@@ -1,13 +1,24 @@
 <?php
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class EpisodesTest extends TestCase
 {
-    use WithoutMiddleware;
+    use DatabaseMigrations, WithoutMiddleware;
 
     public function testReturnOneFeedByName()
     {
+    
+        $feed = factory(\App\Models\Feed::class)->create([
+            'name' => 'devnaestrada',
+            'slug' => 'devnaestrada',
+        ]);
+    
+        factory(\App\Models\Episode::class)->times(6)->create([
+            'feed_id' => $feed->id
+        ]);
+        
         $this->json('GET', '/v1/feeds/name/devnaestrada')
             ->seeStatusCode(200)
             ->seeJsonStructure([
