@@ -26,8 +26,8 @@ class UserTransformer extends TransformerAbstract
             'id' => $user->id,
             'username' => $user->username,
             'email' => $user->email,
-            'friends_count' => $user->friends_count,
-            'podcasts_count' => $user->podcasts_count,
+            'friends_count' => (int) $user->friends_count,
+            'podcasts_count' => (int) $user->podcasts_count,
             'joined_at' => $this->setDate($user->created_at),
             'last_update' => $this->setDate($user->updated_at)
         ];

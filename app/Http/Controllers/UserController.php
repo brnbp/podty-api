@@ -38,6 +38,7 @@ class UserController extends ApiController
         if ($user) {
             $user = $this->userTransformer->transform($user);
         }
+
         return $this->responseData($user);
     }
 
