@@ -51,15 +51,6 @@ class FeedsTest extends TestCase
     public function testReturnLatestsFeeds()
     {
         factory(\App\Models\Episode::class)->times(6)->create();
-        
-        $this->json('GET', '/v1/feeds/latest')
-            ->seeStatusCode(200)
-            ->seeJsonStructure($this->getDefaultStructure());
-    }
-
-    public function testReturnTopestsFeeds()
-    {
-        factory(\App\Models\Episode::class)->times(6)->create();
         $this->json('GET', '/v1/feeds/latest')
             ->seeStatusCode(200)
             ->seeJsonStructure($this->getDefaultStructure());
