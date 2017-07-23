@@ -1,5 +1,7 @@
 <?php
+namespace Tests\Integration\Feeds;
 
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
