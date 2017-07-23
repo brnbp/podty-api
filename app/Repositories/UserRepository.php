@@ -19,7 +19,7 @@ class UserRepository
         $user = new User([
             'username' => $userData['username'],
             'email' => $userData['email'],
-            'password' => $userData['password'],
+            'password' => Password::encrypt($userData['password']),
             'friends_count' => 0,
             'podcasts_count' => 0,
         ]);
