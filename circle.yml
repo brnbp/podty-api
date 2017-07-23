@@ -7,8 +7,8 @@ test:
   override:
     - php vendor/bin/phpunit
   post:
-    - mkdir $CIRCLE_ARTIFACTS/tests
-    - php vendor/bin/phpunit --coverage-html $CIRCLE_ARTIFACTS/tests
+    - vendor/bin/phpunit --coverage-clover=coverage.xml
+    - bash <(curl -s https://codecov.io/bash)
 deployment:
   production:
     branch: master
