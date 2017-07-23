@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/brnbp/podty-api.svg?style=svg&circle-token=120eaa9768f28a5ae58d7c3b88e66fe628c304d0)](https://circleci.com/gh/brnbp/podty-api)
+[![StyleCI](https://styleci.io/repos/57003001/shield?branch=master)](https://styleci.io/repos/57003001)
 
 ## Podcast API
 
@@ -39,11 +40,11 @@ $ php artisan serve
 Filters available
  - limit
  - offset
- - order 
+ - order
     - DESC
     - ASC
 
-- Feeds: 
+- Feeds:
 
 ###### GET:
 ```
@@ -167,7 +168,7 @@ Filters available
 
 ##### queuing:
 ```bash
-$ php artisan queue:work --daemon --sleep 120 --tries 3 -q & 
+$ php artisan queue:work --daemon --sleep 120 --tries 3 -q &
 ```
 
 ##### run crons (put this on crontab, run every minute)
