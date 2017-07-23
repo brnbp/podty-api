@@ -10,20 +10,23 @@ class RetrieveUserEpisodesTest extends TestCase
     /** @test */
     public function it_retrieves_in_progress_episodes()
     {
-        $episodes = factory(\App\Models\Episode::class)->times(6)->create();
-        
         $user = factory(\App\Models\User::class)->create();
+        $userFeeds = factory(\App\Models\UserFeed::class, 3)->create(['user_id' => $user->id]);
         
-        $episodes->each(function($episode) use ($user) {
-            $this->post('/v1/users/' . $user->username . '/feeds/' . $episode->feed_id);
-            if ($episode->id <= 2) return;
-            $this->put('/v1/users/' . $user->username . '/episodes/' . $episode->id . '/paused/' . random_int(100, 100000));
-        });
+        factory(\App\Models\UserEpisode::class)->create([
+            'user_feed_id' => $userFeeds->first()->id,
+            'paused_at' => 50
+        ]);
+    
+        factory(\App\Models\UserEpisode::class)->create([
+            'user_feed_id' => $userFeeds->last()->id,
+            'paused_at' => 150
+        ]);
         
         $response = $this->get('/v1/users/' . $user->username . '/episodes/listening');
         $response = collect(json_decode($response->response->getContent())->data);
-        
-        $this->assertCount(4, $response);
+
+        $this->assertCount(2, $response);
         $this->seeJsonStructure([
             'data' => [
                 '*' => [

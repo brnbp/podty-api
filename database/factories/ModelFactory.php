@@ -5,12 +5,12 @@
 
 use App\Models\Episode;
 use App\Models\Feed;
+use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
 use App\Models\UserFriend;
-use App\User;
 
-$factory->define(\App\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Faker\Generator $faker) {
     return [
         'username' => $faker->name,
         'email' => $faker->email,
@@ -49,7 +49,7 @@ $factory->define(Episode::class, function (Faker\Generator $faker) {
         'image' => $faker->imageUrl(),
         'duration' => '02:30:42',
         'link' => $faker->url,
-        'media_length' => $faker->numberBetween(11113960, 99993960),
+        'media_length' => $faker->numberBetween(113960, 993960),
         'media_type' => 'audio/mpeg',
         'media_url' => $faker->url,
     ];
@@ -78,7 +78,7 @@ $factory->define(UserEpisode::class, function (Faker\Generator $faker) {
     return [
         'user_feed_id' => $userFeed->id,
         'episode_id' => $episode->id,
-        'paused_at' => $faker->randomNumber(6000),
+        'paused_at' => $faker->randomNumber(3),
     ];
 });
 
