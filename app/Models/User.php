@@ -7,7 +7,7 @@ class User extends Model
 {
     protected $fillable = ['username', 'email', 'password', 'friends_count', 'podcasts_count'];
 
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['remember_token'];
 
     public static $rules = [
         'username' => 'bail|required|alpha_num|unique:users|min:3|max:20',

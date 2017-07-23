@@ -1,6 +1,7 @@
 <?php
 namespace Tests;
 
+use App\Models\Customer;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -25,5 +26,10 @@ class TestCase extends BaseTestCase
         $app->make(Kernel::class)->bootstrap();
 
         return $app;
+    }
+    
+    public function authenticate()
+    {
+        $this->be(new Customer());
     }
 }

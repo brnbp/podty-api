@@ -12,12 +12,12 @@ use App\Models\UserFriend;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
     return [
-        'username' => $faker->name,
+        'username' => str_random(8),
         'email' => $faker->email,
-        'password' => bcrypt('brnbp'),
-        'remember_token' => md5('brnbp'),
-        'friends_count' => 1,
-        'podcasts_count' => 1
+        'password' => $faker->password(8, 12),
+        'remember_token' => $faker->password(8, 12),
+        'friends_count' => 0,
+        'podcasts_count' => 0
     ];
 });
 

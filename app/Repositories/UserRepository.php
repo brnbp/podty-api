@@ -20,6 +20,8 @@ class UserRepository
             'username' => $userData['username'],
             'email' => $userData['email'],
             'password' => Password::encrypt($userData['password']),
+            'friends_count' => 0,
+            'podcasts_count' => 0,
         ]);
 
         $user->save();
