@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Transform\UserTransformer;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Mockery\CountValidator\Exception;
 
 /**
  * Class UserController
