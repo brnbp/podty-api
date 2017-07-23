@@ -4,6 +4,8 @@ machine:
 test:
   pre:
     - php -l app/
+  override:
+    - php vendor/bin/phpunit
   post:
     - mkdir $CIRCLE_ARTIFACTS/tests
     - php vendor/bin/phpunit --coverage-html $CIRCLE_ARTIFACTS/tests
