@@ -34,7 +34,7 @@ class TouchUserTest extends TestCase
     {
         $this->authenticate();
         
-        factory(User::class, 2)->create();
+        factory(User::class)->create();
     
         $this->patch('v1/users/not-valid-user/touch')
             ->assertResponseStatus(404);
