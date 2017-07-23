@@ -7,7 +7,7 @@ test:
   override:
     - php vendor/bin/phpunit
   post:
-    - vendor/bin/phpunit --coverage-clover=coverage.xml
+    - php vendor/bin/phpunit --coverage-clover=coverage.xml
     - bash <(curl -s https://codecov.io/bash)
 deployment:
   production:
