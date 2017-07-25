@@ -87,7 +87,7 @@ $factory->define(UserFriend::class, function (Faker\Generator $faker) {
         'user_id' => function(){
             return factory(User::class)->create()->id;
         },
-        'friends_user_id' => function(){
+        'friend_user_id' => function(){
             return factory(User::class)->create()->id;
         },
     ];
