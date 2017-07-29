@@ -152,11 +152,11 @@ class RetrieveFeedsTest extends TestCase
     {
         $this->authenticate();
     
-        $secondFeed = factory(Feed::class)->create([
+        $thirdFeed = factory(Feed::class)->create([
             'listeners' => 0,
             'last_episode_at' => (string) Carbon::now()->subDay(5),
         ]);
-        $thirdFeed = factory(Feed::class)->create([
+        $secondFeed = factory(Feed::class)->create([
             'listeners' => 1,
             'last_episode_at' => (string) Carbon::now()->subDay(4),
         ]);
@@ -167,17 +167,18 @@ class RetrieveFeedsTest extends TestCase
         
         $response = $this->get('/v1/feeds/top')
             ->seeStatusCode(200)
-            /*->seeJsonEquals([
-               'data' => [
-                   (new FeedTransformer)->transform($firstFeed->toArray()),
-                   (new FeedTransformer)->transform($secondFeed->toArray()),
-                   (new FeedTransformer)->transform($thirdFeed->toArray()),
-               ]
-            ])*/
             ->seeJsonStructure($this->getDefaultStructure());
     
-        /*$response = collect(json_decode($response->response->getContent())->data);
-        $this->assertCount(3, $response);*/
+        $response = json_decode($response->response->getContent(), true);
+        
+        
+        $this->assertEquals([
+            'data' => [
+                (new FeedTransformer)->transform($firstFeed->toArray()),
+                (new FeedTransformer)->transform($secondFeed->toArray()),
+                (new FeedTransformer)->transform($thirdFeed->toArray()),
+            ]
+        ], $response);
     }
     
     /** @test */
