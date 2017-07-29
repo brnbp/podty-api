@@ -21,7 +21,12 @@ class UserFeedsController extends ApiController
 
     public function one($username, $feedId)
     {
-        return $this->responseData(UserFeedsRepository::one($username, $feedId));
+        $feed = UserFeedsRepository::one($username, $feedId);
+        
+        if ($feed->count()) {
+            return $this->respondSuccess($feed);
+        }
+        return $this->respondNotFound();
     }
 
     public function attach($username, $feedId)
@@ -60,10 +65,5 @@ class UserFeedsController extends ApiController
         UserFeedsRepository::markAllListened($userFeed->id);
 
         return $this->respondSuccess(['mark all as listened' => true]);
-    }
-
-    private function responseData($data)
-    {
-        return empty($data) ? $this->respondNotFound() : $this->respondSuccess($data);
     }
 }
