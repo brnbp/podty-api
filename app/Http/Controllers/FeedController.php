@@ -40,24 +40,17 @@ class FeedController extends ApiController
 
         return $this->response($feed);
     }
-
-    /**
-     * @param $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function retrieveById($id)
+    
+    public function retrieveById(Feed $feed)
     {
-        $feed = $this->feedRepository->findById($id);
-
-        return $this->response($feed);
+        return $this->respondSuccess([
+            (new FeedTransformer)->transform($feed->toArray())
+        ]);
     }
 
     public function latest()
     {
-        $latestsFeeds = $this->feedRepository->latests();
-
-        return $this->response($latestsFeeds);
+        return $this->response($this->feedRepository->latests());
     }
 
     public function top(int $count = 20)

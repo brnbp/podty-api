@@ -5,7 +5,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('feeds/latest', 'FeedController@latest');
     Route::get('feeds/top/{count?}', 'FeedController@top');
     Route::get('feeds/name/{name}', 'FeedController@retrieve');
-    Route::get('feeds/{feedId}', 'FeedController@retrieveById');
+    Route::get('feeds/{feed}', 'FeedController@retrieveById');
     Route::get('feeds/{feedId}/episodes', 'EpisodeController@retrieve');
 
     Route::get('feeds/{feedId}/listeners', 'FeedController@listeners');
