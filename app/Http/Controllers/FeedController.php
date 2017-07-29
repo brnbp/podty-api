@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SearchNewFeed;
 use App\Models\Feed;
 use App\Models\UserFeed;
 use App\Repositories\FeedRepository;
@@ -34,7 +35,7 @@ class FeedController extends ApiController
         $feed = $this->feedRepository->findByName($name);
 
         if ($feed->isEmpty()) {
-            $this->Feed->persist($name);
+            $this->dispatch(new SearchNewFeed($name));
         }
 
         return $this->response($feed);
