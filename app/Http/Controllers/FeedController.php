@@ -58,9 +58,9 @@ class FeedController extends ApiController
         return $this->response($this->feedRepository->top($count));
     }
 
-    public function listeners($id)
+    public function listeners(Feed $feed)
     {
-        $users = FeedRepository::listeners($id);
+        $users = FeedRepository::listeners($feed->id);
 
         if (!$users->count()) {
             return $this->respondNotFound();
