@@ -5,22 +5,18 @@ use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Input;
 
-/**
- * Class UserController
- *
- * @package App\Http\Controllers
- */
 class UserFeedsController extends ApiController
 {
-    /**
-     * Get all feeds from specific user
-     * @param string $username
-     */
     public function all($username)
     {
-        return $this->responseData(UserFeedsRepository::all($username));
+        $feeds = UserFeedsRepository::all($username);
+
+        if ($feeds->count()) {
+            return $this->respondSuccess($feeds);
+        }
+        
+        return $this->respondNotFound();
     }
 
     public function one($username, $feedId)
@@ -54,8 +50,6 @@ class UserFeedsController extends ApiController
             $this->respondNotFound();
     }
 
-
-
     public function listenAll($username, $feedId)
     {
         $userId = UserRepository::getId($username);
@@ -67,7 +61,6 @@ class UserFeedsController extends ApiController
 
         return $this->respondSuccess(['mark all as listened' => true]);
     }
-
 
     private function responseData($data)
     {

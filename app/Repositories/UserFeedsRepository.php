@@ -15,7 +15,7 @@ class UserFeedsRepository
             return self::buildQuery(User::whereUsername($username))
                 ->orderBy('last_episode_at', 'DESC')
                 ->get();
-            });
+        });
     }
 
     public static function one($username, $feedId)
