@@ -12,8 +12,6 @@ class TouchUserTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_touch_user()
     {
-        factory(User::class)->make();
-
         $this->patch('v1/users/username/touch')
                 ->assertResponseStatus(401);
     }
@@ -34,8 +32,6 @@ class TouchUserTest extends TestCase
     {
         $this->authenticate();
         
-        factory(User::class)->create();
-    
         $this->patch('v1/users/not-valid-user/touch')
             ->assertResponseStatus(404);
     }

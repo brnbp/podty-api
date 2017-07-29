@@ -13,30 +13,14 @@ class RetrieveFeedsTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_retrieve_feed_by_name()
     {
-        $feedName = 'devnaestrada';
-        $feed = factory(Feed::class)->create([
-            'name' => $feedName,
-            'slug' => $feedName,
-        ]);
-    
-        factory(Episode::class)->times(6)->create([
-            'feed_id' => $feed->id
-        ]);
-    
-        $this->get('/v1/feeds/name/' . $feedName)
+        $this->get('/v1/feeds/name/somefeed')
             ->seeStatusCode(401);
     }
     
     /** @test */
     public function unauthenticated_client_cannot_retrieve_feed_by_id()
     {
-        $feed = factory(Feed::class)->create();
-        
-        factory(Episode::class, 3)->create([
-            'feed_id' => $feed->id
-        ]);
-    
-        $this->get('/v1/feeds/' . $feed->id)
+        $this->get('/v1/feeds/1')
             ->seeStatusCode(401);
     }
 
@@ -69,15 +53,6 @@ class RetrieveFeedsTest extends TestCase
     public function it_returns_404_when_retrieving_non_existent_feed_by_name()
     {
         $this->authenticate();
-        
-        $feed = factory(Feed::class)->create([
-            'name' => 'somefeed',
-            'slug' => 'somefeed',
-        ]);
-        
-        factory(Episode::class, 6)->create([
-            'feed_id' => $feed->id
-        ]);
         
         $this->get('/v1/feeds/name/anotherfeed')
             ->seeStatusCode(404);

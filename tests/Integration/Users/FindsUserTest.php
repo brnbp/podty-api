@@ -12,8 +12,6 @@ class FindsUserTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_search_user()
     {
-        factory(User::class)->make();
-
         $this->get('v1/users/find/randomuser')
                 ->assertResponseStatus(401);
     }

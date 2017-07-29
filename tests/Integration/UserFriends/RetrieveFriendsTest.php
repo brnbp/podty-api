@@ -13,12 +13,7 @@ class RetrieveFriendsTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_retrieve_friends()
     {
-        $user = factory(User::class)->create();
-        $friend = factory(User::class)->create();
-    
-        UserFriendsRepository::follow($user->id, $friend->id);
-        
-        $this->get('v1/users/' . $user->username . '/friends')
+        $this->get('v1/users/someuser/friends')
             ->assertResponseStatus(401);
     }
     

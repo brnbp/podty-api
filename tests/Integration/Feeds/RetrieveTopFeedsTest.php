@@ -14,15 +14,6 @@ class RetrieveTopFeedsTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_retrieve_top_feeds()
     {
-        factory(Feed::class)->create([
-            'listeners' => 1,
-            'last_episode_at' => (string) Carbon::now()->subDay(4),
-        ]);
-        factory(Feed::class)->create([
-            'listeners' => 5,
-            'last_episode_at' => (string) Carbon::now(),
-        ]);
-        
         $this->get('/v1/feeds/top')
             ->seeStatusCode(401);
     }

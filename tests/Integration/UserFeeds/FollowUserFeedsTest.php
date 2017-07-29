@@ -14,10 +14,7 @@ class FollowUserFeedsTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_allow_user_to_follows_feed()
     {
-        $user = factory(User::class)->create();
-        $feed = factory(Feed::class)->create();
-        
-        $this->post('v1/users/' . $user->username . '/feeds/' . $feed->id)
+        $this->post('v1/users/someuser/feeds/1')
             ->assertResponseStatus(401);
     }
     

@@ -12,8 +12,6 @@ class DeleteUserTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_delete_user()
     {
-        factory(User::class)->make();
-
         $this->delete('v1/users/username')
                 ->assertResponseStatus(401);
     }

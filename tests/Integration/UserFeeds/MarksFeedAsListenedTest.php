@@ -15,11 +15,7 @@ class MarksFeedAsListenedTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_allow_user_to_follows_feed()
     {
-        $user = factory(User::class)->create();
-        $feed = factory(Feed::class)->create();
-        UserFeedsRepository::create($feed->id, $user);
-        
-        $this->put('v1/users/' . $user->username . '/feeds/' . $feed->id . '/listenAll')
+        $this->put('v1/users/someuser/feeds/1/listenAll')
             ->assertResponseStatus(401);
     }
     

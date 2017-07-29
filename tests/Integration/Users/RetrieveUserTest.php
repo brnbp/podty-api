@@ -12,8 +12,6 @@ class RetrieveUserTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_retrieve_user()
     {
-        factory(User::class)->make();
-
         $this->delete('v1/users/username')
                 ->assertResponseStatus(401);
     }
@@ -42,8 +40,6 @@ class RetrieveUserTest extends TestCase
     public function it_requires_a_valid_user()
     {
         $this->authenticate();
-        
-        factory(User::class, 3)->create();
         
         $this->get('v1/users/not-valid-user')
             ->assertResponseStatus(404);

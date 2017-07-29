@@ -15,11 +15,6 @@ class RetrieveListenersTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_retrieve_listeners_for_feed()
     {
-        $feed = factory(Feed::class)->create();
-        $user = factory(User::class)->create();
-        
-        UserFeedsRepository::create($feed->id, $user);
-        
         $this->get('/v1/feeds/1/listeners')
             ->seeStatusCode(401);
     }

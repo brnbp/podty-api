@@ -12,8 +12,6 @@ class RetrieveLatestsFeedsTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_retrieve_latests_feeds()
     {
-        factory(Episode::class, 3)->create();
-        
         $this->get('/v1/feeds/latest')
             ->seeStatusCode(401);
     }

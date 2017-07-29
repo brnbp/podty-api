@@ -13,9 +13,7 @@ class CreateUserTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_create_user()
     {
-        $user = factory(User::class)->make();
-
-        $this->post('v1/users', $user->toArray())
+        $this->post('v1/users', [])
                 ->assertResponseStatus(401);
     }
     

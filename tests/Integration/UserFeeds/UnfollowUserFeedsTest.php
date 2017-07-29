@@ -15,11 +15,7 @@ class UnfollowUserFeedsTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_allow_user_to_follows_feed()
     {
-        $user = factory(User::class)->create();
-        $feed = factory(Feed::class)->create();
-        UserFeedsRepository::create($feed->id, $user);
-        
-        $this->delete('v1/users/' . $user->username . '/feeds/' . $feed->id)
+        $this->delete('v1/users/someuser/feeds/1')
             ->assertResponseStatus(401);
     }
     

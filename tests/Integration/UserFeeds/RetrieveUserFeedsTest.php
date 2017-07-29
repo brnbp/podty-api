@@ -14,9 +14,7 @@ class RetrieveUserFeedsTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_retrieve_user_feeds()
     {
-        $user = factory(User::class)->create();
-        
-        $this->get('v1/users/' . $user->username . '/feeds')
+        $this->get('v1/users/someuser/feeds')
             ->assertResponseStatus(401);
     }
     

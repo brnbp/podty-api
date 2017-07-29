@@ -14,11 +14,7 @@ class UnfollowUsersTest extends TestCase
     /** @test */
     public function unauthenticated_client_cannot_follow_users()
     {
-        $user = factory(User::class)->create();
-        $friend = factory(User::class)->create();
-        
-        
-        $this->delete('v1/users/' . $user->username . '/friends/' . $friend->username)
+        $this->delete('v1/users/someuser/friends/anotheruser')
             ->assertResponseStatus(401);
     }
     
