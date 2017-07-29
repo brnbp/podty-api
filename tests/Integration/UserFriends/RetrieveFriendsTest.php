@@ -1,8 +1,8 @@
 <?php
-namespace Tests\Feature;
+namespace Tests\Integration\UserFriends;
 
 use App\Models\User;
-use App\Models\UserFriend;
+use App\Repositories\UserFriendsRepository;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -15,11 +15,8 @@ class RetrieveFriendsTest extends TestCase
     {
         $user = factory(User::class)->create();
         $friend = factory(User::class)->create();
-        
-        factory(UserFriend::class)->create([
-            'user_id' => $user->id,
-            'friend_user_id' => $friend->id,
-        ]);
+    
+        UserFriendsRepository::follow($user->id, $friend->id);
         
         $this->get('v1/users/' . $user->username . '/friends')
             ->assertResponseStatus(401);
@@ -31,14 +28,10 @@ class RetrieveFriendsTest extends TestCase
         $this->authenticate();
 
         $user = factory(User::class)->create();
-        
         $friends = factory(User::class, 2)->create();
-        
+    
         $friends->each(function($friend) use($user){
-            factory(UserFriend::class)->create([
-                'user_id' => $user->id,
-                'friend_user_id' => $friend->id,
-            ]);
+            UserFriendsRepository::follow($user->id, $friend->id);
         });
     
         $this->get('v1/users/' . $user->username . '/friends')

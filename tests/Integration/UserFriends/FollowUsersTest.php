@@ -1,11 +1,11 @@
 <?php
-namespace Tests\Integration;
+namespace Tests\Integration\UserFriends;
 
 use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class FollowUserTest extends TestCase
+class FollowUsersTest extends TestCase
 {
     use DatabaseMigrations;
     
