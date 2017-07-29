@@ -5,17 +5,19 @@ use App\Models\UserFriend;
 
 class UserFriendsRepository
 {
-    public static function follow($userId, $friendUserId)
+    public static function follow($userId, $friendUserId) : bool
     {
-        UserFriend::create([
+        $user = UserFriend::firstOrCreate([
             'user_id' => $userId,
             'friend_user_id' => $friendUserId
         ]);
+        
+        return $user->wasRecentlyCreated;
     }
 
-    public static function unfollow($userId, $friendUserId)
+    public static function unfollow($userId, $friendUserId) :bool
     {
-        UserFriend::whereUserId($userId)
+        return UserFriend::whereUserId($userId)
             ->whereFriendUserId($friendUserId)
             ->delete();
     }

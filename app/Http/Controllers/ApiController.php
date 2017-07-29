@@ -35,7 +35,7 @@ class ApiController extends Controller
         return $this->setStatusCode(Response::HTTP_CREATED)->respond($content);
     }
 
-    public function respondSuccess($data, $meta = [])
+    public function respondSuccess($data = [], $meta = [])
     {
         if (!empty($meta)) {
             $content['meta'] = $meta;

@@ -41,6 +41,26 @@ class FollowUsersTest extends TestCase
     }
     
     /** @test */
+    public function an_user_cannot_follow_twice_same_user()
+    {
+        $this->authenticate();
+        
+        $user = factory(User::class)->create();
+        $anotherUser = factory(User::class)->create();
+    
+        $this->post('v1/users/' . $user->username . '/friends/' . $anotherUser->username)
+            ->assertResponseStatus(200);
+    
+        $this->post('v1/users/' . $user->username . '/friends/' . $anotherUser->username)
+            ->assertResponseStatus(400);
+    
+        $this->get('v1/users/' . $user->username . '/friends')
+            ->assertResponseStatus(200);
+    
+        $this->assertEquals(1, $user->fresh()->friends_count);
+    }
+    
+    /** @test */
     public function an_user_can_follow_another_user()
     {
         $this->authenticate();

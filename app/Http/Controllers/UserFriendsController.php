@@ -26,15 +26,24 @@ class UserFriendsController extends ApiController
 
     public function follow(User $user, User $friend)
     {
-        Cache::forget('user_friends_' . $user->username);
-        UserFriendsRepository::follow($user->id, $friend->id);
-        UserRepository::incrementsFriendsCount($user->id);
+        if (UserFriendsRepository::follow($user->id, $friend->id)) {
+            Cache::forget('user_friends_' . $user->username);
+            UserRepository::incrementsFriendsCount($user->id);
+            
+            return $this->respondSuccess();
+        }
+        
+        return $this->respondBadRequest();
     }
 
     public function unfollow(User $user, User $friend)
     {
-        Cache::forget('user_friends_' . $user->username);
-        UserFriendsRepository::unfollow($user->id, $friend->id);
-        UserRepository::decrementsFriendsCount($user->id);
+        if (UserFriendsRepository::unfollow($user->id, $friend->id)) {
+            Cache::forget('user_friends_' . $user->username);
+            UserRepository::decrementsFriendsCount($user->id);
+            return $this->respondSuccess();
+        }
+        
+        return $this->respondBadRequest();
     }
 }
