@@ -1,7 +1,6 @@
 <?php
 namespace Tests\Integration\Feeds;
 
-use App\Models\Episode;
 use App\Models\Feed;
 use App\Transform\FeedTransformer;
 use Carbon\Carbon;

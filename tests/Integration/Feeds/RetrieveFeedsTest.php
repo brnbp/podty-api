@@ -3,10 +3,6 @@ namespace Tests\Integration\Feeds;
 
 use App\Models\Episode;
 use App\Models\Feed;
-use App\Models\User;
-use App\Repositories\UserFeedsRepository;
-use App\Transform\FeedTransformer;
-use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -43,16 +39,7 @@ class RetrieveFeedsTest extends TestCase
         $this->get('/v1/feeds/' . $feed->id)
             ->seeStatusCode(401);
     }
-    
-    /** @test */
-    public function unauthenticated_client_cannot_retrieve_latests_feeds()
-    {
-        factory(Episode::class, 3)->create();
-        
-        $this->get('/v1/feeds/latest')
-            ->seeStatusCode(401);
-    }
-    
+
     /** @test */
     public function it_returns_feed_by_name()
     {
@@ -123,39 +110,6 @@ class RetrieveFeedsTest extends TestCase
         
         $this->get('/v1/feeds/1')
             ->seeStatusCode(404);
-    }
-    
-    /** @test */
-    public function it_returns_latests_feeds()
-    {
-        $this->authenticate();
-    
-        factory(Episode::class, 3)->create();
-        
-        $response = $this->get('/v1/feeds/latest')
-                        ->seeStatusCode(200)
-                        ->seeJsonStructure($this->getDefaultStructure());
-    
-        $response = collect(json_decode($response->response->getContent())->data);
-        $this->assertCount(3, $response);
-    }
-    
-    /** @test */
-    public function it_returns_404_when_retrieving_latests_feeds_having_no_feeds()
-    {
-        $this->authenticate();
-        
-        $this->get('/v1/feeds/latest')
-            ->seeStatusCode(404);
-    }
-    
-    private function getDefaultStructure()
-    {
-        return [
-            'data' => [
-                '*' => $this->getDefaultFeedStructure()
-            ]
-        ];
     }
 
     private function getDefaultFeedStructure()
