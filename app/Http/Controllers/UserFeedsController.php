@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Feed;
+use App\Models\User;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
 use App\Repositories\UserRepository;
@@ -29,17 +31,15 @@ class UserFeedsController extends ApiController
         return $this->respondNotFound();
     }
 
-    public function attach($username, $feedId)
+    public function attach(User $username, Feed $feedId)
     {
-        $user = UserRepository::first($username);
-
-        $userFeed = UserFeedsRepository::create($feedId, $user);
+        $userFeed = UserFeedsRepository::create($feedId->id, $username);
 
         if (!$userFeed) {
             return $this->setStatusCode(Response::HTTP_BAD_GATEWAY)->respondError('');
         }
 
-        return $this->respondSuccess(['created' => true]);
+        return $this->respondSuccess($userFeed);
     }
 
     public function detach($username, $feedId)

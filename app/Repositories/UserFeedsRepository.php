@@ -57,7 +57,7 @@ class UserFeedsRepository
             'user_id' => $user->id,
             'feed_id' => $feedId
         ]);
-    
+
         if (!$userFeed) {
             return false;
         }
@@ -71,7 +71,7 @@ class UserFeedsRepository
         
         UserEpisodesRepository::createAllEpisodesFromUserFeed($userFeed);
 
-        return $userFeed;
+        return $userFeed->fresh();
     }
 
     public static function batchCreate($feedsId, User $user)

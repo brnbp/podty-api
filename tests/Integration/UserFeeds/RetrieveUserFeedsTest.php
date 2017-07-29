@@ -4,7 +4,6 @@ namespace Tests\Integration\UserFeeds;
 use App\Models\Feed;
 use App\Models\User;
 use App\Repositories\UserFeedsRepository;
-use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
