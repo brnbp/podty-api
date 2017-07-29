@@ -84,15 +84,14 @@ class UserFeedsRepository
     public static function delete($feedId, User $user)
     {
         $userFeed = self::first($feedId, $user->id);
-        if (!$userFeed) {
-            return false;
-        }
 
         UserRepository::decrementsPodcastCount($userFeed);
         FeedRepository::decrementsListeners($feedId);
+        
         Cache::forget('feeds_listeners_' . $feedId);
         Cache::forget('user_feeds_' . $user->username);
         Cache::forget('user_feeds_' . $feedId . '_' . $user->username);
+        
         return $userFeed->delete();
     }
 

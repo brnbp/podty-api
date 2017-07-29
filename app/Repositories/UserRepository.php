@@ -46,7 +46,6 @@ class UserRepository
     public static function delete(User $user)
     {
         try {
-
             $user->feeds->map(function($feed){
                 FeedRepository::decrementsListeners($feed->id);
             });
@@ -71,14 +70,14 @@ class UserRepository
     public static function incrementsPodcastsCount(UserFeed $userFeed)
     {
         if ($userFeed->wasRecentlyCreated) {
-            return User::whereId($userFeed->user_id)->increment('podcasts_count');
+            return $userFeed->user->increment('podcasts_count');
         }
         return false;
     }
 
     public static function decrementsPodcastCount(UserFeed $userFeed)
     {
-        return User::whereId($userFeed->user_id)->decrement('podcasts_count');
+        return $userFeed->user->decrement('podcasts_count');
     }
 
     public static function incrementsFriendsCount($userId)

@@ -4,10 +4,11 @@ namespace Tests\Integration\UserFeeds;
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Models\User;
+use App\Repositories\UserFeedsRepository;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class FollowUserFeedsTest extends TestCase
+class UnfollowUserFeedsTest extends TestCase
 {
     use DatabaseMigrations;
     
@@ -16,19 +17,20 @@ class FollowUserFeedsTest extends TestCase
     {
         $user = factory(User::class)->create();
         $feed = factory(Feed::class)->create();
+        UserFeedsRepository::create($feed->id, $user);
         
-        $this->post('v1/users/' . $user->username . '/feeds/' . $feed->id)
+        $this->delete('v1/users/' . $user->username . '/feeds/' . $feed->id)
             ->assertResponseStatus(401);
     }
     
     /** @test */
-    public function it_returns_404_when_non_existent_user_tries_to_follow_feed()
+    public function it_returns_404_when_non_existent_user_tries_to_unfollow_feed()
     {
         $this->authenticate();
         
         $feed = factory(Feed::class)->create();
         
-        $this->post('v1/users/randomuser/feeds/' . $feed->id)
+        $this->delete('v1/users/randomuser/feeds/' . $feed->id)
             ->assertResponseStatus(404);
     }
     
@@ -38,53 +40,45 @@ class FollowUserFeedsTest extends TestCase
         $this->authenticate();
         
         $user = factory(User::class)->create();
-    
-        $this->post('v1/users/' . $user->username . '/feeds/2')
+        
+        $this->delete('v1/users/' . $user->username . '/feeds/2')
             ->assertResponseStatus(404);
     }
     
     /** @test */
-    public function an_user_can_follow_a_feed()
+    public function an_user_can_unfollow_a_feed()
     {
         $this->authenticate();
         
         $user = factory(User::class)->create();
-        $feed = factory(Feed::class)->create([
-            'total_episodes' => 3,
-        ]);
+        $feed = factory(Feed::class)->create();
         factory(Episode::class, 3)->create(['feed_id' => $feed->id]);
         
-        $this->post('v1/users/' . $user->username . '/feeds/' . $feed->id)
-            ->seeJson([
-                'data' => [
-                    'id' => 1,
-                    'feed_id' => (string) $feed->id,
-                    'user_id' => (string) $user->id,
-                    'listen_all' => false,
-                ]
-            ])
+        UserFeedsRepository::create($feed->id, $user);
+        
+        $this->delete('v1/users/' . $user->username . '/feeds/' . $feed->id)
             ->assertResponseStatus(200);
         
-        $this->assertEquals(1, $user->fresh()->podcasts_count);
+        $this->assertEquals(0, $user->fresh()->podcasts_count);
     
-        $userFeeds = $user->feeds()->find($feed->id);
-        
-        $this->assertCount(3, $userFeeds->episodes);
+        $this->assertCount(0, $user->feeds()->get());
     }
-
+    
     /** @test */
-    public function it_increases_listener_count_for_feed_when_user_follows_him()
+    public function it_decreases_listener_count_for_feed_when_user_unfollows_him()
     {
         $this->authenticate();
-    
+        
         $user = factory(User::class)->create();
         $feed = factory(Feed::class)->create([
             'listeners' => 0
         ]);
     
-        $this->post('v1/users/' . $user->username . '/feeds/' . $feed->id)
+        UserFeedsRepository::create($feed->id, $user);
+        
+        $this->delete('v1/users/' . $user->username . '/feeds/' . $feed->id)
             ->assertResponseStatus(200);
         
-        $this->assertEquals(1, $feed->fresh()->listeners);
+        $this->assertEquals(0, $feed->fresh()->listeners);
     }
 }
