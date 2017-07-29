@@ -102,7 +102,7 @@ class UserFeedsRepository
 
     public static function markAllNotListened($id)
     {
-        return UserFeed::whereId($id)->update(['listen_all' => false]);
+        self::markAllListened($id, false);
     }
 
     private static function buildQuery(Builder $builder)

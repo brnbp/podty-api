@@ -88,9 +88,9 @@ class UserEpisodesRepository
         return (self::count($userFeedId) > 0) ? true : false;
     }
 
-    public static function deleteAll($userFeedId)
+    public static function deleteAll(UserFeed $userFeed)
     {
-        return UserEpisode::whereUserFeedId($userFeedId)->delete();
+        return $userFeed->episodes()->delete();
     }
 
     public static function markAsPaused($userFeedId, $episodeId, $time)

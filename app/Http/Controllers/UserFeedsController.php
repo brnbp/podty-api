@@ -51,15 +51,14 @@ class UserFeedsController extends ApiController
         $this->respondBadRequest();
     }
 
-    public function listenAll($username, $feedId)
+    public function listenAll(User $username, $feedId)
     {
-        $userId = UserRepository::getId($username);
+        $userFeed = UserFeedsRepository::first($feedId, $username->id);
         
-        $userFeed = UserFeedsRepository::first($feedId, $userId);
-
-        UserEpisodesRepository::deleteAll($userFeed->id);
+        UserEpisodesRepository::deleteAll($userFeed);
+        
         UserFeedsRepository::markAllListened($userFeed->id);
 
-        return $this->respondSuccess(['mark all as listened' => true]);
+        return $this->respondSuccess();
     }
 }
