@@ -2,14 +2,11 @@
 namespace App\Http\Controllers;
 
 use App\Filter\Filter;
+use App\Models\Feed;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use App\Transform\EpisodeTransformer;
 use App\Transform\FeedTransformer;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EpisodeController extends ApiController
 {
@@ -22,24 +19,25 @@ class EpisodeController extends ApiController
     {
         $this->filter = $filter;
     }
-
+    
     /**
-     * @param integer $feedId
+     * @param \App\Models\Feed $feed
+     *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param int $feedId
      */
-    public function retrieve($feedId)
+    public function retrieve(Feed $feed)
     {
         if ($this->filter->validateFilters() === false) {
             return $this->respondInvalidFilter();
         }
 
-        $episodes = (new EpisodesRepository)->retriveByFeedId($feedId, $this->filter);
-
+        $episodes = (new EpisodesRepository)
+                        ->retrieveByFeed($feed, $this->filter);
+        
         if (!$episodes) {
             return $this->respondNotFound();
         }
-
-        $feed = (new FeedRepository)->first($feedId);
 
         $response = $this->transformAll($episodes, $feed);
 

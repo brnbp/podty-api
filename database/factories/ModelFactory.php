@@ -43,9 +43,9 @@ $factory->define(Episode::class, function (Faker\Generator $faker) {
             return factory(Feed::class)->create()->id;
         },
         'title' => $faker->words(3, true),
-        'published_date' => $faker->dateTime,
+        'published_date' => \Carbon\Carbon::now()->subDay(random_int(1,5)),
         'summary' =>$faker->paragraphs(1, true),
-        'content' => $faker->paragraphs(3, true),
+        'content' => $faker->paragraphs(2, true),
         'image' => $faker->imageUrl(),
         'duration' => '02:30:42',
         'link' => $faker->url,

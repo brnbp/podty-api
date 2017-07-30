@@ -104,8 +104,8 @@ class UserEpisodesRepository
     {
         $filter = new Filter;
         $filter->limit = 9999;
-
-        $episodes = (new EpisodesRepository)->retriveByFeedId($userFeed->feed_id, $filter);
+        
+        $episodes = (new EpisodesRepository)->retrieveByFeed($userFeed->feed, $filter);
 
         if (!$episodes) {
             return false;

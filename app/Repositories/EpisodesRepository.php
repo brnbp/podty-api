@@ -32,14 +32,14 @@ class EpisodesRepository
         return $episode ? $episode->feed_id : false;
     }
 
-    public function retriveByFeedId($feedId, Filter $filter)
+    public function retrieveByFeed($feed, Filter $filter)
     {
-        $episodes = Episode::take($filter->limit)
-                ->skip($filter->offset)
-                ->orderBy('published_date', $filter->order)
-                ->whereFeedId($feedId)
-                ->where('title', 'LIKE', "%$filter->term%")
-                ->get();
+        $episodes = $feed->episodes()
+                        ->take($filter->limit)
+                        ->skip($filter->offset)
+                        ->where('title', 'LIKE', "%{$filter->term}%")
+                        ->orderBy('published_date', $filter->order)
+                        ->get();
 
         if ($episodes->isEmpty()) {
             return false;
