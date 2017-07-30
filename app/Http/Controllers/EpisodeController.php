@@ -65,7 +65,7 @@ class EpisodeController extends ApiController
         $response = $episodes->map(function ($episode){
             $feed = (new FeedRepository)->first($episode->feed_id);
             $feed = (new FeedTransformer)->transform($feed);
-            $feed['episodes'] = array($this->episodeTransformer->transform($episode));
+            $feed['episodes'] = [$this->episodeTransformer->transform($episode)];
             return $feed;
         });
 
