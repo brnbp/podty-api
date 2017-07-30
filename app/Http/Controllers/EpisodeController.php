@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Filter\Filter;
+use App\Models\Episode;
 use App\Models\Feed;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
@@ -15,9 +16,15 @@ class EpisodeController extends ApiController
      */
     private $filter;
 
-    public function __construct(Filter $filter)
+    /**
+     * @var \App\Transform\EpisodeTransformer
+     */
+    private $episodeTransformer;
+    
+    public function __construct(Filter $filter, EpisodeTransformer $episodeTransformer)
     {
         $this->filter = $filter;
+        $this->episodeTransformer = $episodeTransformer;
     }
     
     /**
@@ -32,8 +39,7 @@ class EpisodeController extends ApiController
             return $this->respondInvalidFilter();
         }
 
-        $episodes = (new EpisodesRepository)
-                        ->retrieveByFeed($feed, $this->filter);
+        $episodes = (new EpisodesRepository)->retrieveByFeed($feed, $this->filter);
         
         if (!$episodes) {
             return $this->respondNotFound();
@@ -59,21 +65,15 @@ class EpisodeController extends ApiController
         $response = $episodes->map(function ($episode){
             $feed = (new FeedRepository)->first($episode->feed_id);
             $feed = (new FeedTransformer)->transform($feed);
-            $feed['episodes'] = array((new EpisodeTransformer)->transform($episode));
+            $feed['episodes'] = array($this->episodeTransformer->transform($episode));
             return $feed;
         });
 
         return $this->respondSuccess($response);
     }
 
-    public function one($episodeId)
+    public function one(Episode $episode)
     {
-        $episode = (new EpisodesRepository)->one($episodeId);
-
-        if (!$episode) {
-            return $this->respondNotFound();
-        }
-
         $feed = (new FeedRepository)->first($episode->feed_id);
 
         $response = $this->transformOne($episode, $feed);
@@ -85,8 +85,7 @@ class EpisodeController extends ApiController
     {
         $feed = (new FeedTransformer)->transform($feed);
 
-        $feed['episodes'] = (new EpisodeTransformer)
-                                 ->transform($episode->toArray());
+        $feed['episodes'] = $this->episodeTransformer->transform($episode->toArray());
 
         return $feed;
     }
@@ -95,8 +94,8 @@ class EpisodeController extends ApiController
     {
         $feed = (new FeedTransformer)->transform($feed);
 
-        $feed['episodes'] = (new EpisodeTransformer)
-                                ->transformCollection($episodes->toArray());
+        $feed['episodes'] = $this->episodeTransformer->transformCollection($episodes->toArray());
+
         return $feed;
     }
 }

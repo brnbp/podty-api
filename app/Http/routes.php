@@ -11,7 +11,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('feeds/{feed}/listeners', 'FeedController@listeners');
 
     Route::get('episodes/latest', 'EpisodeController@latest');
-    Route::get('episodes/{episodeId}', 'EpisodeController@one');
+    Route::get('episodes/{episode}', 'EpisodeController@one');
 
     Route::get('/users/find/{term}', 'UserController@find');
 
