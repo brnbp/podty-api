@@ -16,7 +16,7 @@ class Kernel extends HttpKernel
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \App\Http\Middleware\BasicAuth::class,
-        \App\Http\Middleware\Cors::class,
+        \Barryvdh\Cors\ServiceProvider::class,
     ];
 
     /**
@@ -42,6 +42,5 @@ class Kernel extends HttpKernel
         'auth.basic' => \App\Http\Middleware\BasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'cors' => \App\Http\Middleware\Cors::class,
     ];
 }

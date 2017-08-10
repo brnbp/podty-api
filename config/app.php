@@ -57,6 +57,9 @@ return [
         App\Providers\RouteServiceProvider::class,
     
         Irazasyed\LaravelGAMP\LaravelGAMPServiceProvider::class,
+    
+        \Barryvdh\Cors\ServiceProvider::class,
+
     ],
 
     /*

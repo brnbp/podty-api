@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => '/v1', 'middleware' => ['api', 'cors']], function () {
+Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::get('feeds/latest', 'FeedController@latest');
     Route::get('feeds/top/{count?}', 'FeedController@top');
