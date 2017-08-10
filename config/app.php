@@ -58,7 +58,7 @@ return [
     
         Irazasyed\LaravelGAMP\LaravelGAMPServiceProvider::class,
     
-        \Barryvdh\Cors\ServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 
