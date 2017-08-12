@@ -13,6 +13,13 @@ class RetrieveUserListeningEpisodesTest extends TestCase
     use DatabaseMigrations;
     
     /** @test */
+    public function it_requires_authenticated_client_to_make_request()
+    {
+        $this->get('/v1/users/randomuser/episodes/listening')
+            ->seeStatusCode(401);
+    }
+    
+    /** @test */
     public function it_retrieves_in_progress_episodes()
     {
         $this->authenticate();
