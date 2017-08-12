@@ -96,45 +96,24 @@ class UserEpisodesController extends ApiController
         return $this->responseData($response);
     }
 
-    public function attach($username)
+    public function attach(User $user, Episode $episode)
     {
-        $userId = UserRepository::getId($username);
-        if (!$userId) {
-            return $this->respondNotFound('user not found');
-        }
+        $userFeedId = UserFeedsRepository::idByEpisodeAndUser($episode->id, $user->id);
+        
+        Cache::forget('user_episodes_latests_' . $user->username);
+        Cache::forget('user_episodes_' . $user->username);
 
-        $content = Input::get('content');
-        if (!$content) {
-            return $this->respondBadRequest('payload not acceptable');
-        }
-
-        $userEpisodes = [];
-        foreach ($content as $episode) {
-            $userFeedId = UserFeedsRepository::idByEpisodeAndUser($episode['id'], $userId);
-            if (!$userFeedId) {
-                continue;
-            }
-            $userEpisodes[] = [
-                'user_feed_id' => $userFeedId,
-                'episode_id' => $episode['id'],
-                'paused_at' => $episode['paused_at'],
-            ];
-        }
-
-        if (!$userEpisodes) {
-            return $this->respondBadRequest('User not follow feed from episodes passed');
-        }
-
-        Cache::forget('user_episodes_latests_' . $username);
-        Cache::forget('user_episodes_' . $username);
-
-        UserEpisodesRepository::batchCreate($userEpisodes);
+        UserEpisodesRepository::create([
+            'user_feed_id' => $userFeedId,
+            'episode_id' => $episode->id,
+            'paused_at' => 0,
+        ]);
 
         if (UserEpisodesRepository::hasEpisodes($userFeedId)) {
             UserFeedsRepository::markAllListened($userFeedId, false);
         }
-
-        return $this->responseData(['created' => true]);
+        
+        return $this->respondCreated();
     }
 
     public function detach($username, $episodeId)

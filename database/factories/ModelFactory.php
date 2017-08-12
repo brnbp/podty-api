@@ -63,7 +63,7 @@ $factory->define(UserFeed::class, function (Faker\Generator $faker) {
         'feed_id' => function(){
             return factory(Feed::class)->create()->id;
         },
-        'listen_all' => $faker->boolean(25),
+        'listen_all' => false,
     ];
 });
 

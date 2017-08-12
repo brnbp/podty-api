@@ -32,12 +32,12 @@ class UserFavoritesEpisodes extends TestCase
         parent::setUp();
         
         $this->user = factory(User::class)->create();
+        
         $this->userFeeds = factory(UserFeed::class)->create(['user_id' => $this->user->id]);
-        factory(Episode::class)->create([
+        
+        $this->episode = factory(Episode::class)->create([
             'feed_id' => $this->userFeeds->feed_id
         ]);
-        
-        $this->episode = $this->userFeeds->feed->episodes->first();
         
         factory(UserEpisode::class)->create([
             'user_feed_id' => $this->userFeeds->id,

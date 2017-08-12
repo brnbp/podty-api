@@ -31,11 +31,11 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::get('users/{username}/feeds/{feedId}/episodes', 'UserEpisodesController@show');
    
-    Route::post('users/{username}/episodes', 'UserEpisodesController@attach');
     Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
     Route::get('users/{username}/episodes/listening', 'UserEpisodesController@listening');
     Route::get('users/{username}/episodes/favorites', 'UserFavoriteController@all');
     Route::get('users/{username}/episodes/{episode}', 'UserEpisodesController@one');
+    Route::post('users/{user}/episodes/{episode}', 'UserEpisodesController@attach');
     Route::delete('users/{username}/episodes/{episodeId}', 'UserEpisodesController@detach');
 
     

@@ -48,7 +48,7 @@ class UserFeedsRepository
         
         $userFeed = UserFeedsRepository::first($feedId, $userId);
 
-        return $userFeed ? $userFeed->id : false;
+        return $userFeed->id;
     }
 
     public static function create($feedId, User $user)
