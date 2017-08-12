@@ -1,26 +1,31 @@
 <?php
 namespace Tests\Integration;
 
+use App\Models\User;
+use App\Models\UserEpisode;
+use App\Models\UserFeed;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class RetrieveUserEpisodesTest extends TestCase
+class RetrieveUserListeningEpisodesTest extends TestCase
 {
-    use DatabaseMigrations, WithoutMiddleware;
+    use DatabaseMigrations;
     
     /** @test */
     public function it_retrieves_in_progress_episodes()
     {
-        $user = factory(\App\Models\User::class)->create();
-        $userFeeds = factory(\App\Models\UserFeed::class, 3)->create(['user_id' => $user->id]);
+        $this->authenticate();
+
+        $user = factory(User::class)->create();
+        $userFeeds = factory(UserFeed::class, 3)->create(['user_id' => $user->id]);
         
-        factory(\App\Models\UserEpisode::class)->create([
+        factory(UserEpisode::class)->create([
             'user_feed_id' => $userFeeds->first()->id,
             'paused_at' => 50
         ]);
     
-        factory(\App\Models\UserEpisode::class)->create([
+        factory(UserEpisode::class)->create([
             'user_feed_id' => $userFeeds->last()->id,
             'paused_at' => 150
         ]);
