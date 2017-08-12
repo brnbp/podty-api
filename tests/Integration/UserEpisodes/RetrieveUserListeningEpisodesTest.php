@@ -1,12 +1,11 @@
 <?php
-namespace Tests\Integration;
+namespace Tests\Integration\UserEpisodes;
 
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class RetrieveUserListeningEpisodesTest extends TestCase
 {
