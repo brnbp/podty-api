@@ -72,4 +72,27 @@ class RetrieveUserListeningEpisodesTest extends TestCase
             ]
         ]);
     }
+    
+    /** @test */
+    public function it_returns_404_when_user_has_zero_episodes_in_progress()
+    {
+        $this->authenticate();
+        
+        $user = factory(User::class)->create();
+        $userFeeds = factory(UserFeed::class, 3)->create(['user_id' => $user->id]);
+        
+        factory(UserEpisode::class)->create([
+            'user_feed_id' => $userFeeds->first()->id,
+            'paused_at' => 0
+        ]);
+        
+        factory(UserEpisode::class)->create([
+            'user_feed_id' => $userFeeds->last()->id,
+            'paused_at' => 0
+        ]);
+        
+        $this->get('/v1/users/' . $user->username . '/episodes/listening')
+            ->seeStatusCode(404);
+    }
+    
 }
