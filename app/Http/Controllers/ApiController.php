@@ -46,12 +46,6 @@ class ApiController extends Controller
         return $this->respond($content);
     }
 
-    public function respondAcceptedRequest()
-    {
-        return $this->setStatusCode(Response::HTTP_ACCEPTED)->respond([]);
-    }
-
-
     public function respondBadRequest($message = 'Bad Request')
     {
         return $this->setStatusCode(Response::HTTP_BAD_REQUEST)->respondError($message);
