@@ -4,18 +4,12 @@ namespace App\Http\Controllers;
 use App\Filter\Filter;
 use App\Models\Episode;
 use App\Models\User;
-use App\Models\UserEpisode;
-use App\Models\UserFeed;
-use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
-use App\Repositories\UserRepository;
 use App\Transform\EpisodeTransformer;
 use App\Transform\FeedTransformer;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 
 class UserEpisodesController extends ApiController
 {
