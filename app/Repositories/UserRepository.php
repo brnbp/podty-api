@@ -1,19 +1,12 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\User;
 use App\Models\UserFeed;
 use App\Services\Password;
-use Illuminate\Database\QueryException;
 
 class UserRepository
 {
-    public static function byId($id)
-    {
-        return User::whereId($id)->get();
-    }
-
     public static function create($userData)
     {
         $user = new User([
@@ -51,20 +44,11 @@ class UserRepository
             });
 
             $deleted = $user->delete();
-        } catch (QueryException $e) {
+        } catch (\Exception $e) {
             return false;
         }
 
         return $deleted;
-    }
-
-    public static function getId($username)
-    {
-        $user = static::first($username);
-        if (!$user) {
-            return false;
-        }
-        return $user->id;
     }
 
     public static function incrementsPodcastsCount(UserFeed $userFeed)
@@ -72,7 +56,6 @@ class UserRepository
         if ($userFeed->wasRecentlyCreated) {
             return $userFeed->user->increment('podcasts_count');
         }
-        return false;
     }
 
     public static function decrementsPodcastCount(UserFeed $userFeed)

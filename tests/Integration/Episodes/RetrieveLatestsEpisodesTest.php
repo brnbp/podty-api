@@ -63,4 +63,19 @@ class RetrieveLatestsEpisodesTest extends TestCase
         $this->get('/v1/episodes/latest')
             ->seeStatusCode(404);
     }
+    
+    /** @test */
+    public function it_requires_valid_filter()
+    {
+        $this->authenticate();
+        
+        $feed = factory(Feed::class)->create();
+        
+        factory(Episode::class, 2)->create([
+            'feed_id' => $feed->id
+        ]);
+        
+        $this->get('/v1/episodes/latest?invalidFilter=true')
+            ->seeStatusCode(400);
+    }
 }

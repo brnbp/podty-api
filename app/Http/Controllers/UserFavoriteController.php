@@ -19,11 +19,7 @@ class UserFavoriteController extends ApiController
 
     public function favorite(User $username, $episode)
     {
-        $userEpisodeFavorite = UserFavoritesRepository::create($username, $episode);
-
-        if (!$userEpisodeFavorite) {
-            return $this->respondNotFound();
-        }
+        UserFavoritesRepository::create($username, $episode);
 
         return $this->respondCreated();
     }

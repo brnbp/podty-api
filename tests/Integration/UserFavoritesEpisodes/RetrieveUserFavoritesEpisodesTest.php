@@ -28,9 +28,9 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
             'data' => [
                 [
                     "id" => 1,
-                    "user_id" => 1,
-                    "feed_id" => $this->episode->feed_id,
-                    "episode_id" => $this->episode->id,
+                    "user_id" => '1',
+                    "feed_id" => (string) $this->episode->feed_id,
+                    "episode_id" => (string) $this->episode->id,
                     "created_at" => (string) Carbon::now(),
                     "episode" => [
                         "id" => $this->episode->id,
