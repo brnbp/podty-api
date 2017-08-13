@@ -12,7 +12,8 @@ class UserEpisodesRepository
 {
     public static function retrieve(string $username, $feedId)
     {
-        return Cache::remember('user_episodes_' . $username, 5, function() use ($username, $feedId) {
+        $cacheHash = md5('user_' . $username . '_feeds_' . $feedId . '_episodes');
+        return Cache::remember($cacheHash, 15, function() use ($username, $feedId) {
             return User::whereUsername($username)
                         ->join('user_feeds', function($join) use ($feedId) {
                             $join->on('users.id', '=', 'user_feeds.user_id')
@@ -20,10 +21,7 @@ class UserEpisodesRepository
                         })
                         ->join('user_episodes', 'user_feeds.id', '=', 'user_episodes.user_feed_id')
                         ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
-                        ->select('episodes.id as id', 'episodes.title as title',
-                                'episodes.media_url as media_url', 'episodes.media_type as media_type',
-                                'episodes.published_date as published_date', 'episodes.content as content',
-                                'user_episodes.paused_at')
+                        ->select('episodes.*', 'user_episodes.paused_at')
                         ->orderBy('episodes.published_date', 'desc')
                         ->get();
         });
