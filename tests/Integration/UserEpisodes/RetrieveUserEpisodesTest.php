@@ -6,7 +6,6 @@ use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
-use App\Podty\UserEpisodes;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -15,7 +14,7 @@ class RetrieveUserEpisodesTest extends TestCase
     use DatabaseMigrations;
     
     /** @test */
-    public function unauthenticated_client_cannot_retrieve_latests_feeds()
+    public function unauthenticated_client_cannot_make_request()
     {
         $this->get('/v1/users/user/episodes/1')
             ->seeStatusCode(401);
