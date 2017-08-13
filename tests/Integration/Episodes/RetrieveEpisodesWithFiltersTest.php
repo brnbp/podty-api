@@ -1,11 +1,8 @@
 <?php
-
-namespace Tests\Feature;
+namespace Tests\Integration\Episodes;
 
 use App\Models\Episode;
 use App\Models\Feed;
-use App\Transform\EpisodeTransformer;
-use App\Transform\FeedTransformer;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -96,11 +93,11 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
         ]);
         factory(Episode::class)->create([
             'feed_id' => $feed->id,
-            'published_date' => Carbon::now()->subDay(2)
+            'published_date' => (string) Carbon::now()->subDay(2)
         ]);
         factory(Episode::class)->create([
             'feed_id' => $feed->id,
-            'published_date' => Carbon::now()->subDay(1)
+            'published_date' => (string) Carbon::now()->subDay(1)
         ]);
         
         $response = $this->get('/v1/feeds/1/episodes?order=ASC')
@@ -108,9 +105,9 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
         
         $episodes = json_decode($response->response->getContent(), true)['data']['episodes'];
         
-        $this->assertEquals(Carbon::now()->subDay(3), $episodes[0]['published_at']);
-        $this->assertEquals(Carbon::now()->subDay(2), $episodes[1]['published_at']);
-        $this->assertEquals(Carbon::now()->subDay(1), $episodes[2]['published_at']);
+        $this->assertEquals((string) Carbon::now()->subDay(3), (string) $episodes[0]['published_at']);
+        $this->assertEquals((string) Carbon::now()->subDay(2), (string) $episodes[1]['published_at']);
+        $this->assertEquals((string) Carbon::now()->subDay(1), (string) $episodes[2]['published_at']);
     }
     
     /** @test */
