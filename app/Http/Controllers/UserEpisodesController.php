@@ -35,15 +35,14 @@ class UserEpisodesController extends ApiController
     
     public function show(User $user, Feed $feed)
     {
-        $data = (new UserEpisodesRepository)
-            ->retrieve($user->username, $feed->id);
+        $episodes = UserEpisodesRepository::retrieve($user, $feed);
 
-        if ($data->isEmpty()) {
-           return $this->respondNotFound();
+        if ($episodes->isEmpty()) {
+            return $this->respondNotFound();
         }
         
         $feed = (new FeedTransformer)->transform($feed);
-        $feed['episodes'] = $data;
+        $feed['episodes'] = $episodes;
         
         return $this->responseData($feed);
     }

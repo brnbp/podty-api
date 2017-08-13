@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Filter\Filter;
 use App\Models\Episode;
+use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
@@ -10,20 +11,16 @@ use Illuminate\Support\Facades\Cache;
 
 class UserEpisodesRepository
 {
-    public static function retrieve(string $username, $feedId)
+    public static function retrieve(User $user, Feed $feed)
     {
-        $cacheHash = md5('user_' . $username . '_feeds_' . $feedId . '_episodes');
-        return Cache::remember($cacheHash, 15, function() use ($username, $feedId) {
-            return User::whereUsername($username)
-                        ->join('user_feeds', function($join) use ($feedId) {
-                            $join->on('users.id', '=', 'user_feeds.user_id')
-                                ->where('user_feeds.feed_id', '=', $feedId);
-                        })
-                        ->join('user_episodes', 'user_feeds.id', '=', 'user_episodes.user_feed_id')
-                        ->join('episodes', 'episodes.id', '=', 'user_episodes.episode_id')
-                        ->select('episodes.*', 'user_episodes.paused_at')
-                        ->orderBy('episodes.published_date', 'desc')
-                        ->get();
+        $cacheHash = md5('user_' . $user->username . '_feeds_' . $feed->id . '_episodes');
+        return Cache::remember($cacheHash, 5, function() use ($user, $feed) {
+            $userFeed = $user->feeds()->whereFeedId($feed->id)->first();
+            return $userFeed->episodes->map(function($userEpisode){
+                $episode = $userEpisode->episode;
+                $episode->paused_at = $userEpisode->paused_at;
+                return $episode;
+            })->sortByDesc('published_date');
         });
     }
 

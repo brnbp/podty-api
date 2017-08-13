@@ -80,46 +80,47 @@ class RetrieveUserEpisodesTest extends TestCase
         factory(UserEpisode::class)->create([
             'user_feed_id' => $userFeeds->id,
             'episode_id' => $episode->id,
-            'paused_at' => 0
+            'paused_at' => 99
         ]);
         
         $feed = $userFeeds->feed()->first();
-        $this->get('/v1/users/' . $user->username . '/feeds/' .$userFeeds->feed_id . '/episodes')
-            ->seeStatusCode(200)
-            ->seeJsonEquals([
-                'data' => [
-                    'id' => $feed->id,
-                    'name' => $feed->name,
-                    'slug' => $feed->slug,
-                    'url' => $feed->url,
-                    'thumbnail_30' => $feed->thumbnail_30,
-                    'thumbnail_60' => $feed->thumbnail_60,
-                    'thumbnail_100' => $feed->thumbnail_100,
-                    'thumbnail_600' => $feed->thumbnail_600,
-                    'total_episodes' => $feed->total_episodes,
-                    'listeners' => $feed->listeners,
-                    'last_episode_at' => (string) $feed->last_episode_at,
-                    'episodes' => [
-                        [
-                            "id" => $episode->id,
-                            "feed_id" => (string) $episode->feed_id,
-                            "title" => $episode->title,
-                            "link" => $episode->link,
-                            "published_date" => (string) $episode->published_date,
-                            "summary" => $episode->summary,
-                            "content" => $episode->content,
-                            "image" => $episode->image,
-                            "duration" => $episode->duration,
-                            "media_url" => $episode->media_url,
-                            "media_length" => (string) $episode->media_length,
-                            "media_type" => $episode->media_type,
-                            "created_at" => (string) $episode->created_at,
-                            "updated_at" => (string) $episode->updated_at,
-                            "paused_at" => "0"
-                        ]
+        $response = $this->get('/v1/users/' . $user->username . '/feeds/' .$userFeeds->feed_id . '/episodes')
+            ->seeStatusCode(200);
+    
+        $response = json_decode($response->response->getContent(), true);
+        
+        $this->assertEquals([
+            'data' => [
+                'id' => $feed->id,
+                'name' => $feed->name,
+                'slug' => $feed->slug,
+                'url' => $feed->url,
+                'thumbnail_30' => $feed->thumbnail_30,
+                'thumbnail_60' => $feed->thumbnail_60,
+                'thumbnail_100' => $feed->thumbnail_100,
+                'thumbnail_600' => $feed->thumbnail_600,
+                'total_episodes' => $feed->total_episodes,
+                'listeners' => $feed->listeners,
+                'last_episode_at' => (string) $feed->last_episode_at,
+                'episodes' => [
+                    [
+                        "id" => $episode->id,
+                        "feed_id" => (string) $episode->feed_id,
+                        "title" => $episode->title,
+                        "link" => $episode->link,
+                        "published_date" => (string) $episode->published_date,
+                        "summary" => $episode->summary,
+                        "content" => $episode->content,
+                        "image" => $episode->image,
+                        "duration" => $episode->duration,
+                        "media_url" => $episode->media_url,
+                        "media_length" => (string) $episode->media_length,
+                        "media_type" => $episode->media_type,
+                        "paused_at" => "99"
                     ]
                 ]
-        ]);
+            ]
+        ], $response);
     }
     
     /** @test */
