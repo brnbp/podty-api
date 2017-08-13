@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Filter\Filter;
+use App\Models\Episode;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
@@ -68,13 +69,10 @@ class UserEpisodesRepository
         }
     }
 
-    public static function delete($userFeedId, $episodeId)
+    public static function delete(UserFeed $userFeed, Episode $episode) : bool
     {
-        $userEpisode = self::first($userFeedId, $episodeId);
-        if (!$userEpisode) {
-            return false;
-        }
-
+        $userEpisode = self::first($userFeed->id, $episode->id);
+       
         return $userEpisode->delete();
     }
 

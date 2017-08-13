@@ -115,7 +115,7 @@ class UserEpisodesController extends ApiController
     {
         $userFeed = UserFeedsRepository::first($episode->feed(), $user);
         
-        $deleted = UserEpisodesRepository::delete($userFeed->id, $episode->id);
+        UserEpisodesRepository::delete($userFeed, $episode);
 
         if (UserEpisodesRepository::hasEpisodes($userFeed->id) == false) {
             UserFeedsRepository::markAllListened($userFeed->id);
@@ -124,9 +124,7 @@ class UserEpisodesController extends ApiController
         Cache::forget('user_episodes_latests_' . $user->username);
         Cache::forget('user_episodes_' . $user->username);
 
-        return  $deleted ?
-            $this->respondSuccess(['removed' => true]) :
-            $this->respondNotFound();
+        return  $this->respondSuccess();
     }
 
     public function paused(User $user, Episode $episode, $time)

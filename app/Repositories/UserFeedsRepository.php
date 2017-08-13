@@ -29,9 +29,7 @@ class UserFeedsRepository
 
     public static function first(Feed $feed, User $user): UserFeed
     {
-        return UserFeed::whereFeedId($feed->id)
-                        ->whereUserId($user->id)
-                        ->firstOrFail();
+        return $user->feeds()->whereId($feed->id)->firstOrFail();
     }
 
     public static function create($feedId, User $user)

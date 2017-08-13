@@ -59,7 +59,7 @@ class DeletesUserEpisodesTest extends TestCase
             'feed_id' => $userFeeds->feed_id
         ]);
         
-        $this->post('/v1/users/' . $user->username . '/episodes/42')
+        $this->delete('/v1/users/' . $user->username . '/episodes/42')
             ->seeStatusCode(404);
     }
     
@@ -70,7 +70,7 @@ class DeletesUserEpisodesTest extends TestCase
     
         $episode = factory(Episode::class)->create();
     
-        $this->post('/v1/users/fakeUser/episodes/' . $episode->id)
+        $this->delete('/v1/users/fakeUser/episodes/' . $episode->id)
             ->seeStatusCode(404);
     }
     
@@ -83,7 +83,7 @@ class DeletesUserEpisodesTest extends TestCase
         
         $episode = factory(Episode::class)->create();
     
-        $this->post('/v1/users/' . $user->username . '/episodes/' . $episode->id)
+        $this->delete('/v1/users/' . $user->username . '/episodes/' . $episode->id)
             ->seeStatusCode(404);
     }
 }
