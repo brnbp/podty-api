@@ -33,15 +33,15 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
    
     Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
     Route::get('users/{username}/episodes/listening', 'UserEpisodesController@listening');
-    Route::get('users/{username}/episodes/favorites', 'UserFavoriteController@all');
+    Route::get('users/{user}/episodes/favorites', 'UserFavoriteController@all');
     
     Route::get('users/{user}/episodes/{episode}', 'UserEpisodesController@one');
     Route::post('users/{user}/episodes/{episode}', 'UserEpisodesController@attach');
     Route::delete('users/{user}/episodes/{episode}', 'UserEpisodesController@detach');
     Route::put('users/{user}/episodes/{episode}/paused/{time}', 'UserEpisodesController@paused');
 
-    Route::post('users/{username}/episodes/{episodeId}/favorite', 'UserFavoriteController@favorite');
-    Route::delete('users/{username}/episodes/{episodeId}/favorite', 'UserFavoriteController@unfavorite');
+    Route::post('users/{user}/episodes/{episode}/favorite', 'UserFavoriteController@favorite');
+    Route::delete('users/{user}/episodes/{episode}/favorite', 'UserFavoriteController@unfavorite');
 
 
     Route::get('users/{user}/friends', 'UserFriendsController@all');

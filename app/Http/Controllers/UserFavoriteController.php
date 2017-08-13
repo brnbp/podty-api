@@ -1,14 +1,15 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Episode;
 use App\Models\User;
 use App\Repositories\UserFavoritesRepository;
 
 class UserFavoriteController extends ApiController
 {
-    public function all(User $username)
+    public function all(User $user)
     {
-        $favorites = UserFavoritesRepository::all($username);
+        $favorites = UserFavoritesRepository::all($user);
 
         if (!$favorites->count()) {
             return $this->respondNotFound();
@@ -17,16 +18,16 @@ class UserFavoriteController extends ApiController
         return $this->respondSuccess($favorites);
     }
 
-    public function favorite(User $username, $episode)
+    public function favorite(User $user, Episode $episode)
     {
-        UserFavoritesRepository::create($username, $episode);
+        UserFavoritesRepository::create($user, $episode);
 
         return $this->respondCreated();
     }
 
-    public function unfavorite(User $username, $episode)
+    public function unfavorite(User $user, Episode $episode)
     {
-        $userEpisodeFavorite = UserFavoritesRepository::delete($username, $episode);
+        $userEpisodeFavorite = UserFavoritesRepository::delete($user, $episode);
 
         if ($userEpisodeFavorite) {
             return $this->respondSuccess(['deleted' => true]);
