@@ -42,7 +42,7 @@ class UserEpisodesController extends ApiController
         }
 
         $feed = (new FeedTransformer)->transform($feed);
-        $feed['episodes'] = $episodes;
+        $feed['episodes'] = $episodes->toArray();
         
         return $this->responseData($feed);
     }
