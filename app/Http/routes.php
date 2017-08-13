@@ -48,10 +48,4 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::post('users/{user}/friends/{friend}', 'UserFriendsController@follow');
     Route::delete('users/{user}/friends/{friend}', 'UserFriendsController@unfollow');
-
-
-
-    Route::get('queue', 'QueueController@index');
-    Route::delete('queue/{id}', 'QueueController@destroy');
-    Route::get('queue/failed', 'QueueController@failed');
 });
