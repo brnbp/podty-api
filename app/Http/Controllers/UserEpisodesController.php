@@ -40,7 +40,7 @@ class UserEpisodesController extends ApiController
         if ($episodes->isEmpty()) {
             return $this->respondNotFound();
         }
-        
+
         $feed = (new FeedTransformer)->transform($feed);
         $feed['episodes'] = $episodes;
         

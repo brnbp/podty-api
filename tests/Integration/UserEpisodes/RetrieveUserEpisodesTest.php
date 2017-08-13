@@ -2,6 +2,7 @@
 namespace Tests\Integration\UserEpisodes;
 
 use App\Models\Episode;
+use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
@@ -143,4 +144,60 @@ class RetrieveUserEpisodesTest extends TestCase
             ->seeStatusCode(404);
     }
     
+    /** @test */
+    public function it_requires_an_valid_user()
+    {
+        $this->authenticate();
+        
+        $feed = factory(Feed::class)->create();
+        
+        $this->get('/v1/users/invalidUser/feeds/' .$feed->id . '/episodes')
+            ->seeStatusCode(404);
+    }
+    
+    /** @test */
+    public function it_requires_an_valid_feed()
+    {
+        $this->authenticate();
+        
+        $user = factory(User::class)->create();
+        
+        $this->get('/v1/users/' . $user->username . '/feeds/42/episodes')
+            ->seeStatusCode(404);
+    }
+    
+    /** @test */
+    public function feed_must_have_episodes()
+    {
+        $this->authenticate();
+    
+        $user = factory(User::class)->create();
+    
+        $feed = factory(Feed::class)->create();
+        
+        factory(UserFeed::class)->create([
+            'user_id' => $user->id,
+            'feed_id' => $feed->id,
+            'listen_all' => false,
+        ]);
+        
+        $this->get('/v1/users/' . $user->username . '/feeds/' . $feed->id . '/episodes')
+            ->seeStatusCode(404);
+    }
+    
+    /** @test */
+    public function it_must_follow_feed()
+    {
+        $this->authenticate();
+        
+        $user = factory(User::class)->create();
+        
+        $feed = factory(Feed::class)->create();
+        factory(Episode::class)->create([
+           'feed_id' => $feed->id
+        ]);
+        
+        $this->get('/v1/users/' . $user->username . '/feeds/' . $feed->id . '/episodes')
+            ->seeStatusCode(404);
+    }
 }

@@ -7,15 +7,16 @@ use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class UserEpisodesRepository
 {
-    public static function retrieve(User $user, Feed $feed)
+    public static function retrieve(User $user, Feed $feed): Collection
     {
         $cacheHash = md5('user_' . $user->username . '_feeds_' . $feed->id . '_episodes');
         return Cache::remember($cacheHash, 5, function() use ($user, $feed) {
-            $userFeed = $user->feeds()->whereFeedId($feed->id)->first();
+            $userFeed = $user->feeds()->whereFeedId($feed->id)->firstOrFail();
             return $userFeed->episodes->map(function($userEpisode){
                 $episode = $userEpisode->episode;
                 $episode->paused_at = $userEpisode->paused_at;
