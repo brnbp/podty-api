@@ -21,7 +21,7 @@ class UserEpisodesRepository
                 $episode = $userEpisode->episode;
                 $episode->paused_at = $userEpisode->paused_at;
                 return $episode;
-            })->sortByDesc('published_date');
+            })->sortByDesc('published_date')->values();
         });
     }
 
