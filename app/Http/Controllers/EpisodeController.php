@@ -63,7 +63,7 @@ class EpisodeController extends ApiController
         }
 
         $response = $episodes->map(function ($episode){
-            $feed = (new FeedRepository)->first($episode->feed_id);
+            $feed = $episode->feed();
             $feed = (new FeedTransformer)->transform($feed);
             $feed['episodes'] = [$this->episodeTransformer->transform($episode)];
             return $feed;
@@ -74,7 +74,7 @@ class EpisodeController extends ApiController
 
     public function one(Episode $episode)
     {
-        $feed = (new FeedRepository)->first($episode->feed_id);
+        $feed = $episode->feed();
 
         $response = $this->transformOne($episode, $feed);
 

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Filter\Filter;
 use App\Models\Episode;
+use App\Models\Feed;
 use App\Models\User;
 use App\Repositories\FeedRepository;
 use App\Repositories\UserEpisodesRepository;
@@ -32,16 +33,18 @@ class UserEpisodesController extends ApiController
         return $this->responseData($episode);
     }
     
-    public function show($username, $feedId)
+    public function show(User $user, Feed $feed)
     {
         $data = (new UserEpisodesRepository)
-            ->retrieve($username, $feedId);
+            ->retrieve($user->username, $feed->id);
 
-        $feed = (new FeedRepository)->first($feedId);
+        if ($data->isEmpty()) {
+           return $this->respondNotFound();
+        }
+        
         $feed = (new FeedTransformer)->transform($feed);
-        $feed['episodes'] =  $data;
-
-
+        $feed['episodes'] = $data;
+        
         return $this->responseData($feed);
     }
 

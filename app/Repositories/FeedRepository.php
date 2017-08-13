@@ -15,11 +15,6 @@ class FeedRepository
             ->get();
     }
 
-    public function first($id)
-    {
-        return $this->findById($id)->first();
-    }
-
     public function all()
     {
         return Feed::all();

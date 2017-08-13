@@ -29,7 +29,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::put('users/{user}/feeds/{feed}/listenAll', 'UserFeedsController@listenAll');
 
-    Route::get('users/{username}/feeds/{feedId}/episodes', 'UserEpisodesController@show');
+    Route::get('users/{user}/feeds/{feed}/episodes', 'UserEpisodesController@show');
    
     Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
     Route::get('users/{username}/episodes/listening', 'UserEpisodesController@listening');
