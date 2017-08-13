@@ -26,15 +26,17 @@ class DeletesUserEpisodesTest extends TestCase
     
         $user = factory(User::class)->create();
     
+        factory(Episode::class)->create();
+
         $userFeeds = factory(UserFeed::class)->create([
             'user_id' => $user->id,
             'listen_all' => false,
         ]);
-    
+        
         $episode = factory(Episode::class)->create([
             'feed_id' => $userFeeds->feed_id
         ]);
-        
+    
         factory(UserEpisode::class)->create([
             'user_feed_id' => $userFeeds->id,
             'episode_id' => $episode->id,
