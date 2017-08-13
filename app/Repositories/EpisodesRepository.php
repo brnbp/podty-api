@@ -26,12 +26,6 @@ class EpisodesRepository
         return self::first($episodeId) ? true : false;
     }
 
-    public static function feedId($episodeId)
-    {
-        $episode = self::first($episodeId);
-        return $episode ? $episode->feed_id : false;
-    }
-
     public function retrieveByFeed($feed, Filter $filter)
     {
         $episodes = $feed->episodes()
@@ -78,15 +72,6 @@ class EpisodesRepository
         }
 
         return $episode->exists;
-    }
-
-    public static function getIdsByFeed($feedId)
-    {
-        $episodes = Episode::whereFeedId($feedId)->select('id')->get();
-
-        return $episodes->map(function($item){
-            return $item->id;
-        });
     }
 
     private function updateAllUsersWhoFollowsIt($episode)
