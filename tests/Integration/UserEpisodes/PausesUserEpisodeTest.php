@@ -2,7 +2,6 @@
 namespace Tests\Integration\UserEpisodes;
 
 use App\Models\Episode;
-use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
