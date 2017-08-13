@@ -7,6 +7,7 @@ use App\Repositories\FeedRepository;
 use App\Services\Parser\XML;
 use App\Transform\XMLTransformer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 /**
@@ -36,9 +37,9 @@ class Episode extends Model
     /**
      * Define relação com a model Feeds, sendo que Episode pertence a um feed
      */
-    public function feed()
+    public function feed() : Feed
     {
-        $this->belongsTo(Feed::class);
+        return $this->belongsTo(Feed::class)->first();
     }
 
     /**

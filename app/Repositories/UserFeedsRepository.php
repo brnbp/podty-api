@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Repositories;
 
+use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserFeed;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,28 +27,11 @@ class UserFeedsRepository
         });
     }
 
-    public static function first($feedId, $userId)
+    public static function first(Feed $feed, User $user): UserFeed
     {
-        return UserFeed::whereFeedId($feedId)->whereUserId($userId)->firstOrFail();
-    }
-
-    public static function idByEpisodeAndUsername($episodeId, $username)
-    {
-        $userId = UserRepository::getId($username);
-        if (!$userId) {
-            return false;
-        }
-
-        return self::idByEpisodeAndUser($episodeId, $userId);
-    }
-
-    public static function idByEpisodeAndUser($episodeId, $userId)
-    {
-        $feedId = EpisodesRepository::feedId($episodeId);
-        
-        $userFeed = UserFeedsRepository::first($feedId, $userId);
-
-        return $userFeed->id;
+        return UserFeed::whereFeedId($feed->id)
+                        ->whereUserId($user->id)
+                        ->firstOrFail();
     }
 
     public static function create($feedId, User $user)
@@ -81,16 +64,16 @@ class UserFeedsRepository
         }
     }
 
-    public static function delete($feedId, User $user)
+    public static function delete(Feed $feed, User $user)
     {
-        $userFeed = self::first($feedId, $user->id);
+        $userFeed = self::first($feed, $user);
 
         UserRepository::decrementsPodcastCount($userFeed);
-        FeedRepository::decrementsListeners($feedId);
+        FeedRepository::decrementsListeners($feed->id);
         
-        Cache::forget('feeds_listeners_' . $feedId);
+        Cache::forget('feeds_listeners_' . $feed->id);
         Cache::forget('user_feeds_' . $user->username);
-        Cache::forget('user_feeds_' . $feedId . '_' . $user->username);
+        Cache::forget('user_feeds_' . $feed->id . '_' . $user->username);
         
         return $userFeed->delete();
     }

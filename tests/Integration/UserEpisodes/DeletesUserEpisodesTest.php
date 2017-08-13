@@ -3,23 +3,24 @@ namespace Tests\Integration\UserEpisodes;
 
 use App\Models\Episode;
 use App\Models\User;
+use App\Models\UserEpisode;
 use App\Models\UserFeed;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class CreatesUserEpisodesTest extends TestCase
+class DeletesUserEpisodesTest extends TestCase
 {
     use DatabaseMigrations;
     
     /** @test */
     public function unauthenticated_client_cannot_make_request()
     {
-        $this->post('/v1/users/user/episodes/1')
+        $this->delete('/v1/users/user/episodes/1')
             ->seeStatusCode(401);
     }
     
     /** @test */
-    public function it_creates_episodes()
+    public function it_deletes_an_episode()
     {
         $this->authenticate();
     
@@ -27,17 +28,22 @@ class CreatesUserEpisodesTest extends TestCase
     
         $userFeeds = factory(UserFeed::class)->create([
             'user_id' => $user->id,
-            'listen_all' => true,
+            'listen_all' => false,
         ]);
     
         $episode = factory(Episode::class)->create([
             'feed_id' => $userFeeds->feed_id
         ]);
         
-        $this->post('/v1/users/' . $user->username . '/episodes/' . $episode->id)
-            ->seeStatusCode(201);
+        factory(UserEpisode::class)->create([
+            'user_feed_id' => $userFeeds->id,
+            'episode_id' => $episode->id,
+        ]);
         
-        $this->assertFalse($userFeeds->fresh()->listen_all);
+        $this->delete('/v1/users/' . $user->username . '/episodes/' . $episode->id)
+            ->seeStatusCode(200);
+        
+        $this->assertTrue($userFeeds->fresh()->listen_all);
     }
     
     /** @test */

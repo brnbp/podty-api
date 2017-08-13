@@ -26,23 +26,18 @@ class UserEpisodesController extends ApiController
         $this->filter = $filter;
     }
 
-    public function one(User $username, Episode $episode)
+    public function one(User $user, Episode $episode)
     {
-        $userFeed = UserFeedsRepository::idByEpisodeAndUser($episode->id, $username->id);
+        $userFeed = UserFeedsRepository::first($episode->feed(), $user);
 
-        $userEpisode = UserEpisodesRepository::first($userFeed, $episode->id);
+        $userEpisode = UserEpisodesRepository::first($userFeed->id, $episode->id);
 
         $episode = (new EpisodeTransformer)->transform($episode->toArray());
         $episode['paused_at'] = $userEpisode['paused_at'];
-
+ 
         return $this->responseData($episode);
     }
-
-    /**
-     * Get episodes from feedId
-     * @param string $username
-     * @param integer $feedId
-     */
+    
     public function show($username, $feedId)
     {
         $data = (new UserEpisodesRepository)
@@ -98,50 +93,47 @@ class UserEpisodesController extends ApiController
 
     public function attach(User $user, Episode $episode)
     {
-        $userFeedId = UserFeedsRepository::idByEpisodeAndUser($episode->id, $user->id);
+        $userFeed = UserFeedsRepository::first($episode->feed(), $user);
         
         Cache::forget('user_episodes_latests_' . $user->username);
         Cache::forget('user_episodes_' . $user->username);
 
         UserEpisodesRepository::create([
-            'user_feed_id' => $userFeedId,
+            'user_feed_id' => $userFeed->id,
             'episode_id' => $episode->id,
             'paused_at' => 0,
         ]);
 
-        if (UserEpisodesRepository::hasEpisodes($userFeedId)) {
-            UserFeedsRepository::markAllListened($userFeedId, false);
+        if (UserEpisodesRepository::hasEpisodes($userFeed->id)) {
+            UserFeedsRepository::markAllListened($userFeed->id, false);
         }
         
         return $this->respondCreated();
     }
 
-    public function detach($username, $episodeId)
+    public function detach(User $user, Episode $episode)
     {
-        $userFeedId = UserFeedsRepository::idByEpisodeAndUsername($episodeId, $username);
-        if (!$userFeedId) {
-            return $this->respondNotFound('User not follow feed from episodes passed');
+        $userFeed = UserFeedsRepository::first($episode->feed(), $user);
+        
+        $deleted = UserEpisodesRepository::delete($userFeed->id, $episode->id);
+
+        if (UserEpisodesRepository::hasEpisodes($userFeed->id) == false) {
+            UserFeedsRepository::markAllListened($userFeed->id);
         }
 
-        $deleted = UserEpisodesRepository::delete($userFeedId, $episodeId);
-
-        if (UserEpisodesRepository::hasEpisodes($userFeedId) == false) {
-            UserFeedsRepository::markAllListened($userFeedId);
-        }
-
-        Cache::forget('user_episodes_latests_' . $username);
-        Cache::forget('user_episodes_' . $username);
+        Cache::forget('user_episodes_latests_' . $user->username);
+        Cache::forget('user_episodes_' . $user->username);
 
         return  $deleted ?
             $this->respondSuccess(['removed' => true]) :
             $this->respondNotFound();
     }
 
-    public function paused($username, $episodeId, $time)
+    public function paused(User $user, Episode $episode, $time)
     {
-        $userFeedId = UserFeedsRepository::idByEpisodeAndUsername($episodeId, $username);
+        $userFeed = UserFeedsRepository::first($episode->feed(), $user);
 
-        UserEpisodesRepository::markAsPaused($userFeedId, $episodeId, $time);
+        UserEpisodesRepository::markAsPaused($userFeed->id, $episode->id, $time);
 
         return $this->respondSuccess(['updated' => true]);
     }

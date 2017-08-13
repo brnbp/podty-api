@@ -44,16 +44,16 @@ class UserFeedsController extends ApiController
 
     public function detach(User $username, Feed $feedId)
     {
-        if (UserFeedsRepository::delete($feedId->id, $username)) {
+        if (UserFeedsRepository::delete($feedId, $username)) {
             $this->respondSuccess(['removed' => true]);
         }
     
         $this->respondBadRequest();
     }
 
-    public function listenAll(User $username, $feedId)
+    public function listenAll(User $user, Feed $feed)
     {
-        $userFeed = UserFeedsRepository::first($feedId, $username->id);
+        $userFeed = UserFeedsRepository::first($feed, $user);
         
         UserEpisodesRepository::deleteAll($userFeed);
         
