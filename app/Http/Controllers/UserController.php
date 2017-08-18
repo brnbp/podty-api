@@ -6,6 +6,7 @@ use App\Repositories\UserRepository;
 use App\Transform\UserTransformer;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -46,6 +47,11 @@ class UserController extends ApiController
         if ($validator->fails()) {
             return $this->respondErrorValidator($validator);
         }
+    
+        Mail::queue('emails.welcome', ['user' => Input::get('username')], function ($m) {
+            $m->from('signin@podty.co', 'Podty');
+            $m->to(Input::get('email'), Input::get('username'))->subject('Welcome to Podty');
+        });
 
         return $this->responseData(
             $this->userTransformer->transform(
