@@ -47,16 +47,16 @@ class UserController extends ApiController
         if ($validator->fails()) {
             return $this->respondErrorValidator($validator);
         }
+        
+        $user = UserRepository::create(Input::all());
     
-        Mail::queue('emails.welcome', ['user' => Input::get('username')], function ($m) {
+        Mail::queue('emails.welcome', ['user' => $user->username], function ($m) use($user) {
             $m->from('signin@podty.co', 'Podty');
-            $m->to(Input::get('email'), Input::get('username'))->subject('Welcome to Podty');
+            $m->to($user->email, $user->username)->subject('Welcome to Podty');
         });
 
         return $this->responseData(
-            $this->userTransformer->transform(
-                UserRepository::create(Input::all())
-            )
+            $this->userTransformer->transform($user)
         );
     }
 

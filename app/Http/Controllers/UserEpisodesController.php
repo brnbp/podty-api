@@ -47,13 +47,14 @@ class UserEpisodesController extends ApiController
         return $this->responseData($feed);
     }
 
-    public function latests($username)
+    public function latests(User $user)
     {
         if ($this->filter->validateFilters() === false) {
             return $this->respondInvalidFilter();
         }
 
-        $latestsEpisodes = (new UserEpisodesRepository)->latests($username, $this->filter);
+        $latestsEpisodes = (new UserEpisodesRepository)
+                                ->latests($user->username, $this->filter);
 
         $response = $latestsEpisodes->map(function($episode) {
             $feed = (new FeedTransformer)->transform($episode);

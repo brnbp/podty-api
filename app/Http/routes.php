@@ -31,7 +31,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::get('users/{user}/feeds/{feed}/episodes', 'UserEpisodesController@show');
    
-    Route::get('users/{username}/episodes/latests', 'UserEpisodesController@latests');
+    Route::get('users/{user}/episodes/latests', 'UserEpisodesController@latests');
     Route::get('users/{username}/episodes/listening', 'UserEpisodesController@listening');
     Route::get('users/{user}/episodes/favorites', 'UserFavoriteController@all');
     
