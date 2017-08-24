@@ -25,6 +25,8 @@ class AddTimestampsUserFriendsTable extends Migration
     {
         Schema::table('user_friends', function ($table) {
             $table->dropColumn('created_at');
+        });
+        Schema::table('user_friends', function ($table) {
             $table->dropColumn('updated_at');
         });
     }
