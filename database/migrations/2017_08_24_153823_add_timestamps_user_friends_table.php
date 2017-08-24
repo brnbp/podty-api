@@ -12,7 +12,7 @@ class AddTimestampsUserFriendsTable extends Migration
     public function up()
     {
         Schema::table('user_friends', function ($table) {
-            $table->timestamps()->default();
+            $table->timestamps();
         });
     }
 
