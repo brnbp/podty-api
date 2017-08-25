@@ -5,9 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserFriend extends Model
 {
-    protected $fillable = ['user_id', 'friend_user_id'];
-
-    public $timestamps = false;
+    protected $fillable = ['user_id', 'friend_user_id', 'created_at'];
 
     protected $with = ['friend'];
 

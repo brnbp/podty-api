@@ -1,7 +1,10 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\User;
 use App\Models\UserFriend;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class UserFriendsRepository
 {
@@ -20,5 +23,12 @@ class UserFriendsRepository
         return UserFriend::whereUserId($userId)
             ->whereFriendUserId($friendUserId)
             ->delete();
+    }
+    
+    public static function newestFollowers(User $user, int $intervalDays = 7): Collection
+    {
+        return UserFriend::whereFriendUserId($user->id)
+                ->where('created_at', '>=', (string) Carbon::create()->subDays($intervalDays))
+                ->get();
     }
 }
