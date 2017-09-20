@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         DB::table('feeds')->truncate();
         DB::table('jobs')->truncate();
         DB::table('customers')->truncate();
+        DB::table('rating_types')->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
