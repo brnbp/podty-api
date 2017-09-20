@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Episode;
 use App\Jobs\Job;
+use App\Models\Feed;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,8 +37,10 @@ class RegisterEpisodesFeed extends Job implements ShouldQueue
      * Busca por novos episodios a partir de feed
      * @param Episode $episode
      */
-    public function handle(Episode $episode)
+    public function handle(Episode $episode, Feed $feed)
     {
-        $episode->storage($this->id, $this->url);
+        if ($feed->wasRecentlyModifiedXML($this->url)) {
+            $episode->storage($this->id, $this->url);
+        }
     }
 }
