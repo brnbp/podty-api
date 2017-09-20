@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +13,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Validator::extend('float_between', function ($attribute, $value, $parameters, $validator) {
+            list($min, $max) = $parameters;
+            return is_float($value) ? $value >= $min && $value <= $max : false;
+        });
+    
+        Validator::replacer('float_between',
+            function ($message, $attribute, $rule, $parameters) {
+                return str_replace([':min', ':max'], [$parameters[0], $parameters[1]], $message);
+            });
     }
 
     /**
