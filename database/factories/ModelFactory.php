@@ -95,3 +95,23 @@ $factory->define(UserFriend::class, function() {
     ];
 });
 
+$factory->define(RatingType::class, function(Faker\Generator $faker) {
+    return [
+        'type' => $faker->word
+    ];
+});
+
+$factory->define(Rating::class, function() {
+    $contentId = rand(0, 1) == 1 ?
+                    factory(Episode::class)->create()->id :
+                    factory(Feed::class)->create()->id;
+    return [
+        'type_id' => function(){
+            return factory(RatingType::class)->create()->id;
+        },
+        'user_id' => function(){
+            return factory(User::class)->create()->id;
+        },
+        'content_id' => $contentId,
+    ];
+});
