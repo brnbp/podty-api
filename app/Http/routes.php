@@ -1,5 +1,9 @@
 <?php
 
+Route::get('/d', function(){
+   return view('emails.newsletter.weekly');
+});
+
 Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::get('feeds/latest', 'FeedController@latest');
