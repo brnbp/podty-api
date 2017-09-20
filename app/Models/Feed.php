@@ -4,9 +4,8 @@ namespace App\Models;
 use App\Jobs\RegisterEpisodesFeed;
 use App\Jobs\UpdateLastEpisodeFeed;
 use App\Repositories\FeedRepository;
-use App\Services\Filter;
-use App\Services\Queue;
-use Illuminate\Database\Eloquent\Collection;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Services\Itunes\Finder as ItunesFinder;
@@ -104,5 +103,14 @@ class Feed extends Model
     public static function slugfy($feedId, $feedName)
     {
         return $feedId . '-' . rtrim(str_limit(str_slug($feedName), 30, ''), '-');
+    }
+    
+    public function wasRecentlyModifiedXML(string $url) :bool
+    {
+        $lastModified = (new Client)->head($url)->getHeader('Last-Modified');
+        
+        $lastModified = Carbon::createFromFormat('D, d M Y H:i:s T', reset($lastModified));
+        
+        return $lastModified->gte(Carbon::now()->subHour(12));
     }
 }
