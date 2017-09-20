@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call('UserFeedsTableSeeder');
         $this->call('UserEpisodesTableSeeder');
         $this->call('JobsTableSeeder');
+        $this->call(RatingTypesTableSeeder::class);
     }
 }
