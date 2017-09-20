@@ -5,12 +5,14 @@
 
 use App\Models\Episode;
 use App\Models\Feed;
+use App\Models\Rating;
+use App\Models\RatingType;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
 use App\Models\UserFriend;
 
-$factory->define(User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function(Faker\Generator $faker) {
     return [
         'username' => str_random(8),
         'email' => $faker->email,
@@ -21,7 +23,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Feed::class, function (Faker\Generator $faker) {
+$factory->define(Feed::class, function(Faker\Generator $faker) {
     $name = $faker->words(3, true);
     return [
         'name' => $name,
@@ -37,7 +39,7 @@ $factory->define(Feed::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Episode::class, function (Faker\Generator $faker) {
+$factory->define(Episode::class, function(Faker\Generator $faker) {
     return [
         'feed_id' => function(){
             return factory(Feed::class)->create()->id;
@@ -55,7 +57,7 @@ $factory->define(Episode::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(UserFeed::class, function (Faker\Generator $faker) {
+$factory->define(UserFeed::class, function() {
     return [
         'user_id' => function(){
             return factory(User::class)->create()->id;
@@ -67,7 +69,7 @@ $factory->define(UserFeed::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(UserEpisode::class, function (Faker\Generator $faker) {
+$factory->define(UserEpisode::class, function(Faker\Generator $faker) {
     $feed = factory(Feed::class)->create();
     $episode = factory(Episode::class)->create([
         'feed_id' => $feed->id
@@ -82,7 +84,7 @@ $factory->define(UserEpisode::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(UserFriend::class, function (Faker\Generator $faker) {
+$factory->define(UserFriend::class, function() {
     return [
         'user_id' => function(){
             return factory(User::class)->create()->id;
