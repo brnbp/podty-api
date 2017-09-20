@@ -26,13 +26,13 @@ class DatabaseSeeder extends Seeder
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $this->call('CustomersTableSeeder');
-        $this->call('FeedsTableSeeder');
-        $this->call('EpisodesTableSeeder');
-        $this->call('UsersTableSeeder');
-        $this->call('UserFeedsTableSeeder');
-        $this->call('UserEpisodesTableSeeder');
-        $this->call('JobsTableSeeder');
+        $this->call(CustomersTableSeeder::class);
+        $this->call(FeedsTableSeeder::class);
+        $this->call(EpisodesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(UserFeedsTableSeeder::class);
+        $this->call(UserEpisodesTableSeeder::class);
+        $this->call(JobsTableSeeder::class);
         $this->call(RatingTypesTableSeeder::class);
     }
 }
