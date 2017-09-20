@@ -6,8 +6,6 @@ use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use App\Services\Parser\XML;
 use App\Transform\XMLTransformer;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 
 /**
