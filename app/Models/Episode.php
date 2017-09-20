@@ -6,9 +6,9 @@ use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use App\Services\Parser\XML;
 use App\Transform\XMLTransformer;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 
 /**
  * Class Episode
