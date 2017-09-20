@@ -15,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Validator::extend('float_between', function ($attribute, $value, $parameters, $validator) {
             list($min, $max) = $parameters;
-            return is_float($value) ? $value >= $min && $value <= $max : false;
+            $value = (float) $value;
+            return  $value >= $min && $value <= $max;
         });
     
         Validator::replacer('float_between',
