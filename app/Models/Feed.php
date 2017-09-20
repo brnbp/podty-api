@@ -38,6 +38,14 @@ class Feed extends Model
     {
         return $this->hasMany('App\Models\Episode');
     }
+    
+    /**
+     * Get all of the post's rates.
+     */
+    public function ratings()
+    {
+        return $this->morphMany(Rating::class, 'content');
+    }
 
     public function persist($name)
     {

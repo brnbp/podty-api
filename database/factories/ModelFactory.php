@@ -102,16 +102,16 @@ $factory->define(RatingType::class, function(Faker\Generator $faker) {
 });
 
 $factory->define(Rating::class, function() {
-    $contentId = rand(0, 1) == 1 ?
-                    factory(Episode::class)->create()->id :
-                    factory(Feed::class)->create()->id;
+    $content = rand(0, 1) == 1 ?
+                    factory(Episode::class)->create() :
+                    factory(Feed::class)->create();
     return [
-        'type_id' => function(){
-            return factory(RatingType::class)->create()->id;
+        'content_type' => function() use($content){
+            return ($content instanceof Episode) ? 'episode' : 'feed';
         },
         'user_id' => function(){
             return factory(User::class)->create()->id;
         },
-        'content_id' => $contentId,
+        'content_id' => $content->id,
     ];
 });
