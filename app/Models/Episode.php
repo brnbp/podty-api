@@ -26,7 +26,8 @@ class Episode extends Model
         'link',
         'media_length',
         'media_type',
-        'media_url'
+        'media_url',
+        'avg_rating',
     ];
 
     /** @var array $hidden The attributes that should be hidden for arrays. */
