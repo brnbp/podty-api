@@ -2,10 +2,10 @@
 namespace App\Http\Controllers;
 
 use App\Filter\Filter;
+use App\Http\Requests\RatingRequest;
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Models\User;
-use App\Repositories\FeedRepository;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
 use App\Transform\EpisodeTransformer;
@@ -131,6 +131,18 @@ class UserEpisodesController extends ApiController
         UserEpisodesRepository::markAsPaused($userFeed->id, $episode->id, $time);
 
         return $this->respondSuccess(['updated' => true]);
+    }
+    
+    public function rate(RatingRequest $request, User $user, Episode $episode)
+    {
+        $rate = $episode->ratings()->updateOrCreate(
+            ['user_id' => $user->id,],
+            ['rate' => $request->rate]
+        );
+        
+        return $rate->wasRecentlyCreated ?
+            $this->respondCreated($rate) :
+            $this->respondSuccess($rate);
     }
 
     private function responseData($data)

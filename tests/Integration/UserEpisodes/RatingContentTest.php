@@ -1,7 +1,7 @@
 <?php
-namespace Tests\Integration\UserFeeds;
+namespace Tests\Integration\UserEpisodes;
 
-use App\Models\Feed;
+use App\Models\Episode;
 use App\Models\User;
 use Faker\Factory;
 use Tests\TestCase;
@@ -14,10 +14,10 @@ class RatingContentTest extends TestCase
     /** @test */
     public function it_requires_authentication_to_rate_content()
     {
-        $feed = factory(Feed::class)->create();
+        $episode = factory(Episode::class)->create();
         $user = factory(User::class)->create();
 
-        $this->post('/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate')
+        $this->post('/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate')
             ->seeStatusCode(401);
     }
     
@@ -25,8 +25,8 @@ class RatingContentTest extends TestCase
     public function it_rate_an_content()
     {
         $this->authenticate();
-        
-        $feed = factory(Feed::class)->create();
+    
+        $episode = factory(Episode::class)->create();
         
         $user = factory(User::class, 2)->create()->last();
         
@@ -34,15 +34,15 @@ class RatingContentTest extends TestCase
         $rate = $faker->randomFloat(2, 0.00 , 5.00);
         
         $this->json('post',
-            '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
+            '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
             'rate' => $rate,
         ])->seeStatusCode(201)
           ->seeJson([
               "data" => [
                   "id" => 1,
                   "user_id" => $user->id,
-                  "content_id" => $feed->id,
-                  "content_type" => 'App\Models\Feed',
+                  "content_id" => $episode->id,
+                  "content_type" => 'App\Models\Episode',
                   "rate" => $rate,
               ]
           ]);
@@ -52,13 +52,13 @@ class RatingContentTest extends TestCase
     public function it_requires_valid_rate_value()
     {
         $this->authenticate();
-        
-        $feed = factory(Feed::class)->create();
+    
+        $episode = factory(Episode::class)->create();
         
         $user = factory(User::class)->create();
         
         $this->json('post',
-            '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
+            '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
             'rate' => 5.01,
         ])->seeStatusCode(422)
           ->seeJson([
@@ -68,7 +68,7 @@ class RatingContentTest extends TestCase
           ]);
     
         $this->json('post',
-            '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
+            '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
             'rate' => -1.01,
         ])->seeStatusCode(422)
             ->seeJson([
@@ -78,7 +78,7 @@ class RatingContentTest extends TestCase
             ]);
     
         $this->json('post',
-            '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
+            '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
             'rate' => 'not-numeric-value',
         ])->seeStatusCode(422)
             ->seeJson([
@@ -92,12 +92,12 @@ class RatingContentTest extends TestCase
     public function it_requires_an_rate_value()
     {
         $this->authenticate();
-        
-        $feed = factory(Feed::class)->create();
+    
+        $episode = factory(Episode::class)->create();
         
         $user = factory(User::class)->create();
         
-        $this->json('post', '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate')
+        $this->json('post', '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate')
             ->seeStatusCode(422)
             ->seeJson([
                 "rate" => [
@@ -110,10 +110,10 @@ class RatingContentTest extends TestCase
     public function it_requires_an_valid_user()
     {
         $this->authenticate();
-        
-        $feed = factory(Feed::class)->create();
+    
+        $episode = factory(Episode::class)->create();
 
-        $this->json('post', '/v1/users/random-user/feeds/' . $feed->id . '/rate', [
+        $this->json('post', '/v1/users/random-user/episodes/' . $episode->id . '/rate', [
             'rate' => 4,
         ])->seeStatusCode(404);
     }
@@ -123,31 +123,31 @@ class RatingContentTest extends TestCase
     {
         $this->authenticate();
     
-        $feed = factory(Feed::class)->create();
+        $episode = factory(Episode::class)->create();
         $user = factory(User::class, 2)->create()->last();
     
-        $this->json('post', '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
+        $this->json('post', '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
             'rate' => 5.0,
         ])->seeStatusCode(201)
             ->seeJson([
                 "data" => [
                     "id" => 1,
                     "user_id" => $user->id,
-                    "content_id" => $feed->id,
-                    "content_type" => 'App\Models\Feed',
+                    "content_id" => $episode->id,
+                    "content_type" => 'App\Models\Episode',
                     "rate" => 5.0,
                 ]
             ]);
     
-        $this->json('post', '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
+        $this->json('post', '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
             'rate' => 3.1,
         ])->seeStatusCode(200)
             ->seeJson([
                 "data" => [
                     "id" => 1,
                     "user_id" => "$user->id",
-                    "content_id" => "$feed->id",
-                    "content_type" => 'App\Models\Feed',
+                    "content_id" => "$episode->id",
+                    "content_type" => 'App\Models\Episode',
                     "rate" => 3.1,
                 ]
             ]);
