@@ -19,7 +19,7 @@ class CreateRatingsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             
             $table->integer('content_id')->unsigned();
-            $table->enum('content_type', ['App\Models\Feed', 'App\Models\Episode']);
+            $table->string('content_type', 75);
             
             $table->float('rate')->unsigned();
             
