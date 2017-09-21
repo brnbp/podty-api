@@ -1,16 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Jobs\SearchNewFeed;
 use App\Models\Feed;
-use App\Models\UserFeed;
 use App\Repositories\FeedRepository;
-use App\Repositories\UserFeedsRepository;
 use App\Transform\FeedTransformer;
 use App\Transform\UserTransformer;
-use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
 
 class FeedController extends ApiController
 {
