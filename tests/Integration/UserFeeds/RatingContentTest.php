@@ -7,7 +7,7 @@ use Faker\Factory;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class FeedRatingContentTest extends TestCase
+class RatingContentTest extends TestCase
 {
     use DatabaseMigrations;
     
@@ -15,7 +15,9 @@ class FeedRatingContentTest extends TestCase
     public function it_requires_authentication_to_rate_content()
     {
         $feed = factory(Feed::class)->create();
-        $this->post('/v1/feeds/' . $feed->id . '/rating')
+        $user = factory(User::class)->create();
+
+        $this->post('/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate')
             ->seeStatusCode(401);
     }
     
@@ -31,9 +33,9 @@ class FeedRatingContentTest extends TestCase
         $faker = Factory::create();
         $rate = $faker->randomFloat(2, 0.00 , 5.00);
         
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
+        $this->json('post',
+            '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
             'rate' => $rate,
-            'user' => $user->id
         ])->seeStatusCode(201)
           ->seeJson([
               "data" => [
@@ -55,9 +57,9 @@ class FeedRatingContentTest extends TestCase
         
         $user = factory(User::class)->create();
         
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
+        $this->json('post',
+            '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
             'rate' => 5.01,
-            'user' => $user->id
         ])->seeStatusCode(422)
           ->seeJson([
               "rate" => [
@@ -65,9 +67,9 @@ class FeedRatingContentTest extends TestCase
               ]
           ]);
     
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
+        $this->json('post',
+            '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
             'rate' => -1.01,
-            'user' => $user->id
         ])->seeStatusCode(422)
             ->seeJson([
                 "rate" => [
@@ -75,9 +77,9 @@ class FeedRatingContentTest extends TestCase
                 ]
             ]);
     
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
+        $this->json('post',
+            '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
             'rate' => 'not-numeric-value',
-            'user' => $user->id
         ])->seeStatusCode(422)
             ->seeJson([
                 "rate" => [
@@ -95,29 +97,11 @@ class FeedRatingContentTest extends TestCase
         
         $user = factory(User::class)->create();
         
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
-            'user' => $user->id
-        ])->seeStatusCode(422)
+        $this->json('post', '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate')
+            ->seeStatusCode(422)
             ->seeJson([
                 "rate" => [
                     'The rate field is required.'
-                ]
-            ]);
-    }
-    
-    /** @test */
-    public function it_requires_an_user()
-    {
-        $this->authenticate();
-        
-        $feed = factory(Feed::class)->create();
-        
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
-            'rate' => 4
-        ])->seeStatusCode(422)
-            ->seeJson([
-                "user" => [
-                    'The user field is required.'
                 ]
             ]);
     }
@@ -129,32 +113,21 @@ class FeedRatingContentTest extends TestCase
         
         $feed = factory(Feed::class)->create();
 
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
+        $this->json('post', '/v1/users/random-user/feeds/' . $feed->id . '/rate', [
             'rate' => 4,
-            'user' => 1
-        ])->seeStatusCode(422)
-            ->seeJson([
-                "user" => [
-                    'The selected user is invalid.'
-                ]
-            ]);
+        ])->seeStatusCode(404);
     }
     
     /** @test */
-    public function it_allows_to_rate_an_content_only_one_time()
+    public function it_updates_an_rated_content()
     {
         $this->authenticate();
     
         $feed = factory(Feed::class)->create();
-    
         $user = factory(User::class, 2)->create()->last();
     
-        $faker = Factory::create();
-        $rate = $faker->randomFloat(2, 0.00 , 5.00);
-    
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
-            'rate' => $rate,
-            'user' => $user->id
+        $this->json('post', '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
+            'rate' => 5.0,
         ])->seeStatusCode(201)
             ->seeJson([
                 "data" => [
@@ -162,18 +135,20 @@ class FeedRatingContentTest extends TestCase
                     "user_id" => $user->id,
                     "content_id" => $feed->id,
                     "content_type" => 'App\Models\Feed',
-                    "rate" => $rate,
+                    "rate" => 5.0,
                 ]
             ]);
     
-        $this->json('post', '/v1/feeds/' . $feed->id . '/rating', [
-            'rate' => $rate,
-            'user' => $user->id
-        ])->seeStatusCode(422)
+        $this->json('post', '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate', [
+            'rate' => 3.1,
+        ])->seeStatusCode(200)
             ->seeJson([
-                'error' => [
-                    'message' => 'User already rated this content',
-                    'status_code' => 422
+                "data" => [
+                    "id" => 1,
+                    "user_id" => "$user->id",
+                    "content_id" => "$feed->id",
+                    "content_type" => 'App\Models\Feed',
+                    "rate" => 3.1,
                 ]
             ]);
     }

@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RatingRequest;
 use App\Models\Feed;
 use App\Models\User;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
-use App\Repositories\UserRepository;
 use Illuminate\Http\Response;
 
 class UserFeedsController extends ApiController
@@ -60,5 +60,17 @@ class UserFeedsController extends ApiController
         UserFeedsRepository::markAllListened($userFeed->id);
 
         return $this->respondSuccess();
+    }
+    
+    public function rate(RatingRequest $request, User $user, Feed $feed)
+    {
+        $rate = $feed->ratings()->updateOrCreate(
+            ['user_id' => $user->id,],
+            ['rate' => $request->rate]
+        );
+    
+        return $rate->wasRecentlyCreated ?
+            $this->respondCreated($rate) :
+            $this->respondSuccess($rate);
     }
 }

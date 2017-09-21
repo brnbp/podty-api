@@ -7,9 +7,6 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('feeds/name/{name}', 'FeedController@retrieve');
     Route::get('feeds/{feed}', 'FeedController@retrieveById');
     Route::get('feeds/{feed}/episodes', 'EpisodeController@retrieve');
-    
-    Route::post('feeds/{feed}/rating', 'RatingController@create');
-    Route::put('feeds/{feed}/rating', 'RatingController@create');
 
     Route::get('feeds/{feed}/listeners', 'FeedController@listeners');
 
@@ -32,8 +29,10 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
 
     Route::put('users/{user}/feeds/{feed}/listenAll', 'UserFeedsController@listenAll');
 
+    Route::post('users/{user}/feeds/{feed}/rate', 'UserFeedsController@rate');
+    
     Route::get('users/{user}/feeds/{feed}/episodes', 'UserEpisodesController@show');
-   
+    
     Route::get('users/{user}/episodes/latests', 'UserEpisodesController@latests');
     Route::get('users/{username}/episodes/listening', 'UserEpisodesController@listening');
     Route::get('users/{user}/episodes/favorites', 'UserFavoriteController@all');
