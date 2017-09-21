@@ -119,7 +119,9 @@ class Feed extends Model
         $lastModified = (new Client)->head($url)->getHeader('Last-Modified');
         
         $lastModified = Carbon::createFromFormat('D, d M Y H:i:s T', reset($lastModified));
+    
+        $isDawn = Carbon::now()->hour > 1 && Carbon::now()->hour < 6;
         
-        return $lastModified->gte(Carbon::now()->subHour(12));
+        return $lastModified->gte(Carbon::now()->subHour(12)) || $isDawn;
     }
 }
