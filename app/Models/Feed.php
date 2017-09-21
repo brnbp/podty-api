@@ -24,6 +24,7 @@ class Feed extends Model
         'thumbnail_60', 'thumbnail_100',
         'thumbnail_600', 'total_episodes',
         'listeners','last_episode_at',
+        'avg_rating'
     ];
 
     /** @var array $hidden The attributes that should be hidden for arrays. */

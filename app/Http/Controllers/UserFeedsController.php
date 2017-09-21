@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Events\ContentRated;
 use App\Http\Requests\RatingRequest;
+use App\Http\Requests\Request;
 use App\Models\Feed;
 use App\Models\User;
 use App\Repositories\UserEpisodesRepository;
@@ -69,6 +71,8 @@ class UserFeedsController extends ApiController
             ['rate' => $request->rate]
         );
     
+        event(new ContentRated($feed, Feed::class));
+        
         return $rate->wasRecentlyCreated ?
             $this->respondCreated($rate) :
             $this->respondSuccess($rate);

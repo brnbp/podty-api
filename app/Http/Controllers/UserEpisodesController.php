@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Events\ContentRated;
 use App\Filter\Filter;
 use App\Http\Requests\RatingRequest;
 use App\Models\Episode;
@@ -139,6 +140,8 @@ class UserEpisodesController extends ApiController
             ['user_id' => $user->id,],
             ['rate' => $request->rate]
         );
+    
+        event(new ContentRated($episode, Episode::class));
         
         return $rate->wasRecentlyCreated ?
             $this->respondCreated($rate) :

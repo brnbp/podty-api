@@ -1,6 +1,8 @@
 <?php
 namespace App\Providers;
 
+use App\Events\ContentRated;
+use App\Listeners\RecalculateRating;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -12,6 +14,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        ContentRated::class => [
+            RecalculateRating::class,
+        ],
     ];
 
     /**
