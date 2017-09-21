@@ -116,7 +116,13 @@ class Feed extends Model
     
     public function wasRecentlyModifiedXML(string $url) :bool
     {
-        $lastModified = (new Client)->head($url)->getHeader('Last-Modified');
+        $lastModified = (new Client)->head($url)->getHeader('Last-Modified') ?? [];
+    
+        $lastModified = reset($lastModified);
+        
+        if (!$lastModified) {
+            return true;
+        }
         
         $lastModified = Carbon::createFromFormat('D, d M Y H:i:s T', reset($lastModified));
     
