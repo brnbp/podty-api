@@ -124,7 +124,7 @@ class Feed extends Model
             return true;
         }
         
-        $lastModified = Carbon::createFromFormat('D, d M Y H:i:s T', reset($lastModified));
+        $lastModified = Carbon::createFromFormat('D, d M Y H:i:s T', $lastModified);
     
         $isDawn = Carbon::now()->hour > 1 && Carbon::now()->hour < 6;
         
