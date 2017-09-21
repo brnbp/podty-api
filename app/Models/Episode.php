@@ -39,7 +39,15 @@ class Episode extends Model
     {
         return $this->belongsTo(Feed::class)->first();
     }
-
+    
+    /**
+     * Get all of the post's rates.
+     */
+    public function ratings()
+    {
+        return $this->morphMany(Rating::class, 'content');
+    }
+    
     /**
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
      * @param integer $feed_id id do feed

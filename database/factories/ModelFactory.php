@@ -6,7 +6,6 @@
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Models\Rating;
-use App\Models\RatingType;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
@@ -95,19 +94,13 @@ $factory->define(UserFriend::class, function() {
     ];
 });
 
-$factory->define(RatingType::class, function(Faker\Generator $faker) {
-    return [
-        'type' => $faker->word
-    ];
-});
-
 $factory->define(Rating::class, function() {
     $content = rand(0, 1) == 1 ?
                     factory(Episode::class)->create() :
                     factory(Feed::class)->create();
     return [
         'content_type' => function() use($content){
-            return ($content instanceof Episode) ? 'episode' : 'feed';
+            return ($content instanceof Episode) ? Episode::class : Feed::class;
         },
         'user_id' => function(){
             return factory(User::class)->create()->id;

@@ -60,6 +60,12 @@ class ApiController extends Controller
     {
         return $this->setStatusCode(Response::HTTP_NOT_FOUND)->respondError($message);
     }
+    
+    public function respondBusinessLogicError($message = '')
+    {
+        return $this->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->respondError($message);
+    }
 
     public function respondError($message)
     {

@@ -9,14 +9,11 @@ class Rating extends Model
         'user_id', 'content_id', 'content_type', 'rate'
     ];
     
+    protected $hidden = ['created_at', 'updated_at'];
+    
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-    
-    public function type()
-    {
-        return $this->hasOne(RatingType::class);
     }
     
     /**

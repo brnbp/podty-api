@@ -7,6 +7,9 @@ Route::group(['prefix' => '/v1', 'middleware' => ['api']], function () {
     Route::get('feeds/name/{name}', 'FeedController@retrieve');
     Route::get('feeds/{feed}', 'FeedController@retrieveById');
     Route::get('feeds/{feed}/episodes', 'EpisodeController@retrieve');
+    
+    Route::post('feeds/{feed}/rating', 'RatingController@create');
+    Route::put('feeds/{feed}/rating', 'RatingController@create');
 
     Route::get('feeds/{feed}/listeners', 'FeedController@listeners');
 

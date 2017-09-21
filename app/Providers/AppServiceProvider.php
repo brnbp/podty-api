@@ -14,8 +14,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('float_between', function ($attribute, $value, $parameters, $validator) {
+            if (!is_numeric($value)) {
+                return false;
+            }
+            
             list($min, $max) = $parameters;
             $value = (float) $value;
+
             return  $value >= $min && $value <= $max;
         });
     
