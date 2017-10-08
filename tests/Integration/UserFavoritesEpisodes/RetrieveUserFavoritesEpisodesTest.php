@@ -18,11 +18,9 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
         $this->authenticate();
 
         $this->post('/v1/users/' . $this->user->username . '/episodes/' . $this->episode->id . '/favorite');
-    
-        $response = $this->get('/v1/users/' . $this->user->username . '/episodes/favorites')
-            ->see($this->episode->title)
-            ->see($this->userFeeds->feed->name);
-    
+
+        $response = $this->get('/v1/users/' . $this->user->username . '/episodes/favorites');
+
         $response = json_decode($response->response->getContent(), true);
         $this->assertEquals([
             'data' => [
@@ -44,7 +42,8 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
                         "duration" => $this->episode->duration,
                         "media_url" => $this->episode->media_url,
                         "media_length" => $this->episode->media_length,
-                        "media_type" => $this->episode->media_type
+                        "media_type" => $this->episode->media_type,
+                        "avg_rating" => 0.0,
                     ],
                     "feed" => [
                         "id" => $this->userFeeds->feed->id,
@@ -58,7 +57,8 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
                         "total_episodes" => $this->userFeeds->feed->total_episodes,
                         "last_episode_at" => $this->userFeeds->feed->last_episode_at,
                         "listeners" => $this->userFeeds->feed->listeners,
-                        "updated_at" => $this->userFeeds->feed->updated_at
+                        "updated_at" => $this->userFeeds->feed->updated_at,
+                        "avg_rating" => 0.0,
                     ]
                 ]
             ]

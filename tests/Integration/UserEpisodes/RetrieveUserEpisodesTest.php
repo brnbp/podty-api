@@ -116,7 +116,8 @@ class RetrieveUserEpisodesTest extends TestCase
                         "media_url" => $episode->media_url,
                         "media_length" => (string) $episode->media_length,
                         "media_type" => $episode->media_type,
-                        "paused_at" => "99"
+                        "paused_at" => "99",
+                        "avg_rating" => '0.0',
                     ]
                 ]
             ]
