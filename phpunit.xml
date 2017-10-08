@@ -13,7 +13,7 @@
             <directory>./tests/Unit/</directory>
         </testsuite>
         <testsuite name="integration">
-            <directory suffix="Test.php">./tests/integration/</directory>
+            <directory suffix="Test.php">./tests/Integration/</directory>
         </testsuite>
         <testsuite name="contract">
             <directory>./tests/contract/</directory>

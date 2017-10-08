@@ -8,38 +8,38 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class RetrieveLatestsFeedsTest extends TestCase
 {
     use DatabaseMigrations;
-    
+
     /** @test */
     public function unauthenticated_client_cannot_retrieve_latests_feeds()
     {
         $this->get('/v1/feeds/latest')
-            ->seeStatusCode(401);
+            ->assertStatus(401);
     }
-    
+
     /** @test */
     public function it_returns_latests_feeds()
     {
         $this->authenticate();
-    
+
         factory(Episode::class, 3)->create();
-        
+
         $response = $this->get('/v1/feeds/latest')
-                        ->seeStatusCode(200)
-                        ->seeJsonStructure($this->getDefaultStructure());
-    
-        $response = collect(json_decode($response->response->getContent())->data);
+                        ->assertStatus(200)
+                        ->assertJsonStructure($this->getDefaultStructure());
+
+        $response = collect(json_decode($response->getContent())->data);
         $this->assertCount(3, $response);
     }
-    
+
     /** @test */
     public function it_returns_404_when_retrieving_latests_feeds_having_no_feeds()
     {
         $this->authenticate();
-        
+
         $this->get('/v1/feeds/latest')
-            ->seeStatusCode(404);
+            ->assertStatus(404);
     }
-    
+
     private function getDefaultStructure()
     {
         return [

@@ -9,9 +9,9 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
     public function it_requires_authenticated_client_to_make_request()
     {
         $this->get('/v1/users/randomuser/episodes/favorites')
-            ->seeStatusCode(401);
+            ->assertStatus(401);
     }
-    
+
     /** @test */
     public function it_retrieves_user_favorites_episodes()
     {
@@ -21,7 +21,7 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
 
         $response = $this->get('/v1/users/' . $this->user->username . '/episodes/favorites');
 
-        $response = json_decode($response->response->getContent(), true);
+        $response = json_decode($response->getContent(), true);
         $this->assertEquals([
             'data' => [
                 [
@@ -64,22 +64,22 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
             ]
         ], $response);
     }
-    
+
     /** @test */
     public function it_retrieves_none_user_favorites_episodes()
     {
         $this->authenticate();
-        
+
         $this->get('/v1/users/' . $this->user->username . '/episodes/favorites')
-            ->seeStatusCode(404);
+            ->assertStatus(404);
     }
-    
+
     /** @test */
     public function it_cannot_retrieve_favorites_episodes_for_nonexistent_user()
     {
         $this->authenticate();
-        
+
         $this->get('/v1/users/nonUser/episodes/favorites')
-            ->seeStatusCode(404);
+            ->assertStatus(404);
     }
 }
