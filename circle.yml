@@ -5,9 +5,8 @@ test:
   pre:
     - php -l app/
   override:
-    - php vendor/bin/phpunit
-  post:
     - php vendor/bin/phpunit --coverage-clover=coverage.xml
+  post:
     - bash <(curl -s https://codecov.io/bash)
 deployment:
   production:
