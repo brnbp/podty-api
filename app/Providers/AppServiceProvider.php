@@ -41,7 +41,9 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
-        } else {
+        }
+
+        if (env('APP_ENV') == 'production') {
             $this->app->alias('bugsnag.logger', Log::class);
             $this->app->alias('bugsnag.logger', LoggerInterface::class);
         }
