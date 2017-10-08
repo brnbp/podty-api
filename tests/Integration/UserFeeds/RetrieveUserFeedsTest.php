@@ -10,35 +10,35 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class RetrieveUserFeedsTest extends TestCase
 {
     use DatabaseMigrations;
-    
+
     /** @test */
     public function unauthenticated_client_cannot_retrieve_user_feeds()
     {
         $this->get('v1/users/someuser/feeds')
-            ->assertResponseStatus(401);
+            ->assertStatus(401);
     }
-    
+
     /** @test */
     public function an_user_have_no_feeds()
     {
         $this->authenticate();
         $user = factory(User::class)->create();
-        
+
         $this->get('v1/users/' . $user->username . '/feeds')
-            ->assertResponseStatus(404);
+            ->assertStatus(404);
     }
-    
+
     /** @test */
     public function an_user_have_feeds()
     {
         $this->authenticate();
         $user = factory(User::class)->create();
-        
+
         $feed = factory(Feed::class)->create();
         UserFeedsRepository::create($feed->id, $user);
-        
+
         $this->get('v1/users/' . $user->username . '/feeds')
-            ->seeJson([
+            ->assertExactJson([
                 'data' => [
                     [
                         'id' => $feed->id,
@@ -54,20 +54,20 @@ class RetrieveUserFeedsTest extends TestCase
                     ]
                 ]
             ])
-            ->assertResponseStatus(200);
+            ->assertStatus(200);
     }
-    
+
     /** @test */
     public function it_retrieves_one_feed()
     {
         $this->authenticate();
         $user = factory(User::class)->create();
-        
+
         $feed = factory(Feed::class)->create();
         UserFeedsRepository::create($feed->id, $user);
-        
+
         $this->get('v1/users/' . $user->username . '/feeds/' . $feed->id)
-            ->seeJson([
+            ->assertExactJson([
                 'data' => [
                     [
                         'id' => $feed->id,
@@ -83,28 +83,28 @@ class RetrieveUserFeedsTest extends TestCase
                     ]
                 ]
             ])
-            ->assertResponseStatus(200);
+            ->assertStatus(200);
     }
-    
+
     /** @test */
     public function it_gives_404_when_retrieving_non_existent_feed_by_id()
     {
         $this->authenticate();
         $user = factory(User::class)->create();
-        
+
         $this->get('v1/users/' . $user->username . '/feeds/1')
-            ->assertResponseStatus(404);
+            ->assertStatus(404);
     }
-    
+
     /** @test */
     public function it_gives_404_when_retrieving_feed_that_user_not_follow()
     {
         $this->authenticate();
         $user = factory(User::class)->create();
-        
+
         $feed = factory(Feed::class)->create();
-        
+
         $this->get('v1/users/' . $user->username . '/feeds/' . $feed->id)
-            ->assertResponseStatus(404);
+            ->assertStatus(404);
     }
 }

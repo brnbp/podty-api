@@ -10,19 +10,19 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class RetrieveTopFeedsTest extends TestCase
 {
     use DatabaseMigrations;
-    
+
     /** @test */
     public function unauthenticated_client_cannot_retrieve_top_feeds()
     {
         $this->get('/v1/feeds/top')
-            ->seeStatusCode(401);
+            ->assertStatus(401);
     }
-    
+
     /** @test */
     public function it_retrieves_top_feeds()
     {
         $this->authenticate();
-    
+
         $thirdFeed = factory(Feed::class)->create([
             'listeners' => 0,
             'last_episode_at' => (string) Carbon::now()->subDay(5),
@@ -35,14 +35,14 @@ class RetrieveTopFeedsTest extends TestCase
             'listeners' => 5,
             'last_episode_at' => (string) Carbon::now(),
         ]);
-        
+
         $response = $this->get('/v1/feeds/top')
-            ->seeStatusCode(200)
-            ->seeJsonStructure($this->getDefaultStructure());
-    
-        $response = json_decode($response->response->getContent(), true);
-        
-        
+            ->assertStatus(200)
+            ->assertJsonStructure($this->getDefaultStructure());
+
+        $response = json_decode($response->getContent(), true);
+
+
         $this->assertEquals([
             'data' => [
                 (new FeedTransformer)->transform($firstFeed->toArray()),
@@ -51,16 +51,15 @@ class RetrieveTopFeedsTest extends TestCase
             ]
         ], $response);
     }
-    
+
     /** @test */
     public function it_returns_404_when_retrieving_top_feeds_having_no_feeds()
     {
         $this->authenticate();
-        
-        $this->get('/v1/feeds/top')
-            ->seeStatusCode(404);
+
+        $this->get('/v1/feeds/top')->assertStatus(404);
     }
-    
+
     private function getDefaultStructure()
     {
         return [

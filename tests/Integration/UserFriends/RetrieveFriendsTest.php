@@ -9,14 +9,14 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class RetrieveFriendsTest extends TestCase
 {
     use DatabaseMigrations;
-    
+
     /** @test */
     public function unauthenticated_client_cannot_retrieve_friends()
     {
         $this->get('v1/users/someuser/friends')
-            ->assertResponseStatus(401);
+            ->assertStatus(401);
     }
-    
+
     /** @test */
     public function it_retrieves_friends_from_given_user()
     {
@@ -24,13 +24,13 @@ class RetrieveFriendsTest extends TestCase
 
         $user = factory(User::class)->create();
         $friends = factory(User::class, 2)->create();
-    
+
         $friends->each(function($friend) use($user){
             UserFriendsRepository::follow($user->id, $friend->id);
         });
-    
+
         $this->get('v1/users/' . $user->username . '/friends')
-            ->seeJson([
+            ->assertExactJson([
                 'data' => [
                     [
                       "id" => $friends->first()->id,
@@ -52,23 +52,23 @@ class RetrieveFriendsTest extends TestCase
                     ]
                 ]
             ])
-            ->assertResponseStatus(200);
+            ->assertStatus(200);
     }
-    
+
     /** @test */
     public function it_retrieves_zero_friends_from_given_user()
     {
         $this->authenticate();
-        
+
         $user = factory(User::class)->create();
-        
+
         $this->get('v1/users/' . $user->username . '/friends')
-            ->seeJson([
+            ->assertExactJson([
                 'error' => [
                     'message' => 'Not Found',
                     'status_code' => 404
                 ]
             ])
-            ->assertResponseStatus(404);
+            ->assertStatus(404);
     }
 }
