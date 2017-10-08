@@ -35,7 +35,7 @@ class FeedController extends ApiController
 
         return $this->response($feed);
     }
-    
+
     public function retrieveById(Feed $feed)
     {
         return $this->respondSuccess([

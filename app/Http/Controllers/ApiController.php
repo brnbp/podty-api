@@ -43,7 +43,7 @@ class ApiController extends Controller
 
         $content['data'] = $data;
 
-        return $this->respond($content);
+        return $this->setStatusCode(Response::HTTP_OK)->respond($content);
     }
 
     public function respondBadRequest($message = 'Bad Request')

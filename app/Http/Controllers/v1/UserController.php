@@ -47,9 +47,9 @@ class UserController extends ApiController
         if ($validator->fails()) {
             return $this->respondErrorValidator($validator);
         }
-        
+
         $user = UserRepository::create(Input::all());
-    
+
         Mail::queue('emails.welcome', ['user' => $user->username], function ($m) use($user) {
             $m->from('signin@podty.co', 'Podty');
             $m->to($user->email, $user->username)->subject('Welcome to Podty');
@@ -115,7 +115,7 @@ class UserController extends ApiController
     public function touch($username)
     {
         $user = UserRepository::first($username);
-        
+
         if (!$user) {
             return $this->respondNotFound();
         }
