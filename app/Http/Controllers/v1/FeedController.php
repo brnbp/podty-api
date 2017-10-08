@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
+use App\Http\Controllers\ApiController;
 use App\Jobs\SearchNewFeed;
 use App\Models\Feed;
 use App\Repositories\FeedRepository;
@@ -35,7 +36,7 @@ class FeedController extends ApiController
 
         return $this->response($feed);
     }
-    
+
     public function retrieveById(Feed $feed)
     {
         return $this->respondSuccess([

@@ -4,6 +4,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'name' => 'Podty - Api',
+
     'debug' => env('APP_DEBUG', false),
 
     'url' => 'http://localhost',

@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
+use App\Http\Controllers\ApiController;
 use App\Filter\Filter;
 use App\Models\Episode;
 use App\Models\Feed;
