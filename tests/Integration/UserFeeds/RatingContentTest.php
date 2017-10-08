@@ -62,8 +62,11 @@ class RatingContentTest extends TestCase
             'rate' => 5.01,
         ])->assertStatus(422)
           ->assertExactJson([
-              "rate" => [
-                  'The rate must be between 0.00 and 5.00 float digits.'
+              'message' => 'The given data was invalid.',
+              'errors' => [
+                  "rate" => [
+                      'The rate must be between 0.00 and 5.00 float digits.'
+                  ]
               ]
           ]);
 
@@ -72,8 +75,11 @@ class RatingContentTest extends TestCase
             'rate' => -1.01,
         ])->assertStatus(422)
             ->assertExactJson([
-                "rate" => [
-                    'The rate must be between 0.00 and 5.00 float digits.'
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    "rate" => [
+                        'The rate must be between 0.00 and 5.00 float digits.'
+                    ]
                 ]
             ]);
 
@@ -82,8 +88,11 @@ class RatingContentTest extends TestCase
             'rate' => 'not-numeric-value',
         ])->assertStatus(422)
             ->assertJson([
-                "rate" => [
-                    'The rate must be between 0.00 and 5.00 float digits.'
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    "rate" => [
+                        'The rate must be between 0.00 and 5.00 float digits.'
+                    ]
                 ]
             ]);
     }
@@ -100,8 +109,11 @@ class RatingContentTest extends TestCase
         $this->json('post', '/v1/users/' . $user->username . '/feeds/' . $feed->id . '/rate')
             ->assertStatus(422)
             ->assertJson([
-                "rate" => [
-                    'The rate field is required.'
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    "rate" => [
+                        'The rate field is required.'
+                    ]
                 ]
             ]);
     }
