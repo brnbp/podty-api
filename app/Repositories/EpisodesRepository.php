@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Repositories;
 
 use App\EpisodeEntity;
 use App\Filter\Filter;
 use App\Models\Episode;
-use App\Models\User;
 use App\Models\UserFeed;
-use Illuminate\Database\Eloquent\Builder;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 class EpisodesRepository
 {
@@ -60,18 +58,23 @@ class EpisodesRepository
 
     public function save(EpisodeEntity $episodeEntity)
     {
-        $episode = Episode::updateOrCreate([
-	        'title'     => $episodeEntity->title,
-	        'feed_id'     => $episodeEntity->feed_id,
-        ], $episodeEntity->toArray());
+        try {
+            $episode = Episode::updateOrCreate([
+                'title'     => $episodeEntity->title,
+                'feed_id'     => $episodeEntity->feed_id,
+                'published_date'     => $episodeEntity->getPublishedDate(),
+            ], $episodeEntity->toArray());
 
-        if ($episode->wasRecentlyCreated) {
+            if ($episode->wasRecentlyCreated) {
+                $this->updateAllUsersWhoFollowsIt($episode);
+            }
 
-            $this->updateAllUsersWhoFollowsIt($episode);
+            return $episode->exists;
 
+        } catch (\Exception $exception) {
+            Bugsnag::notifyException($exception);
+            return false;
         }
-
-        return $episode->exists;
     }
 
     private function updateAllUsersWhoFollowsIt($episode)
