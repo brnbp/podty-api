@@ -15,10 +15,6 @@ class RecalculateRating implements ShouldQueue
      */
     public function handle(ContentRated $event)
     {
-        $average = $event->content->ratings->avg('rate');
-
-        $event->content->avg_rating = Rating::round($average);
-
-        $event->content->save();
+        $event->content->updateAverageRating();
     }
 }
