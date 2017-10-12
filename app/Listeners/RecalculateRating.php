@@ -2,7 +2,6 @@
 namespace App\Listeners;
 
 use App\Events\ContentRated;
-use App\Models\Rating;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RecalculateRating implements ShouldQueue
