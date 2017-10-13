@@ -23,4 +23,12 @@ class Rating extends Model
     {
         return $this->morphTo();
     }
+
+    /*
+     * rounds number to 0.50, 1.00, 1.50, 2.00, 2.50 and so on
+     */
+    public static function round($number)
+    {
+        return round($number * 2) / 2;
+    }
 }

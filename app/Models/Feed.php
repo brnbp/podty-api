@@ -17,7 +17,7 @@ use App\Services\Itunes\Finder as ItunesFinder;
  */
 class Feed extends Model
 {
-    use DispatchesJobs;
+    use DispatchesJobs, RateableContent;
 
     protected $fillable = [
         'url', 'name', 'slug', 'thumbnail_30',
@@ -38,14 +38,6 @@ class Feed extends Model
     public function episodes()
     {
         return $this->hasMany('App\Models\Episode');
-    }
-    
-    /**
-     * Get all of the post's rates.
-     */
-    public function ratings()
-    {
-        return $this->morphMany(Rating::class, 'content');
     }
 
     public function persist($name)
