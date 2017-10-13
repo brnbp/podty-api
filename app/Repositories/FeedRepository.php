@@ -3,7 +3,6 @@ namespace App\Repositories;
 
 use App\Models\Feed;
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
 
 class FeedRepository
 {
@@ -49,16 +48,18 @@ class FeedRepository
 
     public function top($count = 10)
     {
-        return Cache::remember('feeds_top_' . $count, 120, function() use ($count) {
-            return $this->model
-                ->top($count)
-                ->get();
-        });
+        return $this->model
+            ->top($count)
+            ->get();
     }
 
     public function totalEpisodes($id)
     {
-        return Feed::whereId($id)->select('total_episodes')->first()->toArray();
+        return $this->model
+                ->whereId($id)
+                ->select('total_episodes')
+                ->first()
+                ->toArray();
     }
 
     public function updateOrCreate(array $feed)
@@ -77,37 +78,37 @@ class FeedRepository
 
     public function updateTotalEpisodes($id)
     {
-        Feed::whereId($id)->update([
+        $this->model
+            ->whereId($id)
+            ->update([
                 'total_episodes' => (new EpisodesRepository)->getTotalEpisodes($id)
             ]);
     }
 
     public function updateLastEpisodeDate($id, $date)
     {
-        Feed::whereId($id)->update([
+        $this->model
+            ->whereId($id)
+            ->update([
                 'last_episode_at' => $date
             ]);
     }
 
     public static function incrementsListeners($feedId)
     {
-        Cache::forget('feeds_listeners_' . $feedId);
         return Feed::whereId($feedId)->increment('listeners');
     }
 
     public static function decrementsListeners($feedId)
     {
-        Cache::forget('feeds_listeners_' . $feedId);
         return Feed::whereId($feedId)->decrement('listeners');
     }
 
     public static function listeners($feedId)
     {
-        return Cache::remember('feeds_listeners_' . $feedId, 120, function() use ($feedId) {
-            return User::where('user_feeds.feed_id', $feedId)
-                ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
-                ->orderBy('user_feeds.id', 'desc')
-                ->get();
-        });
+        return User::where('user_feeds.feed_id', $feedId)
+            ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
+            ->orderBy('user_feeds.id', 'desc')
+            ->get();
     }
 }

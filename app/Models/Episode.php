@@ -40,7 +40,7 @@ class Episode extends Model
     {
         return $this->belongsTo(Feed::class)->first();
     }
-    
+
     /**
      * Get all of the post's rates.
      */
@@ -48,7 +48,7 @@ class Episode extends Model
     {
         return $this->morphMany(Rating::class, 'content');
     }
-    
+
     /**
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
      * @param integer $feed_id id do feed
@@ -67,7 +67,7 @@ class Episode extends Model
         $content = (new XMLTransformer)->transform($content);
 
         $this->insert($feed_id, $content);
-        (new FeedRepository())->updateTotalEpisodes($feed_id);
+        (new FeedRepository(new Feed))->updateTotalEpisodes($feed_id);
 
         return true;
     }

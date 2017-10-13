@@ -28,7 +28,7 @@ class UpdateLastEpisodeFeed extends Job implements ShouldQueue
         $Episodes
             ->unique('feed_id')
             ->map(function($episode){
-                (new FeedRepository)
+                (new FeedRepository(new Feed))
                     ->updateLastEpisodeDate($episode->feed_id, $episode->published_date);
             });
     }

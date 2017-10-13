@@ -93,7 +93,7 @@ class Feed extends Model
         }
 
         $response = array_map(function($feed){
-            return (new FeedRepository)->updateOrCreate($feed);
+            return (new FeedRepository($this))->updateOrCreate($feed);
         }, $results);
 
         return count($response) ? collect($response) : false;
@@ -106,7 +106,7 @@ class Feed extends Model
     public function cronSearchForNewEpisodes($feeds = null)
     {
         if (!$feeds) {
-            $feeds = (new FeedRepository)->all();
+            $feeds = (new FeedRepository($this))->all();
         }
 
         $feeds->map(function($feed){
