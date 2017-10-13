@@ -57,6 +57,18 @@ class Feed extends Model
                     ->orderBy('last_episode_at', 'DESC');
     }
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function($feed) {
+            if (!$feed->slug){
+                $feed->slug = self::slugfy($feed->id, $feed->name);
+                $feed->save();
+            }
+        });
+    }
+
     public static function slugfy($feedId, $feedName)
     {
         return $feedId . '-' . rtrim(str_limit(str_slug($feedName), 30, ''), '-');

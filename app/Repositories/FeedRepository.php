@@ -65,14 +65,11 @@ class FeedRepository
 
     public function updateOrCreate(array $feed)
     {
-        $feed = Feed::updateOrCreate([
+        $feed = $this->model->updateOrCreate([
             'url' => $feed['url']
         ], $feed);
 
         if ($feed->wasRecentlyCreated) {
-            $feed->slug = Feed::slugfy($feed->id, $feed->name);
-            $feed->save();
-
             dispatch(new RegisterEpisodesFeed([
                 'id' => $feed->id,
                 'url' => $feed->url
