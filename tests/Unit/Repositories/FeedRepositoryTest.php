@@ -1,9 +1,13 @@
 <?php
 namespace Tests\Unit\Repositories;
 
+use App\Jobs\RegisterEpisodesFeed;
+use App\Jobs\SearchNewFeed;
+use App\Jobs\UpdateLastEpisodeFeed;
 use App\Models\Feed;
 use App\Repositories\FeedRepository;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Bus;
 use Mockery;
 use Tests\TestCase;
 
@@ -106,6 +110,50 @@ class FeedRepositoryTest extends TestCase
         $feed = (new FeedRepository($this->model))->totalEpisodes(1);
 
         $this->assertEquals(10, $feed['total_episodes']);
+    }
+
+    /** @test */
+    public function it_creates_an_feed()
+    {
+        $this->defaultFeed->wasRecentlyCreated = true;
+
+        $this->model
+            ->shouldReceive('updateOrCreate')->once()
+            ->withArgs([
+                ['url' => $this->defaultFeed->url],
+                $this->defaultFeed->toArray()
+            ])
+            ->andReturn($this->defaultFeed);
+
+        Bus::fake();
+
+        $feed = (new FeedRepository($this->model))
+                    ->updateOrCreate($this->defaultFeed->toArray());
+
+        $this->assertEquals($this->defaultFeed, $feed);
+        Bus::assertDispatched(RegisterEpisodesFeed::class);
+    }
+
+    /** @test */
+    public function it_dont_create_an_feed()
+    {
+        $this->defaultFeed->wasRecentlyCreated = false;
+
+        $this->model
+            ->shouldReceive('updateOrCreate')->once()
+            ->withArgs([
+                ['url' => $this->defaultFeed->url],
+                $this->defaultFeed->toArray()
+            ])
+            ->andReturn($this->defaultFeed);
+
+        Bus::fake();
+
+        $feed = (new FeedRepository($this->model))
+            ->updateOrCreate($this->defaultFeed->toArray());
+
+        $this->assertEquals($this->defaultFeed, $feed);
+        Bus::assertNotDispatched(RegisterEpisodesFeed::class);
     }
 
     public function tearDown()

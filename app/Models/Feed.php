@@ -1,14 +1,10 @@
 <?php
 namespace App\Models;
 
-use App\Jobs\RegisterEpisodesFeed;
-use App\Jobs\UpdateLastEpisodeFeed;
-use App\Repositories\FeedRepository;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use App\Services\Itunes\Finder as ItunesFinder;
 
 /**
  * Class Feed
