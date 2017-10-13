@@ -39,13 +39,30 @@ class Feed extends Model
     {
         return $this->hasMany('App\Models\Episode');
     }
-    
+
     /**
      * Get all of the post's rates.
      */
     public function ratings()
     {
         return $this->morphMany(Rating::class, 'content');
+    }
+
+    public function scopeBy($builder, $name)
+    {
+        return $builder->where('name', 'like', "%{$name}%");
+    }
+
+    public function scopeLatest($builder, $count = 10)
+    {
+        return $builder->take($count)->orderBy('last_episode_at', 'DESC');
+    }
+
+    public function scopeTop($builder, $count = 10)
+    {
+        return $builder->take($count)
+                    ->orderBy('listeners', 'DESC')
+                    ->orderBy('last_episode_at', 'DESC');
     }
 
     public function persist($name)
