@@ -6,10 +6,9 @@ use Illuminate\Queue\SerializesModels;
 class ContentRated
 {
     use SerializesModels;
-    
+
     public $content;
-    public $contentType;
-    
+
     /**
      * Create a new event instance.
      *
@@ -18,9 +17,8 @@ class ContentRated
      *
      * @internal param $contentId
      */
-    public function __construct($content, $contentType)
+    public function __construct($content)
     {
         $this->content = $content;
-        $this->contentType = $contentType;
     }
 }

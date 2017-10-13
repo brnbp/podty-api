@@ -17,7 +17,7 @@ use App\Services\Itunes\Finder as ItunesFinder;
  */
 class Feed extends Model
 {
-    use DispatchesJobs;
+    use DispatchesJobs, RateableContent;
 
     protected $fillable = [
         'url', 'name', 'slug', 'thumbnail_30',
@@ -38,14 +38,6 @@ class Feed extends Model
     public function episodes()
     {
         return $this->hasMany('App\Models\Episode');
-    }
-
-    /**
-     * Get all of the post's rates.
-     */
-    public function ratings()
-    {
-        return $this->morphMany(Rating::class, 'content');
     }
 
     public function scopeBy($builder, $name)
@@ -130,21 +122,21 @@ class Feed extends Model
     {
         return $feedId . '-' . rtrim(str_limit(str_slug($feedName), 30, ''), '-');
     }
-    
+
     public function wasRecentlyModifiedXML(string $url) :bool
     {
         $lastModified = (new Client)->head($url)->getHeader('Last-Modified') ?? [];
-    
+
         $lastModified = reset($lastModified);
-        
+
         if (!$lastModified) {
             return true;
         }
-        
+
         $lastModified = Carbon::createFromFormat('D, d M Y H:i:s T', $lastModified);
-    
+
         $isDawn = Carbon::now()->hour > 1 && Carbon::now()->hour < 6;
-        
+
         return $lastModified->gte(Carbon::now()->subHour(12)) || $isDawn;
     }
 }

@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Episode extends Model
 {
+    use RateableContent;
+
     protected $fillable = [
         'feed_id',
         'title',
@@ -39,14 +41,6 @@ class Episode extends Model
     public function feed() : Feed
     {
         return $this->belongsTo(Feed::class)->first();
-    }
-
-    /**
-     * Get all of the post's rates.
-     */
-    public function ratings()
-    {
-        return $this->morphMany(Rating::class, 'content');
     }
 
     /**
