@@ -25,21 +25,30 @@ class RegisterEpisodesFeed extends Job implements ShouldQueue
     public $url;
 
     /**
-     * @param array $feed array com $feed['id'] and $feed['url'] indices
+     * @var bool $force
      */
-    public function __construct(array $feed)
+    public $force;
+
+    /**
+     * @param array $feed array com $feed['id'] and $feed['url'] indices
+     * @param bool  $force
+     */
+    public function __construct(array $feed, bool $force = false)
     {
         $this->id = $feed['id'];
         $this->url = $feed['url'];
+        $this->force = false;
     }
 
     /**
      * Busca por novos episodios a partir de feed
-     * @param Episode $episode
+     *
+     * @param Episode          $episode
+     * @param \App\Models\Feed $feed
      */
     public function handle(Episode $episode, Feed $feed)
     {
-        if ($feed->wasRecentlyModifiedXML($this->url)) {
+        if ($feed->wasRecentlyModifiedXML($this->url) || $this->force) {
             $episode->storage($this->id, $this->url);
         }
     }

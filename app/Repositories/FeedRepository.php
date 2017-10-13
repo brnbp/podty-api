@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Jobs\RegisterEpisodesFeed;
 use App\Models\Feed;
 use App\Models\User;
 
@@ -71,6 +72,11 @@ class FeedRepository
         if ($feed->wasRecentlyCreated) {
             $feed->slug = Feed::slugfy($feed->id, $feed->name);
             $feed->save();
+
+            dispatch(new RegisterEpisodesFeed([
+                'id' => $feed->id,
+                'url' => $feed->url
+            ]), true);
         }
 
         return $feed;
