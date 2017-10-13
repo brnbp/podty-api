@@ -17,19 +17,21 @@ class UpdateLastEpisodeFeed extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     /**
-     * Atualiza a data do ultimo episodio lan�ado
+     * Atualiza a data do ultimo episodio lançado
      *
+     * @param \App\Filter\Filter                   $filter
+     * @param \App\Repositories\FeedRepository     $feedRepository
+     * @param \App\Repositories\EpisodesRepository $episodesRepository
      */
-    public function handle(Filter $filter)
+    public function handle(Filter $filter, FeedRepository $feedRepository, EpisodesRepository $episodesRepository)
     {
-        $filter->setLimit(900);
+        $filter->setLimit(9999);
 
-        $Episodes = (new EpisodesRepository)->latests($filter);
-        $Episodes
+        $episodesRepository
+            ->latests($filter)
             ->unique('feed_id')
-            ->map(function($episode){
-                (new FeedRepository(new Feed))
-                    ->updateLastEpisodeDate($episode->feed_id, $episode->published_date);
+            ->each(function($episode) use($feedRepository) {
+                $feedRepository->updateLastEpisodeDate($episode->feed_id, $episode->published_date);
             });
     }
 }
