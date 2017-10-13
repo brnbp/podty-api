@@ -31,15 +31,11 @@ class UserController extends ApiController
      * @param  string $username
      * @return \Illuminate\Http\Response
      */
-    public function show($username)
+    public function show(User $username)
     {
-        $user = UserRepository::first($username);
-
-        if ($user) {
-            $user = $this->userTransformer->transform($user);
-        }
-
-        return $this->responseData($user);
+        return $this->responseData(
+            $this->userTransformer->transform($username)
+        );
     }
 
     public function create()
@@ -59,15 +55,9 @@ class UserController extends ApiController
         );
     }
 
-    public function delete($username)
+    public function delete(User $username)
     {
-        $user = UserRepository::first($username);
-
-        if (!$user) {
-            return $this->responseData($user);
-        }
-
-        $deleted = UserRepository::delete($user);
+        $deleted = UserRepository::delete($username);
 
         if (!$deleted) {
             return $this->setStatusCode(Response::HTTP_BAD_REQUEST)
@@ -111,16 +101,11 @@ class UserController extends ApiController
         ]);
     }
 
-    public function touch($username)
+    public function touch(User $username)
     {
-        $user = UserRepository::first($username);
+        $username->touch();
 
-        if (!$user) {
-            return $this->respondNotFound();
-        }
-        $user->touch();
-
-        return response('', 200);
+        return $this->respondSuccess();
     }
 
     private function responseData($data)
