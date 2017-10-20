@@ -12,8 +12,7 @@ class ContentRated
     /**
      * Create a new event instance.
      *
-     * @param $content
-     * @param $contentType
+     * @param \App\Models\Episode|\App\Models\Feed $content
      *
      * @internal param $contentId
      */

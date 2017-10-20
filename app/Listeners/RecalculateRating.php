@@ -9,7 +9,8 @@ class RecalculateRating implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  FeedRated  $event
+     * @param \App\Events\ContentRated $event
+     *
      * @return void
      */
     public function handle(ContentRated $event)
