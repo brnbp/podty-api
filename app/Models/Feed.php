@@ -29,6 +29,7 @@ class Feed extends Model
     /**
      * Define relação com a model Episodes, sendo que Feed possui varios episodios
      * ligados a ele
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function episodes()
@@ -70,7 +71,7 @@ class Feed extends Model
         return $feedId . '-' . rtrim(str_limit(str_slug($feedName), 30, ''), '-');
     }
 
-    public function wasRecentlyModifiedXML(string $url) :bool
+    public function wasRecentlyModifiedXML(string $url): bool
     {
         $lastModified = (new Client)->head($url)->getHeader('Last-Modified') ?? [];
 

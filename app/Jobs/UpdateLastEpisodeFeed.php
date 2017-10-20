@@ -1,10 +1,6 @@
 <?php
-
 namespace App\Jobs;
 
-use App\Jobs\Job;
-use App\Models\Episode;
-use App\Models\Feed;
 use App\Filter\Filter;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;

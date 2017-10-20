@@ -35,7 +35,7 @@ class FeedController extends ApiController
     public function retrieveById(Feed $feed)
     {
         return $this->respondSuccess([
-            (new FeedTransformer)->transform($feed->toArray())
+            (new FeedTransformer)->transform($feed->toArray()),
         ]);
     }
 

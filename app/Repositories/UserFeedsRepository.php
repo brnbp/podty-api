@@ -34,22 +34,22 @@ class UserFeedsRepository
 
     public static function create($feedId, User $user)
     {
-       $userFeed = UserFeed::firstOrCreate([
+        $userFeed = UserFeed::firstOrCreate([
             'user_id' => $user->id,
-            'feed_id' => $feedId
+            'feed_id' => $feedId,
         ]);
 
         if (!$userFeed) {
             return false;
         }
-    
+
         Cache::forget('user_feeds_' . $feedId . '_' . $user->username);
         Cache::forget('feeds_listeners_' . $feedId);
         UserRepository::incrementsPodcastsCount($userFeed);
         FeedRepository::incrementsListeners($feedId);
-        
+
         self::markAllNotListened($feedId);
-        
+
         UserEpisodesRepository::createAllEpisodesFromUserFeed($userFeed);
 
         return $userFeed->fresh();
@@ -68,11 +68,11 @@ class UserFeedsRepository
 
         UserRepository::decrementsPodcastCount($userFeed);
         FeedRepository::decrementsListeners($feed->id);
-        
+
         Cache::forget('feeds_listeners_' . $feed->id);
         Cache::forget('user_feeds_' . $user->username);
         Cache::forget('user_feeds_' . $feed->id . '_' . $user->username);
-        
+
         return $userFeed->delete();
     }
 

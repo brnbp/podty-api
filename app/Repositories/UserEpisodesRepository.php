@@ -15,11 +15,14 @@ class UserEpisodesRepository
     public static function retrieve(User $user, Feed $feed): Collection
     {
         $cacheHash = md5('user_' . $user->username . '_feeds_' . $feed->id . '_episodes');
+
         return Cache::remember($cacheHash, 5, function() use ($user, $feed) {
             $userFeed = $user->feeds()->whereFeedId($feed->id)->firstOrFail();
-            return $userFeed->episodes->map(function($userEpisode){
+
+            return $userFeed->episodes->map(function($userEpisode) {
                 $episode = $userEpisode->episode;
                 $episode->paused_at = $userEpisode->paused_at;
+
                 return $episode;
             })->sortByDesc('published_date')->values();
         });
@@ -54,8 +57,8 @@ class UserEpisodesRepository
     {
         return UserEpisode::updateOrCreate([
             'user_feed_id' => $data['user_feed_id'],
-            'episode_id' => $data['episode_id']
-        ],$data);
+            'episode_id' => $data['episode_id'],
+        ], $data);
     }
 
     public static function batchCreate($bulk)
@@ -65,10 +68,10 @@ class UserEpisodesRepository
         }
     }
 
-    public static function delete(UserFeed $userFeed, Episode $episode) : bool
+    public static function delete(UserFeed $userFeed, Episode $episode): bool
     {
         $userEpisode = self::first($userFeed->id, $episode->id);
-       
+
         return $userEpisode->delete();
     }
 
@@ -98,7 +101,7 @@ class UserEpisodesRepository
     {
         $filter = new Filter;
         $filter->limit = 9999;
-        
+
         $episodes = (new EpisodesRepository)->retrieveByFeed($userFeed->feed, $filter);
 
         if (!$episodes) {

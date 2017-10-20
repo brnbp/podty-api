@@ -31,6 +31,7 @@ class UserFeedsController extends ApiController
         if ($feed->count()) {
             return $this->respondSuccess($feed);
         }
+
         return $this->respondNotFound();
     }
 

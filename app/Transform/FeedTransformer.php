@@ -10,6 +10,7 @@ class FeedTransformer extends TransformerAbstract
 {
     /**
      * Transforma um feed para um retorno padrao
+     *
      * @param $feed
      *
      * @return array
@@ -28,8 +29,7 @@ class FeedTransformer extends TransformerAbstract
             'total_episodes' => $feed['total_episodes'],
             'listeners' => $feed['listeners'],
             'last_episode_at' => $feed['last_episode_at'],
-            'episodes' => []
+            'episodes' => [],
         ];
-
     }
 }

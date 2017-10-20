@@ -39,7 +39,7 @@ class UserRepository
     public static function delete(User $user)
     {
         try {
-            $user->feeds->map(function($feed){
+            $user->feeds->map(function($feed) {
                 FeedRepository::decrementsListeners($feed->id);
             });
 
