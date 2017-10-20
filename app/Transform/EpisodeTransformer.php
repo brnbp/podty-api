@@ -5,6 +5,7 @@ class EpisodeTransformer extends TransformerAbstract
 {
     /**
      * Transforma um feed para um retorno padrao
+     *
      * @param $feed
      *
      * @return array
@@ -22,7 +23,7 @@ class EpisodeTransformer extends TransformerAbstract
             'duration' => $episode['duration'] ?? '',
             'media_url' => $episode['media_url'] ?? '',
             'media_length' => $episode['media_length'] ?? '',
-            'media_type' => $episode['media_type'] ?? ''
+            'media_type' => $episode['media_type'] ?? '',
         ];
     }
 }

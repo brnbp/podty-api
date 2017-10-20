@@ -66,7 +66,7 @@ class FeedRepository
     public function updateOrCreate(array $feed)
     {
         $feed = Feed::updateOrCreate([
-            'url' => $feed['url']
+            'url' => $feed['url'],
         ], $feed);
 
         if ($feed->wasRecentlyCreated) {
@@ -75,7 +75,7 @@ class FeedRepository
 
             dispatch(new RegisterEpisodesFeed([
                 'id' => $feed->id,
-                'url' => $feed->url
+                'url' => $feed->url,
             ]), true);
         }
 

@@ -12,10 +12,10 @@ class Queue
     {
         $feeds = (new FeedRepository(new Feed))->all();
 
-        $feeds->each(function($feed){
+        $feeds->each(function($feed) {
             dispatch(new RegisterEpisodesFeed([
                 'id' => $feed->id,
-                'url' => $feed->url
+                'url' => $feed->url,
             ]));
         });
     }

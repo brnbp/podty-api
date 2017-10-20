@@ -38,21 +38,22 @@ class Episode extends Model
     /**
      * Define relação com a model Feeds, sendo que Episode pertence a um feed
      */
-    public function feed() : Feed
+    public function feed(): Feed
     {
         return $this->belongsTo(Feed::class)->first();
     }
 
     /**
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
-     * @param integer $feed_id id do feed
-     * @param string $feed_url url do feed
+     *
+     * @param integer $feed_id  id do feed
+     * @param string  $feed_url url do feed
+     *
      * @return bool
      */
     public function storage($feed_id, $feed_url)
     {
-        $content = (new XML($feed_url))
-            ->retrieve();
+        $content = (new XML($feed_url))->retrieve();
 
         if ($content === false) {
             return false;
@@ -68,8 +69,9 @@ class Episode extends Model
 
     /**
      * Armazena os episodios no banco
-     * @param integer $feedId id do feed
-     * @param array $episodes array de episodios
+     *
+     * @param integer $feedId   id do feed
+     * @param array   $episodes array de episodios
      */
     private function insert($feedId, array $episodes)
     {

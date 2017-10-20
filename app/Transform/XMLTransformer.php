@@ -10,6 +10,7 @@ class XMLTransformer extends TransformerAbstract
 {
     /**
      * Transforma um feed para um retorno padrao
+     *
      * @param $feed
      *
      * @return array

@@ -29,6 +29,7 @@ class UserController extends ApiController
      * Get user data from specific username.
      *
      * @param  string $username
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(User $username)
@@ -71,7 +72,7 @@ class UserController extends ApiController
     {
         $validator = Validator::make(Input::all(), [
             'username' => 'bail|required|alpha_num|min:3|max:20',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -97,7 +98,7 @@ class UserController extends ApiController
         }
 
         return $this->respondSuccess($users->toArray(), [
-            'total_matches' => $users->count()
+            'total_matches' => $users->count(),
         ]);
     }
 

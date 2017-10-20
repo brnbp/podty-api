@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Jobs;
 
 use App\Models\Episode;
-use App\Jobs\Job;
 use App\Models\Feed;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 /**
  * Class RegisterEpisodesFeed
  * Coloca na fila todos os feeds existentes para busca de novos episodios
+ *
  * @package App\Jobs
  */
 class RegisterEpisodesFeed extends Job implements ShouldQueue

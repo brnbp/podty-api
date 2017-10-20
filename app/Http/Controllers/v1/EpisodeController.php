@@ -6,7 +6,6 @@ use App\Filter\Filter;
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Repositories\EpisodesRepository;
-use App\Repositories\FeedRepository;
 use App\Transform\EpisodeTransformer;
 use App\Transform\FeedTransformer;
 
@@ -21,13 +20,13 @@ class EpisodeController extends ApiController
      * @var \App\Transform\EpisodeTransformer
      */
     private $episodeTransformer;
-    
+
     public function __construct(Filter $filter, EpisodeTransformer $episodeTransformer)
     {
         $this->filter = $filter;
         $this->episodeTransformer = $episodeTransformer;
     }
-    
+
     /**
      * @param \App\Models\Feed $feed
      *
@@ -41,7 +40,7 @@ class EpisodeController extends ApiController
         }
 
         $episodes = (new EpisodesRepository)->retrieveByFeed($feed, $this->filter);
-        
+
         if (!$episodes) {
             return $this->respondNotFound();
         }
@@ -63,10 +62,11 @@ class EpisodeController extends ApiController
             return $this->respondNotFound();
         }
 
-        $response = $episodes->map(function ($episode){
+        $response = $episodes->map(function($episode) {
             $feed = $episode->feed();
             $feed = (new FeedTransformer)->transform($feed);
             $feed['episodes'] = [$this->episodeTransformer->transform($episode)];
+
             return $feed;
         });
 

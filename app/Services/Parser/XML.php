@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Services\Parser;
-
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
@@ -40,7 +38,7 @@ class XML
     /**
      * Obtains XML content in array format or false if not capable
      *
-     *@return array|boolean return array with xml content or false
+     * @return array|boolean return array with xml content or false
      */
     public function retrieve()
     {
@@ -55,13 +53,14 @@ class XML
 
         if ($sxe === false) {
             $errors = [];
-            foreach(libxml_get_errors() as $error) {
+            foreach (libxml_get_errors() as $error) {
                 $errors[] = $error->message;
             }
             Log::info(json_encode([
                 'xml_path' => $this->xmlPath,
-                'error' => $errors
+                'error' => $errors,
             ]));
+
             return false;
         }
 
@@ -75,6 +74,7 @@ class XML
 
     /**
      * Gets the xml content with Guzzle
+     *
      * @return bool|string returns xml with string format or false if not possible
      */
     public function getContent()

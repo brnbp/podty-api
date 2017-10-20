@@ -1,8 +1,6 @@
 <?php
 namespace App\Transform;
 
-use Carbon\Carbon;
-
 /**
  * Class FeedTransformer
  *
@@ -12,6 +10,7 @@ class UserTransformer extends TransformerAbstract
 {
     /**
      * Transforma um feed para um retorno padrao
+     *
      * @param $user
      *
      * @return array
@@ -29,7 +28,7 @@ class UserTransformer extends TransformerAbstract
             'friends_count' => (int) $user->friends_count,
             'podcasts_count' => (int) $user->podcasts_count,
             'joined_at' => $this->setDate($user->created_at),
-            'last_update' => $this->setDate($user->updated_at)
+            'last_update' => $this->setDate($user->updated_at),
         ];
     }
 
