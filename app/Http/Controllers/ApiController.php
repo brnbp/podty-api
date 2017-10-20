@@ -60,7 +60,7 @@ class ApiController extends Controller
     {
         return $this->setStatusCode(Response::HTTP_NOT_FOUND)->respondError($message);
     }
-    
+
     public function respondBusinessLogicError($message = '')
     {
         return $this->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -72,14 +72,15 @@ class ApiController extends Controller
         return $this->respond([
             'error' => [
                 'message' => $message,
-                'status_code' => $this->getStatusCode()
-            ]
+                'status_code' => $this->getStatusCode(),
+            ],
         ]);
     }
 
     public function respondErrorValidator(Validator $validator)
     {
         $this->setStatusCode(Response::HTTP_BAD_REQUEST);
+
         return $this->respondError($validator->errors()->all());
     }
 

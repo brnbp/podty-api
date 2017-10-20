@@ -60,15 +60,15 @@ class EpisodesRepository
     {
         try {
             $episode = Episode::updateOrCreate([
-                'title'     => $episodeEntity->title,
-                'feed_id'     => $episodeEntity->feed_id,
-                'published_date'     => $episodeEntity->getPublishedDate(),
+                'title' => $episodeEntity->title,
+                'feed_id' => $episodeEntity->feed_id,
+                'published_date' => $episodeEntity->getPublishedDate(),
             ], $episodeEntity->toArray());
 
             return $episode->exists;
-
         } catch (\Exception $exception) {
             Bugsnag::notifyException($exception);
+
             return false;
         }
     }
@@ -81,7 +81,7 @@ class EpisodesRepository
             UserEpisodesRepository::create([
                 'user_feed_id' => $userFeed->id,
                 'episode_id' => $episode->id,
-                'paused_at' => 0
+                'paused_at' => 0,
             ]);
         }
     }

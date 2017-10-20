@@ -4,7 +4,7 @@ namespace App;
 class EpisodeEntity
 {
     public $feed_id;
-    
+
     public $title;
 
     public $link;
@@ -50,6 +50,7 @@ class EpisodeEntity
     public function setSummary($summary)
     {
         $this->summary = $summary;
+
         return $this;
     }
 
@@ -69,6 +70,7 @@ class EpisodeEntity
     public function setImage($image)
     {
         $this->image = $image;
+
         return $this;
     }
 
@@ -88,9 +90,9 @@ class EpisodeEntity
     public function setDuration($duration)
     {
         $this->duration = $duration;
+
         return $this;
     }
-
 
     /**
      * @param mixed $feedId
@@ -100,6 +102,7 @@ class EpisodeEntity
     public function setFeedId($feedId)
     {
         $this->feed_id = $feedId;
+
         return $this;
     }
 
@@ -111,6 +114,7 @@ class EpisodeEntity
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -122,6 +126,7 @@ class EpisodeEntity
     public function setLink($link)
     {
         $this->link = $link;
+
         return $this;
     }
 
@@ -133,6 +138,7 @@ class EpisodeEntity
     public function setPublishedDate($publishedDate)
     {
         $this->published_date = (new \DateTime($publishedDate))->format('Y-m-d H:i:s');
+
         return $this;
     }
 
@@ -152,6 +158,7 @@ class EpisodeEntity
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -163,6 +170,7 @@ class EpisodeEntity
     public function setMediaUrl($mediaUrl)
     {
         $this->media_url = $mediaUrl ?? 'empty';
+
         return $this;
     }
 
@@ -174,6 +182,7 @@ class EpisodeEntity
     public function setMediaLength($mediaLength)
     {
         $this->media_length = $mediaLength ?? 0;
+
         return $this;
     }
 
@@ -185,6 +194,7 @@ class EpisodeEntity
     public function setMediaType($mediaType)
     {
         $this->media_type = $mediaType ?? 'audio/mp3';
+
         return $this;
     }
 
@@ -194,17 +204,17 @@ class EpisodeEntity
     public function toArray()
     {
         return [
-          'feed_id' => $this->feed_id,
-          'title' => $this->title,
-          'published_date' => $this->published_date,
-          'summary' => $this->summary,
-          'image' => $this->image,
-          'duration' => $this->duration,
-          'content' => $this->content,
-          'link' => $this->link,
-          'media_length' => $this->media_length,
-          'media_type' => $this->media_type,
-          'media_url' => $this->media_url
+            'feed_id' => $this->feed_id,
+            'title' => $this->title,
+            'published_date' => $this->published_date,
+            'summary' => $this->summary,
+            'image' => $this->image,
+            'duration' => $this->duration,
+            'content' => $this->content,
+            'link' => $this->link,
+            'media_length' => $this->media_length,
+            'media_type' => $this->media_type,
+            'media_url' => $this->media_url,
         ];
     }
 }

@@ -64,6 +64,7 @@ class UserEpisodesController extends ApiController
             $ep['paused_at'] = $episode['paused_at'];
             $feed['episode'] = $ep;
             unset($feed['episodes']);
+
             return $feed;
         });
 
@@ -80,6 +81,7 @@ class UserEpisodesController extends ApiController
             $ep['paused_at'] = $episode['paused_at'];
             $feed['episode'] = $ep;
             unset($feed['episodes']);
+
             return $feed;
         });
 
@@ -123,7 +125,7 @@ class UserEpisodesController extends ApiController
         Cache::forget('user_episodes_latests_' . $user->username);
         Cache::forget('user_episodes_' . $user->username);
 
-        return  $this->respondSuccess();
+        return $this->respondSuccess();
     }
 
     public function paused(User $user, Episode $episode, $time)

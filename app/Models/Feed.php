@@ -1,14 +1,10 @@
 <?php
 namespace App\Models;
 
-use App\Jobs\RegisterEpisodesFeed;
-use App\Jobs\UpdateLastEpisodeFeed;
-use App\Repositories\FeedRepository;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use App\Services\Itunes\Finder as ItunesFinder;
 
 /**
  * Class Feed
@@ -33,6 +29,7 @@ class Feed extends Model
     /**
      * Define relação com a model Episodes, sendo que Feed possui varios episodios
      * ligados a ele
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function episodes()
@@ -62,7 +59,7 @@ class Feed extends Model
         return $feedId . '-' . rtrim(str_limit(str_slug($feedName), 30, ''), '-');
     }
 
-    public function wasRecentlyModifiedXML(string $url) :bool
+    public function wasRecentlyModifiedXML(string $url): bool
     {
         $lastModified = (new Client)->head($url)->getHeader('Last-Modified') ?? [];
 

@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Services\Itunes;
 
 use GuzzleHttp\Client as GuzzleClient;
 
 /**
  * Class Finder
+ *
  * @package App\Services\Itunes
  * @see docs: https://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html
  */
@@ -20,7 +20,7 @@ class Finder
         'limit' => '15',
         'term' => '',
         'attribute' => 'titleTerm',
-        'country' => 'BR'
+        'country' => 'BR',
     ];
 
     private $return_fields = [
@@ -29,7 +29,7 @@ class Finder
         'artworkUrl30',
         'artworkUrl60',
         'artworkUrl100',
-        'artworkUrl600'
+        'artworkUrl600',
     ];
 
     /** @var GuzzleClient $GuzzleClient */
@@ -48,12 +48,14 @@ class Finder
     {
         $this->properties['limit'] = '1';
         $this->obtain();
+
         return $this->results;
     }
 
     public function all()
     {
         $this->obtain();
+
         return array_map([$this, 'transform'], $this->results);
     }
 
@@ -61,7 +63,7 @@ class Finder
     {
         $this->makeRequest();
 
-        $this->results = $this->results ? : [];
+        $this->results = $this->results ?: [];
     }
 
     private function makeRequest()
@@ -78,7 +80,7 @@ class Finder
     private function getProperties()
     {
         return [
-            'query' => http_build_query($this->properties)
+            'query' => http_build_query($this->properties),
         ];
     }
 
@@ -109,7 +111,7 @@ class Finder
             'thumbnail_30' => $feed['artworkUrl30'],
             'thumbnail_60' => $feed['artworkUrl60'],
             'thumbnail_100' => $feed['artworkUrl100'],
-            'thumbnail_600' => $feed['artworkUrl600']
+            'thumbnail_600' => $feed['artworkUrl600'],
         ];
     }
 }

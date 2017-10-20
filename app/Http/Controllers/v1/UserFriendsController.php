@@ -13,7 +13,7 @@ class UserFriendsController extends ApiController
     public function all(User $user)
     {
         $data = Cache::remember('user_friends_' . $user->username, 60, function() use ($user) {
-            return $user->friends->map(function($friendship){
+            return $user->friends->map(function($friendship) {
                 return (new UserTransformer)->transform($friendship->friend);
             })->sortByDesc('last_update')->toArray();
         });
@@ -30,10 +30,10 @@ class UserFriendsController extends ApiController
         if (UserFriendsRepository::follow($user->id, $friend->id)) {
             Cache::forget('user_friends_' . $user->username);
             UserRepository::incrementsFriendsCount($user->id);
-            
+
             return $this->respondSuccess();
         }
-        
+
         return $this->respondBadRequest();
     }
 
@@ -42,9 +42,10 @@ class UserFriendsController extends ApiController
         if (UserFriendsRepository::unfollow($user->id, $friend->id)) {
             Cache::forget('user_friends_' . $user->username);
             UserRepository::decrementsFriendsCount($user->id);
+
             return $this->respondSuccess();
         }
-        
+
         return $this->respondBadRequest();
     }
 }
