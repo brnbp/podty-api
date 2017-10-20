@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 class EpisodeCreated
 {
     use SerializesModels;
+
     /**
      * @var \App\Models\Episode
      */
