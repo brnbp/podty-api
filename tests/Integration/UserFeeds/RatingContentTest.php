@@ -11,6 +11,16 @@ class RatingContentTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * @var User $user
+     */
+    public $user;
+
+    /**
+     * @var Feed $feed
+     */
+    public $feed;
+
     public function setUp()
     {
         parent::setUp();
