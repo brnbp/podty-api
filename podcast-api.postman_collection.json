@@ -8,6 +8,90 @@
 	},
 	"item": [
 		{
+			"name": "episodes",
+			"description": "",
+			"item": [
+				{
+					"name": "episodes",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "",
+								"password": "",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/feeds/15/episodes",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "latests episodes",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "",
+								"password": "",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/episodes/latest?limit=1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic =",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "one episode",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "",
+								"password": "",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/episodes/65672",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic ",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "feeds",
 			"description": "",
 			"item": [
@@ -17,8 +101,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -37,8 +121,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -48,7 +132,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -63,8 +147,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -74,7 +158,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -89,8 +173,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -100,85 +184,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "episodes",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
-								"saveHelperData": true,
-								"showPassword": false
-							}
-						},
-						"url": "{{url}}/v1/feeds/15/episodes",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "latests episodes",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
-								"saveHelperData": true,
-								"showPassword": false
-							}
-						},
-						"url": "{{url}}/v1/episodes/latest?limit=1",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "one episode",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
-								"saveHelperData": true,
-								"showPassword": false
-							}
-						},
-						"url": "{{url}}/v1/episodes/65672",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -193,8 +199,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -204,91 +210,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "queue",
-			"description": "",
-			"item": [
-				{
-					"name": "queues",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
-								"saveHelperData": true,
-								"showPassword": false
-							}
-						},
-						"url": "{{url}}/v1/queue",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "queues failed",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
-								"saveHelperData": true,
-								"showPassword": false
-							}
-						},
-						"url": "{{url}}/v1/queue/failed",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "queue",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
-								"saveHelperData": true,
-								"showPassword": false
-							}
-						},
-						"url": "{{url}}/v1/queue/QUEUEID",
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -304,13 +226,39 @@
 			"description": "",
 			"item": [
 				{
+					"name": "listening ok",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "",
+								"password": "",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp/episodes/listening",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic ",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "latests",
 					"request": {
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -320,7 +268,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -330,13 +278,13 @@
 					"response": []
 				},
 				{
-					"name": "all episodes",
+					"name": "all episodes ok",
 					"request": {
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -346,7 +294,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -356,13 +304,13 @@
 					"response": []
 				},
 				{
-					"name": "one episode",
+					"name": "one episode ok",
 					"request": {
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -372,7 +320,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -382,18 +330,18 @@
 					"response": []
 				},
 				{
-					"name": "user episodes",
+					"name": "user episodes ok",
 					"request": {
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
 						},
-						"url": "{{url}}/v1/users/brnbp/episodes",
+						"url": "{{url}}/v1/users/brnbp/episodes/{episodeId}",
 						"method": "POST",
 						"header": [
 							{
@@ -403,36 +351,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"content\": [\n        {\n            \"id\": \"1005\",\n            \"paused_at\": \"0\"\n        },\n        {\n            \"id\": \"1006\",\n            \"paused_at\": \"0\"\n        }\n    ]\n}"
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "user episode",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
-								"saveHelperData": true,
-								"showPassword": false
-							}
-						},
-						"url": "{{url}}/v1/users/brnbp/episodes/778",
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -442,13 +361,39 @@
 					"response": []
 				},
 				{
-					"name": "set paused_at",
+					"name": "user episode ok",
 					"request": {
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp/episodes/778",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic ",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "set paused_at ok",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -463,7 +408,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -473,13 +418,53 @@
 					"response": []
 				},
 				{
+					"name": "user episodes rate",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "",
+								"password": "",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp/episodes/1/rate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic ",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rate\": 4.25\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user episodes favorites",
+			"description": "",
+			"item": [
+				{
 					"name": "user episodes favorites",
 					"request": {
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -494,7 +479,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -512,8 +497,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -528,7 +513,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -546,8 +531,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -562,7 +547,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -586,8 +571,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -597,7 +582,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -612,8 +597,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -623,7 +608,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -638,8 +623,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -649,7 +634,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							},
 							{
@@ -669,8 +654,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -680,7 +665,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -695,8 +680,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -706,11 +691,45 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
 						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "user feeds rate",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"username": "",
+								"password": "",
+								"saveHelperData": true,
+								"showPassword": false
+							}
+						},
+						"url": "{{url}}/v1/users/brnbp/feeds/1/rate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic ",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rate\": 4.25\n}"
+						},
 						"description": ""
 					},
 					"response": []
@@ -734,7 +753,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -746,7 +765,7 @@
 				{
 					"name": "follow friend",
 					"request": {
-						"url": "{{url}}/v1/users/admin/follow/username",
+						"url": "{{url}}/v1/users/brnbp/friends/anotherUser",
 						"method": "POST",
 						"header": [
 							{
@@ -756,7 +775,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -768,7 +787,7 @@
 				{
 					"name": "follow friend",
 					"request": {
-						"url": "{{url}}/v1/users/admin/unfollow/username",
+						"url": "{{url}}/v1/users/admin/friends/username",
 						"method": "DELETE",
 						"header": [
 							{
@@ -778,7 +797,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
@@ -799,8 +818,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -810,7 +829,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							},
 							{
@@ -833,8 +852,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -844,7 +863,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							},
 							{
@@ -867,8 +886,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -878,7 +897,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							},
 							{
@@ -889,7 +908,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"brnbp\",\n    \"email\": \"brnbp@icloud.com\",\n    \"password\": \"brnbp\"\n}"
+							"raw": ""
 						},
 						"description": ""
 					},
@@ -901,8 +920,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -912,7 +931,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							},
 							{
@@ -935,8 +954,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -951,14 +970,11 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
+						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -969,8 +985,8 @@
 						"auth": {
 							"type": "basic",
 							"basic": {
-								"username": "brnbp",
-								"password": "brnbp",
+								"username": "",
+								"password": "",
 								"saveHelperData": true,
 								"showPassword": false
 							}
@@ -985,13 +1001,13 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic YnJuYnA6YnJuYnA=",
+								"value": "Basic ",
 								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"brnbp\",\n    \"email\": \"brnbp@icloud.com\",\n    \"password\": \"brnbp\"\n}"
+							"raw": "{\n    \"username\": \"\",\n    \"email\": \"\",\n    \"password\": \"\"\n}"
 						},
 						"description": ""
 					},
