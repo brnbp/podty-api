@@ -14,3 +14,4 @@ storage/
 !.elasticbeanstalk/*.global.yml
 
 .DS_Store
+.idea/
