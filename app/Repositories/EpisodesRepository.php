@@ -65,10 +65,6 @@ class EpisodesRepository
                 'published_date' => $episodeEntity->getPublishedDate(),
             ], $episodeEntity->toArray());
 
-            if ($episode->wasRecentlyCreated) {
-                $this->updateAllUsersWhoFollowsIt($episode);
-            }
-
             return $episode->exists;
         } catch (\Exception $exception) {
             Bugsnag::notifyException($exception);
@@ -77,7 +73,7 @@ class EpisodesRepository
         }
     }
 
-    private function updateAllUsersWhoFollowsIt($episode)
+    public function addToListeners(Episode $episode)
     {
         $usersFeed = UserFeed::whereFeedId($episode->feed_id)->get();
 

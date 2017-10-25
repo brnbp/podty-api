@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\EpisodeEntity;
+use App\Events\EpisodeCreated;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use App\Services\Parser\XML;
@@ -34,6 +35,15 @@ class Episode extends Model
 
     /** @var array $hidden The attributes that should be hidden for arrays. */
     protected $hidden = ['created_at', 'updated_at'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function($episode) {
+            event(new EpisodeCreated($episode));
+        });
+    }
 
     /**
      * Define relação com a model Feeds, sendo que Episode pertence a um feed

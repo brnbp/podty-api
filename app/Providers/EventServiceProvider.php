@@ -2,6 +2,8 @@
 namespace App\Providers;
 
 use App\Events\ContentRated;
+use App\Events\EpisodeCreated;
+use App\Listeners\AddNewEpisodeToListeners;
 use App\Listeners\RecalculateRating;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -16,13 +18,16 @@ class EventServiceProvider extends ServiceProvider
         ContentRated::class => [
             RecalculateRating::class,
         ],
+        EpisodeCreated::class => [
+            AddNewEpisodeToListeners::class,
+        ],
     ];
 
     /**
      * Register any other events for your application.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
      * @return void
+     * @internal param \Illuminate\Contracts\Events\Dispatcher $events
      */
     public function boot()
     {
