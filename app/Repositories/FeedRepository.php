@@ -70,10 +70,10 @@ class FeedRepository
         ], $feed);
 
         if ($feed->wasRecentlyCreated) {
-            dispatch(new RegisterEpisodesFeed([
+            RegisterEpisodesFeed::dispatch([
                 'id' => $feed->id,
                 'url' => $feed->url,
-            ], true));
+            ], true);
         }
 
         return $feed;
