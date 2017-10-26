@@ -13,16 +13,16 @@ class Queue
         $feeds = (new FeedRepository(new Feed))->all();
 
         $feeds->each(function($feed) {
-            dispatch(new RegisterEpisodesFeed([
+            RegisterEpisodesFeed::dispatch([
                 'id' => $feed->id,
                 'url' => $feed->url,
-            ]));
+            ]);
         });
     }
 
     public function updateLastEpisodeAt()
     {
-        dispatch(new UpdateLastEpisodeFeed);
+        UpdateLastEpisodeFeed::dispatch();
     }
 
     public function send()

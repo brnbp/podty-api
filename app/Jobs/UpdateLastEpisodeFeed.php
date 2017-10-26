@@ -7,10 +7,11 @@ use App\Repositories\FeedRepository;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 
 class UpdateLastEpisodeFeed extends Job implements ShouldQueue
 {
-    use InteractsWithQueue, SerializesModels;
+    use InteractsWithQueue, SerializesModels, Dispatchable;
 
     /**
      * Atualiza a data do ultimo episodio lançado

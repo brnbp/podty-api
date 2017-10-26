@@ -6,6 +6,7 @@ use App\Models\Feed;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 
 /**
  * Class RegisterEpisodesFeed
@@ -15,7 +16,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
  */
 class RegisterEpisodesFeed extends Job implements ShouldQueue
 {
-    use InteractsWithQueue, SerializesModels;
+    use InteractsWithQueue, SerializesModels, Dispatchable;
 
     /** @var integer $id feed id */
     public $id;
