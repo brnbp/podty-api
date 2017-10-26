@@ -68,25 +68,6 @@ class UserController extends ApiController
         return $this->responseData(['removed' => true]);
     }
 
-    public function authenticate()
-    {
-        $validator = Validator::make(Input::all(), [
-            'username' => 'bail|required|alpha_num|min:3|max:20',
-            'password' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->respondErrorValidator($validator);
-        }
-
-        if (UserRepository::verifyAuthentication(Input::all())) {
-            return $this->respondSuccess(['message' => 'user authenticated']);
-        }
-
-        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)
-            ->respondError('user not authenticated');
-    }
-
     public function find($term)
     {
         $users = User::where('username', 'LIKE', "%$term%")

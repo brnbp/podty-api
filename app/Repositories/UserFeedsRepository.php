@@ -55,13 +55,6 @@ class UserFeedsRepository
         return $userFeed->fresh();
     }
 
-    public static function batchCreate($feedsId, User $user)
-    {
-        foreach ($feedsId as $feedId) {
-            self::create($feedId, $user);
-        }
-    }
-
     public static function delete(Feed $feed, User $user)
     {
         $userFeed = self::first($feed, $user);

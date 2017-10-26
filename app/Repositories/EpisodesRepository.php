@@ -15,16 +15,6 @@ class EpisodesRepository
         return Episode::whereId($episodeId)->firstOrFail();
     }
 
-    public function one($episodeId)
-    {
-        return Episode::whereId($episodeId)->first();
-    }
-
-    public static function exists($episodeId)
-    {
-        return self::first($episodeId) ? true : false;
-    }
-
     public function retrieveByFeed(Feed $feed, Filter $filter)
     {
         $episodes = $feed->episodes()

@@ -23,20 +23,6 @@ class UserRepository
         return $user;
     }
 
-    public static function verifyAuthentication($userData)
-    {
-        $user = User::whereUsername($userData['username'])
-                    ->wherePassword($userData['password'])
-                    ->get();
-
-        return $user->count();
-    }
-
-    public static function first($username)
-    {
-        return User::whereUsername($username)->firstOrFail();
-    }
-
     public static function delete(User $user)
     {
         try {
