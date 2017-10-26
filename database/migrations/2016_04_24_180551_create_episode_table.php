@@ -12,7 +12,7 @@ class CreateEpisodeTable extends Migration
      */
     public function up()
     {
-        Schema::create('episodes', function(Blueprint $table){
+        Schema::create('episodes', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->integer('feed_id')->unsigned();
             $table->string('title');

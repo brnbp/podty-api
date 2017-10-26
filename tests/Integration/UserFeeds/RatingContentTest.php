@@ -42,7 +42,7 @@ class RatingContentTest extends TestCase
         $this->authenticate();
 
         $faker = Factory::create();
-        $rate = $faker->randomFloat(2, 0.00 , 5.00);
+        $rate = $faker->randomFloat(2, 0.00, 5.00);
 
         $this->json('post',
             '/v1/users/' . $this->user->username . '/feeds/' . $this->feed->id . '/rate', [

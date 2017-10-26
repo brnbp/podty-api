@@ -22,5 +22,5 @@ abstract class FilterAbstract
         return $this;
     }
 
-    public abstract function validateFilters();
+    abstract public function validateFilters();
 }

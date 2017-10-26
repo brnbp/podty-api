@@ -31,7 +31,7 @@ class RatingContentTest extends TestCase
         $user = factory(User::class, 2)->create()->last();
 
         $faker = Factory::create();
-        $rate = $faker->randomFloat(2, 0.00 , 5.00);
+        $rate = $faker->randomFloat(2, 0.00, 5.00);
 
         $this->json('post',
             '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [

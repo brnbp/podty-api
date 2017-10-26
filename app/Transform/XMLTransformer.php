@@ -19,7 +19,6 @@ class XMLTransformer extends TransformerAbstract
     {
         $episodes = [];
         foreach ($feedXML->channel->item as $entry) {
-
             $nsElements = $this->getNamespaceChildren($entry);
 
             $enclosure = $this->getEnclosureAttributes($entry->enclosure->attributes());
