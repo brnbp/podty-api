@@ -14,7 +14,6 @@ class AddSlugFieldFeedsTable extends Migration
     {
         Schema::table('feeds', function ($table) {
             $table->string('slug', 50)->nullable()->after('name');
-            ;
         });
     }
 
