@@ -67,11 +67,6 @@ class XML
         return $sxe;
     }
 
-    private function removeCDATA()
-    {
-        $this->xmlContent = str_replace(["<![CDATA[", "]]>"], "", $this->xmlContent);
-    }
-
     /**
      * Gets the xml content with Guzzle
      *

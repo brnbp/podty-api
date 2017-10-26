@@ -3,6 +3,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
 use App\Models\User;
+use App\Models\UserFriend;
 use App\Repositories\UserFriendsRepository;
 use App\Repositories\UserRepository;
 use App\Transform\UserTransformer;
@@ -13,7 +14,7 @@ class UserFriendsController extends ApiController
     public function all(User $user)
     {
         $data = Cache::remember('user_friends_' . $user->username, 60, function () use ($user) {
-            return $user->friends->map(function (User $friendship) {
+            return $user->friends->map(function (UserFriend $friendship) {
                 return (new UserTransformer)->transform($friendship->friend);
             })->sortByDesc('last_update')->toArray();
         });
