@@ -20,10 +20,7 @@ class CreateUserEpisodesTable extends Migration
             $table->timestamps();
             $table->foreign('user_feed_id')->references('id')->on('user_feeds')->onDelete('cascade');
             $table->foreign('episode_id')->references('id')->on('episodes');
-
-            // determina que nao podera haver dois registros iguais na tabela,
-            // dois registros com a mesma relacao de user_feed_id e episode_id
-            // um user só podera ter um unico registro de determinado episodio para determinado feed
+            
             $table->unique(['user_feed_id', 'episode_id']);
         });
     }

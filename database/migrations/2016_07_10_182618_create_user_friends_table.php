@@ -20,7 +20,6 @@ class CreateUserFriendsTable extends Migration
             ;
             $table->foreign('friend_user_id')->references('id')->on('users');
 
-            // determina que nao podera haver dois registros iguais na tabela
             $table->unique(['user_id', 'friend_user_id']);
         });
     }
