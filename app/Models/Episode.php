@@ -40,7 +40,7 @@ class Episode extends Model
     {
         parent::boot();
 
-        static::saved(function ($episode) {
+        static::created(function ($episode) {
             event(new EpisodeCreated($episode));
         });
     }

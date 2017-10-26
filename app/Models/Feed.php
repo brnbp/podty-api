@@ -58,7 +58,7 @@ class Feed extends Model
     {
         parent::boot();
 
-        static::saved(function ($feed) {
+        static::created(function ($feed) {
             if (!$feed->slug) {
                 $feed->slug = self::slugfy($feed->id, $feed->name);
                 $feed->save();
