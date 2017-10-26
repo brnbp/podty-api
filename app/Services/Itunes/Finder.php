@@ -32,28 +32,21 @@ class Finder
         'artworkUrl600',
     ];
 
-    /** @var GuzzleClient $GuzzleClient */
-    private $GuzzleClient;
+    /** @var GuzzleClient $client */
+    private $client;
 
     private $results;
     private $result_count;
 
-    public function __construct($term)
+    public function __construct(GuzzleClient $client)
+    {
+        $this->client = $client;
+    }
+
+    public function all($term)
     {
         $this->properties['term'] = $term;
-        $this->GuzzleClient = new GuzzleClient();
-    }
 
-    public function first()
-    {
-        $this->properties['limit'] = '1';
-        $this->obtain();
-
-        return $this->results;
-    }
-
-    public function all()
-    {
         $this->obtain();
 
         return array_map([$this, 'transform'], $this->results);
@@ -69,7 +62,7 @@ class Finder
     private function makeRequest()
     {
         $this->treatResponse(
-            $this->GuzzleClient->request(
+            $this->client->request(
                 self::REQUEST_METHOD, self::BASE_URL, $this->getProperties()
             )
             ->getBody()

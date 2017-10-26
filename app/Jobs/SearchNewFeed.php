@@ -5,12 +5,11 @@ use App\Repositories\FeedRepository;
 use App\Services\Itunes\Finder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SearchNewFeed implements ShouldQueue
 {
-    use InteractsWithQueue, SerializesModels, Queueable;
+    use SerializesModels, Queueable;
 
     /** @var string $feedName possible feed name */
     public $feedName;
@@ -20,12 +19,12 @@ class SearchNewFeed implements ShouldQueue
         $this->feedName = $feedName;
     }
 
-    public function handle(FeedRepository $repository)
+    public function handle(FeedRepository $repository, Finder $finder)
     {
-        $feeds = collect((new Finder($this->feedName))->all());
+        $feeds = collect($finder->all($this->feedName));
 
-        $feeds->each(function($feed) use ($repository) {
-            return $repository->updateOrCreate($feed);
+        return $feeds->map(function($feed) use($repository) {
+            return $repository->updateOrCreate($feed->toArray());
         });
     }
 }
