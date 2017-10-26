@@ -14,7 +14,6 @@ class AddRatingFeedsTable extends Migration
     {
         Schema::table('feeds', function ($table) {
             $table->float('avg_rating')->unsigned()->default(0)->after('listeners');
-            ;
         });
     }
 

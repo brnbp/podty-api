@@ -14,7 +14,6 @@ class AddRatingEpisodesTable extends Migration
     {
         Schema::table('episodes', function ($table) {
             $table->float('avg_rating')->unsigned()->default(0)->after('media_type');
-            ;
         });
     }
 
