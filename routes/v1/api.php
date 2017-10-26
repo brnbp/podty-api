@@ -22,8 +22,8 @@ Route::patch('users/{username}/touch', 'UserController@touch');
 Route::post('users/{username}/feeds/{feedId}', 'UserFeedsController@attach');
 Route::delete('users/{username}/feeds/{feedId}', 'UserFeedsController@detach');
 
-Route::get('users/{username}/feeds','UserFeedsController@all');
-Route::get('users/{username}/feeds/{feedId}','UserFeedsController@one');
+Route::get('users/{username}/feeds', 'UserFeedsController@all');
+Route::get('users/{username}/feeds/{feedId}', 'UserFeedsController@one');
 
 Route::put('users/{user}/feeds/{feed}/listenAll', 'UserFeedsController@listenAll');
 

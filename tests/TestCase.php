@@ -35,5 +35,4 @@ class TestCase extends BaseTestCase
         $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
         return $this;
     }*/
-
 }

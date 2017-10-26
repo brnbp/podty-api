@@ -40,7 +40,7 @@ class Episode extends Model
     {
         parent::boot();
 
-        static::saved(function($episode) {
+        static::saved(function ($episode) {
             event(new EpisodeCreated($episode));
         });
     }
@@ -87,7 +87,7 @@ class Episode extends Model
     {
         $episodes = array_reverse($episodes);
 
-        array_walk($episodes, function($episode) use($feedId) {
+        array_walk($episodes, function ($episode) use ($feedId) {
             (new EpisodesRepository)->save((new EpisodeEntity)
                 ->setFeedId($feedId)
                 ->setTitle($episode['title'])

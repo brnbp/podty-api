@@ -13,7 +13,7 @@ class AddRatingFeedsTable extends Migration
     public function up()
     {
         Schema::table('feeds', function ($table) {
-            $table->float('avg_rating')->unsigned()->default(0)->after('listeners');;
+            $table->float('avg_rating')->unsigned()->default(0)->after('listeners');
         });
     }
 

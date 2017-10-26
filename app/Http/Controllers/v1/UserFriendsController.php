@@ -12,8 +12,8 @@ class UserFriendsController extends ApiController
 {
     public function all(User $user)
     {
-        $data = Cache::remember('user_friends_' . $user->username, 60, function() use ($user) {
-            return $user->friends->map(function($friendship) {
+        $data = Cache::remember('user_friends_' . $user->username, 60, function () use ($user) {
+            return $user->friends->map(function ($friendship) {
                 return (new UserTransformer)->transform($friendship->friend);
             })->sortByDesc('last_update')->toArray();
         });

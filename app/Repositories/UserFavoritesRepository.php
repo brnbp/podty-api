@@ -27,7 +27,7 @@ class UserFavoritesRepository
 
     public function all(User $user)
     {
-        return Cache::remember('user_favorites_' . $user->username, 360, function() use ($user) {
+        return Cache::remember('user_favorites_' . $user->username, 360, function () use ($user) {
             return $user->favorites()->orderBy('id', 'desc')->get();
         });
     }
