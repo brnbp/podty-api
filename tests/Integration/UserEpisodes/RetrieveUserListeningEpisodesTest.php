@@ -96,5 +96,4 @@ class RetrieveUserListeningEpisodesTest extends TestCase
         $this->get('/v1/users/' . $user->username . '/episodes/listening')
             ->assertStatus(404);
     }
-
 }

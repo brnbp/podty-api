@@ -28,7 +28,7 @@ class RetrieveListenersTest extends TestCase
 
         $users = factory(User::class, 2)->create();
 
-        $users->each(function($user) use($feed) {
+        $users->each(function ($user) use ($feed) {
             UserFeedsRepository::create($feed->id, $user);
         });
 

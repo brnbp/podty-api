@@ -11,7 +11,7 @@ class UserFeedsRepository
 {
     public static function all($username)
     {
-        return Cache::remember('user_feeds_' . $username, 60, function() use ($username) {
+        return Cache::remember('user_feeds_' . $username, 60, function () use ($username) {
             return self::buildQuery(User::whereUsername($username))
                 ->orderBy('last_episode_at', 'DESC')
                 ->get();
@@ -20,7 +20,7 @@ class UserFeedsRepository
 
     public static function one($username, $feedId)
     {
-        return Cache::remember('user_feeds_' . $feedId . '_' . $username, 60, function() use ($username, $feedId) {
+        return Cache::remember('user_feeds_' . $feedId . '_' . $username, 60, function () use ($username, $feedId) {
             return self::buildQuery(User::whereUsername($username)
                 ->whereFeedId($feedId))
                 ->get();

@@ -11,7 +11,7 @@ use App\Models\UserEpisode;
 use App\Models\UserFeed;
 use App\Models\UserFriend;
 
-$factory->define(User::class, function(Faker\Generator $faker) {
+$factory->define(User::class, function (Faker\Generator $faker) {
     return [
         'username' => str_random(8),
         'email' => $faker->email,
@@ -22,7 +22,7 @@ $factory->define(User::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Feed::class, function(Faker\Generator $faker) {
+$factory->define(Feed::class, function (Faker\Generator $faker) {
     $name = $faker->words(3, true);
     return [
         'name' => $name,
@@ -38,13 +38,13 @@ $factory->define(Feed::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Episode::class, function(Faker\Generator $faker) {
+$factory->define(Episode::class, function (Faker\Generator $faker) {
     return [
-        'feed_id' => function(){
+        'feed_id' => function () {
             return factory(Feed::class)->create()->id;
         },
         'title' => $faker->words(3, true),
-        'published_date' => \Carbon\Carbon::now()->subDay(random_int(1,5)),
+        'published_date' => \Carbon\Carbon::now()->subDay(random_int(1, 5)),
         'summary' =>$faker->paragraphs(1, true),
         'content' => $faker->paragraphs(2, true),
         'image' => $faker->imageUrl(),
@@ -56,19 +56,19 @@ $factory->define(Episode::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(UserFeed::class, function() {
+$factory->define(UserFeed::class, function () {
     return [
-        'user_id' => function(){
+        'user_id' => function () {
             return factory(User::class)->create()->id;
         },
-        'feed_id' => function(){
+        'feed_id' => function () {
             return factory(Feed::class)->create()->id;
         },
         'listen_all' => false,
     ];
 });
 
-$factory->define(UserEpisode::class, function(Faker\Generator $faker) {
+$factory->define(UserEpisode::class, function (Faker\Generator $faker) {
     $feed = factory(Feed::class)->create();
     $episode = factory(Episode::class)->create([
         'feed_id' => $feed->id
@@ -83,26 +83,26 @@ $factory->define(UserEpisode::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(UserFriend::class, function() {
+$factory->define(UserFriend::class, function () {
     return [
-        'user_id' => function(){
+        'user_id' => function () {
             return factory(User::class)->create()->id;
         },
-        'friend_user_id' => function(){
+        'friend_user_id' => function () {
             return factory(User::class)->create()->id;
         },
     ];
 });
 
-$factory->define(Rating::class, function() {
+$factory->define(Rating::class, function () {
     $content = rand(0, 1) == 1 ?
                     factory(Episode::class)->create() :
                     factory(Feed::class)->create();
     return [
-        'content_type' => function() use($content){
+        'content_type' => function () use ($content) {
             return ($content instanceof Episode) ? Episode::class : Feed::class;
         },
-        'user_id' => function(){
+        'user_id' => function () {
             return factory(User::class)->create()->id;
         },
         'content_id' => $content->id,

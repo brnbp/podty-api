@@ -25,7 +25,7 @@ class RetrieveFriendsTest extends TestCase
         $user = factory(User::class)->create();
         $friends = factory(User::class, 2)->create();
 
-        $friends->each(function($friend) use($user){
+        $friends->each(function ($friend) use ($user) {
             UserFriendsRepository::follow($user->id, $friend->id);
         });
 

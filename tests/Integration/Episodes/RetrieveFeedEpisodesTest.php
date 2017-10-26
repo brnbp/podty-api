@@ -64,4 +64,3 @@ class RetrieveFeedEpisodesTest extends TestCase
             ->assertStatus(404);
     }
 }
-

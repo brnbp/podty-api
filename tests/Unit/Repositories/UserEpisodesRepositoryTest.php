@@ -19,9 +19,11 @@ class UserEpisodesRepositoryTest extends TestCase
     
         $user = factory(User::class)->create();
     
-        $episodes->each(function($episode) use ($user) {
+        $episodes->each(function ($episode) use ($user) {
             $userFeed = UserFeedsRepository::create($episode->feed_id, $user);
-            if ($episode->id <= 2) return;
+            if ($episode->id <= 2) {
+                return;
+            }
             UserEpisodesRepository::markAsPaused($userFeed->id, $episode->id, random_int(100, 100000));
         });
         

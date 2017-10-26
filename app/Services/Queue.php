@@ -12,7 +12,7 @@ class Queue
     {
         $feeds = (new FeedRepository(new Feed))->all();
 
-        $feeds->each(function($feed) {
+        $feeds->each(function ($feed) {
             RegisterEpisodesFeed::dispatch([
                 'id' => $feed->id,
                 'url' => $feed->url,
