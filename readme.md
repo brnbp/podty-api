@@ -2,6 +2,8 @@
 [![StyleCI](https://styleci.io/repos/57003001/shield?branch=master)](https://styleci.io/repos/57003001)
 [![codecov](https://codecov.io/gh/brnbp/podty-api/branch/master/graph/badge.svg)](https://codecov.io/gh/brnbp/podty-api)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/4ddf7889-ef30-4e89-b5c5-7fafa7da9b9f/small.png)](https://insight.sensiolabs.com/projects/4ddf7889-ef30-4e89-b5c5-7fafa7da9b9f)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/651998c049474a47aabac3071cda0ad0)](https://www.codacy.com/app/bruno9pereira/podty-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=brnbp/podty-api&amp;utm_campaign=Badge_Grade)
+
 
 ## Podcast API
 
