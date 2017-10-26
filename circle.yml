@@ -1,6 +1,10 @@
 machine:
   php:
     version: 7.1.0
+dependencies:
+  cache_directories:
+    - ~/.composer/cache
+    - ~/vendor
 test:
   pre:
     - php -l app/
