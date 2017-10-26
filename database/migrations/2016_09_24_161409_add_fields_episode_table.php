@@ -14,7 +14,6 @@ class AddFieldsEpisodeTable extends Migration
     {
         Schema::table('episodes', function ($table) {
             $table->string('image')->nullable()->after('content');
-            ;
             $table->string('duration', 50)->nullable()->after('image');
             $table->string('summary')->nullable()->after('published_date');
         });
