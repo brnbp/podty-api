@@ -2,8 +2,6 @@
 namespace Tests\Unit\Repositories;
 
 use App\Jobs\RegisterEpisodesFeed;
-use App\Jobs\SearchNewFeed;
-use App\Jobs\UpdateLastEpisodeFeed;
 use App\Models\Feed;
 use App\Repositories\FeedRepository;
 use Illuminate\Support\Collection;
