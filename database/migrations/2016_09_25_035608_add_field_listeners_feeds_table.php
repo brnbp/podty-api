@@ -12,7 +12,7 @@ class AddFieldListenersFeedsTable extends Migration
      */
     public function up()
     {
-        Schema::table('feeds', function ($table) {
+        Schema::table('feeds', function (Blueprint $table) {
             $table->integer('listeners')->nullable()->default(0)->after('last_episode_at');
             ;
         });
@@ -25,7 +25,7 @@ class AddFieldListenersFeedsTable extends Migration
      */
     public function down()
     {
-        Schema::table('feeds', function ($table) {
+        Schema::table('feeds', function (Blueprint $table) {
             $table->dropColumn('listeners');
         });
     }

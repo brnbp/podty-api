@@ -1,6 +1,7 @@
 <?php
 namespace App\Jobs;
 
+use App\Models\Feed;
 use App\Repositories\FeedRepository;
 use App\Services\Itunes\Finder;
 use Illuminate\Bus\Queueable;
@@ -23,7 +24,7 @@ class SearchNewFeed implements ShouldQueue
     {
         $feeds = collect($finder->all($this->feedName));
 
-        return $feeds->map(function ($feed) use ($repository) {
+        return $feeds->map(function (Feed $feed) use ($repository) {
             return $repository->updateOrCreate($feed->toArray());
         });
     }
