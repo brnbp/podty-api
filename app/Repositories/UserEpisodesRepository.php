@@ -19,7 +19,7 @@ class UserEpisodesRepository
         return Cache::remember($cacheHash, 5, function () use ($user, $feed) {
             $userFeed = $user->feeds()->whereFeedId($feed->id)->firstOrFail();
 
-            return $userFeed->episodes->map(function ($userEpisode) {
+            return $userFeed->episodes->map(function (UserEpisode $userEpisode) {
                 $episode = $userEpisode->episode;
                 $episode->paused_at = $userEpisode->paused_at;
 
@@ -108,17 +108,17 @@ class UserEpisodesRepository
             return false;
         }
 
-        $episodes = $episodes->map(function ($item) use ($userFeed) {
+        $episodes = $episodes->map(function (Episode $episode) use ($userFeed) {
             return [
                 'user_feed_id' => $userFeed->id,
-                'episode_id' => $item->id,
+                'episode_id' => $episode->id,
                 'paused_at' => 0,
             ];
         });
 
         self::batchCreate($episodes->toArray());
     }
-    
+
     public function listening($username)
     {
         return User::whereUsername($username)
