@@ -21,7 +21,7 @@ class Filter extends FilterAbstract
         }
 
         if (isset($filters['limit'])) {
-            if (is_numeric($filters['limit']) == false) {
+            if (is_numeric($filters['limit']) === false) {
                 return false;
             }
         }

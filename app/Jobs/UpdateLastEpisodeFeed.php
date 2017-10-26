@@ -2,6 +2,7 @@
 namespace App\Jobs;
 
 use App\Filter\Filter;
+use App\Models\Episode;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
 use Illuminate\Queue\SerializesModels;
@@ -27,7 +28,7 @@ class UpdateLastEpisodeFeed extends Job implements ShouldQueue
         $episodesRepository
             ->latests($filter)
             ->unique('feed_id')
-            ->each(function ($episode) use ($feedRepository) {
+            ->each(function (Episode $episode) use ($feedRepository) {
                 $feedRepository->updateLastEpisodeDate($episode->feed_id, $episode->published_date);
             });
     }

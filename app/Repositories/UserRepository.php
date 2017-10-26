@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserFeed;
 use App\Services\Password;
@@ -39,7 +40,7 @@ class UserRepository
     public static function delete(User $user)
     {
         try {
-            $user->feeds->map(function ($feed) {
+            $user->feeds->map(function (Feed $feed) {
                 FeedRepository::decrementsListeners($feed->id);
             });
 

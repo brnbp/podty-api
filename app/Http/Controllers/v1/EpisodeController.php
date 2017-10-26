@@ -62,7 +62,7 @@ class EpisodeController extends ApiController
             return $this->respondNotFound();
         }
 
-        $response = $episodes->map(function ($episode) {
+        $response = $episodes->map(function (Episode $episode) {
             $feed = $episode->feed();
             $feed = (new FeedTransformer)->transform($feed);
             $feed['episodes'] = [$this->episodeTransformer->transform($episode)];

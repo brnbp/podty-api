@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\EpisodeEntity;
 use App\Filter\Filter;
 use App\Models\Episode;
+use App\Models\Feed;
 use App\Models\UserFeed;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
@@ -24,7 +25,7 @@ class EpisodesRepository
         return self::first($episodeId) ? true : false;
     }
 
-    public function retrieveByFeed($feed, Filter $filter)
+    public function retrieveByFeed(Feed $feed, Filter $filter)
     {
         $episodes = $feed->episodes()
                         ->take($filter->limit)

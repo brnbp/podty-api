@@ -118,7 +118,7 @@ class UserEpisodesController extends ApiController
 
         UserEpisodesRepository::delete($userFeed, $episode);
 
-        if (UserEpisodesRepository::hasEpisodes($userFeed->id) == false) {
+        if (UserEpisodesRepository::hasEpisodes($userFeed->id) === false) {
             UserFeedsRepository::markAllListened($userFeed->id);
         }
 

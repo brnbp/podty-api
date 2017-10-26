@@ -36,7 +36,6 @@ class Finder
     private $client;
 
     private $results;
-    private $result_count;
 
     public function __construct(GuzzleClient $client)
     {
@@ -81,7 +80,6 @@ class Finder
     {
         $response = json_decode($response, true);
 
-        $this->result_count = $response['resultCount'];
         $this->filterResults($response['results']);
     }
 
