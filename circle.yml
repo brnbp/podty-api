@@ -4,7 +4,6 @@ machine:
 dependencies:
   cache_directories:
     - ~/.composer/cache
-    - vendor
 test:
   pre:
     - php -l app/
