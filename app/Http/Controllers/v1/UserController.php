@@ -49,8 +49,6 @@ class UserController extends ApiController
 
         $user = UserRepository::create(Input::all());
 
-        Mail::send(new UserRegistered($user));
-
         return $this->responseData(
             $this->userTransformer->transform($user)
         );
