@@ -64,6 +64,6 @@ class JobsTableSeeder extends Seeder
 
         foreach ($jobs as $job) {
             DB::table('jobs')->insert($job);
-        }    
+        }
     }
 }

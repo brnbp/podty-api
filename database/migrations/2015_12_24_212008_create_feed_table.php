@@ -12,7 +12,7 @@ class CreateFeedTable extends Migration
      */
     public function up()
     {
-        Schema::create('feeds', function(Blueprint $table){
+        Schema::create('feeds', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index();
             $table->string('url');
