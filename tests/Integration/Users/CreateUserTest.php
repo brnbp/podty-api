@@ -39,9 +39,9 @@ class CreateUserTest extends TestCase
            'username' => null
         ]);
 
-        $this->post('v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user->toArray())
             ->assertJsonFragment(['The username field is required.'])
-            ->assertStatus(400);
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -57,9 +57,9 @@ class CreateUserTest extends TestCase
             'username' => 'reallyunique'
         ]);
 
-        $this->post('v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user->toArray())
             ->assertJsonFragment(['The username has already been taken.'])
-            ->assertStatus(400);
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -71,9 +71,9 @@ class CreateUserTest extends TestCase
             'username' => 'fo'
         ]);
 
-        $this->post('v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user->toArray())
             ->assertJsonFragment(['The username must be at least 3 characters.'])
-            ->assertStatus(400);
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -85,9 +85,9 @@ class CreateUserTest extends TestCase
             'username' => 'reallyreallylongusername'
         ]);
 
-        $this->post('v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user->toArray())
             ->assertJsonFragment(['The username may not be greater than 20 characters.'])
-            ->assertStatus(400);
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -99,9 +99,9 @@ class CreateUserTest extends TestCase
            'email' => null
         ]);
 
-        $this->post('v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user->toArray())
             ->assertJsonFragment(['The email field is required.'])
-            ->assertStatus(400);
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -113,9 +113,9 @@ class CreateUserTest extends TestCase
             'email' => 'not-valid-email'
         ]);
 
-        $this->post('v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user->toArray())
             ->assertJsonFragment(['The email must be a valid email address.'])
-            ->assertStatus(400);
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -131,9 +131,9 @@ class CreateUserTest extends TestCase
             'email' => 'totally@valid.email'
         ]);
 
-        $this->post('v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user->toArray())
             ->assertJsonFragment(['The email has already been taken.'])
-            ->assertStatus(400);
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -145,8 +145,8 @@ class CreateUserTest extends TestCase
             'password' => 'foo'
         ]);
 
-        $this->post('v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user->toArray())
             ->assertJsonFragment(['The password must be at least 5 characters.'])
-            ->assertStatus(400);
+            ->assertStatus(422);
     }
 }

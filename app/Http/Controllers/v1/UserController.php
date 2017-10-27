@@ -2,14 +2,11 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
-use App\Mail\UserRegistered;
+use App\Http\Requests\CreateUserRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Transform\UserTransformer;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * Class UserController
@@ -28,30 +25,22 @@ class UserController extends ApiController
     /**
      * Get user data from specific username.
      *
-     * @param  string $username
+     * @param \App\Models\User $username
      *
      * @return \Illuminate\Http\Response
      */
     public function show(User $username)
     {
-        return $this->responseData(
+        return $this->respondSuccess(
             $this->userTransformer->transform($username)
         );
     }
 
-    public function create()
+    public function create(CreateUserRequest $request)
     {
-        $validator = Validator::make(Input::all(), User::$rules);
+        $user = UserRepository::create($request->all());
 
-        if ($validator->fails()) {
-            return $this->respondErrorValidator($validator);
-        }
-
-        $user = UserRepository::create(Input::all());
-
-        return $this->responseData(
-            $this->userTransformer->transform($user)
-        );
+        return $this->respondSuccess($this->userTransformer->transform($user));
     }
 
     public function delete(User $username)
@@ -63,7 +52,7 @@ class UserController extends ApiController
                 ->respondError('excluding user with existing feeds');
         }
 
-        return $this->responseData(['removed' => true]);
+        return $this->respondSuccess(['removed' => true]);
     }
 
     public function find($term)
@@ -86,10 +75,5 @@ class UserController extends ApiController
         $username->touch();
 
         return $this->respondSuccess();
-    }
-
-    private function responseData($data)
-    {
-        return empty($data) ? $this->respondNotFound() : $this->respondSuccess($data);
     }
 }
