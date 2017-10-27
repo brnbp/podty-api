@@ -77,11 +77,11 @@ class ApiController extends Controller
         ]);
     }
 
-    public function respondErrorValidator(Validator $validator)
+    public function respondErrorValidator(array $errors)
     {
         $this->setStatusCode(Response::HTTP_BAD_REQUEST);
 
-        return $this->respondError($validator->errors()->all());
+        return $this->respondError($errors);
     }
 
     public function respond($data)
