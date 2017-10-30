@@ -11,6 +11,10 @@ Route::get('feeds/{feed}/listeners', 'FeedController@listeners');
 Route::get('episodes/latest', 'EpisodeController@latest');
 Route::get('episodes/{episode}', 'EpisodeController@one');
 
+Route::get('/categories', 'CategoryController@all');
+Route::get('/categories/{category}', 'CategoryController@show');
+Route::get('/categories/{category}/feeds', 'CategoryController@feeds');
+
 Route::get('/users/find/{term}', 'UserController@find');
 
 Route::get('users/{username}', 'UserController@show');

@@ -10,7 +10,7 @@ class CategoryTransformer extends TransformerAbstract
             'name' => $category['name'],
             'slug' => $category['slug'],
             'thumbnail' => $category['thumbnail'] ?? '',
-            'counter' => $category['counter'],
+            'counter' => (string) $category['counter'],
         ];
     }
 }
