@@ -2,9 +2,6 @@
 namespace App\Services\Parser;
 
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -26,22 +23,16 @@ class XML
     private $xmlContent;
 
     /**
-     * XML constructor.
-     *
-     * @param string $xml_path
-     */
-    public function __construct($xml_path)
-    {
-        $this->xmlPath = $xml_path;
-    }
-
-    /**
      * Obtains XML content in array format or false if not capable
      *
-     * @return array|boolean return array with xml content or false
+     * @param string $xml_path
+     *
+     * @return array|bool return array with xml content or false
      */
-    public function retrieve()
+    public function retrieve(string $xml_path)
     {
+        $this->xmlPath = $xml_path;
+
         $this->xmlContent = $this->getContent();
 
         if ($this->xmlContent === false) {
@@ -72,19 +63,35 @@ class XML
      *
      * @return bool|string returns xml with string format or false if not possible
      */
-    public function getContent()
+    protected function getContent()
     {
         $guzzle = new GuzzleClient();
+
         try {
             $response = $guzzle->request('GET', $this->xmlPath);
-        } catch (ClientException $Exception) {
-            return false;
-        } catch (RequestException $Exception) {
-            return false;
-        } catch (ServerException $Exception) {
+        } catch (\Exception $exception) {
             return false;
         }
 
         return $response->getBody()->getContents();
+    }
+
+    public function getItunesNamespace($xml)
+    {
+        $namespaces = $xml->getNameSpaces(true);
+        return $namespaces['itunes'] ?? array_first($namespaces);
+    }
+
+    public function getCategories($content)
+    {
+        $itunesNamespace = $this->getItunesNamespace($content);
+        $nsElements = $content->channel->children($itunesNamespace);
+
+        $categories = collect();
+        foreach ($nsElements->category as $category) {
+            $categories->push((string) $category->attributes());
+        }
+
+        return $categories;
     }
 }
