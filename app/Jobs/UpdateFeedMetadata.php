@@ -26,11 +26,15 @@ class UpdateFeedMetadata implements ShouldQueue
     {
         $content = $xml->retrieve($this->feed->url);
 
-        $description = (string) $content->channel->description;
+        if (!$content) {
+            return;
+        }
 
-        if ($description) {
-            $this->feed->description = (string) $content->channel->description;
+        try {
+            $this->feed->description = $xml->getDescription($content);
             $this->feed->save();
+        } catch (\Exception $e) {
+            return;
         }
     }
 }
