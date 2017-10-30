@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Jobs\RegisterEpisodesFeed;
+use App\Jobs\UpdateFeedMetadata;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
@@ -68,6 +69,7 @@ class Feed extends Model
                 'id' => $feed->id,
                 'url' => $feed->url,
             ], true);
+            UpdateFeedMetadata::dispatch($feed);
         });
     }
 
