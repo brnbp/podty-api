@@ -1,7 +1,9 @@
 <?php
 namespace App\Jobs;
 
+use App\Models\Category;
 use App\Models\Feed;
+use App\Models\FeedCategory;
 use App\Services\Parser\XML;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -34,7 +36,7 @@ class UpdateFeedsMetadata implements ShouldQueue
                 return;
             }
 
-            //$categories = $xml->getCategories($content);
+            $this->saveCategories($xml, $content, $feed);
 
             try {
                 $feed->description = $xml->getDescription($content);
@@ -43,5 +45,21 @@ class UpdateFeedsMetadata implements ShouldQueue
                 return;
             }
         });
+    }
+
+    public function saveCategories($xml, $content, $feed)
+    {
+        $xml->getCategories($content)->each(function ($category) use ($feed) {
+            $category = Category::firstOrCreate([
+                'slug' => str_slug($category),
+                'name' => $category,
+            ]);
+
+            FeedCategory::firstOrCreate([
+                'feed_id' => $feed->id,
+                'category_id' => $category->id,
+            ]);
+        });
+
     }
 }
