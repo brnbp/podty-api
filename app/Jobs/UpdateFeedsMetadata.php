@@ -12,16 +12,30 @@ class UpdateFeedsMetadata implements ShouldQueue
 {
     use Dispatchable, Queueable, SerializesModels;
 
+    /**
+     * @var \Illuminate\Support\Collection $feed
+     */
+    public $feeds;
+
+    public function __construct(Feed $feed = null)
+    {
+        $this->feeds = collect($feed);
+    }
+
     public function handle(XML $xml)
     {
-        $feeds = Feed::all();
+        if ($this->feeds->isEmpty()) {
+            $this->feeds = Feed::all();
+        }
 
-        $feeds->each(function($feed) use($xml) {
+        $this->feeds->each(function($feed) use($xml) {
 
             $content = $xml->retrieve($feed->url);
             if (!$content) {
                 return;
             }
+
+            //$categories = $xml->getCategories($content);
 
             try {
                 $feed->description = $xml->getDescription($content);
