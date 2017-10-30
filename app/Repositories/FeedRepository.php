@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories;
 
-use App\Jobs\RegisterEpisodesFeed;
 use App\Models\Feed;
 use App\Models\User;
 
@@ -65,18 +64,9 @@ class FeedRepository
 
     public function updateOrCreate(array $feed)
     {
-        $feed = $this->model->updateOrCreate([
+        return $this->model->updateOrCreate([
             'url' => $feed['url']
         ], $feed);
-
-        if ($feed->wasRecentlyCreated) {
-            RegisterEpisodesFeed::dispatch([
-                'id' => $feed->id,
-                'url' => $feed->url,
-            ], true);
-        }
-
-        return $feed;
     }
 
     public function updateTotalEpisodes($id)

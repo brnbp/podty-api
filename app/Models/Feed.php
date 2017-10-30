@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Jobs\RegisterEpisodesFeed;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
@@ -63,6 +64,10 @@ class Feed extends Model
                 $feed->slug = self::slugfy($feed->id, $feed->name);
                 $feed->save();
             }
+            RegisterEpisodesFeed::dispatch([
+                'id' => $feed->id,
+                'url' => $feed->url,
+            ], true);
         });
     }
 
