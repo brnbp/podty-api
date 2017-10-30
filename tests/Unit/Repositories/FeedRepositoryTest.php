@@ -123,13 +123,10 @@ class FeedRepositoryTest extends TestCase
             ])
             ->andReturn($this->defaultFeed);
 
-        Bus::fake();
-
         $feed = (new FeedRepository($this->model))
                     ->updateOrCreate($this->defaultFeed->toArray());
 
         $this->assertEquals($this->defaultFeed, $feed);
-        Bus::assertDispatched(RegisterEpisodesFeed::class);
     }
 
     /** @test */
@@ -145,13 +142,10 @@ class FeedRepositoryTest extends TestCase
             ])
             ->andReturn($this->defaultFeed);
 
-        Bus::fake();
-
         $feed = (new FeedRepository($this->model))
             ->updateOrCreate($this->defaultFeed->toArray());
 
         $this->assertEquals($this->defaultFeed, $feed);
-        Bus::assertNotDispatched(RegisterEpisodesFeed::class);
     }
 
     public function tearDown()
