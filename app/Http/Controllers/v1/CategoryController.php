@@ -22,7 +22,7 @@ class CategoryController extends ApiController
     public function all()
     {
         $categories = Cache::remember('categories.all', 360, function () {
-           return Category::orderBy('name')->get()->toArray();
+            return Category::orderBy('name')->get()->toArray();
         });
 
         return $this->respondSuccess(
