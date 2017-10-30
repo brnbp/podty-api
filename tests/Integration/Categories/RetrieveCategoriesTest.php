@@ -27,17 +27,14 @@ class RetrieveCategoriesTest extends TestCase
 
         $categories = create(Category::class, [], 2);
 
-        $response = $this->get('/v1/categories')
+        $this->get('/v1/categories')
+            ->assertExactJson([
+                'data' => [
+                    (new CategoryTransformer)->transform($categories->first()),
+                    (new CategoryTransformer)->transform($categories->last()),
+                ]
+            ])
             ->assertStatus(200);
-
-        $response = json_decode($response->getContent(), true);
-
-        $expected = (new CategoryTransformer)
-                        ->transformCollection($categories->reverse()->toArray());
-
-        $this->assertEquals([
-            'data' => $expected
-        ], $response);
     }
 
     /** @test */
