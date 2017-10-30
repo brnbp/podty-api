@@ -91,6 +91,7 @@ class UserFeedsRepository
                     'feeds.thumbnail_60',
                     'feeds.thumbnail_100',
                     'feeds.thumbnail_600',
+                    'feeds.description',
                     'feeds.total_episodes',
                     'feeds.last_episode_at',
                     'user_feeds.listen_all'

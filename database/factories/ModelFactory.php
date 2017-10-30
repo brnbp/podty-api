@@ -28,6 +28,7 @@ $factory->define(Feed::class, function (Faker\Generator $faker) {
         'name' => $name,
         'slug' => str_slug($name),
         'url' => $faker->url,
+        'description' => $faker->words(5, true),
         'thumbnail_30' => $faker->imageUrl(),
         'thumbnail_60' => $faker->imageUrl(),
         'thumbnail_100' => $faker->imageUrl(),

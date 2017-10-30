@@ -50,6 +50,7 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
                         "name" => $this->userFeeds->feed->name,
                         "slug" => $this->userFeeds->feed->slug,
                         "url" => $this->userFeeds->feed->url,
+                        'description' => $this->userFeeds->feed->description,
                         "thumbnail_30" => $this->userFeeds->feed->thumbnail_30,
                         "thumbnail_60" => $this->userFeeds->feed->thumbnail_60,
                         "thumbnail_100" => $this->userFeeds->feed->thumbnail_100,

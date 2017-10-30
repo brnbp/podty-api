@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
             })
             ->everyThirtyMinutes()->name('updateFeeds')->withoutOverlapping();
 
-        $schedule->call(function(){
+        $schedule->call(function () {
             dispatch(new UpdateFeedsMetadata);
         })->monthly();
     }
