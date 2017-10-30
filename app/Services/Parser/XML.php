@@ -94,4 +94,16 @@ class XML
 
         return $categories;
     }
+
+    public function getDescription($content)
+    {
+        if ((string) $content->channel->description) {
+            return (string) $content->channel->description ;
+        }
+
+        $itunesNamespace = $this->getItunesNamespace($content);
+        $nsElements = $content->channel->children($itunesNamespace);
+
+        return (string) $nsElements->summary;
+    }
 }
