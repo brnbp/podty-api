@@ -63,13 +63,14 @@ class Episode extends Model
      */
     public function storage($feed_id, $feed_url)
     {
-        $content = (new XML($feed_url))->retrieve();
+        $xml = new XML;
+        $content = $xml->retrieve($feed_url);
 
         if ($content === false) {
             return false;
         }
 
-        $content = (new XMLTransformer)->transform($content);
+        $content = (new XMLTransformer($xml))->transform($content);
 
         $this->insert($feed_id, $content);
         (new FeedRepository(new Feed))->updateTotalEpisodes($feed_id);

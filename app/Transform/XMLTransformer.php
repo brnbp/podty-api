@@ -1,6 +1,8 @@
 <?php
 namespace App\Transform;
 
+use App\Services\Parser\XML;
+
 /**
  * Class XMLTransformer
  *
@@ -9,9 +11,19 @@ namespace App\Transform;
 class XMLTransformer extends TransformerAbstract
 {
     /**
+     * @var \App\Services\Parser\XML
+     */
+    private $xml;
+
+    public function __construct(XML $xml)
+    {
+        $this->xml = $xml;
+    }
+
+    /**
      * Transforma um feed para um retorno padrao
      *
-     * @param $feed
+     * @param $feedXML
      *
      * @return array
      */
@@ -42,9 +54,9 @@ class XMLTransformer extends TransformerAbstract
 
     private function getNamespaceChildren($entry)
     {
-        $namespaces = $entry->getNameSpaces(true);
+        $itunesNamespace = $this->xml->getItunesNamespace($entry);
 
-        return $entry->children($namespaces['itunes'] ?? array_first($namespaces));
+        return $entry->children($itunesNamespace);
     }
 
     private function getImageUrl($nsElements)
