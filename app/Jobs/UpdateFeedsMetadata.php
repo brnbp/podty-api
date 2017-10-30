@@ -60,6 +60,5 @@ class UpdateFeedsMetadata implements ShouldQueue
                 'category_id' => $category->id,
             ]);
         });
-
     }
 }

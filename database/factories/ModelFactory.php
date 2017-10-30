@@ -123,10 +123,10 @@ $factory->define(Category::class, function (Faker\Generator $faker) {
 
 $factory->define(FeedCategory::class, function () {
     return [
-        'feed_id' => function(){
+        'feed_id' => function () {
             return factory(Feed::class)->create()->id;
         },
-        'category_id' => function(){
+        'category_id' => function () {
             return factory(Category::class)->create()->id;
         },
     ];

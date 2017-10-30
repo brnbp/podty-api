@@ -9,7 +9,7 @@ class Category extends Model
 
     public function feeds()
     {
-        return $this->belongsToMany(Feed::class, 'feed_categories' );
+        return $this->belongsToMany(Feed::class, 'feed_categories');
     }
 
     public function incrementsCounter()

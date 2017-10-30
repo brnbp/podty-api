@@ -36,7 +36,7 @@ class Feed extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'feed_categories' )->withTimestamps();
+        return $this->belongsToMany(Category::class, 'feed_categories')->withTimestamps();
     }
 
     public function scopeBy($builder, $name)

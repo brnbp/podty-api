@@ -11,10 +11,10 @@ class FeedCategory extends Model
     {
         parent::boot();
 
-        static::created(function($feedCategory){
+        static::created(function ($feedCategory) {
             $feedCategory->category->incrementsCounter();
         });
-        static::deleted(function($feedCategory){
+        static::deleted(function ($feedCategory) {
             $feedCategory->category->decrementsCounter();
         });
     }
