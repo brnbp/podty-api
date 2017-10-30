@@ -2,9 +2,10 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 /** @var Faker\Generator $faker */
 
-
+use App\Models\Category;
 use App\Models\Episode;
 use App\Models\Feed;
+use App\Models\FeedCategory;
 use App\Models\Rating;
 use App\Models\User;
 use App\Models\UserEpisode;
@@ -107,5 +108,26 @@ $factory->define(Rating::class, function () {
             return factory(User::class)->create()->id;
         },
         'content_id' => $content->id,
+    ];
+});
+
+$factory->define(Category::class, function (Faker\Generator $faker) {
+    $name = $faker->words(3, true);
+    return [
+        'name' => $name,
+        'slug' => str_slug($name),
+        'thumbnail' => $faker->image(),
+        'counter' => $faker->randomDigit,
+    ];
+});
+
+$factory->define(FeedCategory::class, function () {
+    return [
+        'feed_id' => function(){
+            return factory(Feed::class)->create()->id;
+        },
+        'category_id' => function(){
+            return factory(Category::class)->create()->id;
+        },
     ];
 });
