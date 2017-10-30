@@ -22,6 +22,7 @@ class FeedTransformer extends TransformerAbstract
             'name' => $feed['name'],
             'slug' => $feed['slug'],
             'url' => $feed['url'],
+            'description' => $feed['description'],
             'thumbnail_30' => $feed['thumbnail_30'],
             'thumbnail_60' => $feed['thumbnail_60'],
             'thumbnail_100' => $feed['thumbnail_100'],

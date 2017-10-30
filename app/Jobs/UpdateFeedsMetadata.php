@@ -28,8 +28,7 @@ class UpdateFeedsMetadata implements ShouldQueue
             $this->feeds = Feed::all();
         }
 
-        $this->feeds->each(function($feed) use($xml) {
-
+        $this->feeds->each(function ($feed) use ($xml) {
             $content = $xml->retrieve($feed->url);
             if (!$content) {
                 return;
@@ -43,7 +42,6 @@ class UpdateFeedsMetadata implements ShouldQueue
             } catch (\Exception $e) {
                 return;
             }
-
         });
     }
 }

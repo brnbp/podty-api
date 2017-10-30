@@ -75,6 +75,7 @@ class RetrieveTopFeedsTest extends TestCase
             'id',
             'name',
             'url',
+            'description',
             'thumbnail_30',
             'thumbnail_60',
             'thumbnail_100',
