@@ -5,6 +5,7 @@ use App\Http\Controllers\ApiController;
 use App\Models\Category;
 use App\Transform\CategoryTransformer;
 use App\Transform\FeedTransformer;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryController extends ApiController
 {
@@ -20,25 +21,29 @@ class CategoryController extends ApiController
 
     public function all()
     {
+        $categories = Cache::remember('categories.all', 360, function () {
+           return Category::orderBy('name')->get()->toArray();
+        });
+
         return $this->respondSuccess(
-            $this->transformer->transformCollection(
-                Category::orderBy('name')->get()->toArray()
-            )
+            $this->transformer->transformCollection($categories)
         );
     }
 
     public function show(Category $category)
     {
         return $this->respondSuccess(
-            $this->transformer->transform(
-                $category
-            )
+            $this->transformer->transform($category)
         );
     }
 
     public function feeds(Category $category)
     {
-        $feeds = $category->feeds()->with('categories')->get();
+        $cacheHash = "categories.{$category->id}.feeds";
+
+        $feeds = Cache::remember($cacheHash, 360, function () use ($category) {
+            return $category->feeds()->with('categories')->get();
+        });
 
         if ($feeds->isEmpty()) {
             return $this->respondNotFound();
