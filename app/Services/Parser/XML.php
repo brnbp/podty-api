@@ -2,6 +2,7 @@
 namespace App\Services\Parser;
 
 use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -82,17 +83,21 @@ class XML
         return $namespaces['itunes'] ?? array_first($namespaces);
     }
 
-    public function getCategories($content)
+    public function getCategories($content) : Collection
     {
-        $itunesNamespace = $this->getItunesNamespace($content);
-        $nsElements = $content->channel->children($itunesNamespace);
-
         $categories = collect();
-        foreach ($nsElements->category as $category) {
-            $categories->push((string) $category->attributes());
-        }
 
-        return $categories;
+        try {
+            $itunesNamespace = $this->getItunesNamespace($content);
+            $nsElements = $content->channel->children($itunesNamespace);
+
+            foreach ($nsElements->category as $category) {
+                $categories->push((string) $category->attributes());
+            }
+            return $categories;
+        } catch (\Exception $exception) {
+            return $categories;
+        }
     }
 
     public function getDescription($content)

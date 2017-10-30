@@ -8,11 +8,6 @@ use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-/**
- * Class Feed
- *
- * @author Bruno Pereira <bruno9pereira@gmail.com>
- */
 class Feed extends Model
 {
     use DispatchesJobs, RateableContent;
@@ -39,6 +34,11 @@ class Feed extends Model
         return $this->hasMany('App\Models\Episode');
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'feed_categories')->withTimestamps();
+    }
+
     public function scopeBy($builder, $name)
     {
         return $builder->where('name', 'like', "%{$name}%");
@@ -61,10 +61,9 @@ class Feed extends Model
         parent::boot();
 
         static::created(function ($feed) {
-            if (!$feed->slug) {
-                $feed->slug = self::slugfy($feed->id, $feed->name);
-                $feed->save();
-            }
+            $feed->slug = self::slugfy($feed->id, $feed->name);
+            $feed->save();
+
             RegisterEpisodesFeed::dispatch([
                 'id' => $feed->id,
                 'url' => $feed->url,
