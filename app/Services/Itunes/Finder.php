@@ -90,6 +90,9 @@ class Finder
         }
 
         foreach ($results as $result) {
+            if (count(array_intersect_key($result, array_flip($this->return_fields))) != 6) {
+                continue;
+            }
             $this->results[] = array_intersect_key($result, array_flip($this->return_fields));
         }
     }
