@@ -25,7 +25,7 @@ class SearchNewFeed implements ShouldQueue
         $feeds = collect($finder->all($this->feedName));
 
         return $feeds->map(function ($feed) use ($repository) {
-            return $repository->updateOrCreate($feed->toArray());
+            return $repository->updateOrCreate($feed);
         });
     }
 }
