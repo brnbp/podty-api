@@ -16,7 +16,7 @@ class SearchNewFeedTest extends TestCase
         $feed = factory(Feed::class)->make(['name' => 'newest feed']);
 
         $finder = \Mockery::mock(Finder::class);
-        $finder->shouldReceive('all')->with('newest feed')->andReturn(collect([$feed]));
+        $finder->shouldReceive('all')->with('newest feed')->andReturn([$feed->toArray()]);
 
         $repository = \Mockery::mock(FeedRepository::class);
         $repository->shouldReceive('updateOrCreate')->once()->with($feed->toArray())->andReturn(collect($feed));
