@@ -1,8 +1,6 @@
 <?php
 namespace App\Models;
 
-use App\Jobs\RegisterEpisodesFeed;
-use App\Jobs\UpdateFeedsMetadata;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
@@ -54,22 +52,6 @@ class Feed extends Model
         return $builder->take($count)
                     ->orderBy('listeners', 'DESC')
                     ->orderBy('last_episode_at', 'DESC');
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($feed) {
-            $feed->slug = self::slugfy($feed->id, $feed->name);
-            $feed->save();
-
-            RegisterEpisodesFeed::dispatch([
-                'id' => $feed->id,
-                'url' => $feed->url,
-            ], true);
-            UpdateFeedsMetadata::dispatch($feed);
-        });
     }
 
     public static function slugfy($feedId, $feedName)
