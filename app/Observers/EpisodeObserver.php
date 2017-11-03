@@ -8,6 +8,6 @@ class EpisodeObserver
 {
     public function created(Episode $episode)
     {
-        event(new EpisodeCreated($episode));
+        EpisodeCreated::dispatch($episode);
     }
 }
