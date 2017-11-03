@@ -3,10 +3,11 @@ namespace App\Events;
 
 use App\Models\Episode;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Events\Dispatchable;
 
 class EpisodeCreated
 {
-    use SerializesModels;
+    use SerializesModels, Dispatchable;
 
     /**
      * @var \App\Models\Episode
