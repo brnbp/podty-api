@@ -73,7 +73,7 @@ class UserFeedsController extends ApiController
             ['rate' => $request->rate]
         );
 
-        event(new ContentRated($feed));
+        ContentRated::dispatch($feed);
 
         return $rate->wasRecentlyCreated ?
             $this->respondCreated($rate) :

@@ -144,7 +144,7 @@ class UserEpisodesController extends ApiController
             ['rate' => $request->rate]
         );
 
-        event(new ContentRated($episode));
+        ContentRated::dispatch($episode);
 
         return $rate->wasRecentlyCreated ?
             $this->respondCreated($rate) :

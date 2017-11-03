@@ -2,10 +2,11 @@
 namespace App\Events;
 
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Events\Dispatchable;
 
 class ContentRated
 {
-    use SerializesModels;
+    use SerializesModels, Dispatchable;
 
     public $content;
 
