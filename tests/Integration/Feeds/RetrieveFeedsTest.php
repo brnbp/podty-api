@@ -98,6 +98,7 @@ class RetrieveFeedsTest extends TestCase
             'thumbnail_60',
             'thumbnail_100',
             'thumbnail_600',
+            'color',
             'total_episodes',
             'listeners',
             'last_episode_at'

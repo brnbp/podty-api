@@ -55,6 +55,7 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
                         "thumbnail_60" => $this->userFeeds->feed->thumbnail_60,
                         "thumbnail_100" => $this->userFeeds->feed->thumbnail_100,
                         "thumbnail_600" => $this->userFeeds->feed->thumbnail_600,
+                        "main_color" => $this->userFeeds->feed->main_color,
                         "total_episodes" => $this->userFeeds->feed->total_episodes,
                         "last_episode_at" => $this->userFeeds->feed->last_episode_at,
                         "listeners" => $this->userFeeds->feed->listeners,

@@ -27,6 +27,7 @@ class FeedTransformer extends TransformerAbstract
             'thumbnail_60' => $feed['thumbnail_60'],
             'thumbnail_100' => $feed['thumbnail_100'],
             'thumbnail_600' => $feed['thumbnail_600'],
+            'color' => $feed['main_color'],
             'total_episodes' => $feed['total_episodes'],
             'listeners' => $feed['listeners'],
             'last_episode_at' => $feed['last_episode_at'],
