@@ -4,8 +4,10 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\ApiController;
 use App\Models\User;
 use App\Models\UserFriend;
+use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFriendsRepository;
 use App\Repositories\UserRepository;
+use App\Transform\EpisodeTransformer;
 use App\Transform\UserTransformer;
 use Illuminate\Support\Facades\Cache;
 
@@ -13,11 +15,19 @@ class UserFriendsController extends ApiController
 {
     public function all(User $user)
     {
-        $data = Cache::remember('user_friends_' . $user->username, 60, function () use ($user) {
-            return $user->friends->map(function (UserFriend $friendship) {
-                return (new UserTransformer)->transform($friendship->friend);
+        //$data = Cache::remember('user_friends_' . $user->username, 60, function () use ($user) {
+            $data = $user->friends->map(function (UserFriend $friendship) {
+                $lastEpisode = (new UserEpisodesRepository)->listening($friendship->friend->username, 1);
+                $episode = (new EpisodeTransformer)->transform($lastEpisode->first());
+                $user = (new UserTransformer)->transform($friendship->friend);
+                $user['episode'] = $episode;
+                if ($lastEpisode->first())
+                    $user['episode']['paused_at'] = $lastEpisode->first()->paused_at;
+                else
+                    $user['episode'] = [];
+                return $user;
             })->sortByDesc('last_update')->toArray();
-        });
+        //});
 
         if (!$data) {
             return $this->respondNotFound();
