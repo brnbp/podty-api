@@ -49,6 +49,7 @@ class RetrieveUserFeedsTest extends TestCase
                         'thumbnail_60' => $feed->thumbnail_60,
                         'thumbnail_100' => $feed->thumbnail_100,
                         'thumbnail_600' => $feed->thumbnail_600,
+                        'color' => $feed->main_color,
                         'total_episodes' => (string) $feed->total_episodes,
                         'last_episode_at' => (string) $feed->last_episode_at,
                         'listen_all' => (string) 0
@@ -79,6 +80,7 @@ class RetrieveUserFeedsTest extends TestCase
                         'thumbnail_60' => $feed->thumbnail_60,
                         'thumbnail_100' => $feed->thumbnail_100,
                         'thumbnail_600' => $feed->thumbnail_600,
+                        'color' => $feed->main_color,
                         'total_episodes' => (string) $feed->total_episodes,
                         'last_episode_at' => (string) $feed->last_episode_at,
                         'listen_all' => (string) 0

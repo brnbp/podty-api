@@ -34,6 +34,7 @@ $factory->define(Feed::class, function (Faker\Generator $faker) {
         'thumbnail_60' => $faker->imageUrl(),
         'thumbnail_100' => $faker->imageUrl(),
         'thumbnail_600' => $faker->imageUrl(),
+        'main_color' => $faker->hexColor,
         'total_episodes' => $faker->numberBetween(10, 100),
         'listeners' => $faker->numberBetween(10, 100),
         'last_episode_at' => \Carbon\Carbon::now(),

@@ -9,6 +9,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use League\ColorExtractor\Color;
+use League\ColorExtractor\ColorExtractor;
+use League\ColorExtractor\Palette;
 
 class UpdateFeedsMetadata implements ShouldQueue
 {
@@ -39,6 +42,7 @@ class UpdateFeedsMetadata implements ShouldQueue
             $this->saveCategories($xml, $content, $feed);
 
             try {
+                $feed->main_color = $this->retrieveMainColorFromImage($feed->thumbnail_100);
                 $feed->description = $xml->getDescription($content);
                 $feed->save();
             } catch (\Exception $e) {
@@ -60,5 +64,19 @@ class UpdateFeedsMetadata implements ShouldQueue
                 'category_id' => $category->id,
             ]);
         });
+    }
+
+    public function retrieveMainColorFromImage(string $image): string
+    {
+        $palette = Palette::fromFilename($image);
+
+        $extractor = new ColorExtractor($palette);
+
+        $color = collect($extractor->extract(1))
+                    ->map(function ($color) {
+                        return Color::fromIntToHex($color);
+                    });
+
+        return $color->first();
     }
 }
