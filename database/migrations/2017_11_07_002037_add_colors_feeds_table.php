@@ -15,7 +15,6 @@ class AddColorsFeedsTable extends Migration
     {
         Schema::table('feeds', function (Blueprint $table) {
             $table->string('main_color', 15)->nullable()->after('thumbnail_600');
-            $table->string('secondary_color', 15)->nullable()->after('main_color');
         });
     }
 
@@ -26,8 +25,8 @@ class AddColorsFeedsTable extends Migration
      */
     public function down()
     {
-        Schema::table('episodes', function (Blueprint $table) {
-            $table->dropColumn(['main_color', 'secondary_color']);
+        Schema::table('feeds', function (Blueprint $table) {
+            $table->dropColumn(['main_color']);
         });
     }
 }
