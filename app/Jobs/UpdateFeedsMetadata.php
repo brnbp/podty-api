@@ -25,6 +25,7 @@ class UpdateFeedsMetadata implements ShouldQueue
     public function __construct(Feed $feed = null)
     {
         $this->feeds = collect([$feed])->filter();
+        $this->queue = 'low';
     }
 
     public function handle(XML $xml)

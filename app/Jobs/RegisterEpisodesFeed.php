@@ -38,6 +38,7 @@ class RegisterEpisodesFeed extends Job implements ShouldQueue
         $this->id = $feed['id'];
         $this->url = $feed['url'];
         $this->force = $force;
+        $this->queue = 'low';
     }
 
     /**

@@ -14,6 +14,11 @@ class UpdateLastEpisodeFeed extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels, Dispatchable;
 
+    public function __construct()
+    {
+        $this->queue = 'low';
+    }
+
     /**
      * Atualiza a data do ultimo episodio lançado
      *
