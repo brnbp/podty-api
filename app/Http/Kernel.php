@@ -2,7 +2,14 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\BasicAuth;
+use App\Http\Middleware\TrimStrings;
+use Barryvdh\Cors\HandleCors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
+use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 
 class Kernel extends HttpKernel
 {
@@ -14,9 +21,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \App\Http\Middleware\BasicAuth::class,
-        \Barryvdh\Cors\HandleCors::class,
+        CheckForMaintenanceMode::class,
+        TrimStrings::class,
+        ConvertEmptyStringsToNull::class,
+        HandleCors::class,
+
     ];
 
     /**
@@ -26,7 +35,9 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'api' => [
-            'throttle:300,1'
+            'auth.basic',
+            'bindings',
+            'throttle:300,1',
         ]
     ];
 
@@ -38,7 +49,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth.basic' => \App\Http\Middleware\BasicAuth::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'auth.basic' => BasicAuth::class,
+        'throttle' => ThrottleRequests::class,
+        'bindings' => SubstituteBindings::class,
     ];
 }

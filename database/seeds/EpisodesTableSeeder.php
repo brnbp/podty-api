@@ -44,7 +44,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 55,
                 'feed_id' => 1,
-                'title' => "DNE 54 - Partiu Canadá com Vanhack",
+                'title' => "DNE 54 - Partiu CanadÃ¡ com Vanhack",
                 'link' => 'podcast.com.br/0102/his-prima-eligendi.html',
                 'published_date' => "2016-05-20 00:00:00",
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -166,7 +166,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 703,
                 'feed_id' => 3,
-                'title' => "Nerdcast Empreendedor 17 ? Empreendedores bilionários",
+                'title' => "Nerdcast Empreendedor 17 ? Empreendedores bilionï¿½rios",
                 'link' => 'podcast.com.br/0302/his-prima-eligendi.html',
                 'published_date' => "2016-05-27 12:15:17",
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -177,7 +177,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 704,
                 'feed_id' => 3,
-                'title' => "Nerdcast 518 ? Rei Artur: História e mito",
+                'title' => "Nerdcast 518 ? Rei Artur: Histï¿½ria e mito",
                 'link' => 'podcast.com.br/0303/his-prima-eligendi.html',
                 'published_date' => "2016-05-27 12:21:23",
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -232,7 +232,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 775,
                 'feed_id' => 4,
-                'title' => "#69 - Conversando Sobre Pornô no Banheiro Feminino",
+                'title' => "#69 - Conversando Sobre Pornï¿½ no Banheiro Feminino",
                 'link' => 'podcast.com.br/0402/his-prima-eligendi.html',
                 'published_date' => "2016-05-20 18:38:26",
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -254,7 +254,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 777,
                 'feed_id' => 4,
-                'title' => "#70 - Adoção",
+                'title' => "#70 - Adoï¿½ï¿½o",
                 'link' => 'podcast.com.br/0404/his-prima-eligendi.html',
                 'published_date' => "2016-05-27 16:37:25"   ,
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -287,7 +287,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 821,
                 'feed_id' => 5,
-                'title' => "#043 - Inevitáveis bugs",
+                'title' => "#043 - Inevitï¿½veis bugs",
                 'link' => 'podcast.com.br/0501/his-prima-eligendi.html',
                 'published_date' => "2016-03-20 19:38:05",
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -298,7 +298,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 822,
                 'feed_id' => 5,
-                'title' => "#044 - Inteligência artificial: deu ruim (ou parte 2)",
+                'title' => "#044 - Inteligï¿½ncia artificial: deu ruim (ou parte 2)",
                 'link' => 'podcast.com.br/0502/his-prima-eligendi.html',
                 'published_date' => "2016-03-31 22:14:07",
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -309,7 +309,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 823,
                 'feed_id' => 5,
-                'title' => "#045 - Brasil das metáforas",
+                'title' => "#045 - Brasil das metï¿½foras",
                 'link' => 'podcast.com.br/0503/his-prima-eligendi.html',
                 'published_date' => "2016-04-12 04:12:54",
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -342,7 +342,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 826,
                 'feed_id' => 5,
-                'title' => "#048 - Formação acadêmica do futuro",
+                'title' => "#048 - Formaï¿½ï¿½o acadï¿½mica do futuro",
                 'link' => 'podcast.com.br/0506/his-prima-eligendi.html',
                 'published_date' => "2016-06-02 22:59:55",
                 'content' => Faker\Provider\Lorem::sentence(17),
@@ -397,7 +397,7 @@ class EpisodesTableSeeder extends Seeder
             [
                 'id' => 1006,
                 'feed_id' => 6,
-                'title' => "#194. O direito à desconexa?o",
+                'title' => "#194. O direito ï¿½ desconexa?o",
                 'link' => 'podcast.com.br/0605/his-prima-eligendi.html',
                 'published_date' => "2016-06-03 02:11:04",
                 'content' => Faker\Provider\Lorem::sentence(17),

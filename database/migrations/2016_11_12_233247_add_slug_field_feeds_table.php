@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class AddSlugFieldFeedsTable extends Migration
 {
@@ -12,8 +12,8 @@ class AddSlugFieldFeedsTable extends Migration
      */
     public function up()
     {
-        Schema::table('feeds', function ($table) {
-            $table->string('slug', 50)->nullable()->after('name');;
+        Schema::table('feeds', function (Blueprint $table) {
+            $table->string('slug', 50)->nullable()->after('name');
         });
     }
 
@@ -24,7 +24,7 @@ class AddSlugFieldFeedsTable extends Migration
      */
     public function down()
     {
-        Schema::table('feeds', function ($table) {
+        Schema::table('feeds', function (Blueprint $table) {
             $table->dropColumn('slug');
         });
     }

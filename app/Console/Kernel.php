@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Console;
+
+use App\Jobs\UpdateFeedsMetadata;
 use App\Services\Queue;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -16,9 +18,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule
-            ->call(function(){
+            ->call(function () {
                 (new Queue)->send();
             })
             ->everyThirtyMinutes()->name('updateFeeds')->withoutOverlapping();
+
+        $schedule->call(function () {
+            dispatch(new UpdateFeedsMetadata);
+        })->monthly();
     }
 }

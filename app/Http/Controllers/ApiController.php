@@ -43,7 +43,7 @@ class ApiController extends Controller
 
         $content['data'] = $data;
 
-        return $this->respond($content);
+        return $this->setStatusCode(Response::HTTP_OK)->respond($content);
     }
 
     public function respondBadRequest($message = 'Bad Request')
@@ -61,25 +61,31 @@ class ApiController extends Controller
         return $this->setStatusCode(Response::HTTP_NOT_FOUND)->respondError($message);
     }
 
+    public function respondBusinessLogicError($message = '')
+    {
+        return $this->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->respondError($message);
+    }
+
     public function respondError($message)
     {
         return $this->respond([
             'error' => [
                 'message' => $message,
-                'status_code' => $this->getStatusCode()
-            ]
+                'status_code' => $this->getStatusCode(),
+            ],
         ]);
     }
 
-    public function respondErrorValidator(Validator $validator)
+    public function respondErrorValidator(array $errors)
     {
         $this->setStatusCode(Response::HTTP_BAD_REQUEST);
-        return $this->respondError($validator->errors()->all());
+
+        return $this->respondError($errors);
     }
 
     public function respond($data)
     {
         return response()->json($data, $this->getStatusCode());
     }
-
 }

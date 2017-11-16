@@ -1,13 +1,12 @@
 <?php
-
 namespace App\Repositories;
 
 use App\EpisodeEntity;
 use App\Filter\Filter;
 use App\Models\Episode;
-use App\Models\User;
+use App\Models\Feed;
 use App\Models\UserFeed;
-use Illuminate\Database\Eloquent\Builder;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 class EpisodesRepository
 {
@@ -16,17 +15,7 @@ class EpisodesRepository
         return Episode::whereId($episodeId)->firstOrFail();
     }
 
-    public function one($episodeId)
-    {
-        return Episode::whereId($episodeId)->first();
-    }
-
-    public static function exists($episodeId)
-    {
-        return self::first($episodeId) ? true : false;
-    }
-
-    public function retrieveByFeed($feed, Filter $filter)
+    public function retrieveByFeed(Feed $feed, Filter $filter)
     {
         $episodes = $feed->episodes()
                         ->take($filter->limit)
@@ -60,21 +49,22 @@ class EpisodesRepository
 
     public function save(EpisodeEntity $episodeEntity)
     {
-        $episode = Episode::updateOrCreate([
-	        'title'     => $episodeEntity->title,
-	        'feed_id'     => $episodeEntity->feed_id,
-        ], $episodeEntity->toArray());
+        try {
+            $episode = Episode::updateOrCreate([
+                'title' => $episodeEntity->title,
+                'feed_id' => $episodeEntity->feed_id,
+                'published_date' => $episodeEntity->getPublishedDate(),
+            ], $episodeEntity->toArray());
 
-        if ($episode->wasRecentlyCreated) {
+            return $episode->exists;
+        } catch (\Exception $exception) {
+            Bugsnag::notifyException($exception);
 
-            $this->updateAllUsersWhoFollowsIt($episode);
-
+            return false;
         }
-
-        return $episode->exists;
     }
 
-    private function updateAllUsersWhoFollowsIt($episode)
+    public function addToListeners(Episode $episode)
     {
         $usersFeed = UserFeed::whereFeedId($episode->feed_id)->get();
 
@@ -82,7 +72,7 @@ class EpisodesRepository
             UserEpisodesRepository::create([
                 'user_feed_id' => $userFeed->id,
                 'episode_id' => $episode->id,
-                'paused_at' => 0
+                'paused_at' => 0,
             ]);
         }
     }

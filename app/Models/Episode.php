@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Episode extends Model
 {
+    use RateableContent;
+
     protected $fillable = [
         'feed_id',
         'title',
@@ -26,7 +28,8 @@ class Episode extends Model
         'link',
         'media_length',
         'media_type',
-        'media_url'
+        'media_url',
+        'avg_rating',
     ];
 
     /** @var array $hidden The attributes that should be hidden for arrays. */
@@ -35,44 +38,47 @@ class Episode extends Model
     /**
      * Define relação com a model Feeds, sendo que Episode pertence a um feed
      */
-    public function feed() : Feed
+    public function feed()
     {
         return $this->belongsTo(Feed::class)->first();
     }
 
     /**
      * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
-     * @param integer $feed_id id do feed
-     * @param string $feed_url url do feed
+     *
+     * @param integer $feed_id  id do feed
+     * @param string  $feed_url url do feed
+     *
      * @return bool
      */
     public function storage($feed_id, $feed_url)
     {
-        $content = (new XML($feed_url))
-            ->retrieve();
+        $xml = new XML;
+        $content = $xml->retrieve($feed_url);
 
         if ($content === false) {
             return false;
         }
 
-        $content = (new XMLTransformer)->transform($content);
+        $content = (new XMLTransformer($xml))->transform($content);
 
         $this->insert($feed_id, $content);
-        (new FeedRepository())->updateTotalEpisodes($feed_id);
+        (new FeedRepository(new Feed))->updateTotalEpisodes($feed_id);
 
         return true;
     }
 
     /**
      * Armazena os episodios no banco
-     * @param integer $feedId id do feed
-     * @param array $episodes array de episodios
+     *
+     * @param integer $feedId   id do feed
+     * @param array   $episodes array de episodios
      */
     private function insert($feedId, array $episodes)
     {
         $episodes = array_reverse($episodes);
 
-        array_walk($episodes, function($episode) use($feedId) {
+        array_walk($episodes, function ($episode) use ($feedId) {
             (new EpisodesRepository)->save((new EpisodeEntity)
                 ->setFeedId($feedId)
                 ->setTitle($episode['title'])

@@ -20,10 +20,6 @@ class CreateUserFeedsTable extends Migration
             $table->foreign('feed_id')->references('id')->on('feeds');
             $table->boolean('listen_all')->default(false);
 
-
-            // determina que nao podera haver dois registros iguais na tabela,
-            // dois registros com a mesma relacao de user_id e feed_id
-            // um user só podera ter um unico registro de determinado feed
             $table->unique(['user_id', 'feed_id']);
         });
     }

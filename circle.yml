@@ -1,14 +1,14 @@
 machine:
   php:
-    version: 7.1.0
+    version: 7.1.6
+dependencies:
+  cache_directories:
+    - ~/.composer/cache
 test:
   pre:
     - php -l app/
   override:
     - php vendor/bin/phpunit
-  post:
-    - php vendor/bin/phpunit --coverage-clover=coverage.xml
-    - bash <(curl -s https://codecov.io/bash)
 deployment:
   production:
     branch: master

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Transform;
 
 /**
@@ -11,6 +10,7 @@ abstract class TransformerAbstract
 {
     /**
      * Itera sob um array de itens e transforma cada item
+     *
      * @param array $itens
      *
      * @return array
@@ -20,5 +20,5 @@ abstract class TransformerAbstract
         return array_map([$this, 'transform'], $itens);
     }
 
-    public abstract function transform($item);
+    abstract public function transform($item);
 }

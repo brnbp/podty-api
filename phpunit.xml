@@ -13,7 +13,7 @@
             <directory>./tests/Unit/</directory>
         </testsuite>
         <testsuite name="integration">
-            <directory suffix="Test.php">./tests/integration/</directory>
+            <directory suffix="Test.php">./tests/Integration/</directory>
         </testsuite>
         <testsuite name="contract">
             <directory>./tests/contract/</directory>
@@ -29,6 +29,7 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="database"/>
+        <env name="MAIL_DRIVER" value="log"/>
 
         <env name="APP_ENV" value="testing"/>
         <env name="DB_CONNECTION" value="sqlite"/>

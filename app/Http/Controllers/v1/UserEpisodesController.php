@@ -1,11 +1,13 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
+use App\Http\Controllers\ApiController;
+use App\Events\ContentRated;
 use App\Filter\Filter;
+use App\Http\Requests\RatingRequest;
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Models\User;
-use App\Repositories\FeedRepository;
 use App\Repositories\UserEpisodesRepository;
 use App\Repositories\UserFeedsRepository;
 use App\Transform\EpisodeTransformer;
@@ -29,10 +31,10 @@ class UserEpisodesController extends ApiController
 
         $episode = (new EpisodeTransformer)->transform($episode->toArray());
         $episode['paused_at'] = $userEpisode['paused_at'];
- 
+
         return $this->responseData($episode);
     }
-    
+
     public function show(User $user, Feed $feed)
     {
         $episodes = UserEpisodesRepository::retrieve($user, $feed);
@@ -43,7 +45,7 @@ class UserEpisodesController extends ApiController
 
         $feed = (new FeedTransformer)->transform($feed);
         $feed['episodes'] = $episodes->toArray();
-        
+
         return $this->responseData($feed);
     }
 
@@ -56,42 +58,44 @@ class UserEpisodesController extends ApiController
         $latestsEpisodes = (new UserEpisodesRepository)
                                 ->latests($user->username, $this->filter);
 
-        $response = $latestsEpisodes->map(function($episode) {
+        $response = $latestsEpisodes->map(function ($episode) {
             $feed = (new FeedTransformer)->transform($episode);
             $ep = (new EpisodeTransformer)->transform($episode);
             $ep['paused_at'] = $episode['paused_at'];
             $feed['episode'] = $ep;
             unset($feed['episodes']);
+
             return $feed;
         });
-        
+
         return $this->responseData($response);
     }
-    
+
     public function listening($username)
     {
         $listening = (new UserEpisodesRepository)->listening($username);
-        
-        $response = $listening->map(function($episode) {
+
+        $response = $listening->map(function ($episode) {
             $feed = (new FeedTransformer)->transform($episode);
             $ep = (new EpisodeTransformer)->transform($episode);
             $ep['paused_at'] = $episode['paused_at'];
             $feed['episode'] = $ep;
             unset($feed['episodes']);
+
             return $feed;
         });
-    
+
         if (!$response->count()) {
             return $this->respondNotFound();
         }
-    
+
         return $this->responseData($response);
     }
 
     public function attach(User $user, Episode $episode)
     {
         $userFeed = UserFeedsRepository::first($episode->feed(), $user);
-        
+
         Cache::forget('user_episodes_latests_' . $user->username);
         Cache::forget('user_episodes_' . $user->username);
 
@@ -104,24 +108,24 @@ class UserEpisodesController extends ApiController
         if (UserEpisodesRepository::hasEpisodes($userFeed->id)) {
             UserFeedsRepository::markAllListened($userFeed->id, false);
         }
-        
+
         return $this->respondCreated();
     }
 
     public function detach(User $user, Episode $episode)
     {
         $userFeed = UserFeedsRepository::first($episode->feed(), $user);
-        
+
         UserEpisodesRepository::delete($userFeed, $episode);
 
-        if (UserEpisodesRepository::hasEpisodes($userFeed->id) == false) {
+        if (UserEpisodesRepository::hasEpisodes($userFeed->id) === false) {
             UserFeedsRepository::markAllListened($userFeed->id);
         }
 
         Cache::forget('user_episodes_latests_' . $user->username);
         Cache::forget('user_episodes_' . $user->username);
 
-        return  $this->respondSuccess();
+        return $this->respondSuccess();
     }
 
     public function paused(User $user, Episode $episode, $time)
@@ -131,6 +135,20 @@ class UserEpisodesController extends ApiController
         UserEpisodesRepository::markAsPaused($userFeed->id, $episode->id, $time);
 
         return $this->respondSuccess(['updated' => true]);
+    }
+
+    public function rate(RatingRequest $request, User $user, Episode $episode)
+    {
+        $rate = $episode->ratings()->updateOrCreate(
+            ['user_id' => $user->id,],
+            ['rate' => $request->rate]
+        );
+
+        ContentRated::dispatch($episode);
+
+        return $rate->wasRecentlyCreated ?
+            $this->respondCreated($rate) :
+            $this->respondSuccess($rate);
     }
 
     private function responseData($data)

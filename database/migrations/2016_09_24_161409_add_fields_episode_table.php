@@ -12,8 +12,8 @@ class AddFieldsEpisodeTable extends Migration
      */
     public function up()
     {
-        Schema::table('episodes', function ($table) {
-            $table->string('image')->nullable()->after('content');;
+        Schema::table('episodes', function (Blueprint $table) {
+            $table->string('image')->nullable()->after('content');
             $table->string('duration', 50)->nullable()->after('image');
             $table->string('summary')->nullable()->after('published_date');
         });
@@ -26,7 +26,7 @@ class AddFieldsEpisodeTable extends Migration
      */
     public function down()
     {
-        Schema::table('episodes', function ($table) {
+        Schema::table('episodes', function (Blueprint $table) {
             $table->dropColumn(['image', 'duration', 'summary']);
         });
     }

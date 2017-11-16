@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Filter;
-
 
 abstract class FilterAbstract
 {
@@ -11,7 +9,7 @@ abstract class FilterAbstract
     /** @var integer $offset */
     public $offset = 0;
 
-    /** @var string $order*/
+    /** @var string $order */
     public $order = 'DESC';
 
     /** @var string $term */
@@ -20,8 +18,9 @@ abstract class FilterAbstract
     public function setLimit($limit)
     {
         $this->limit = $limit;
+
         return $this;
     }
 
-    public abstract function validateFilters();
+    abstract public function validateFilters();
 }

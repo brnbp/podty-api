@@ -20,7 +20,7 @@ class UserFriendsRepositoryTest extends TestCase
         $friends = factory(User::class, 4)->create();
         
         $friendAtWeeks = 3;
-        $friends->map(function($friend) use($user, &$friendAtWeeks) {
+        $friends->map(function ($friend) use ($user, &$friendAtWeeks) {
             UserFriend::firstOrCreate([
                 'user_id' => $friend->id,
                 'friend_user_id' => $user->id,

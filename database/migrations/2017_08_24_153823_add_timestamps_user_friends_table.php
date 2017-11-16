@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class AddTimestampsUserFriendsTable extends Migration
 {
@@ -11,7 +12,7 @@ class AddTimestampsUserFriendsTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_friends', function ($table) {
+        Schema::table('user_friends', function (Blueprint $table) {
             $table->timestamps();
         });
     }
@@ -23,10 +24,10 @@ class AddTimestampsUserFriendsTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_friends', function ($table) {
+        Schema::table('user_friends', function (Blueprint $table) {
             $table->dropColumn('created_at');
         });
-        Schema::table('user_friends', function ($table) {
+        Schema::table('user_friends', function (Blueprint $table) {
             $table->dropColumn('updated_at');
         });
     }

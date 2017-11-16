@@ -1,8 +1,6 @@
 <?php
 namespace App\Filter;
 
-use Illuminate\Http\Request;
-
 class Filter extends FilterAbstract
 {
     public function validateFilters()
@@ -23,7 +21,7 @@ class Filter extends FilterAbstract
         }
 
         if (isset($filters['limit'])) {
-            if (is_numeric($filters['limit']) == false) {
+            if (is_numeric($filters['limit']) === false) {
                 return false;
             }
         }
@@ -40,7 +38,7 @@ class Filter extends FilterAbstract
             $filters['term'] = urldecode($filters['term']);
         }
 
-        foreach($filters as $name => $value) {
+        foreach ($filters as $name => $value) {
             $this->$name = $value;
         }
 
@@ -49,7 +47,9 @@ class Filter extends FilterAbstract
 
     /**
      * Make assoc array
+     *
      * @param $parameter
+     *
      * @return array
      */
     private function getAssocArray(array $parameter)
@@ -68,7 +68,9 @@ class Filter extends FilterAbstract
 
     /**
      * Verify if the filters on query string are valid
+     *
      * @param $array
+     *
      * @return array content valid filters
      */
     private function arrayFilter(array $array)
@@ -77,7 +79,7 @@ class Filter extends FilterAbstract
             'limit',
             'offset',
             'order',
-            'term'
+            'term',
         ]);
 
         $ret = array_intersect_key($array, $filters_allowed);

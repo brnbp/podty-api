@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserFeed;
 use App\Services\Password;
@@ -22,24 +23,10 @@ class UserRepository
         return $user;
     }
 
-    public static function verifyAuthentication($userData)
-    {
-        $user = User::whereUsername($userData['username'])
-                    ->wherePassword($userData['password'])
-                    ->get();
-
-        return $user->count();
-    }
-
-    public static function first($username)
-    {
-        return User::whereUsername($username)->firstOrFail();
-    }
-
     public static function delete(User $user)
     {
         try {
-            $user->feeds->map(function($feed){
+            $user->feeds->map(function (Feed $feed) {
                 FeedRepository::decrementsListeners($feed->id);
             });
 

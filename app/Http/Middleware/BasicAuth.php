@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Illuminate\Support\Facades\Config;
 
 class BasicAuth extends AuthenticateWithBasicAuth
 {
@@ -18,6 +19,10 @@ class BasicAuth extends AuthenticateWithBasicAuth
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if ($request->header('Authorization') === env('SANDBOX_AUTHORIZATION')) {
+            Config::set('database.connections.mysql.database', env('DB_DATABASE_SANDBOX'));
+        }
+
         return $this->auth->guard($guard)->basic('username') ?: $next($request);
     }
 }

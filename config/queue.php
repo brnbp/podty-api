@@ -9,7 +9,7 @@ return [
         'database' => [
             'driver' => 'database',
             'table'  => 'jobs',
-            'queue'  => 'default',
+            'queue'  => 'low',
             'expire' => 60,
         ],
         'beanstalkd' => [
@@ -38,4 +38,3 @@ return [
         'table'    => 'failed_jobs',
     ],
 ];
-

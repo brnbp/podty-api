@@ -1,32 +1,23 @@
 <?php
+namespace App\Http\Controllers\v1;
 
-namespace App\Http\Controllers;
-
+use App\Http\Controllers\ApiController;
 use App\Jobs\SearchNewFeed;
 use App\Models\Feed;
-use App\Models\UserFeed;
 use App\Repositories\FeedRepository;
-use App\Repositories\UserFeedsRepository;
 use App\Transform\FeedTransformer;
 use App\Transform\UserTransformer;
-use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class FeedController extends ApiController
 {
-    /**
-     * @var Feed
-     */
-    private $Feed;
-
     /**
      * @var FeedRepository
      */
     private $feedRepository;
 
-    public function __construct(Feed $feed, FeedRepository $feedRepository)
+    public function __construct(FeedRepository $feedRepository)
     {
-        $this->Feed = $feed;
         $this->feedRepository = $feedRepository;
     }
 
@@ -40,11 +31,11 @@ class FeedController extends ApiController
 
         return $this->response($feed);
     }
-    
+
     public function retrieveById(Feed $feed)
     {
         return $this->respondSuccess([
-            (new FeedTransformer)->transform($feed->toArray())
+            (new FeedTransformer)->transform($feed->toArray()),
         ]);
     }
 
@@ -55,12 +46,18 @@ class FeedController extends ApiController
 
     public function top(int $count = 20)
     {
-        return $this->response($this->feedRepository->top($count));
+        $feeds = Cache::remember('feeds_top_' . $count, 120, function () use ($count) {
+            return $this->feedRepository->top($count);
+        });
+
+        return $this->response($feeds);
     }
 
     public function listeners(Feed $feed)
     {
-        $users = FeedRepository::listeners($feed->id);
+        $users = Cache::remember('feeds_listeners_' . $feed->id, 120, function () use ($feed) {
+            return FeedRepository::listeners($feed->id);
+        });
 
         if (!$users->count()) {
             return $this->respondNotFound();

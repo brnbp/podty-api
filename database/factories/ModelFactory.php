@@ -2,9 +2,11 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 /** @var Faker\Generator $faker */
 
-
+use App\Models\Category;
 use App\Models\Episode;
 use App\Models\Feed;
+use App\Models\FeedCategory;
+use App\Models\Rating;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
@@ -27,10 +29,12 @@ $factory->define(Feed::class, function (Faker\Generator $faker) {
         'name' => $name,
         'slug' => str_slug($name),
         'url' => $faker->url,
+        'description' => $faker->words(5, true),
         'thumbnail_30' => $faker->imageUrl(),
         'thumbnail_60' => $faker->imageUrl(),
         'thumbnail_100' => $faker->imageUrl(),
         'thumbnail_600' => $faker->imageUrl(),
+        'main_color' => $faker->hexColor,
         'total_episodes' => $faker->numberBetween(10, 100),
         'listeners' => $faker->numberBetween(10, 100),
         'last_episode_at' => \Carbon\Carbon::now(),
@@ -39,11 +43,11 @@ $factory->define(Feed::class, function (Faker\Generator $faker) {
 
 $factory->define(Episode::class, function (Faker\Generator $faker) {
     return [
-        'feed_id' => function(){
+        'feed_id' => function () {
             return factory(Feed::class)->create()->id;
         },
         'title' => $faker->words(3, true),
-        'published_date' => \Carbon\Carbon::now()->subDay(random_int(1,5)),
+        'published_date' => \Carbon\Carbon::now()->subDay(random_int(1, 5)),
         'summary' =>$faker->paragraphs(1, true),
         'content' => $faker->paragraphs(2, true),
         'image' => $faker->imageUrl(),
@@ -55,12 +59,12 @@ $factory->define(Episode::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(UserFeed::class, function (Faker\Generator $faker) {
+$factory->define(UserFeed::class, function () {
     return [
-        'user_id' => function(){
+        'user_id' => function () {
             return factory(User::class)->create()->id;
         },
-        'feed_id' => function(){
+        'feed_id' => function () {
             return factory(Feed::class)->create()->id;
         },
         'listen_all' => false,
@@ -82,14 +86,49 @@ $factory->define(UserEpisode::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(UserFriend::class, function (Faker\Generator $faker) {
+$factory->define(UserFriend::class, function () {
     return [
-        'user_id' => function(){
+        'user_id' => function () {
             return factory(User::class)->create()->id;
         },
-        'friend_user_id' => function(){
+        'friend_user_id' => function () {
             return factory(User::class)->create()->id;
         },
     ];
 });
 
+$factory->define(Rating::class, function () {
+    $content = rand(0, 1) == 1 ?
+                    factory(Episode::class)->create() :
+                    factory(Feed::class)->create();
+    return [
+        'content_type' => function () use ($content) {
+            return ($content instanceof Episode) ? Episode::class : Feed::class;
+        },
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+        'content_id' => $content->id,
+    ];
+});
+
+$factory->define(Category::class, function (Faker\Generator $faker) {
+    $name = $faker->words(3, true);
+    return [
+        'name' => $name,
+        'slug' => str_slug($name),
+        'thumbnail' => $faker->image(),
+        'counter' => $faker->randomDigit,
+    ];
+});
+
+$factory->define(FeedCategory::class, function () {
+    return [
+        'feed_id' => function () {
+            return factory(Feed::class)->create()->id;
+        },
+        'category_id' => function () {
+            return factory(Category::class)->create()->id;
+        },
+    ];
+});
