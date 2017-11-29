@@ -1,5 +1,14 @@
 <?php
 
+Route::get('aaa', function(){
+   dd('a');
+});
+
+Route::get('dd', function(){
+    dd('a');
+    return view('emails.newsletter.weekly');
+});
+
 Route::get('feeds/latest', 'FeedController@latest');
 Route::get('feeds/top/{count?}', 'FeedController@top');
 Route::get('feeds/name/{name}', 'FeedController@retrieve');
