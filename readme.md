@@ -5,7 +5,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/651998c049474a47aabac3071cda0ad0)](https://www.codacy.com/app/bruno9pereira/podty-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=brnbp/podty-api&amp;utm_campaign=Badge_Grade)
 
 
-## Podcast API
+## Podcast API :rocket:
 
 ## Requirements
 - [Composer](https://getcomposer.org)
