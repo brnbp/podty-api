@@ -9,9 +9,9 @@ test:
     - php -l app/
   override:
     - php vendor/bin/phpunit
-deployment:
-  production:
-    branch: master
-    commands:
-      - curl $DEPLOY_ENDPOINT
+#deployment:
+#  production:
+#    branch: master
+#    commands:
+#      - curl $DEPLOY_ENDPOINT
 
