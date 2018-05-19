@@ -8,7 +8,8 @@ test:
   pre:
     - php -l app/
   override:
-    - php vendor/bin/phpunit
+    - php vendor/bin/phpunit --testsuite unit
+    - php vendor/bin/phpunit --testsuite integration
 #deployment:
 #  production:
 #    branch: master
