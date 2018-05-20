@@ -69,6 +69,10 @@ class UserEpisodesController extends ApiController
             return $feed;
         });
 
+        if ($response->isEmpty()) {
+            return $this->respondNotFound();
+        }
+
         return $this->responseData($response);
     }
 
