@@ -17,10 +17,11 @@ Route::get('/categories/{category}/feeds', 'CategoryController@feeds');
 
 Route::get('/users/find/{term}', 'UserController@find');
 
-Route::get('users/{username}', 'UserController@show');
 Route::post('users', 'UserController@create');
+Route::get('users/{username}', 'UserController@show');
 Route::delete('users/{username}', 'UserController@delete');
 Route::patch('users/{username}/touch', 'UserController@touch');
+Route::post('users/authenticate', 'UserController@authenticate');
 
 Route::post('users/{username}/feeds/{feedId}', 'UserFeedsController@attach');
 Route::delete('users/{username}/feeds/{feedId}', 'UserFeedsController@detach');

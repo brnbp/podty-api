@@ -2,18 +2,27 @@
 
 return [
     'defaults' => [
-        'guard' => 'api'
+        'guard' => 'api-auth',
+        'provider' => 'customers',
     ],
     'guards' => [
-        'api' => [
+        'api-auth' => [
             'driver' => 'session',
             'provider' => 'customers',
+        ],
+        'api-user' => [
+            'driver' => 'session',
+            'provider' => 'users',
         ],
     ],
     'providers' => [
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
+        ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
         ]
     ]
 ];
