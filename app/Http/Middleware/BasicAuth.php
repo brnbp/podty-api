@@ -23,6 +23,6 @@ class BasicAuth extends AuthenticateWithBasicAuth
             Config::set('database.connections.mysql.database', env('DB_DATABASE_SANDBOX'));
         }
 
-        return $this->auth->guard($guard)->basic('username') ?: $next($request);
+        return $this->auth->guard('api-auth')->basic('username') ?: $next($request);
     }
 }

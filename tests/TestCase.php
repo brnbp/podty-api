@@ -2,7 +2,6 @@
 namespace Tests;
 
 use App\Models\Customer;
-
 use App\Exceptions\Handler;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 
@@ -17,7 +16,7 @@ class TestCase extends BaseTestCase
         $this->be(new Customer());
     }
 
-    /*protected function disableExceptionHandling()
+    protected function disableExceptionHandling()
     {
         $this->oldExceptionHandler = $this->app->make(ExceptionHandler::class);
 
@@ -34,5 +33,5 @@ class TestCase extends BaseTestCase
     {
         $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
         return $this;
-    }*/
+    }
 }

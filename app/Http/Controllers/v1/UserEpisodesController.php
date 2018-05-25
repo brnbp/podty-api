@@ -61,13 +61,17 @@ class UserEpisodesController extends ApiController
 	$response = $latestsEpisodes->map(function ($episode) {
 	    $episode = $episode->toArray();
             $feed = (new FeedTransformer)->transform(array_merge($episode, ['id' => $episode['feed_id']]));	
-	    $ep = (new EpisodeTransformer)->transform($episode);
+            $ep = (new EpisodeTransformer)->transform($episode);
             $ep['paused_at'] = $episode['paused_at'];
             $feed['episode'] = $ep;
             unset($feed['episodes']);
 
             return $feed;
         });
+
+        if ($response->isEmpty()) {
+            return $this->respondNotFound();
+        }
 
         return $this->responseData($response);
     }

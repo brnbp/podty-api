@@ -8,10 +8,11 @@ test:
   pre:
     - php -l app/
   override:
-    - php vendor/bin/phpunit
-deployment:
-  production:
-    branch: master
-    commands:
-      - curl $DEPLOY_ENDPOINT
+    - php vendor/bin/phpunit --testsuite unit
+    - php vendor/bin/phpunit --testsuite integration
+#deployment:
+#  production:
+#    branch: master
+#    commands:
+#      - curl $DEPLOY_ENDPOINT
 

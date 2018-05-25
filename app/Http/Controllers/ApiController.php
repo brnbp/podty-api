@@ -1,73 +1,72 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Response;
-use Illuminate\Validation\Validator;
+use Illuminate\Http\JsonResponse;
 
 class ApiController extends Controller
 {
-    protected $statusCode = Response::HTTP_OK;
+    protected $statusCode = JsonResponse::HTTP_OK;
 
-    /**
-     * @return mixed
-     */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    /**
-     * @param $statusCode
-     *
-     * @return $this
-     */
-    public function setStatusCode($statusCode)
+    public function setStatusCode(int $statusCode): self
     {
         $this->statusCode = $statusCode;
 
         return $this;
     }
 
-    public function respondCreated($data = [])
+    public function respondCreated($data = []): JsonResponse
     {
-        $content['data'] = $data;
-
-        return $this->setStatusCode(Response::HTTP_CREATED)->respond($content);
+        $this->setStatusCode(JsonResponse::HTTP_CREATED);
+        return $this->respond(['data' => $data]);
     }
 
-    public function respondSuccess($data = [], $meta = [])
+    public function respondSuccess($data = [], array $meta = []): JsonResponse
     {
+        $this->setStatusCode(JsonResponse::HTTP_OK);
         if (!empty($meta)) {
             $content['meta'] = $meta;
         }
 
         $content['data'] = $data;
 
-        return $this->setStatusCode(Response::HTTP_OK)->respond($content);
+        return $this->respond($content);
     }
 
-    public function respondBadRequest($message = 'Bad Request')
+    public function respondBadRequest($message = 'Bad Request'): JsonResponse
     {
-        return $this->setStatusCode(Response::HTTP_BAD_REQUEST)->respondError($message);
+        $this->setStatusCode(JsonResponse::HTTP_BAD_REQUEST);
+        return $this->respondError($message);
     }
 
-    public function respondInvalidFilter()
+    public function respondInvalidFilter(): JsonResponse
     {
         return $this->respondBadRequest('Invalid Filter Query');
     }
 
-    public function respondNotFound($message = 'Not Found')
+    public function respondUnauthorized(string $message = 'Unauthorized'): JsonResponse
     {
-        return $this->setStatusCode(Response::HTTP_NOT_FOUND)->respondError($message);
+        $this->setStatusCode(JsonResponse::HTTP_UNAUTHORIZED);
+        return $this->respondError($message);
     }
 
-    public function respondBusinessLogicError($message = '')
+    public function respondNotFound(string $message = 'Not Found'): JsonResponse
     {
-        return $this->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->respondError($message);
+        $this->setStatusCode(JsonResponse::HTTP_NOT_FOUND);
+        return $this->respondError($message);
     }
 
-    public function respondError($message)
+    public function respondBusinessLogicError(string $message = ''): JsonResponse
+    {
+        $this->setStatusCode(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        return $this->respondError($message);
+    }
+
+    public function respondError($message = ''): JsonResponse
     {
         return $this->respond([
             'error' => [
@@ -77,14 +76,14 @@ class ApiController extends Controller
         ]);
     }
 
-    public function respondErrorValidator(array $errors)
+    public function respondErrorValidator(array $errors): JsonResponse
     {
-        $this->setStatusCode(Response::HTTP_BAD_REQUEST);
+        $this->setStatusCode(JsonResponse::HTTP_BAD_REQUEST);
 
         return $this->respondError($errors);
     }
 
-    public function respond($data)
+    public function respond(array $data = []): JsonResponse
     {
         return response()->json($data, $this->getStatusCode());
     }

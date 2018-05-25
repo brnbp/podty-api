@@ -6,13 +6,9 @@ use App\Http\Requests\CreateUserRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Transform\UserTransformer;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
-/**
- * Class UserController
- *
- * @package App\Http\Controllers
- */
 class UserController extends ApiController
 {
     private $userTransformer;
@@ -22,40 +18,32 @@ class UserController extends ApiController
         $this->userTransformer = $userTransformer;
     }
 
-    /**
-     * Get user data from specific username.
-     *
-     * @param \App\Models\User $username
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $username)
+    public function show(User $username): JsonResponse
     {
         return $this->respondSuccess(
             $this->userTransformer->transform($username)
         );
     }
 
-    public function create(CreateUserRequest $request)
+    public function create(CreateUserRequest $request): JsonResponse
     {
         $user = UserRepository::create($request->all());
 
         return $this->respondSuccess($this->userTransformer->transform($user));
     }
 
-    public function delete(User $username)
+    public function delete(User $username): JsonResponse
     {
         $deleted = UserRepository::delete($username);
 
         if (!$deleted) {
-            return $this->setStatusCode(Response::HTTP_BAD_REQUEST)
-                ->respondError('excluding user with existing feeds');
+            return $this->respondBadRequest('excluding user with existing feeds');
         }
 
         return $this->respondSuccess(['removed' => true]);
     }
 
-    public function find($term)
+    public function find($term): JsonResponse
     {
         $users = User::where('username', 'LIKE', "%$term%")
             ->select('id', 'username', 'friends_count', 'podcasts_count')
@@ -70,10 +58,19 @@ class UserController extends ApiController
         ]);
     }
 
-    public function touch(User $username)
+    public function touch(User $username): JsonResponse
     {
         $username->touch();
 
         return $this->respondSuccess();
+    }
+
+    public function authenticate(Request $request): JsonResponse
+    {
+        if (UserRepository::authenticate($request->get('username'), $request->get('password'))) {
+            return $this->respondSuccess(['message' => 'user authenticated']);
+        }
+
+        return $this->respondUnauthorized('user not authenticated');
     }
 }

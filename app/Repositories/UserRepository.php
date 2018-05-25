@@ -4,7 +4,9 @@ namespace App\Repositories;
 use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserFeed;
-use App\Services\Password;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 
 class UserRepository
 {
@@ -13,7 +15,7 @@ class UserRepository
         $user = new User([
             'username' => $userData['username'],
             'email' => $userData['email'],
-            'password' => Password::encrypt($userData['password']),
+            'password' => Hash::make($userData['password']),
             'friends_count' => 0,
             'podcasts_count' => 0,
         ]);
@@ -58,5 +60,15 @@ class UserRepository
     public static function decrementsFriendsCount($userId)
     {
         return User::whereId($userId)->decrement('friends_count');
+    }
+
+    public static function authenticate(string $username, string $password): bool
+    {
+        $auth = [
+            'username' => $username,
+            'password' => $password,
+        ];
+
+        return Auth::guard('api-user')->validate($auth);
     }
 }
