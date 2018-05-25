@@ -21,10 +21,10 @@ class Kernel extends ConsoleKernel
             ->call(function () {
                 (new Queue)->send();
             })
-            ->everyThirtyMinutes()->name('updateFeeds')->withoutOverlapping();
+            ->hourly()->name('updateFeeds')->withoutOverlapping();
 
         $schedule->call(function () {
             dispatch(new UpdateFeedsMetadata);
-        })->monthly();
+        })->weekly();
     }
 }

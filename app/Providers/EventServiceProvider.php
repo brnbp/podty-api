@@ -22,15 +22,4 @@ class EventServiceProvider extends ServiceProvider
             AddNewEpisodeToListeners::class,
         ],
     ];
-
-    /**
-     * Register any other events for your application.
-     *
-     * @return void
-     * @internal param \Illuminate\Contracts\Events\Dispatcher $events
-     */
-    public function boot()
-    {
-        parent::boot();
-    }
 }
