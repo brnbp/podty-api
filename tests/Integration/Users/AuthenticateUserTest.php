@@ -2,7 +2,6 @@
 namespace Tests\Integration\Users;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -17,7 +16,7 @@ class AuthenticateUserTest extends TestCase
 
         factory(User::class)->create([
             'username' => 'johndoe',
-            'password' => Hash::make('siper-sicret-password'),
+            'password' => 'siper-sicret-password',
         ]);
 
         $this->post('v1/users/authenticate', [
@@ -33,7 +32,7 @@ class AuthenticateUserTest extends TestCase
 
         factory(User::class)->create([
             'username' => 'johndoe',
-            'password' => Hash::make('siper-sicret-password'),
+            'password' => 'siper-sicret-password',
         ]);
 
         $this->post('v1/users/authenticate', [

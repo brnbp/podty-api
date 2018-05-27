@@ -140,11 +140,11 @@ class CreateUserTest extends TestCase
     {
         $this->authenticate();
 
-        $user = factory(User::class)->make([
-            'password' => 'foo'
+        $user = factory(User::class)->raw([
+            'password' => 'foo',
         ]);
 
-        $this->json('post', 'v1/users', $user->toArray())
+        $this->json('post', 'v1/users', $user)
             ->assertJsonFragment(['The password must be at least 5 characters.'])
             ->assertStatus(422);
     }

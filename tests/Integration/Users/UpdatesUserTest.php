@@ -2,6 +2,7 @@
 namespace Tests\Integration\Users;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -45,7 +46,8 @@ class UpdatesUserTest extends TestCase
             'password' =>  'new-password'
         ])->assertStatus(200);
 
-        $this->assertSame('new-password', $user->fresh()->password);
+        $this->assertTrue(Hash::check('new-password', $user->fresh()->password));
+        $this->assertFalse(Hash::check('old-password', $user->fresh()->password));
     }
 
     /** @test */
@@ -63,7 +65,7 @@ class UpdatesUserTest extends TestCase
         ])->assertJsonFragment(['password' => ['The password must be at least 5 characters.']])
             ->assertStatus(422);
 
-        $this->assertSame('old-but-good-password', $user->fresh()->password);
+        $this->assertTrue(Hash::check('old-but-good-password', $user->fresh()->password));
     }
 
     /** @test */
@@ -83,7 +85,8 @@ class UpdatesUserTest extends TestCase
         $user = $user->fresh();
 
         $this->assertSame('johndoe', $user->username);
-        $this->assertSame('keep-this-password', $user->password);
+        $this->assertTrue(Hash::check('keep-this-password', $user->password));
+
     }
 
     /** @test */

@@ -5,8 +5,6 @@ use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserFeed;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\URL;
 
 class UserRepository
 {
@@ -15,7 +13,7 @@ class UserRepository
         $user = new User([
             'username' => $userData['username'],
             'email' => $userData['email'],
-            'password' => Hash::make($userData['password']),
+            'password' => $userData['password'],
             'friends_count' => 0,
             'podcasts_count' => 0,
         ]);
