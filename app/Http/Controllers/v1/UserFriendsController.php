@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
@@ -13,9 +14,9 @@ class UserFriendsController extends ApiController
 {
     public function all(User $user)
     {
-        $data = Cache::remember('user_friends_' . $user->username, 60, function () use ($user) {
+        $data = Cache::remember('user_friends_'.$user->username, 60, function () use ($user) {
             return $user->friends->map(function (UserFriend $friendship) {
-                return (new UserTransformer)->transform($friendship->friend);
+                return (new UserTransformer())->transform($friendship->friend);
             })->sortByDesc('last_update')->toArray();
         });
 
@@ -29,7 +30,7 @@ class UserFriendsController extends ApiController
     public function follow(User $user, User $friend)
     {
         if (UserFriendsRepository::follow($user->id, $friend->id)) {
-            Cache::forget('user_friends_' . $user->username);
+            Cache::forget('user_friends_'.$user->username);
             UserRepository::incrementsFriendsCount($user->id);
 
             return $this->respondSuccess();
@@ -41,7 +42,7 @@ class UserFriendsController extends ApiController
     public function unfollow(User $user, User $friend)
     {
         if (UserFriendsRepository::unfollow($user->id, $friend->id)) {
-            Cache::forget('user_friends_' . $user->username);
+            Cache::forget('user_friends_'.$user->username);
             UserRepository::decrementsFriendsCount($user->id);
 
             return $this->respondSuccess();

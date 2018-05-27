@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Integration\Users;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveUserTest extends TestCase
 {
@@ -23,17 +24,17 @@ class RetrieveUserTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->get('v1/users/' . $user->username)
+        $this->get('v1/users/'.$user->username)
             ->assertExactJson([
                 'data' => [
-                    'id' => $user->id,
-                    'username' => $user->username,
-                    'email' => $user->email,
-                    'friends_count' => $user->friends_count,
+                    'id'             => $user->id,
+                    'username'       => $user->username,
+                    'email'          => $user->email,
+                    'friends_count'  => $user->friends_count,
                     'podcasts_count' => $user->podcasts_count,
-                    'joined_at' => $user->created_at->toDateTimeString(),
-                    'last_update' => $user->updated_at->toDateTimeString(),
-                ]
+                    'joined_at'      => $user->created_at->toDateTimeString(),
+                    'last_update'    => $user->updated_at->toDateTimeString(),
+                ],
             ])
             //->seeJson()
             ->assertStatus(200);

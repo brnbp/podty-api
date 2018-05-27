@@ -1,12 +1,11 @@
 <?php
+
 namespace App\Transform;
 
 use App\Services\Parser\XML;
 
 /**
- * Class XMLTransformer
- *
- * @package App\Transform
+ * Class XMLTransformer.
  */
 class XMLTransformer extends TransformerAbstract
 {
@@ -21,7 +20,7 @@ class XMLTransformer extends TransformerAbstract
     }
 
     /**
-     * Transforma um feed para um retorno padrao
+     * Transforma um feed para um retorno padrao.
      *
      * @param $feedXML
      *
@@ -36,16 +35,16 @@ class XMLTransformer extends TransformerAbstract
             $enclosure = $this->getEnclosureAttributes($entry->enclosure->attributes());
 
             $episodes[] = [
-                'title' => array_first($entry->title),
-                'link' => array_first($entry->link) ?? '',
+                'title'          => array_first($entry->title),
+                'link'           => array_first($entry->link) ?? '',
                 'published_date' => array_first($entry->pubDate) ?? '',
-                'content' => array_first($entry->description) ?? '',
-                'summary' => array_first($nsElements->summary ?? []) ?? '',
-                'image' => $this->getImageUrl($nsElements),
-                'duration' => array_first($nsElements->duration ?? []) ?? '',
-                'media_url' => $enclosure['@attributes']['url'] ?? '',
-                'media_length' => $enclosure['@attributes']['length'] ?? 0,
-                'media_type' => $enclosure['@attributes']['type'] ?? 'audio/mp3',
+                'content'        => array_first($entry->description) ?? '',
+                'summary'        => array_first($nsElements->summary ?? []) ?? '',
+                'image'          => $this->getImageUrl($nsElements),
+                'duration'       => array_first($nsElements->duration ?? []) ?? '',
+                'media_url'      => $enclosure['@attributes']['url'] ?? '',
+                'media_length'   => $enclosure['@attributes']['length'] ?? 0,
+                'media_type'     => $enclosure['@attributes']['type'] ?? 'audio/mp3',
             ];
         }
 

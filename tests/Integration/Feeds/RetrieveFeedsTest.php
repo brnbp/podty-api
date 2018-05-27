@@ -1,10 +1,11 @@
 <?php
+
 namespace Tests\Integration\Feeds;
 
 use App\Models\Episode;
 use App\Models\Feed;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveFeedsTest extends TestCase
 {
@@ -35,15 +36,15 @@ class RetrieveFeedsTest extends TestCase
         ]);
 
         factory(Episode::class, 6)->create([
-            'feed_id' => $feed->id
+            'feed_id' => $feed->id,
         ]);
 
         $response = $this->get('/v1/feeds/name/devnaestrada')
             ->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    $this->getDefaultFeedStructure()
-                ]
+                    $this->getDefaultFeedStructure(),
+                ],
             ]);
         $response = collect(json_decode($response->getContent())->data);
         $this->assertCount(1, $response);
@@ -66,15 +67,15 @@ class RetrieveFeedsTest extends TestCase
         $feed = factory(Feed::class)->create();
 
         factory(Episode::class, 3)->create([
-            'feed_id' => $feed->id
+            'feed_id' => $feed->id,
         ]);
 
         $this->get('/v1/feeds/1')
             ->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    $this->getDefaultFeedStructure()
-                ]
+                    $this->getDefaultFeedStructure(),
+                ],
             ]);
     }
 
@@ -101,7 +102,7 @@ class RetrieveFeedsTest extends TestCase
             'color',
             'total_episodes',
             'listeners',
-            'last_episode_at'
+            'last_episode_at',
         ];
     }
 }

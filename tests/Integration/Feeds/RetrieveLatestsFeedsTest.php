@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Integration\Feeds;
 
 use App\Models\Episode;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveLatestsFeedsTest extends TestCase
 {
@@ -44,8 +45,8 @@ class RetrieveLatestsFeedsTest extends TestCase
     {
         return [
             'data' => [
-                '*' => $this->getDefaultFeedStructure()
-            ]
+                '*' => $this->getDefaultFeedStructure(),
+            ],
         ];
     }
 
@@ -62,7 +63,7 @@ class RetrieveLatestsFeedsTest extends TestCase
             'thumbnail_600',
             'total_episodes',
             'listeners',
-            'last_episode_at'
+            'last_episode_at',
         ];
     }
 }

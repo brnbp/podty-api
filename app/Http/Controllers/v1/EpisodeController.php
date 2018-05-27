@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Controllers\v1;
 
-use App\Http\Controllers\ApiController;
 use App\Filter\Filter;
+use App\Http\Controllers\ApiController;
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Repositories\EpisodesRepository;
@@ -31,6 +32,7 @@ class EpisodeController extends ApiController
      * @param \App\Models\Feed $feed
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @internal param int $feedId
      */
     public function retrieve(Feed $feed)
@@ -39,7 +41,7 @@ class EpisodeController extends ApiController
             return $this->respondInvalidFilter();
         }
 
-        $episodes = (new EpisodesRepository)->retrieveByFeed($feed, $this->filter);
+        $episodes = (new EpisodesRepository())->retrieveByFeed($feed, $this->filter);
 
         if (!$episodes) {
             return $this->respondNotFound();
@@ -56,7 +58,7 @@ class EpisodeController extends ApiController
             return $this->respondInvalidFilter();
         }
 
-        $episodes = (new EpisodesRepository)->latests($this->filter);
+        $episodes = (new EpisodesRepository())->latests($this->filter);
 
         if ($episodes->isEmpty()) {
             return $this->respondNotFound();
@@ -64,7 +66,7 @@ class EpisodeController extends ApiController
 
         $response = $episodes->map(function (Episode $episode) {
             $feed = $episode->feed();
-            $feed = (new FeedTransformer)->transform($feed);
+            $feed = (new FeedTransformer())->transform($feed);
             $feed['episodes'] = [$this->episodeTransformer->transform($episode)];
 
             return $feed;
@@ -84,7 +86,7 @@ class EpisodeController extends ApiController
 
     private function transformOne($episode, $feed)
     {
-        $feed = (new FeedTransformer)->transform($feed);
+        $feed = (new FeedTransformer())->transform($feed);
 
         $feed['episodes'] = $this->episodeTransformer->transform($episode->toArray());
 
@@ -93,7 +95,7 @@ class EpisodeController extends ApiController
 
     private function transformAll($episodes, $feed)
     {
-        $feed = (new FeedTransformer)->transform($feed);
+        $feed = (new FeedTransformer())->transform($feed);
 
         $feed['episodes'] = $this->episodeTransformer->transformCollection($episodes->toArray());
 

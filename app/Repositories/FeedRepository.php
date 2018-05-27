@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Feed;
@@ -7,7 +8,7 @@ use App\Models\User;
 class FeedRepository
 {
     /**
-     * @var \App\Models\Feed $model
+     * @var \App\Models\Feed
      */
     public $model;
 
@@ -32,11 +33,12 @@ class FeedRepository
     }
 
     /**
-     * Busca pelos feeds que recentemente publicaram novos episodios
+     * Busca pelos feeds que recentemente publicaram novos episodios.
      *
      * @param int $count
      *
      * @return
+     *
      * @internal param int $limit limite de quantidade de retorno, por padrao, 10
      */
     public function latests($count = 10)
@@ -65,7 +67,7 @@ class FeedRepository
     public function updateOrCreate(array $feed)
     {
         return $this->model->updateOrCreate([
-            'url' => $feed['url']
+            'url' => $feed['url'],
         ], $feed);
     }
 
@@ -74,7 +76,7 @@ class FeedRepository
         $this->model
             ->whereId($id)
             ->update([
-                'total_episodes' => (new EpisodesRepository)->getTotalEpisodes($id)
+                'total_episodes' => (new EpisodesRepository())->getTotalEpisodes($id),
             ]);
     }
 
@@ -83,7 +85,7 @@ class FeedRepository
         $this->model
             ->whereId($id)
             ->update([
-                'last_episode_at' => $date
+                'last_episode_at' => $date,
             ]);
     }
 

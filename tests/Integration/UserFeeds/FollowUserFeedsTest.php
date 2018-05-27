@@ -1,11 +1,12 @@
 <?php
+
 namespace Tests\Integration\UserFeeds;
 
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class FollowUserFeedsTest extends TestCase
 {
@@ -25,7 +26,7 @@ class FollowUserFeedsTest extends TestCase
 
         $feed = factory(Feed::class)->create();
 
-        $this->post('v1/users/randomuser/feeds/' . $feed->id)
+        $this->post('v1/users/randomuser/feeds/'.$feed->id)
             ->assertStatus(404);
     }
 
@@ -36,7 +37,7 @@ class FollowUserFeedsTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->post('v1/users/' . $user->username . '/feeds/2')
+        $this->post('v1/users/'.$user->username.'/feeds/2')
             ->assertStatus(404);
     }
 
@@ -51,14 +52,14 @@ class FollowUserFeedsTest extends TestCase
         ]);
         factory(Episode::class, 3)->create(['feed_id' => $feed->id]);
 
-        $this->post('v1/users/' . $user->username . '/feeds/' . $feed->id)
+        $this->post('v1/users/'.$user->username.'/feeds/'.$feed->id)
             ->assertExactJson([
                 'data' => [
-                    'id' => 1,
-                    'feed_id' => (string) $feed->id,
-                    'user_id' => (string) $user->id,
+                    'id'         => 1,
+                    'feed_id'    => (string) $feed->id,
+                    'user_id'    => (string) $user->id,
                     'listen_all' => false,
-                ]
+                ],
             ])
             ->assertStatus(200);
 
@@ -76,10 +77,10 @@ class FollowUserFeedsTest extends TestCase
 
         $user = factory(User::class)->create();
         $feed = factory(Feed::class)->create([
-            'listeners' => 0
+            'listeners' => 0,
         ]);
 
-        $this->post('v1/users/' . $user->username . '/feeds/' . $feed->id)
+        $this->post('v1/users/'.$user->username.'/feeds/'.$feed->id)
             ->assertStatus(200);
 
         $this->assertEquals(1, $feed->fresh()->listeners);

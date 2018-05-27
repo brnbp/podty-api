@@ -1,10 +1,11 @@
 <?php
+
 namespace Tests\Integration\Users;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UpdatesUserTest extends TestCase
 {
@@ -24,11 +25,11 @@ class UpdatesUserTest extends TestCase
 
         factory(User::class)->create([
             'username' => 'otheruser',
-            'password' => 'old-password'
+            'password' => 'old-password',
         ]);
 
         $this->put('v1/users/johndoe', [
-            'password' =>  'new-password'
+            'password' => 'new-password',
         ])->assertStatus(404);
     }
 
@@ -39,11 +40,11 @@ class UpdatesUserTest extends TestCase
 
         $user = factory(User::class)->create([
             'username' => 'johndoe',
-            'password' => 'old-password'
+            'password' => 'old-password',
         ]);
 
         $this->put('v1/users/johndoe', [
-            'password' =>  'new-password'
+            'password' => 'new-password',
         ])->assertStatus(200);
 
         $this->assertTrue(Hash::check('new-password', $user->fresh()->password));
@@ -57,11 +58,11 @@ class UpdatesUserTest extends TestCase
 
         $user = factory(User::class)->create([
             'username' => 'johndoe',
-            'password' => 'old-but-good-password'
+            'password' => 'old-but-good-password',
         ]);
 
-        $this->put( 'v1/users/johndoe', [
-            'password' => 'new'
+        $this->put('v1/users/johndoe', [
+            'password' => 'new',
         ])->assertJsonFragment(['password' => ['The password must be at least 5 characters.']])
             ->assertStatus(422);
 
@@ -75,18 +76,17 @@ class UpdatesUserTest extends TestCase
 
         $user = factory(User::class)->create([
             'username' => 'old-jondoe',
-            'password' => 'keep-this-password'
+            'password' => 'keep-this-password',
         ]);
 
         $this->put('v1/users/old-jondoe', [
-            'username' =>  'johndoe',
+            'username' => 'johndoe',
         ])->assertStatus(200);
 
         $user = $user->fresh();
 
         $this->assertSame('johndoe', $user->username);
         $this->assertTrue(Hash::check('keep-this-password', $user->password));
-
     }
 
     /** @test */
@@ -103,7 +103,7 @@ class UpdatesUserTest extends TestCase
         ]);
 
         $this->put('v1/users/johannes', [
-            'username' =>  'johndoe',
+            'username' => 'johndoe',
         ])->assertJsonFragment(['username' => ['The username has already been taken.']])
             ->assertStatus(422);
 
@@ -117,11 +117,11 @@ class UpdatesUserTest extends TestCase
 
         $user = factory(User::class)->create([
             'username' => 'johndoe',
-            'email' => 'valid@email.com'
+            'email'    => 'valid@email.com',
         ]);
 
-        $this->put( 'v1/users/johndoe', [
-            'email' => 'not@valid-email'
+        $this->put('v1/users/johndoe', [
+            'email' => 'not@valid-email',
         ])->assertJsonFragment(['email' => ['The email must be a valid email address.']])
             ->assertStatus(422);
 
@@ -139,11 +139,11 @@ class UpdatesUserTest extends TestCase
 
         $user = factory(User::class)->create([
             'username' => 'johndoe',
-            'email' => 'email@server.com',
+            'email'    => 'email@server.com',
         ]);
 
         $this->put('v1/users/johndoe', [
-            'email' =>  'really@unique.email',
+            'email' => 'really@unique.email',
         ])->assertJsonFragment(['email' => ['The email has already been taken.']])
             ->assertStatus(422);
 
@@ -157,7 +157,7 @@ class UpdatesUserTest extends TestCase
 
         $user = factory(User::class)->create([
             'username' => 'johndoe',
-            'email' => 'old@email.com',
+            'email'    => 'old@email.com',
         ]);
 
         $this->put('v1/users/johndoe', [
@@ -174,12 +174,12 @@ class UpdatesUserTest extends TestCase
 
         $user = factory(User::class)->create([
             'username' => 'johndoe',
-            'email' => 'john@doe.com',
+            'email'    => 'john@doe.com',
         ]);
 
         $this->put('v1/users/johndoe', [
             'username' => 'johndoe',
-            'email' => 'john@doe.com',
+            'email'    => 'john@doe.com',
         ])->assertStatus(200);
 
         $this->assertSame('johndoe', $user->fresh()->username);

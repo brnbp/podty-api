@@ -1,15 +1,14 @@
 <?php
+
 namespace App\Transform;
 
 /**
- * Class Transformer
- *
- * @package App\Transform
+ * Class Transformer.
  */
 abstract class TransformerAbstract
 {
     /**
-     * Itera sob um array de itens e transforma cada item
+     * Itera sob um array de itens e transforma cada item.
      *
      * @param array $itens
      *

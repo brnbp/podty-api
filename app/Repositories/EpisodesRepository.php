@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\EpisodeEntity;
@@ -32,7 +33,7 @@ class EpisodesRepository
     }
 
     /**
-     * @param integer $feedId id of feed
+     * @param int $feedId id of feed
      */
     public function getTotalEpisodes($feedId)
     {
@@ -51,8 +52,8 @@ class EpisodesRepository
     {
         try {
             $episode = Episode::updateOrCreate([
-                'title' => $episodeEntity->title,
-                'feed_id' => $episodeEntity->feed_id,
+                'title'          => $episodeEntity->title,
+                'feed_id'        => $episodeEntity->feed_id,
                 'published_date' => $episodeEntity->getPublishedDate(),
             ], $episodeEntity->toArray());
 
@@ -71,8 +72,8 @@ class EpisodesRepository
         foreach ($usersFeed as $userFeed) {
             UserEpisodesRepository::create([
                 'user_feed_id' => $userFeed->id,
-                'episode_id' => $episode->id,
-                'paused_at' => 0,
+                'episode_id'   => $episode->id,
+                'paused_at'    => 0,
             ]);
         }
     }

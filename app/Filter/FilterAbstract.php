@@ -1,12 +1,13 @@
 <?php
+
 namespace App\Filter;
 
 abstract class FilterAbstract
 {
-    /** @var integer $limit */
+    /** @var int $limit */
     public $limit = 5;
 
-    /** @var integer $offset */
+    /** @var int $offset */
     public $offset = 0;
 
     /** @var string $order */

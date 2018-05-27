@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Integration\Users;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class TouchUserTest extends TestCase
 {
@@ -23,7 +24,7 @@ class TouchUserTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->patch('v1/users/' . $user->username . '/touch')
+        $this->patch('v1/users/'.$user->username.'/touch')
             ->assertStatus(200);
     }
 

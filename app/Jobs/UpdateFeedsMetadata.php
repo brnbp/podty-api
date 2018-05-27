@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Jobs;
 
 use App\Models\Category;
@@ -6,9 +7,9 @@ use App\Models\Feed;
 use App\Models\FeedCategory;
 use App\Services\Parser\XML;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use League\ColorExtractor\Color;
 use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Palette;
@@ -18,7 +19,7 @@ class UpdateFeedsMetadata implements ShouldQueue
     use Dispatchable, Queueable, SerializesModels;
 
     /**
-     * @var \Illuminate\Support\Collection $feed
+     * @var \Illuminate\Support\Collection
      */
     public $feeds;
 
@@ -61,7 +62,7 @@ class UpdateFeedsMetadata implements ShouldQueue
             ]);
 
             FeedCategory::firstOrCreate([
-                'feed_id' => $feed->id,
+                'feed_id'     => $feed->id,
                 'category_id' => $category->id,
             ]);
         });

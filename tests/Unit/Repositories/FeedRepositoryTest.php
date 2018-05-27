@@ -1,23 +1,22 @@
 <?php
+
 namespace Tests\Unit\Repositories;
 
-use App\Jobs\RegisterEpisodesFeed;
 use App\Models\Feed;
 use App\Repositories\FeedRepository;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Bus;
 use Mockery;
 use Tests\TestCase;
 
 class FeedRepositoryTest extends TestCase
 {
     /**
-     * @var \App\Models\Feed $defaultFeed
+     * @var \App\Models\Feed
      */
     private $defaultFeed;
 
     /**
-     * @var \Mockery\Mock $model
+     * @var \Mockery\Mock
      */
     private $model;
 
@@ -119,7 +118,7 @@ class FeedRepositoryTest extends TestCase
             ->shouldReceive('updateOrCreate')->once()
             ->withArgs([
                 ['url' => $this->defaultFeed->url],
-                $this->defaultFeed->toArray()
+                $this->defaultFeed->toArray(),
             ])
             ->andReturn($this->defaultFeed);
 
@@ -138,7 +137,7 @@ class FeedRepositoryTest extends TestCase
             ->shouldReceive('updateOrCreate')->once()
             ->withArgs([
                 ['url' => $this->defaultFeed->url],
-                $this->defaultFeed->toArray()
+                $this->defaultFeed->toArray(),
             ])
             ->andReturn($this->defaultFeed);
 

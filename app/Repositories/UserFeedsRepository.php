@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Feed;
@@ -11,7 +12,7 @@ class UserFeedsRepository
 {
     public static function all($username)
     {
-        return Cache::remember('user_feeds_' . $username, 60, function () use ($username) {
+        return Cache::remember('user_feeds_'.$username, 60, function () use ($username) {
             return self::buildQuery(User::whereUsername($username))
                 ->orderBy('last_episode_at', 'DESC')
                 ->get();
@@ -20,7 +21,7 @@ class UserFeedsRepository
 
     public static function one($username, $feedId)
     {
-        return Cache::remember('user_feeds_' . $feedId . '_' . $username, 60, function () use ($username, $feedId) {
+        return Cache::remember('user_feeds_'.$feedId.'_'.$username, 60, function () use ($username, $feedId) {
             return self::buildQuery(User::whereUsername($username)
                 ->whereFeedId($feedId))
                 ->get();
@@ -43,8 +44,8 @@ class UserFeedsRepository
             return false;
         }
 
-        Cache::forget('user_feeds_' . $feedId . '_' . $user->username);
-        Cache::forget('feeds_listeners_' . $feedId);
+        Cache::forget('user_feeds_'.$feedId.'_'.$user->username);
+        Cache::forget('feeds_listeners_'.$feedId);
         UserRepository::incrementsPodcastsCount($userFeed);
         FeedRepository::incrementsListeners($feedId);
 
@@ -62,9 +63,9 @@ class UserFeedsRepository
         UserRepository::decrementsPodcastCount($userFeed);
         FeedRepository::decrementsListeners($feed->id);
 
-        Cache::forget('feeds_listeners_' . $feed->id);
-        Cache::forget('user_feeds_' . $user->username);
-        Cache::forget('user_feeds_' . $feed->id . '_' . $user->username);
+        Cache::forget('feeds_listeners_'.$feed->id);
+        Cache::forget('user_feeds_'.$user->username);
+        Cache::forget('user_feeds_'.$feed->id.'_'.$user->username);
 
         return $userFeed->delete();
     }

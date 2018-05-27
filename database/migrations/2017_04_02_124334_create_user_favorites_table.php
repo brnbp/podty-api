@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateUserFavoritesTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateUserFavoritesTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->integer('feed_id')->unsigned()->index();
             $table->integer('episode_id')->unsigned()->index();
-            
+
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

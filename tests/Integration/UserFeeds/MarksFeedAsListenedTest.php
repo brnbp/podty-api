@@ -1,12 +1,13 @@
 <?php
+
 namespace Tests\Integration\UserFeeds;
 
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Models\User;
 use App\Repositories\UserFeedsRepository;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class MarksFeedAsListenedTest extends TestCase
 {
@@ -29,7 +30,7 @@ class MarksFeedAsListenedTest extends TestCase
         factory(Episode::class, 3)->create(['feed_id' => $feed->id]);
         UserFeedsRepository::create($feed->id, $user);
 
-        $this->put('v1/users/' . $user->username . '/feeds/' . $feed->id . '/listenAll')
+        $this->put('v1/users/'.$user->username.'/feeds/'.$feed->id.'/listenAll')
             ->assertStatus(200);
 
         $userFeeds = $user->feeds()->find($feed->id);

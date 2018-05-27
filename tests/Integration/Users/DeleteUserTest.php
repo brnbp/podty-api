@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Integration\Users;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class DeleteUserTest extends TestCase
 {
@@ -23,15 +24,15 @@ class DeleteUserTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->delete('v1/users/' . $user->username)
+        $this->delete('v1/users/'.$user->username)
             ->assertExactJson([
                 'data' => [
-                    'removed' => true
-                ]
+                    'removed' => true,
+                ],
             ])
             ->assertStatus(200);
 
-        $this->get('v1/users/' . $user->username)
+        $this->get('v1/users/'.$user->username)
             ->assertStatus(404);
     }
 

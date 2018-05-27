@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Unit\Jobs;
 
 use App\Jobs\SearchNewFeed;

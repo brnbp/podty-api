@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
@@ -35,7 +36,7 @@ class FeedController extends ApiController
     public function retrieveById(Feed $feed)
     {
         return $this->respondSuccess([
-            (new FeedTransformer)->transform($feed->toArray()),
+            (new FeedTransformer())->transform($feed->toArray()),
         ]);
     }
 
@@ -46,7 +47,7 @@ class FeedController extends ApiController
 
     public function top(int $count = 20)
     {
-        $feeds = Cache::remember('feeds_top_' . $count, 120, function () use ($count) {
+        $feeds = Cache::remember('feeds_top_'.$count, 120, function () use ($count) {
             return $this->feedRepository->top($count);
         });
 
@@ -55,7 +56,7 @@ class FeedController extends ApiController
 
     public function listeners(Feed $feed)
     {
-        $users = Cache::remember('feeds_listeners_' . $feed->id, 120, function () use ($feed) {
+        $users = Cache::remember('feeds_listeners_'.$feed->id, 120, function () use ($feed) {
             return FeedRepository::listeners($feed->id);
         });
 
@@ -75,7 +76,7 @@ class FeedController extends ApiController
         }
 
         return $this->respondSuccess(
-            (new FeedTransformer)->transformCollection($collection->toArray())
+            (new FeedTransformer())->transformCollection($collection->toArray())
         );
     }
 }

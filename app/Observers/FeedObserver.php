@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Observer;
 
 use App\Jobs\RegisterEpisodesFeed;
@@ -13,7 +14,7 @@ class FeedObserver
         $feed->save();
 
         RegisterEpisodesFeed::dispatch([
-            'id' => $feed->id,
+            'id'  => $feed->id,
             'url' => $feed->url,
         ], true);
         UpdateFeedsMetadata::dispatch($feed);

@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Integration\UserFriends;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class FollowUsersTest extends TestCase
 {
@@ -22,7 +23,7 @@ class FollowUsersTest extends TestCase
         $this->authenticate();
         $user = factory(User::class)->create();
 
-        $this->post('v1/users/' . $user->username . '/friends/not-found-user')
+        $this->post('v1/users/'.$user->username.'/friends/not-found-user')
             ->assertStatus(404);
     }
 
@@ -32,7 +33,7 @@ class FollowUsersTest extends TestCase
         $this->authenticate();
         $user = factory(User::class)->create();
 
-        $this->post('v1/users/not-found-user/friends/' . $user->username)
+        $this->post('v1/users/not-found-user/friends/'.$user->username)
             ->assertStatus(404);
     }
 
@@ -44,13 +45,13 @@ class FollowUsersTest extends TestCase
         $user = factory(User::class)->create();
         $anotherUser = factory(User::class)->create();
 
-        $this->post('v1/users/' . $user->username . '/friends/' . $anotherUser->username)
+        $this->post('v1/users/'.$user->username.'/friends/'.$anotherUser->username)
             ->assertStatus(200);
 
-        $this->post('v1/users/' . $user->username . '/friends/' . $anotherUser->username)
+        $this->post('v1/users/'.$user->username.'/friends/'.$anotherUser->username)
             ->assertStatus(400);
 
-        $this->get('v1/users/' . $user->username . '/friends')
+        $this->get('v1/users/'.$user->username.'/friends')
             ->assertStatus(200);
 
         $this->assertEquals(1, $user->fresh()->friends_count);
@@ -63,10 +64,10 @@ class FollowUsersTest extends TestCase
         $user = factory(User::class)->create();
         $anotherUser = factory(User::class)->create();
 
-        $this->post('v1/users/' . $user->username . '/friends/' . $anotherUser->username)
+        $this->post('v1/users/'.$user->username.'/friends/'.$anotherUser->username)
             ->assertStatus(200);
 
-        $this->get('v1/users/' . $user->username . '/friends')
+        $this->get('v1/users/'.$user->username.'/friends')
             ->assertStatus(200);
 
         $this->assertEquals(1, $user->fresh()->friends_count);

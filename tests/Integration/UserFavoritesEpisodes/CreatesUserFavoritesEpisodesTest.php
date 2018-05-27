@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Integration\UserFavoritesEpisodes;
 
 class CreatesUserFavoritesEpisodesTest extends UserFavoritesEpisodes
@@ -15,7 +16,7 @@ class CreatesUserFavoritesEpisodesTest extends UserFavoritesEpisodes
     {
         $this->authenticate();
 
-        $this->post('/v1/users/' . $this->user->username . '/episodes/' . $this->episode->id . '/favorite')
+        $this->post('/v1/users/'.$this->user->username.'/episodes/'.$this->episode->id.'/favorite')
             ->assertStatus(201);
     }
 
@@ -24,7 +25,7 @@ class CreatesUserFavoritesEpisodesTest extends UserFavoritesEpisodes
     {
         $this->authenticate();
 
-        $this->post('/v1/users/' . $this->user->username . '/episodes/42/favorite')
+        $this->post('/v1/users/'.$this->user->username.'/episodes/42/favorite')
             ->assertStatus(404);
     }
 
@@ -33,7 +34,7 @@ class CreatesUserFavoritesEpisodesTest extends UserFavoritesEpisodes
     {
         $this->authenticate();
 
-        $this->post('/v1/users/notUser/episodes/' . $this->episode->id . '/favorite')
+        $this->post('/v1/users/notUser/episodes/'.$this->episode->id.'/favorite')
             ->assertStatus(404);
     }
 }

@@ -1,15 +1,14 @@
 <?php
+
 namespace App\Transform;
 
 /**
- * Class FeedTransformer
- *
- * @package App\Transform
+ * Class FeedTransformer.
  */
 class UserTransformer extends TransformerAbstract
 {
     /**
-     * Transforma um feed para um retorno padrao
+     * Transforma um feed para um retorno padrao.
      *
      * @param $user
      *
@@ -22,13 +21,13 @@ class UserTransformer extends TransformerAbstract
         }
 
         return [
-            'id' => $user->id,
-            'username' => $user->username,
-            'email' => $user->email,
-            'friends_count' => (int) $user->friends_count,
+            'id'             => $user->id,
+            'username'       => $user->username,
+            'email'          => $user->email,
+            'friends_count'  => (int) $user->friends_count,
             'podcasts_count' => (int) $user->podcasts_count,
-            'joined_at' => $this->setDate($user->created_at),
-            'last_update' => $this->setDate($user->updated_at),
+            'joined_at'      => $this->setDate($user->created_at),
+            'last_update'    => $this->setDate($user->updated_at),
         ];
     }
 

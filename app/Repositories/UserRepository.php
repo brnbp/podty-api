@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Feed;
@@ -11,10 +12,10 @@ class UserRepository
     public static function create($userData)
     {
         $user = new User([
-            'username' => $userData['username'],
-            'email' => $userData['email'],
-            'password' => $userData['password'],
-            'friends_count' => 0,
+            'username'       => $userData['username'],
+            'email'          => $userData['email'],
+            'password'       => $userData['password'],
+            'friends_count'  => 0,
             'podcasts_count' => 0,
         ]);
 

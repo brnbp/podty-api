@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -27,8 +28,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => 'App\Http\Controllers\v1',
-            'prefix' => 'v1/',
+            'namespace'  => 'App\Http\Controllers\v1',
+            'prefix'     => 'v1/',
         ], function ($router) {
             require base_path('routes/v1/api.php');
         });

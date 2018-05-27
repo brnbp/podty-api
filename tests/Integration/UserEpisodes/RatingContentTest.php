@@ -1,11 +1,12 @@
 <?php
+
 namespace Tests\Integration\UserEpisodes;
 
 use App\Models\Episode;
 use App\Models\User;
 use Faker\Factory;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RatingContentTest extends TestCase
 {
@@ -17,7 +18,7 @@ class RatingContentTest extends TestCase
         $episode = factory(Episode::class)->create();
         $user = factory(User::class)->create();
 
-        $this->post('/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate')
+        $this->post('/v1/users/'.$user->username.'/episodes/'.$episode->id.'/rate')
             ->assertStatus(401);
     }
 
@@ -34,17 +35,17 @@ class RatingContentTest extends TestCase
         $rate = $faker->randomFloat(2, 0.00, 5.00);
 
         $this->json('post',
-            '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
+            '/v1/users/'.$user->username.'/episodes/'.$episode->id.'/rate', [
             'rate' => $rate,
         ])->assertStatus(201)
           ->assertJson([
-              "data" => [
-                  "id" => 1,
-                  "user_id" => $user->id,
-                  "content_id" => $episode->id,
-                  "content_type" => 'App\Models\Episode',
-                  "rate" => $rate,
-              ]
+              'data' => [
+                  'id'           => 1,
+                  'user_id'      => $user->id,
+                  'content_id'   => $episode->id,
+                  'content_type' => 'App\Models\Episode',
+                  'rate'         => $rate,
+              ],
           ]);
     }
 
@@ -58,42 +59,42 @@ class RatingContentTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->json('post',
-            '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
+            '/v1/users/'.$user->username.'/episodes/'.$episode->id.'/rate', [
             'rate' => 5.01,
         ])->assertStatus(422)
           ->assertJson([
               'message' => 'The given data was invalid.',
-              'errors' => [
-                  "rate" => [
-                      'The rate must be between 0.00 and 5.00 float digits.'
-                  ]
-              ]
+              'errors'  => [
+                  'rate' => [
+                      'The rate must be between 0.00 and 5.00 float digits.',
+                  ],
+              ],
           ]);
 
         $this->json('post',
-            '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
+            '/v1/users/'.$user->username.'/episodes/'.$episode->id.'/rate', [
             'rate' => -1.01,
         ])->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
-                'errors' => [
-                    "rate" => [
-                        'The rate must be between 0.00 and 5.00 float digits.'
-                    ]
-                ]
+                'errors'  => [
+                    'rate' => [
+                        'The rate must be between 0.00 and 5.00 float digits.',
+                    ],
+                ],
             ]);
 
         $this->json('post',
-            '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
+            '/v1/users/'.$user->username.'/episodes/'.$episode->id.'/rate', [
             'rate' => 'not-numeric-value',
         ])->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
-                'errors' => [
-                    "rate" => [
-                        'The rate must be between 0.00 and 5.00 float digits.'
-                    ]
-                ]
+                'errors'  => [
+                    'rate' => [
+                        'The rate must be between 0.00 and 5.00 float digits.',
+                    ],
+                ],
             ]);
     }
 
@@ -106,15 +107,15 @@ class RatingContentTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->json('post', '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate')
+        $this->json('post', '/v1/users/'.$user->username.'/episodes/'.$episode->id.'/rate')
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
-                'errors' => [
-                    "rate" => [
-                        'The rate field is required.'
-                    ]
-                ]
+                'errors'  => [
+                    'rate' => [
+                        'The rate field is required.',
+                    ],
+                ],
             ]);
     }
 
@@ -125,7 +126,7 @@ class RatingContentTest extends TestCase
 
         $episode = factory(Episode::class)->create();
 
-        $this->json('post', '/v1/users/random-user/episodes/' . $episode->id . '/rate', [
+        $this->json('post', '/v1/users/random-user/episodes/'.$episode->id.'/rate', [
             'rate' => 4,
         ])->assertStatus(404);
     }
@@ -138,30 +139,30 @@ class RatingContentTest extends TestCase
         $episode = factory(Episode::class)->create();
         $user = factory(User::class, 2)->create()->last();
 
-        $this->json('post', '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
+        $this->json('post', '/v1/users/'.$user->username.'/episodes/'.$episode->id.'/rate', [
             'rate' => 5.0,
         ])->assertStatus(201)
             ->assertJson([
-                "data" => [
-                    "id" => 1,
-                    "user_id" => $user->id,
-                    "content_id" => $episode->id,
-                    "content_type" => 'App\Models\Episode',
-                    "rate" => 5.0,
-                ]
+                'data' => [
+                    'id'           => 1,
+                    'user_id'      => $user->id,
+                    'content_id'   => $episode->id,
+                    'content_type' => 'App\Models\Episode',
+                    'rate'         => 5.0,
+                ],
             ]);
 
-        $this->json('post', '/v1/users/' . $user->username . '/episodes/' . $episode->id . '/rate', [
+        $this->json('post', '/v1/users/'.$user->username.'/episodes/'.$episode->id.'/rate', [
             'rate' => 3.1,
         ])->assertStatus(200)
             ->assertJson([
-                "data" => [
-                    "id" => 1,
-                    "user_id" => "$user->id",
-                    "content_id" => "$episode->id",
-                    "content_type" => 'App\Models\Episode',
-                    "rate" => 3.1,
-                ]
+                'data' => [
+                    'id'           => 1,
+                    'user_id'      => "$user->id",
+                    'content_id'   => "$episode->id",
+                    'content_type' => 'App\Models\Episode',
+                    'rate'         => 3.1,
+                ],
             ]);
     }
 }

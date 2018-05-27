@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Integration\UserEpisodes;
 
 use App\Models\Episode;
@@ -6,8 +7,8 @@ use App\Models\Feed;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveUserLatestEpisodesTest extends TestCase
 {
@@ -37,45 +38,44 @@ class RetrieveUserLatestEpisodesTest extends TestCase
 
         UserEpisode::create([
             'user_feed_id' => $userFeeds->id,
-            'episode_id' => $episode->id,
-            'paused_at' => 1,
+            'episode_id'   => $episode->id,
+            'paused_at'    => 1,
         ]);
 
-        $response = $this->get('/v1/users/' . $user->username . '/episodes/latests')
+        $response = $this->get('/v1/users/'.$user->username.'/episodes/latests')
             ->assertExactJson([
                 'data' => [
                     [
-                        'id' => (string) $feed['id'],
-                        'name' => $feed['name'],
-                        'description' => $feed['description'],
-                        'slug' => $feed['slug'],
-                        'url' => $feed['url'],
-                        'color' => $feed['main_color'],
-                        'thumbnail_30' => $feed['thumbnail_30'],
-                        'thumbnail_60' => $feed['thumbnail_60'],
-                        'thumbnail_100' => $feed['thumbnail_100'],
-                        'thumbnail_600' => $feed['thumbnail_600'],
-                        'total_episodes' => (string) $feed['total_episodes'],
-                        'listeners' => (string) $feed['listeners'],
+                        'id'              => (string) $feed['id'],
+                        'name'            => $feed['name'],
+                        'description'     => $feed['description'],
+                        'slug'            => $feed['slug'],
+                        'url'             => $feed['url'],
+                        'color'           => $feed['main_color'],
+                        'thumbnail_30'    => $feed['thumbnail_30'],
+                        'thumbnail_60'    => $feed['thumbnail_60'],
+                        'thumbnail_100'   => $feed['thumbnail_100'],
+                        'thumbnail_600'   => $feed['thumbnail_600'],
+                        'total_episodes'  => (string) $feed['total_episodes'],
+                        'listeners'       => (string) $feed['listeners'],
                         'last_episode_at' => (string) $feed['last_episode_at'],
-                        'episode' => [
-                            'id' => $episode['id'],
-                            'title' => $episode['title'],
-                            'link' => $episode['link'],
+                        'episode'         => [
+                            'id'           => $episode['id'],
+                            'title'        => $episode['title'],
+                            'link'         => $episode['link'],
                             'published_at' => (string) $episode['published_date'],
-                            'content' => $episode['content'],
-                            'summary' => $episode['summary'],
-                            'image' => $episode['image'],
-                            'duration' => $episode['duration'],
-                            'media_url' => $episode['media_url'],
+                            'content'      => $episode['content'],
+                            'summary'      => $episode['summary'],
+                            'image'        => $episode['image'],
+                            'duration'     => $episode['duration'],
+                            'media_url'    => $episode['media_url'],
                             'media_length' => (string) $episode['media_length'],
-                            'media_type' => $episode['media_type'],
-                            'paused_at' => "1",
-                        ]
-                    ]
-                ]
+                            'media_type'   => $episode['media_type'],
+                            'paused_at'    => '1',
+                        ],
+                    ],
+                ],
             ]);
-
 
         $response = collect(json_decode($response->getContent())->data);
 
@@ -89,7 +89,7 @@ class RetrieveUserLatestEpisodesTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->get('/v1/users/' . $user->username . '/episodes/latests')
+        $this->get('/v1/users/'.$user->username.'/episodes/latests')
             ->assertStatus(404);
     }
 }

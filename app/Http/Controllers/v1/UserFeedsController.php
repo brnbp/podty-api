@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Http\Controllers\v1;
 
-use App\Http\Controllers\ApiController;
 use App\Events\ContentRated;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\RatingRequest;
-use App\Http\Requests\Request;
 use App\Models\Feed;
 use App\Models\User;
 use App\Repositories\UserEpisodesRepository;
@@ -69,7 +69,7 @@ class UserFeedsController extends ApiController
     public function rate(RatingRequest $request, User $user, Feed $feed)
     {
         $rate = $feed->ratings()->updateOrCreate(
-            ['user_id' => $user->id,],
+            ['user_id' => $user->id],
             ['rate' => $request->rate]
         );
 

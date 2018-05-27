@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Filter\Filter;
@@ -14,7 +15,7 @@ class UserEpisodesRepository
 {
     public static function retrieve(User $user, Feed $feed): Collection
     {
-        $cacheHash = md5('user_' . $user->username . '_feeds_' . $feed->id . '_episodes');
+        $cacheHash = md5('user_'.$user->username.'_feeds_'.$feed->id.'_episodes');
 
         return Cache::remember($cacheHash, 5, function () use ($user, $feed) {
             $userFeed = $user->feeds()->whereFeedId($feed->id)->firstOrFail();
@@ -33,7 +34,7 @@ class UserEpisodesRepository
         $limit = $filter->limit;
         $offset = $filter->offset;
 
-        return Cache::remember('user_episodes_latests_' . $username, 5, function () use ($username, $limit, $offset) {
+        return Cache::remember('user_episodes_latests_'.$username, 5, function () use ($username, $limit, $offset) {
             return User::whereUsername($username)
                 ->join('user_feeds', 'users.id', '=', 'user_feeds.user_id')
                 ->join('feeds', 'feeds.id', '=', 'user_feeds.feed_id')
@@ -57,7 +58,7 @@ class UserEpisodesRepository
     {
         return UserEpisode::updateOrCreate([
             'user_feed_id' => $data['user_feed_id'],
-            'episode_id' => $data['episode_id'],
+            'episode_id'   => $data['episode_id'],
         ], $data);
     }
 
@@ -99,10 +100,10 @@ class UserEpisodesRepository
 
     public static function createAllEpisodesFromUserFeed(UserFeed $userFeed)
     {
-        $filter = new Filter;
+        $filter = new Filter();
         $filter->limit = 9999;
 
-        $episodes = (new EpisodesRepository)->retrieveByFeed($userFeed->feed, $filter);
+        $episodes = (new EpisodesRepository())->retrieveByFeed($userFeed->feed, $filter);
 
         if (!$episodes) {
             return false;
@@ -111,8 +112,8 @@ class UserEpisodesRepository
         $episodes = $episodes->map(function (Episode $episode) use ($userFeed) {
             return [
                 'user_feed_id' => $userFeed->id,
-                'episode_id' => $episode->id,
-                'paused_at' => 0,
+                'episode_id'   => $episode->id,
+                'paused_at'    => 0,
             ];
         });
 
