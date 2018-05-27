@@ -3,10 +3,18 @@ namespace App\Listeners;
 
 use App\Events\EpisodeCreated;
 use App\Repositories\EpisodesRepository;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AddNewEpisodeToListeners implements ShouldQueue
 {
+    use Queueable;
+
+    public function __construct()
+    {
+        $this->queue = 'high';
+    }
+
     /**
      * Handle the event.
      *

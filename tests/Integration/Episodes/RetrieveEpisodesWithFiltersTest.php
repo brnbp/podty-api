@@ -89,15 +89,15 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
 
         factory(Episode::class)->create([
             'feed_id' => $feed->id,
-            'published_date' => Carbon::now()->subDay(3)
+            'published_date' => '2018-05-23 17:21:41'
         ]);
         factory(Episode::class)->create([
             'feed_id' => $feed->id,
-            'published_date' => (string) Carbon::now()->subDay(2)
+            'published_date' => '2018-05-24 17:21:41'
         ]);
         factory(Episode::class)->create([
             'feed_id' => $feed->id,
-            'published_date' => (string) Carbon::now()->subDay(1)
+            'published_date' => '2018-05-25 17:21:41'
         ]);
 
         $response = $this->get('/v1/feeds/1/episodes?order=ASC')
@@ -105,9 +105,9 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
 
         $episodes = json_decode($response->getContent(), true)['data']['episodes'];
 
-        $this->assertEquals((string) Carbon::now()->subDay(3), (string) $episodes[0]['published_at']);
-        $this->assertEquals((string) Carbon::now()->subDay(2), (string) $episodes[1]['published_at']);
-        $this->assertEquals((string) Carbon::now()->subDay(1), (string) $episodes[2]['published_at']);
+        $this->assertEquals('2018-05-23 17:21:41', (string) $episodes[0]['published_at']);
+        $this->assertEquals('2018-05-24 17:21:41', (string) $episodes[1]['published_at']);
+        $this->assertEquals('2018-05-25 17:21:41', (string) $episodes[2]['published_at']);
     }
 
     /** @test */

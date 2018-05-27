@@ -3,6 +3,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Transform\UserTransformer;
@@ -72,5 +73,18 @@ class UserController extends ApiController
         }
 
         return $this->respondUnauthorized('user not authenticated');
+    }
+
+    public function update(UpdateUserRequest $request, User $username)
+    {
+        foreach ($request->validated() as $field => $value) {
+            $username->{$field} = $value;
+        }
+
+        if ($username->save()) {
+            return $this->respondSuccess(['updated' => true]);
+        }
+
+        return $this->respondBadRequest();
     }
 }

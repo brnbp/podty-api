@@ -1,7 +1,6 @@
 <?php
 namespace Tests\Integration\Users;
 
-use App\Models\Customer;
 use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

@@ -19,8 +19,10 @@ Route::get('/users/find/{term}', 'UserController@find');
 
 Route::post('users', 'UserController@create');
 Route::get('users/{username}', 'UserController@show');
+Route::put('users/{username}', 'UserController@update');
 Route::delete('users/{username}', 'UserController@delete');
 Route::patch('users/{username}/touch', 'UserController@touch');
+
 Route::post('users/authenticate', 'UserController@authenticate');
 
 Route::post('users/{username}/feeds/{feedId}', 'UserFeedsController@attach');
