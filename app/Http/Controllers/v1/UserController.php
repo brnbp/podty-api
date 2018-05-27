@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\AuthenticateUserRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
@@ -66,7 +67,7 @@ class UserController extends ApiController
         return $this->respondSuccess();
     }
 
-    public function authenticate(Request $request): JsonResponse
+    public function authenticate(AuthenticateUserRequest $request): JsonResponse
     {
         if (UserRepository::authenticate($request->get('username'), $request->get('password'))) {
             return $this->respondSuccess(['message' => 'user authenticated']);
