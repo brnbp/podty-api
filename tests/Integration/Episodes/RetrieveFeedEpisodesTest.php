@@ -1,13 +1,13 @@
 <?php
+
 namespace Tests\Integration\Episodes;
 
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Transform\EpisodeTransformer;
 use App\Transform\FeedTransformer;
-use Carbon\Carbon;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveFeedEpisodesTest extends TestCase
 {
@@ -36,11 +36,11 @@ class RetrieveFeedEpisodesTest extends TestCase
 
         $response = json_decode($response->getContent(), true);
 
-        $expected = (new FeedTransformer)->transform($feed);
+        $expected = (new FeedTransformer())->transform($feed);
         $expected['episodes'][] = (new EpisodeTransformer())->transform($episodes);
 
         $this->assertEquals([
-            'data' => $expected
+            'data' => $expected,
         ], $response);
     }
 

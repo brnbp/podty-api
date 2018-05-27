@@ -2,8 +2,8 @@
 
 return [
     'default' => 'local',
-    'cloud' => 's3',
-    'disks' => [
+    'cloud'   => 's3',
+    'disks'   => [
         'local' => [
             'driver' => 'local',
             'root'   => storage_path('app'),
@@ -20,6 +20,6 @@ return [
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
-        ]
-    ]
+        ],
+    ],
 ];

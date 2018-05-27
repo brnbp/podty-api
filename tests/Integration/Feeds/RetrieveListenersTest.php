@@ -1,12 +1,13 @@
 <?php
+
 namespace Tests\Integration\Feeds;
 
 use App\Models\Feed;
 use App\Models\User;
 use App\Repositories\UserFeedsRepository;
 use App\Transform\UserTransformer;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveListenersTest extends TestCase
 {
@@ -37,7 +38,7 @@ class RetrieveListenersTest extends TestCase
                 'data' => [
                     (new UserTransformer())->transform($users->first()->fresh()),
                     (new UserTransformer())->transform($users->last()->fresh()),
-                ]
+                ],
             ])
             ->assertStatus(200);
     }

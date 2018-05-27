@@ -1,36 +1,35 @@
 <?php
+
 namespace App\Jobs;
 
 use App\Models\Episode;
 use App\Models\Feed;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Class RegisterEpisodesFeed
- * Coloca na fila todos os feeds existentes para busca de novos episodios
- *
- * @package App\Jobs
+ * Coloca na fila todos os feeds existentes para busca de novos episodios.
  */
 class RegisterEpisodesFeed extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels, Dispatchable;
 
-    /** @var integer $id feed id */
+    /** @var int $id feed id */
     public $id;
 
     /** @var string $url feed url */
     public $url;
 
     /**
-     * @var bool $force
+     * @var bool
      */
     public $force;
 
     /**
-     * @param array $feed array com $feed['id'] and $feed['url'] indices
+     * @param array $feed  array com $feed['id'] and $feed['url'] indices
      * @param bool  $force
      */
     public function __construct(array $feed, bool $force = false)
@@ -42,7 +41,7 @@ class RegisterEpisodesFeed extends Job implements ShouldQueue
     }
 
     /**
-     * Busca por novos episodios a partir de feed
+     * Busca por novos episodios a partir de feed.
      *
      * @param Episode          $episode
      * @param \App\Models\Feed $feed

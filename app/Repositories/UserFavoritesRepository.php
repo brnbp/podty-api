@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Episode;
@@ -9,25 +10,25 @@ class UserFavoritesRepository
 {
     public function create(User $user, Episode $episode)
     {
-        Cache::forget('user_favorites_' . $user->username);
+        Cache::forget('user_favorites_'.$user->username);
 
         return $user->favorites()
                     ->firstOrCreate([
-                        'feed_id' => $episode->feed_id,
-                        'episode_id' => $episode->id
+                        'feed_id'    => $episode->feed_id,
+                        'episode_id' => $episode->id,
                     ]);
     }
 
     public function delete(User $user, Episode $episode)
     {
-        Cache::forget('user_favorites_' . $user->username);
+        Cache::forget('user_favorites_'.$user->username);
 
         return $user->favorites()->whereEpisodeId($episode->id)->delete() ? true : false;
     }
 
     public function all(User $user)
     {
-        return Cache::remember('user_favorites_' . $user->username, 360, function () use ($user) {
+        return Cache::remember('user_favorites_'.$user->username, 360, function () use ($user) {
             return $user->favorites()->orderBy('id', 'desc')->get();
         });
     }

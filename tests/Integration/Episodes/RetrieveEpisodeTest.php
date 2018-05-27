@@ -1,12 +1,13 @@
 <?php
+
 namespace Tests\Integration\Episodes;
 
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Transform\EpisodeTransformer;
 use App\Transform\FeedTransformer;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveEpisodeTest extends TestCase
 {
@@ -26,7 +27,7 @@ class RetrieveEpisodeTest extends TestCase
         $feed = factory(Feed::class)->create();
 
         $episode = factory(Episode::class)->create([
-            'feed_id' => $feed->id
+            'feed_id' => $feed->id,
         ]);
 
         $response = $this->get('/v1/episodes/1')
@@ -34,11 +35,11 @@ class RetrieveEpisodeTest extends TestCase
 
         $response = json_decode($response->getContent(), true);
 
-        $expected = (new FeedTransformer)->transform($feed);
+        $expected = (new FeedTransformer())->transform($feed);
         $expected['episodes'] = (new EpisodeTransformer())->transform($episode);
 
         $this->assertEquals([
-            'data' => $expected
+            'data' => $expected,
         ], $response);
     }
 

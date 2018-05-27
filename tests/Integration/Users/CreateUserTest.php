@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Integration\Users;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class CreateUserTest extends TestCase
 {
@@ -35,7 +36,7 @@ class CreateUserTest extends TestCase
         $this->authenticate();
 
         $user = factory(User::class)->make([
-           'username' => null
+           'username' => null,
         ]);
 
         $this->json('post', 'v1/users', $user->toArray())
@@ -49,11 +50,11 @@ class CreateUserTest extends TestCase
         $this->authenticate();
 
         factory(User::class)->create([
-            'username' => 'reallyunique'
+            'username' => 'reallyunique',
         ]);
 
         $user = factory(User::class)->make([
-            'username' => 'reallyunique'
+            'username' => 'reallyunique',
         ]);
 
         $this->json('post', 'v1/users', $user->toArray())
@@ -67,7 +68,7 @@ class CreateUserTest extends TestCase
         $this->authenticate();
 
         $user = factory(User::class)->make([
-            'username' => 'fo'
+            'username' => 'fo',
         ]);
 
         $this->json('post', 'v1/users', $user->toArray())
@@ -81,7 +82,7 @@ class CreateUserTest extends TestCase
         $this->authenticate();
 
         $user = factory(User::class)->make([
-            'username' => 'reallyreallylongusername'
+            'username' => 'reallyreallylongusername',
         ]);
 
         $this->json('post', 'v1/users', $user->toArray())
@@ -95,7 +96,7 @@ class CreateUserTest extends TestCase
         $this->authenticate();
 
         $user = factory(User::class)->make([
-           'email' => null
+           'email' => null,
         ]);
 
         $this->json('post', 'v1/users', $user->toArray())
@@ -109,7 +110,7 @@ class CreateUserTest extends TestCase
         $this->authenticate();
 
         $user = factory(User::class)->make([
-            'email' => 'not-valid-email'
+            'email' => 'not-valid-email',
         ]);
 
         $this->json('post', 'v1/users', $user->toArray())
@@ -123,11 +124,11 @@ class CreateUserTest extends TestCase
         $this->authenticate();
 
         factory(User::class)->create([
-            'email' => 'totally@valid.email'
+            'email' => 'totally@valid.email',
         ]);
 
         $user = factory(User::class)->make([
-            'email' => 'totally@valid.email'
+            'email' => 'totally@valid.email',
         ]);
 
         $this->json('post', 'v1/users', $user->toArray())

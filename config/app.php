@@ -22,7 +22,6 @@ return [
 
     'log' => env('APP_LOG', 'daily'),
 
-
     'providers' => [
 
         /*
@@ -109,7 +108,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'GAMP'  => Irazasyed\LaravelGAMP\Facades\GAMP::class,
+        'GAMP'    => Irazasyed\LaravelGAMP\Facades\GAMP::class,
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
     ],
 

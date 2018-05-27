@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
@@ -22,6 +23,7 @@ class ApiController extends Controller
     public function respondCreated($data = []): JsonResponse
     {
         $this->setStatusCode(JsonResponse::HTTP_CREATED);
+
         return $this->respond(['data' => $data]);
     }
 
@@ -40,6 +42,7 @@ class ApiController extends Controller
     public function respondBadRequest($message = 'Bad Request'): JsonResponse
     {
         $this->setStatusCode(JsonResponse::HTTP_BAD_REQUEST);
+
         return $this->respondError($message);
     }
 
@@ -51,18 +54,21 @@ class ApiController extends Controller
     public function respondUnauthorized(string $message = 'Unauthorized'): JsonResponse
     {
         $this->setStatusCode(JsonResponse::HTTP_UNAUTHORIZED);
+
         return $this->respondError($message);
     }
 
     public function respondNotFound(string $message = 'Not Found'): JsonResponse
     {
         $this->setStatusCode(JsonResponse::HTTP_NOT_FOUND);
+
         return $this->respondError($message);
     }
 
     public function respondBusinessLogicError(string $message = ''): JsonResponse
     {
         $this->setStatusCode(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+
         return $this->respondError($message);
     }
 
@@ -70,7 +76,7 @@ class ApiController extends Controller
     {
         return $this->respond([
             'error' => [
-                'message' => $message,
+                'message'     => $message,
                 'status_code' => $this->getStatusCode(),
             ],
         ]);

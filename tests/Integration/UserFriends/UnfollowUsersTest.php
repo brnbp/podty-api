@@ -1,11 +1,12 @@
 <?php
+
 namespace Tests\Integration\UserFriends;
 
 use App\Models\User;
 use App\Repositories\UserFriendsRepository;
 use App\Repositories\UserRepository;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class UnfollowUsersTest extends TestCase
 {
@@ -24,7 +25,7 @@ class UnfollowUsersTest extends TestCase
         $this->authenticate();
         $user = factory(User::class)->create();
 
-        $this->delete('v1/users/' . $user->username . '/friends/not-found-user')
+        $this->delete('v1/users/'.$user->username.'/friends/not-found-user')
             ->assertStatus(404);
     }
 
@@ -34,7 +35,7 @@ class UnfollowUsersTest extends TestCase
         $this->authenticate();
         $user = factory(User::class)->create();
 
-        $this->delete('v1/users/not-found-user/friends/' . $user->username)
+        $this->delete('v1/users/not-found-user/friends/'.$user->username)
             ->assertStatus(404);
     }
 
@@ -46,10 +47,10 @@ class UnfollowUsersTest extends TestCase
         $user = factory(User::class)->create();
         $friend = factory(User::class)->create();
 
-        $this->delete('v1/users/' . $user->username . '/friends/' . $friend->username)
+        $this->delete('v1/users/'.$user->username.'/friends/'.$friend->username)
             ->assertStatus(400);
 
-        $this->get('v1/users/' . $user->username . '/friends')
+        $this->get('v1/users/'.$user->username.'/friends')
             ->assertStatus(404);
 
         $this->assertEquals(0, $user->fresh()->friends_count);
@@ -65,10 +66,10 @@ class UnfollowUsersTest extends TestCase
         UserFriendsRepository::follow($user->id, $friend->id);
         UserRepository::incrementsFriendsCount($user->id);
 
-        $this->delete('v1/users/' . $user->username . '/friends/' . $friend->username)
+        $this->delete('v1/users/'.$user->username.'/friends/'.$friend->username)
             ->assertStatus(200);
 
-        $this->get('v1/users/' . $user->username . '/friends')
+        $this->get('v1/users/'.$user->username.'/friends')
             ->assertStatus(404);
 
         $this->assertEquals(0, $user->fresh()->friends_count);

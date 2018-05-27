@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Integration\Users;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class FindsUserTest extends TestCase
 {
@@ -22,7 +23,7 @@ class FindsUserTest extends TestCase
         $this->authenticate();
 
         $user = factory(User::class)->create([
-            'username' => 'specificUser'
+            'username' => 'specificUser',
         ]);
 
         factory(User::class, 2)->create();
@@ -30,16 +31,16 @@ class FindsUserTest extends TestCase
         $this->get('v1/users/find/specificUser')
             ->assertExactJson([
                 'meta' => [
-                    'total_matches' => 1
+                    'total_matches' => 1,
                 ],
                 'data' => [
                     [
-                        "id" => $user->id,
-                        "username" => 'specificUser',
-                        "friends_count" => (string) $user->friends_count,
-                        "podcasts_count" => (string) $user->podcasts_count
-                    ]
-                ]
+                        'id'             => $user->id,
+                        'username'       => 'specificUser',
+                        'friends_count'  => (string) $user->friends_count,
+                        'podcasts_count' => (string) $user->podcasts_count,
+                    ],
+                ],
             ])
             ->assertStatus(200);
     }
@@ -54,9 +55,9 @@ class FindsUserTest extends TestCase
         $this->get('v1/users/find/specificUser')
             ->assertExactJson([
                 'error' => [
-                    'message' => 'Not Found',
+                    'message'     => 'Not Found',
                     'status_code' => 404,
-                ]
+                ],
             ])
             ->assertStatus(404);
     }

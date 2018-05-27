@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class AddFieldListenersFeedsTable extends Migration
 {
@@ -14,7 +14,6 @@ class AddFieldListenersFeedsTable extends Migration
     {
         Schema::table('feeds', function (Blueprint $table) {
             $table->integer('listeners')->nullable()->default(0)->after('last_episode_at');
-            ;
         });
     }
 

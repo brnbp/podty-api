@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Jobs;
 
 use App\Repositories\FeedRepository;
 use App\Services\Itunes\Finder;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 
 class SearchNewFeed implements ShouldQueue
 {

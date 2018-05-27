@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Integration\Categories;
 
 use App\Models\Category;
@@ -6,8 +7,8 @@ use App\Models\Feed;
 use App\Models\FeedCategory;
 use App\Transform\CategoryTransformer;
 use App\Transform\FeedTransformer;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveCategoriesTest extends TestCase
 {
@@ -30,9 +31,9 @@ class RetrieveCategoriesTest extends TestCase
         $this->get('/v1/categories')
             ->assertExactJson([
                 'data' => [
-                    (new CategoryTransformer)->transform($categories->first()),
-                    (new CategoryTransformer)->transform($categories->last()),
-                ]
+                    (new CategoryTransformer())->transform($categories->first()),
+                    (new CategoryTransformer())->transform($categories->last()),
+                ],
             ])
             ->assertStatus(200);
     }
@@ -48,7 +49,7 @@ class RetrieveCategoriesTest extends TestCase
         $response = json_decode($response->getContent(), true);
 
         $this->assertEquals([
-            'data' => []
+            'data' => [],
         ], $response);
     }
 
@@ -59,15 +60,15 @@ class RetrieveCategoriesTest extends TestCase
 
         $categories = create(Category::class, [], 2);
 
-        $response = $this->get('/v1/categories/' . $categories->first()->id)
+        $response = $this->get('/v1/categories/'.$categories->first()->id)
             ->assertStatus(200);
 
         $response = json_decode($response->getContent(), true);
 
-        $expected = (new CategoryTransformer)->transform($categories->first());
+        $expected = (new CategoryTransformer())->transform($categories->first());
 
         $this->assertEquals([
-            'data' => $expected
+            'data' => $expected,
         ], $response);
     }
 
@@ -92,15 +93,15 @@ class RetrieveCategoriesTest extends TestCase
         $feedTwo = create(Feed::class);
 
         create(FeedCategory::class, [
-            'feed_id' => $feedTwo->id,
-            'category_id' => $category->id
+            'feed_id'     => $feedTwo->id,
+            'category_id' => $category->id,
         ]);
         create(FeedCategory::class, [
-            'feed_id' => $feedOne->id,
-            'category_id' => $category->id
+            'feed_id'     => $feedOne->id,
+            'category_id' => $category->id,
         ]);
 
-        $response = $this->get('/v1/categories/' . $category->id . '/feeds')
+        $response = $this->get('/v1/categories/'.$category->id.'/feeds')
             ->assertStatus(200);
 
         $response = json_decode($response->getContent(), true);
@@ -111,7 +112,7 @@ class RetrieveCategoriesTest extends TestCase
         unset($expected[1]['episodes']);
 
         $this->assertEquals([
-            'data' => $expected
+            'data' => $expected,
         ], $response);
     }
 
@@ -124,7 +125,7 @@ class RetrieveCategoriesTest extends TestCase
 
         create(FeedCategory::class, [], 2);
 
-        $this->get('/v1/categories/' . $category->id . '/feeds')
+        $this->get('/v1/categories/'.$category->id.'/feeds')
             ->assertStatus(404);
     }
 }

@@ -1,12 +1,13 @@
 <?php
+
 namespace Tests\Integration\UserFeeds;
 
 use App\Models\Episode;
 use App\Models\Feed;
 use App\Models\User;
 use App\Repositories\UserFeedsRepository;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class UnfollowUserFeedsTest extends TestCase
 {
@@ -26,7 +27,7 @@ class UnfollowUserFeedsTest extends TestCase
 
         $feed = factory(Feed::class)->create();
 
-        $this->delete('v1/users/randomuser/feeds/' . $feed->id)
+        $this->delete('v1/users/randomuser/feeds/'.$feed->id)
             ->assertStatus(404);
     }
 
@@ -37,7 +38,7 @@ class UnfollowUserFeedsTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->delete('v1/users/' . $user->username . '/feeds/2')
+        $this->delete('v1/users/'.$user->username.'/feeds/2')
             ->assertStatus(404);
     }
 
@@ -52,7 +53,7 @@ class UnfollowUserFeedsTest extends TestCase
 
         UserFeedsRepository::create($feed->id, $user);
 
-        $this->delete('v1/users/' . $user->username . '/feeds/' . $feed->id)
+        $this->delete('v1/users/'.$user->username.'/feeds/'.$feed->id)
             ->assertStatus(200);
 
         $this->assertEquals(0, $user->fresh()->podcasts_count);
@@ -67,12 +68,12 @@ class UnfollowUserFeedsTest extends TestCase
 
         $user = factory(User::class)->create();
         $feed = factory(Feed::class)->create([
-            'listeners' => 0
+            'listeners' => 0,
         ]);
 
         UserFeedsRepository::create($feed->id, $user);
 
-        $this->delete('v1/users/' . $user->username . '/feeds/' . $feed->id)
+        $this->delete('v1/users/'.$user->username.'/feeds/'.$feed->id)
             ->assertStatus(200);
 
         $this->assertEquals(0, $feed->fresh()->listeners);

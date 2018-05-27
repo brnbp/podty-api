@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\EpisodeEntity;
@@ -9,7 +10,7 @@ use App\Transform\XMLTransformer;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Episode
+ * Class Episode.
  *
  * @author Bruno Pereira <bruno9pereira@gmail.com>
  */
@@ -36,7 +37,7 @@ class Episode extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     /**
-     * Define relação com a model Feeds, sendo que Episode pertence a um feed
+     * Define relação com a model Feeds, sendo que Episode pertence a um feed.
      */
     public function feed()
     {
@@ -44,16 +45,16 @@ class Episode extends Model
     }
 
     /**
-     * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed
+     * Busca pelo xml com episodios a partir do id do podcast e de sua url de feed.
      *
-     * @param integer $feed_id  id do feed
-     * @param string  $feed_url url do feed
+     * @param int    $feed_id  id do feed
+     * @param string $feed_url url do feed
      *
      * @return bool
      */
     public function storage($feed_id, $feed_url)
     {
-        $xml = new XML;
+        $xml = new XML();
         $content = $xml->retrieve($feed_url);
 
         if ($content === false) {
@@ -63,23 +64,23 @@ class Episode extends Model
         $content = (new XMLTransformer($xml))->transform($content);
 
         $this->insert($feed_id, $content);
-        (new FeedRepository(new Feed))->updateTotalEpisodes($feed_id);
+        (new FeedRepository(new Feed()))->updateTotalEpisodes($feed_id);
 
         return true;
     }
 
     /**
-     * Armazena os episodios no banco
+     * Armazena os episodios no banco.
      *
-     * @param integer $feedId   id do feed
-     * @param array   $episodes array de episodios
+     * @param int   $feedId   id do feed
+     * @param array $episodes array de episodios
      */
     private function insert($feedId, array $episodes)
     {
         $episodes = array_reverse($episodes);
 
         array_walk($episodes, function ($episode) use ($feedId) {
-            (new EpisodesRepository)->save((new EpisodeEntity)
+            (new EpisodesRepository())->save((new EpisodeEntity())
                 ->setFeedId($feedId)
                 ->setTitle($episode['title'])
                 ->setLink($episode['link'])

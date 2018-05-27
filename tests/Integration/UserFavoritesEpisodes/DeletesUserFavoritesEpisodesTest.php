@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Integration\UserFavoritesEpisodes;
 
 class DeletesUserFavoritesEpisodesTest extends UserFavoritesEpisodes
@@ -15,9 +16,9 @@ class DeletesUserFavoritesEpisodesTest extends UserFavoritesEpisodes
     {
         $this->authenticate();
 
-        $this->post('/v1/users/' . $this->user->username . '/episodes/' . $this->episode->id . '/favorite');
+        $this->post('/v1/users/'.$this->user->username.'/episodes/'.$this->episode->id.'/favorite');
 
-        $this->delete('/v1/users/' . $this->user->username . '/episodes/' . $this->episode->id . '/favorite')
+        $this->delete('/v1/users/'.$this->user->username.'/episodes/'.$this->episode->id.'/favorite')
             ->assertStatus(200);
     }
 
@@ -26,7 +27,7 @@ class DeletesUserFavoritesEpisodesTest extends UserFavoritesEpisodes
     {
         $this->authenticate();
 
-        $this->delete('/v1/users/' . $this->user->username . '/episodes/1/favorite')
+        $this->delete('/v1/users/'.$this->user->username.'/episodes/1/favorite')
             ->assertStatus(404);
     }
 
@@ -35,7 +36,7 @@ class DeletesUserFavoritesEpisodesTest extends UserFavoritesEpisodes
     {
         $this->authenticate();
 
-        $this->post('/v1/users/notUser/episodes/' . $this->episode->id . '/favorite')
+        $this->post('/v1/users/notUser/episodes/'.$this->episode->id.'/favorite')
             ->assertStatus(404);
     }
 }

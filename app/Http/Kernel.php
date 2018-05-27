@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
             'auth.basic',
             'bindings',
             'throttle:300,1',
-        ]
+        ],
     ];
 
     /**
@@ -50,7 +50,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth.basic' => BasicAuth::class,
-        'throttle' => ThrottleRequests::class,
-        'bindings' => SubstituteBindings::class,
+        'throttle'   => ThrottleRequests::class,
+        'bindings'   => SubstituteBindings::class,
     ];
 }

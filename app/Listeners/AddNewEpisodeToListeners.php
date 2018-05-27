@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Listeners;
 
 use App\Events\EpisodeCreated;
@@ -24,6 +25,6 @@ class AddNewEpisodeToListeners implements ShouldQueue
      */
     public function handle(EpisodeCreated $event)
     {
-        (new EpisodesRepository)->addToListeners($event->episode);
+        (new EpisodesRepository())->addToListeners($event->episode);
     }
 }

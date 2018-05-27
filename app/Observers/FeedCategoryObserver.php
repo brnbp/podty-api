@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Observer;
 
 use App\Models\FeedCategory;

@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 class EpisodeEntity
@@ -204,17 +205,17 @@ class EpisodeEntity
     public function toArray()
     {
         return [
-            'feed_id' => $this->feed_id,
-            'title' => $this->title,
+            'feed_id'        => $this->feed_id,
+            'title'          => $this->title,
             'published_date' => $this->published_date,
-            'summary' => $this->summary,
-            'image' => $this->image,
-            'duration' => $this->duration,
-            'content' => $this->content,
-            'link' => $this->link,
-            'media_length' => $this->media_length,
-            'media_type' => $this->media_type,
-            'media_url' => $this->media_url,
+            'summary'        => $this->summary,
+            'image'          => $this->image,
+            'duration'       => $this->duration,
+            'content'        => $this->content,
+            'link'           => $this->link,
+            'media_length'   => $this->media_length,
+            'media_type'     => $this->media_type,
+            'media_url'      => $this->media_url,
         ];
     }
 }

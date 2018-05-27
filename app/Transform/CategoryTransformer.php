@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Transform;
 
 class CategoryTransformer extends TransformerAbstract
@@ -6,11 +7,11 @@ class CategoryTransformer extends TransformerAbstract
     public function transform($category)
     {
         return [
-            'id' => $category['id'],
-            'name' => $category['name'],
-            'slug' => $category['slug'],
+            'id'        => $category['id'],
+            'name'      => $category['name'],
+            'slug'      => $category['slug'],
             'thumbnail' => $category['thumbnail'] ?? '',
-            'counter' => (string) $category['counter'],
+            'counter'   => (string) $category['counter'],
         ];
     }
 }

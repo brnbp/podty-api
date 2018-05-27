@@ -1,11 +1,12 @@
 <?php
+
 namespace Tests\Integration\UserEpisodes;
 
 use App\Models\Episode;
 use App\Models\User;
 use App\Models\UserFeed;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class CreatesUserEpisodesTest extends TestCase
 {
@@ -26,15 +27,15 @@ class CreatesUserEpisodesTest extends TestCase
         $user = factory(User::class)->create();
 
         $userFeeds = factory(UserFeed::class)->create([
-            'user_id' => $user->id,
+            'user_id'    => $user->id,
             'listen_all' => true,
         ]);
 
         $episode = factory(Episode::class)->create([
-            'feed_id' => $userFeeds->feed_id
+            'feed_id' => $userFeeds->feed_id,
         ]);
 
-        $this->post('/v1/users/' . $user->username . '/episodes/' . $episode->id)
+        $this->post('/v1/users/'.$user->username.'/episodes/'.$episode->id)
             ->assertStatus(201);
 
         $this->assertFalse($userFeeds->fresh()->listen_all);
@@ -50,10 +51,10 @@ class CreatesUserEpisodesTest extends TestCase
         $userFeeds = factory(UserFeed::class)->create(['user_id' => $user->id]);
 
         factory(Episode::class)->create([
-            'feed_id' => $userFeeds->feed_id
+            'feed_id' => $userFeeds->feed_id,
         ]);
 
-        $this->post('/v1/users/' . $user->username . '/episodes/42')
+        $this->post('/v1/users/'.$user->username.'/episodes/42')
             ->assertStatus(404);
     }
 
@@ -64,7 +65,7 @@ class CreatesUserEpisodesTest extends TestCase
 
         $episode = factory(Episode::class)->create();
 
-        $this->post('/v1/users/fakeUser/episodes/' . $episode->id)
+        $this->post('/v1/users/fakeUser/episodes/'.$episode->id)
             ->assertStatus(404);
     }
 
@@ -77,7 +78,7 @@ class CreatesUserEpisodesTest extends TestCase
 
         $episode = factory(Episode::class)->create();
 
-        $this->post('/v1/users/' . $user->username . '/episodes/' . $episode->id)
+        $this->post('/v1/users/'.$user->username.'/episodes/'.$episode->id)
             ->assertStatus(404);
     }
 }

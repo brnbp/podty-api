@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Cache;
 class CategoryController extends ApiController
 {
     /**
-     * @var \App\Transform\CategoryTransformer $categoryTransformer
+     * @var \App\Transform\CategoryTransformer
      */
     protected $transformer;
 
@@ -52,6 +53,7 @@ class CategoryController extends ApiController
         $response = $feeds->map(function ($feed) {
             $return = (new FeedTransformer())->transform($feed);
             unset($return['episodes']);
+
             return $return;
         });
 

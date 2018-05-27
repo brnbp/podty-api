@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Parser;
 
 use GuzzleHttp\Client as GuzzleClient;
@@ -6,9 +7,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Class XML
+ * Class XML.
  *
- * @package App\Services\Parser
  * @author Bruno Pereira <bruno9pereira@gmail.com>
  */
 class XML
@@ -24,7 +24,7 @@ class XML
     private $xmlContent;
 
     /**
-     * Obtains XML content in array format or false if not capable
+     * Obtains XML content in array format or false if not capable.
      *
      * @param string $xml_path
      *
@@ -50,7 +50,7 @@ class XML
             }
             Log::info(json_encode([
                 'xml_path' => $this->xmlPath,
-                'error' => $errors,
+                'error'    => $errors,
             ]));
 
             return false;
@@ -60,7 +60,7 @@ class XML
     }
 
     /**
-     * Gets the xml content with Guzzle
+     * Gets the xml content with Guzzle.
      *
      * @return bool|string returns xml with string format or false if not possible
      */
@@ -80,6 +80,7 @@ class XML
     public function getItunesNamespace($xml)
     {
         $namespaces = $xml->getNameSpaces(true);
+
         return $namespaces['itunes'] ?? array_first($namespaces);
     }
 
@@ -94,6 +95,7 @@ class XML
             foreach ($nsElements->category as $category) {
                 $categories->push((string) $category->attributes());
             }
+
             return $categories;
         } catch (\Exception $exception) {
             return $categories;
@@ -103,7 +105,7 @@ class XML
     public function getDescription($content)
     {
         if ((string) $content->channel->description) {
-            return (string) $content->channel->description ;
+            return (string) $content->channel->description;
         }
 
         $itunesNamespace = $this->getItunesNamespace($content);

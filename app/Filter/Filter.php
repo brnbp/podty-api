@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filter;
 
 class Filter extends FilterAbstract
@@ -46,7 +47,7 @@ class Filter extends FilterAbstract
     }
 
     /**
-     * Make assoc array
+     * Make assoc array.
      *
      * @param $parameter
      *
@@ -67,7 +68,7 @@ class Filter extends FilterAbstract
     }
 
     /**
-     * Verify if the filters on query string are valid
+     * Verify if the filters on query string are valid.
      *
      * @param $array
      *

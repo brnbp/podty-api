@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -14,7 +15,7 @@ class Feed extends Model
         'url', 'name', 'slug', 'thumbnail_30',
         'thumbnail_60', 'thumbnail_100',
         'thumbnail_600', 'total_episodes',
-        'listeners','last_episode_at',
+        'listeners', 'last_episode_at',
         'avg_rating', 'description',
         'main_color',
     ];
@@ -24,7 +25,7 @@ class Feed extends Model
 
     /**
      * Define relação com a model Episodes, sendo que Feed possui varios episodios
-     * ligados a ele
+     * ligados a ele.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -57,12 +58,12 @@ class Feed extends Model
 
     public static function slugfy($feedId, $feedName)
     {
-        return $feedId . '-' . rtrim(str_limit(str_slug($feedName), 30, ''), '-');
+        return $feedId.'-'.rtrim(str_limit(str_slug($feedName), 30, ''), '-');
     }
 
     public function wasRecentlyModifiedXML(string $url): bool
     {
-        $lastModified = (new Client)->head($url)->getHeader('Last-Modified') ?? [];
+        $lastModified = (new Client())->head($url)->getHeader('Last-Modified') ?? [];
 
         $lastModified = reset($lastModified);
 

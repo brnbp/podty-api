@@ -12,7 +12,7 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-    
+
     'float_between'         => 'The :attribute must be between :min and :max float digits.',
 
     'accepted'             => 'The :attribute must be accepted.',

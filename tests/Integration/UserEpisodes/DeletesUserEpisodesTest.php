@@ -1,12 +1,13 @@
 <?php
+
 namespace Tests\Integration\UserEpisodes;
 
 use App\Models\Episode;
 use App\Models\User;
 use App\Models\UserEpisode;
 use App\Models\UserFeed;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class DeletesUserEpisodesTest extends TestCase
 {
@@ -29,20 +30,20 @@ class DeletesUserEpisodesTest extends TestCase
         factory(Episode::class)->create();
 
         $userFeeds = factory(UserFeed::class)->create([
-            'user_id' => $user->id,
+            'user_id'    => $user->id,
             'listen_all' => false,
         ]);
 
         $episode = factory(Episode::class)->create([
-            'feed_id' => $userFeeds->feed_id
+            'feed_id' => $userFeeds->feed_id,
         ]);
 
         factory(UserEpisode::class)->create([
             'user_feed_id' => $userFeeds->id,
-            'episode_id' => $episode->id,
+            'episode_id'   => $episode->id,
         ]);
 
-        $this->delete('/v1/users/' . $user->username . '/episodes/' . $episode->id)
+        $this->delete('/v1/users/'.$user->username.'/episodes/'.$episode->id)
             ->assertStatus(200);
 
         $this->assertTrue($userFeeds->fresh()->listen_all);
@@ -58,10 +59,10 @@ class DeletesUserEpisodesTest extends TestCase
         $userFeeds = factory(UserFeed::class)->create(['user_id' => $user->id]);
 
         factory(Episode::class)->create([
-            'feed_id' => $userFeeds->feed_id
+            'feed_id' => $userFeeds->feed_id,
         ]);
 
-        $this->delete('/v1/users/' . $user->username . '/episodes/42')
+        $this->delete('/v1/users/'.$user->username.'/episodes/42')
             ->assertStatus(404);
     }
 
@@ -72,7 +73,7 @@ class DeletesUserEpisodesTest extends TestCase
 
         $episode = factory(Episode::class)->create();
 
-        $this->delete('/v1/users/fakeUser/episodes/' . $episode->id)
+        $this->delete('/v1/users/fakeUser/episodes/'.$episode->id)
             ->assertStatus(404);
     }
 
@@ -85,7 +86,7 @@ class DeletesUserEpisodesTest extends TestCase
 
         $episode = factory(Episode::class)->create();
 
-        $this->delete('/v1/users/' . $user->username . '/episodes/' . $episode->id)
+        $this->delete('/v1/users/'.$user->username.'/episodes/'.$episode->id)
             ->assertStatus(404);
     }
 }

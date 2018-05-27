@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\User;
@@ -11,7 +12,7 @@ class UserFriendsRepository
     public static function follow($userId, $friendUserId): bool
     {
         $user = UserFriend::firstOrCreate([
-            'user_id' => $userId,
+            'user_id'        => $userId,
             'friend_user_id' => $friendUserId,
         ]);
 

@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Integration\Users;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class AuthenticateUserTest extends TestCase
 {

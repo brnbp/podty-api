@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -6,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserEpisode extends Model
 {
     protected $fillable = [
-        'user_feed_id', 'episode_id', 'paused_at'
+        'user_feed_id', 'episode_id', 'paused_at',
     ];
 
     public function user()

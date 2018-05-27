@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Http\Controllers\v1;
 
-use App\Http\Controllers\ApiController;
 use App\Events\ContentRated;
 use App\Filter\Filter;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\RatingRequest;
 use App\Models\Episode;
 use App\Models\Feed;
@@ -29,7 +30,7 @@ class UserEpisodesController extends ApiController
 
         $userEpisode = UserEpisodesRepository::first($userFeed->id, $episode->id);
 
-        $episode = (new EpisodeTransformer)->transform($episode->toArray());
+        $episode = (new EpisodeTransformer())->transform($episode->toArray());
         $episode['paused_at'] = $userEpisode['paused_at'];
 
         return $this->responseData($episode);
@@ -43,7 +44,7 @@ class UserEpisodesController extends ApiController
             return $this->respondNotFound();
         }
 
-        $feed = (new FeedTransformer)->transform($feed);
+        $feed = (new FeedTransformer())->transform($feed);
         $feed['episodes'] = $episodes->toArray();
 
         return $this->responseData($feed);
@@ -55,13 +56,13 @@ class UserEpisodesController extends ApiController
             return $this->respondInvalidFilter();
         }
 
-        $latestsEpisodes = (new UserEpisodesRepository)
+        $latestsEpisodes = (new UserEpisodesRepository())
                                 ->latests($user->username, $this->filter);
 
-	$response = $latestsEpisodes->map(function ($episode) {
-	    $episode = $episode->toArray();
-            $feed = (new FeedTransformer)->transform(array_merge($episode, ['id' => $episode['feed_id']]));	
-            $ep = (new EpisodeTransformer)->transform($episode);
+        $response = $latestsEpisodes->map(function ($episode) {
+            $episode = $episode->toArray();
+            $feed = (new FeedTransformer())->transform(array_merge($episode, ['id' => $episode['feed_id']]));
+            $ep = (new EpisodeTransformer())->transform($episode);
             $ep['paused_at'] = $episode['paused_at'];
             $feed['episode'] = $ep;
             unset($feed['episodes']);
@@ -78,11 +79,11 @@ class UserEpisodesController extends ApiController
 
     public function listening($username)
     {
-        $listening = (new UserEpisodesRepository)->listening($username);
+        $listening = (new UserEpisodesRepository())->listening($username);
 
         $response = $listening->map(function ($episode) {
-            $feed = (new FeedTransformer)->transform($episode);
-            $ep = (new EpisodeTransformer)->transform($episode);
+            $feed = (new FeedTransformer())->transform($episode);
+            $ep = (new EpisodeTransformer())->transform($episode);
             $ep['paused_at'] = $episode['paused_at'];
             $feed['episode'] = $ep;
             unset($feed['episodes']);
@@ -101,13 +102,13 @@ class UserEpisodesController extends ApiController
     {
         $userFeed = UserFeedsRepository::first($episode->feed(), $user);
 
-        Cache::forget('user_episodes_latests_' . $user->username);
-        Cache::forget('user_episodes_' . $user->username);
+        Cache::forget('user_episodes_latests_'.$user->username);
+        Cache::forget('user_episodes_'.$user->username);
 
         UserEpisodesRepository::create([
             'user_feed_id' => $userFeed->id,
-            'episode_id' => $episode->id,
-            'paused_at' => 0,
+            'episode_id'   => $episode->id,
+            'paused_at'    => 0,
         ]);
 
         if (UserEpisodesRepository::hasEpisodes($userFeed->id)) {
@@ -127,8 +128,8 @@ class UserEpisodesController extends ApiController
             UserFeedsRepository::markAllListened($userFeed->id);
         }
 
-        Cache::forget('user_episodes_latests_' . $user->username);
-        Cache::forget('user_episodes_' . $user->username);
+        Cache::forget('user_episodes_latests_'.$user->username);
+        Cache::forget('user_episodes_'.$user->username);
 
         return $this->respondSuccess();
     }
@@ -145,7 +146,7 @@ class UserEpisodesController extends ApiController
     public function rate(RatingRequest $request, User $user, Episode $episode)
     {
         $rate = $episode->ratings()->updateOrCreate(
-            ['user_id' => $user->id,],
+            ['user_id' => $user->id],
             ['rate' => $request->rate]
         );
 

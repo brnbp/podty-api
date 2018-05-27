@@ -1,14 +1,15 @@
 <?php
+
 namespace App\Jobs;
 
 use App\Filter\Filter;
 use App\Models\Episode;
 use App\Repositories\EpisodesRepository;
 use App\Repositories\FeedRepository;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class UpdateLastEpisodeFeed extends Job implements ShouldQueue
 {
@@ -20,7 +21,7 @@ class UpdateLastEpisodeFeed extends Job implements ShouldQueue
     }
 
     /**
-     * Atualiza a data do ultimo episodio lançado
+     * Atualiza a data do ultimo episodio lançado.
      *
      * @param \App\Filter\Filter                   $filter
      * @param \App\Repositories\FeedRepository     $feedRepository

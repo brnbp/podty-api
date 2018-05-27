@@ -1,11 +1,12 @@
 <?php
+
 namespace Tests\Integration\Feeds;
 
 use App\Models\Feed;
 use App\Transform\FeedTransformer;
 use Carbon\Carbon;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveTopFeedsTest extends TestCase
 {
@@ -24,15 +25,15 @@ class RetrieveTopFeedsTest extends TestCase
         $this->authenticate();
 
         $thirdFeed = factory(Feed::class)->create([
-            'listeners' => 0,
+            'listeners'       => 0,
             'last_episode_at' => (string) Carbon::now()->subDay(5),
         ]);
         $secondFeed = factory(Feed::class)->create([
-            'listeners' => 1,
+            'listeners'       => 1,
             'last_episode_at' => (string) Carbon::now()->subDay(4),
         ]);
         $firstFeed = factory(Feed::class)->create([
-            'listeners' => 5,
+            'listeners'       => 5,
             'last_episode_at' => (string) Carbon::now(),
         ]);
 
@@ -42,13 +43,12 @@ class RetrieveTopFeedsTest extends TestCase
 
         $response = json_decode($response->getContent(), true);
 
-
         $this->assertEquals([
             'data' => [
-                (new FeedTransformer)->transform($firstFeed->toArray()),
-                (new FeedTransformer)->transform($secondFeed->toArray()),
-                (new FeedTransformer)->transform($thirdFeed->toArray()),
-            ]
+                (new FeedTransformer())->transform($firstFeed->toArray()),
+                (new FeedTransformer())->transform($secondFeed->toArray()),
+                (new FeedTransformer())->transform($thirdFeed->toArray()),
+            ],
         ], $response);
     }
 
@@ -64,8 +64,8 @@ class RetrieveTopFeedsTest extends TestCase
     {
         return [
             'data' => [
-                '*' => $this->getDefaultFeedStructure()
-            ]
+                '*' => $this->getDefaultFeedStructure(),
+            ],
         ];
     }
 
@@ -82,7 +82,7 @@ class RetrieveTopFeedsTest extends TestCase
             'thumbnail_600',
             'total_episodes',
             'listeners',
-            'last_episode_at'
+            'last_episode_at',
         ];
     }
 }

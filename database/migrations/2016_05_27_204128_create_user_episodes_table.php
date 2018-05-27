@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateUserEpisodesTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateUserEpisodesTable extends Migration
             $table->timestamps();
             $table->foreign('user_feed_id')->references('id')->on('user_feeds')->onDelete('cascade');
             $table->foreign('episode_id')->references('id')->on('episodes');
-            
+
             $table->unique(['user_feed_id', 'episode_id']);
         });
     }

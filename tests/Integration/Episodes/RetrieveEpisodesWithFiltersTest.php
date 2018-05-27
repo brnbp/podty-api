@@ -1,11 +1,11 @@
 <?php
+
 namespace Tests\Integration\Episodes;
 
 use App\Models\Episode;
 use App\Models\Feed;
-use Carbon\Carbon;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class RetrieveEpisodesWithFiltersTest extends TestCase
 {
@@ -31,7 +31,7 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
         $feed = factory(Feed::class)->create();
 
         factory(Episode::class, 3)->create([
-            'feed_id' => $feed->id
+            'feed_id' => $feed->id,
         ]);
 
         $response = $this->get('/v1/feeds/1/episodes?limit=1')
@@ -50,7 +50,7 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
         $feed = factory(Feed::class)->create();
 
         factory(Episode::class, 3)->create([
-            'feed_id' => $feed->id
+            'feed_id' => $feed->id,
         ]);
 
         $response = $this->get('/v1/feeds/1/episodes?offset=1')
@@ -69,7 +69,7 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
         $feed = factory(Feed::class)->create();
 
         factory(Episode::class, 3)->create([
-            'feed_id' => $feed->id
+            'feed_id' => $feed->id,
         ]);
 
         $response = $this->get('/v1/feeds/1/episodes?offset=1&limit=1')
@@ -88,16 +88,16 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
         $feed = factory(Feed::class)->create();
 
         factory(Episode::class)->create([
-            'feed_id' => $feed->id,
-            'published_date' => '2018-05-23 17:21:41'
+            'feed_id'        => $feed->id,
+            'published_date' => '2018-05-23 17:21:41',
         ]);
         factory(Episode::class)->create([
-            'feed_id' => $feed->id,
-            'published_date' => '2018-05-24 17:21:41'
+            'feed_id'        => $feed->id,
+            'published_date' => '2018-05-24 17:21:41',
         ]);
         factory(Episode::class)->create([
-            'feed_id' => $feed->id,
-            'published_date' => '2018-05-25 17:21:41'
+            'feed_id'        => $feed->id,
+            'published_date' => '2018-05-25 17:21:41',
         ]);
 
         $response = $this->get('/v1/feeds/1/episodes?order=ASC')
@@ -118,17 +118,17 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
         $feed = factory(Feed::class)->create();
 
         factory(Episode::class)->create([
-            'title' => 'Not Wanted Episode',
-            'feed_id' => $feed->id
+            'title'   => 'Not Wanted Episode',
+            'feed_id' => $feed->id,
         ]);
         factory(Episode::class)->create([
-            'title' => 'Specific Episode',
-            'feed_id' => $feed->id
+            'title'   => 'Specific Episode',
+            'feed_id' => $feed->id,
         ]);
 
         $response = $this->get('/v1/feeds/1/episodes?term=Specific+Episode')
             ->assertJsonFragment([
-                'title' => 'Specific Episode'
+                'title' => 'Specific Episode',
             ])
             ->assertStatus(200);
 
@@ -145,12 +145,12 @@ class RetrieveEpisodesWithFiltersTest extends TestCase
         $feed = factory(Feed::class)->create();
 
         factory(Episode::class)->create([
-            'title' => 'Not Wanted Episode',
-            'feed_id' => $feed->id
+            'title'   => 'Not Wanted Episode',
+            'feed_id' => $feed->id,
         ]);
         factory(Episode::class)->create([
-            'title' => 'Specific Episode',
-            'feed_id' => $feed->id
+            'title'   => 'Specific Episode',
+            'feed_id' => $feed->id,
         ]);
 
         $this->get('/v1/feeds/1/episodes?term=Another+Episode')

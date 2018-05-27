@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Requests;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 abstract class Request extends FormRequest
 {
@@ -32,7 +33,7 @@ abstract class Request extends FormRequest
 
         $response = response()->json([
             'message' => 'The given data was invalid.',
-            'errors' => $errors
+            'errors'  => $errors,
         ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
 
         throw new HttpResponseException($response);

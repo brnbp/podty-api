@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
@@ -9,7 +10,7 @@ use App\Repositories\UserFavoritesRepository;
 class UserFavoriteController extends ApiController
 {
     /**
-     * @var \App\Repositories\UserFavoritesRepository $repository
+     * @var \App\Repositories\UserFavoritesRepository
      */
     private $repository;
 
