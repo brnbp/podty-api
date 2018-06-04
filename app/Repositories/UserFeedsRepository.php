@@ -94,6 +94,7 @@ class UserFeedsRepository
                     'feeds.main_color as color',
                     'feeds.description',
                     'feeds.total_episodes',
+                    'feeds.listeners',
                     'feeds.last_episode_at',
                     'user_feeds.listen_all'
                 );
