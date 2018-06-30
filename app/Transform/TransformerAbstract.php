@@ -8,13 +8,6 @@ namespace App\Transform;
  */
 abstract class TransformerAbstract
 {
-    /**
-     * Itera sob um array de itens e transforma cada item
-     *
-     * @param array $itens
-     *
-     * @return array
-     */
     public function transformCollection(array $itens)
     {
         return array_map([$this, 'transform'], $itens);
