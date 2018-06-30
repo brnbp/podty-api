@@ -29,6 +29,7 @@ $factory->define(Feed::class, function (Faker\Generator $faker) {
         'name' => $name,
         'slug' => str_slug($name),
         'url' => $faker->url,
+        'itunes_id' => $faker->numberBetween(100000, 1000000),
         'description' => $faker->words(5, true),
         'thumbnail_30' => $faker->imageUrl(),
         'thumbnail_60' => $faker->imageUrl(),

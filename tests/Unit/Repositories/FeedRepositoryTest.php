@@ -1,11 +1,9 @@
 <?php
 namespace Tests\Unit\Repositories;
 
-use App\Jobs\RegisterEpisodesFeed;
 use App\Models\Feed;
 use App\Repositories\FeedRepository;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Bus;
 use Mockery;
 use Tests\TestCase;
 
@@ -118,7 +116,7 @@ class FeedRepositoryTest extends TestCase
         $this->model
             ->shouldReceive('updateOrCreate')->once()
             ->withArgs([
-                ['url' => $this->defaultFeed->url],
+                ['itunes_id' => $this->defaultFeed->itunes_id],
                 $this->defaultFeed->toArray()
             ])
             ->andReturn($this->defaultFeed);

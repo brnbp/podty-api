@@ -65,7 +65,7 @@ class FeedRepository
     public function updateOrCreate(array $feed)
     {
         return $this->model->updateOrCreate([
-            'url' => $feed['url']
+            'itunes_id' => $feed['itunes_id'],
         ], $feed);
     }
 

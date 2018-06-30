@@ -24,6 +24,7 @@ class Finder
     ];
 
     private $return_fields = [
+        'collectionId',
         'collectionName',
         'feedUrl',
         'artworkUrl30',
@@ -90,7 +91,7 @@ class Finder
         }
 
         foreach ($results as $result) {
-            if (count(array_intersect_key($result, array_flip($this->return_fields))) != 6) {
+            if (count(array_intersect_key($result, array_flip($this->return_fields))) != count($this->return_fields)) {
                 continue;
             }
             $this->results[] = array_intersect_key($result, array_flip($this->return_fields));
@@ -100,6 +101,7 @@ class Finder
     private function transform(array $feed)
     {
         return [
+            'itunes_id' => $feed['collectionId'],
             'name' => $feed['collectionName'],
             'url' => $feed['feedUrl'],
             'thumbnail_30' => $feed['artworkUrl30'],

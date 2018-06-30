@@ -11,7 +11,7 @@ class Feed extends Model
     use DispatchesJobs, RateableContent;
 
     protected $fillable = [
-        'url', 'name', 'slug', 'thumbnail_30',
+        'url', 'name', 'slug', 'itunes_id', 'thumbnail_30',
         'thumbnail_60', 'thumbnail_100',
         'thumbnail_600', 'total_episodes',
         'listeners','last_episode_at',
