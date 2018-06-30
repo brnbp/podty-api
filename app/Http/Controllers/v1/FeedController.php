@@ -65,7 +65,7 @@ class FeedController extends ApiController
         }
 
         return $this->respondSuccess(
-            (new UserTransformer())->transformCollection($users->toArray())
+            (new UserTransformer())->transformMany($users->toArray())
         );
     }
 
@@ -90,7 +90,7 @@ class FeedController extends ApiController
         }
 
         return $this->respondSuccess(
-            (new FeedTransformer)->transformCollection($collection->toArray())
+            (new FeedTransformer)->transformMany($collection->toArray())
         );
     }
 }

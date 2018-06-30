@@ -27,7 +27,7 @@ class UserFavoriteController extends ApiController
             return $this->respondNotFound();
         }
 
-        $transformedFavorites = $this->favoritesTransformer->transformCollection($favorites->toArray());
+        $transformedFavorites = $this->favoritesTransformer->transformMany($favorites->toArray());
 
         return $this->respondSuccess($transformedFavorites);
     }

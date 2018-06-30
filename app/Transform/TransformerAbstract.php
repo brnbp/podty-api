@@ -8,7 +8,7 @@ namespace App\Transform;
  */
 abstract class TransformerAbstract
 {
-    public function transformCollection(array $itens)
+    public function transformMany(array $itens)
     {
         return array_map([$this, 'transform'], $itens);
     }

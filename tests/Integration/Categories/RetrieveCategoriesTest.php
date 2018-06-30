@@ -105,7 +105,7 @@ class RetrieveCategoriesTest extends TestCase
 
         $response = json_decode($response->getContent(), true);
 
-        $expected = (new FeedTransformer())->transformCollection([$feedOne, $feedTwo]);
+        $expected = (new FeedTransformer())->transformMany([$feedOne, $feedTwo]);
 
         unset($expected[0]['episodes']);
         unset($expected[1]['episodes']);

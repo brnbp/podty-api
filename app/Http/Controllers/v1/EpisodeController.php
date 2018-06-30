@@ -95,7 +95,7 @@ class EpisodeController extends ApiController
     {
         $feed = (new FeedTransformer)->transform($feed);
 
-        $feed['episodes'] = $this->episodeTransformer->transformCollection($episodes->toArray());
+        $feed['episodes'] = $this->episodeTransformer->transformMany($episodes->toArray());
 
         return $feed;
     }

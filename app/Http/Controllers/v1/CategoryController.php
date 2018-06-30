@@ -26,7 +26,7 @@ class CategoryController extends ApiController
         });
 
         return $this->respondSuccess(
-            $this->transformer->transformCollection($categories)
+            $this->transformer->transformMany($categories)
         );
     }
 
