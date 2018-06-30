@@ -8,16 +8,9 @@ namespace App\Transform;
  */
 class FeedTransformer extends TransformerAbstract
 {
-    /**
-     * Transforma um feed para um retorno padrao
-     *
-     * @param $feed
-     *
-     * @return array
-     */
-    public function transform($feed)
+    public function transform($feed, $withoutEpisodes = false)
     {
-        return [
+        $feed = [
             'id' => $feed['id'],
             'name' => $feed['name'],
             'slug' => $feed['slug'],
@@ -33,5 +26,11 @@ class FeedTransformer extends TransformerAbstract
             'last_episode_at' => $feed['last_episode_at'],
             'episodes' => [],
         ];
+
+        if ($withoutEpisodes) {
+            unset($feed['episodes']);
+        }
+
+        return $feed;
     }
 }

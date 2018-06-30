@@ -20,7 +20,7 @@ class Feed extends Model
     ];
 
     /** @var array $hidden The attributes that should be hidden for arrays. */
-    protected $hidden = ['created_at', 'itunes_id'];
+    protected $hidden = ['created_at'];
 
     /**
      * Define relação com a model Episodes, sendo que Feed possui varios episodios

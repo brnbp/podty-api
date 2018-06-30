@@ -5,6 +5,8 @@ use App\Http\Controllers\ApiController;
 use App\Models\Episode;
 use App\Models\User;
 use App\Repositories\UserFavoritesRepository;
+use App\Transform\EpisodeTransformer;
+use App\Transform\FeedTransformer;
 
 class UserFavoriteController extends ApiController
 {
@@ -26,7 +28,20 @@ class UserFavoriteController extends ApiController
             return $this->respondNotFound();
         }
 
-        return $this->respondSuccess($favorites);
+        $feedTransformer = app(FeedTransformer::class);
+        $episodeTransformer = app(EpisodeTransformer::class);
+        $favoritesResponse = $favorites->map(function($favorite) use($feedTransformer, $episodeTransformer){
+            return
+                array_merge(
+                    $favorite->attributesToArray(),
+                    ['feed' => $feedTransformer->transform($favorite->feed, true)],
+                    ['episode' => $episodeTransformer->transform($favorite->episode)]
+                );
+            ;
+        });
+
+
+        return $this->respondSuccess($favoritesResponse);
     }
 
     public function favorite(User $user, Episode $episode)

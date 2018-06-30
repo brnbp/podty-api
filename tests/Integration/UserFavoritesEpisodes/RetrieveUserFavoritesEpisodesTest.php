@@ -32,18 +32,16 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
                     "created_at" => (string) Carbon::now(),
                     "episode" => [
                         "id" => $this->episode->id,
-                        "feed_id" => $this->episode->feed_id,
                         "title" => $this->episode->title,
                         "link" => $this->episode->link,
-                        "published_date" => $this->episode->published_date,
+                        "published_at" => $this->episode->published_date,
                         "summary" => $this->episode->summary,
                         "content" => $this->episode->content,
                         "image" => $this->episode->image,
                         "duration" => $this->episode->duration,
                         "media_url" => $this->episode->media_url,
-                        "media_length" => $this->episode->media_length,
+                        "media_length" => (string) $this->episode->media_length,
                         "media_type" => $this->episode->media_type,
-                        "avg_rating" => 0.0,
                     ],
                     "feed" => [
                         "id" => $this->userFeeds->feed->id,
@@ -55,12 +53,10 @@ class RetrieveUserFavoritesEpisodesTest extends UserFavoritesEpisodes
                         "thumbnail_60" => $this->userFeeds->feed->thumbnail_60,
                         "thumbnail_100" => $this->userFeeds->feed->thumbnail_100,
                         "thumbnail_600" => $this->userFeeds->feed->thumbnail_600,
-                        "main_color" => $this->userFeeds->feed->main_color,
+                        "color" => $this->userFeeds->feed->main_color,
                         "total_episodes" => $this->userFeeds->feed->total_episodes,
                         "last_episode_at" => $this->userFeeds->feed->last_episode_at,
                         "listeners" => $this->userFeeds->feed->listeners,
-                        "updated_at" => $this->userFeeds->feed->updated_at,
-                        "avg_rating" => 0.0,
                     ]
                 ]
             ]
