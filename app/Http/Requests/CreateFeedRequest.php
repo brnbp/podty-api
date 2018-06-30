@@ -8,7 +8,7 @@ class CreateFeedRequest extends Request
 
         return [
             'name' => 'bail|required|string',
-            'itunes_id' => 'bail|required|unique:feeds,itunes_id',
+            'itunes_id' => 'bail|required',
             'url' => 'bail|required',
             'thumbnail_30' => 'string',
             'thumbnail_60' => 'string',
