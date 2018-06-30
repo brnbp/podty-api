@@ -5,7 +5,6 @@ class CreateFeedRequest extends Request
 {
     public function rules()
     {
-
         return [
             'name' => 'bail|required|string',
             'itunes_id' => 'bail|required',
