@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\CreateFeedRequest;
 use App\Jobs\SearchNewFeed;
 use App\Models\Feed;
 use App\Repositories\FeedRepository;
@@ -66,6 +67,20 @@ class FeedController extends ApiController
         return $this->respondSuccess(
             (new UserTransformer())->transformCollection($users->toArray())
         );
+    }
+
+    public function create(CreateFeedRequest $request)
+    {
+        $payload = array_merge($request->all(), [
+            'total_episodes' => 0,
+            'last_episode_at' => '0000-00-00 00:00:00',
+        ]);
+
+        if ($feed = $this->feedRepository->updateOrCreate($payload)) {
+            return $this->respondCreated($feed);
+        }
+
+        return $this->respondBadRequest();
     }
 
     public function response($collection)

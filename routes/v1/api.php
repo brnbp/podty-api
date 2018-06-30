@@ -1,5 +1,6 @@
 <?php
 
+Route::post('feeds', 'FeedController@create');
 Route::get('feeds/latest', 'FeedController@latest');
 Route::get('feeds/top/{count?}', 'FeedController@top');
 Route::get('feeds/name/{name}', 'FeedController@retrieve');
