@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Jobs\RegisterEpisodesFeed;
+use App\Jobs\FindNewEpisodesForFeed;
 use App\Jobs\UpdateLastEpisodeFeed;
 use App\Models\Feed;
 use App\Repositories\FeedRepository;
@@ -13,7 +13,7 @@ class Queue
         $feeds = (new FeedRepository(new Feed))->all();
 
         $feeds->each(function (Feed $feed) {
-            RegisterEpisodesFeed::dispatch([
+            FindNewEpisodesForFeed::dispatch([
                 'id' => $feed->id,
                 'url' => $feed->url,
             ]);

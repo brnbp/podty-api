@@ -9,12 +9,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 /**
- * Class RegisterEpisodesFeed
+ * Class FindNewEpisodesForFeed
  * Coloca na fila todos os feeds existentes para busca de novos episodios
  *
  * @package App\Jobs
  */
-class RegisterEpisodesFeed extends Job implements ShouldQueue
+class FindNewEpisodesForFeed extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels, Dispatchable;
 
