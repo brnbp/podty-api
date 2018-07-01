@@ -3,6 +3,7 @@ namespace App\Providers;
 
 use App\Events\ContentRated;
 use App\Events\EpisodeCreated;
+use App\Events\UserFavoriteEpisode;
 use App\Events\UserListeningEpisode;
 use App\Events\UserRatedEpisode;
 use App\Listeners\RecalculateRating;
@@ -25,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
 
         ],
         UserRatedEpisode::class => [
+
+        ],
+        UsergFavoriteEpisode::class => [
 
         ],
     ];

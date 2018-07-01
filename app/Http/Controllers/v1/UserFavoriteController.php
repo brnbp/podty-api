@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\v1;
 
+use App\Events\UserFavoriteEpisode;
 use App\Http\Controllers\ApiController;
 use App\Models\Episode;
 use App\Models\User;
@@ -35,6 +36,8 @@ class UserFavoriteController extends ApiController
     public function favorite(User $user, Episode $episode)
     {
         $this->repository->create($user, $episode);
+
+        UserFavoriteEpisode::dispatch($user, $episode);
 
         return $this->respondCreated();
     }
