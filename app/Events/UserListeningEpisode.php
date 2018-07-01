@@ -13,7 +13,7 @@ class UserListeningEpisode
 {
     use SerializesModels, Dispatchable;
 
-    private $user;
+    public $user;
 
     public $episode;
 

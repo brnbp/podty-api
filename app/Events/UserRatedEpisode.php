@@ -11,11 +11,11 @@ class UserRatedEpisode
 {
     use SerializesModels, Dispatchable;
 
-    private $user;
+    public $user;
 
-    private $episode;
+    public $episode;
 
-    private $rate;
+    public $rate;
 
     public function __construct($user, $episode, $rate)
     {
