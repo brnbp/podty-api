@@ -5,6 +5,7 @@ use App\Events\ContentRated;
 use App\Events\EpisodeCreated;
 use App\Events\UserFavoriteEpisode;
 use App\Events\UserFollowFeed;
+use App\Events\UserFollowNewFriend;
 use App\Events\UserListeningEpisode;
 use App\Events\UserRatedEpisode;
 use App\Http\Controllers\v1\UserRatedFeed;
@@ -37,6 +38,9 @@ class EventServiceProvider extends ServiceProvider
 
         ],
         UserFollowFeed::class => [
+
+        ],
+        UserFollowNewFriend::class => [
 
         ],
     ];

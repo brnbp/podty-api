@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\v1;
 
+use App\Events\UserFollowNewFriend;
 use App\Http\Controllers\ApiController;
 use App\Models\User;
 use App\Models\UserFriend;
@@ -31,6 +32,8 @@ class UserFriendsController extends ApiController
         if (UserFriendsRepository::follow($user->id, $friend->id)) {
             Cache::forget('user_friends_' . $user->username);
             UserRepository::incrementsFriendsCount($user->id);
+
+            UserFollowNewFriend::dispatch($user, $friend);
 
             return $this->respondSuccess();
         }
