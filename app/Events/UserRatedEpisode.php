@@ -1,6 +1,8 @@
 <?php
 namespace App\Events;
 
+use App\Models\Episode;
+use App\Models\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 
@@ -17,7 +19,7 @@ class UserRatedEpisode
 
     public $rate;
 
-    public function __construct($user, $episode, $rate)
+    public function __construct(User $user, Episode $episode, float $rate)
     {
         $this->user = $user;
         $this->episode = $episode;

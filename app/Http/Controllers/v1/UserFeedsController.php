@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\v1;
 
+use App\Events\UserFollowFeed;
 use App\Http\Controllers\ApiController;
 use App\Events\ContentRated;
 use App\Http\Requests\RatingRequest;
@@ -42,6 +43,8 @@ class UserFeedsController extends ApiController
             return $this->setStatusCode(Response::HTTP_BAD_GATEWAY)->respondError('');
         }
 
+        UserFollowFeed::dispatch($username, $feedId);
+
         return $this->respondSuccess($userFeed);
     }
 
@@ -73,6 +76,7 @@ class UserFeedsController extends ApiController
         );
 
         ContentRated::dispatch($feed);
+        UserRatedFeed::dispatch($user, $feed, $request->rate);
 
         return $rate->wasRecentlyCreated ?
             $this->respondCreated($rate) :
