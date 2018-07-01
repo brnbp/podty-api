@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\v1;
 
+use App\Events\UserListeningEpisode;
+use App\Events\UserRatedEpisode;
 use App\Http\Controllers\ApiController;
 use App\Events\ContentRated;
 use App\Filter\Filter;
@@ -139,6 +141,8 @@ class UserEpisodesController extends ApiController
 
         UserEpisodesRepository::markAsPaused($userFeed->id, $episode->id, $time);
 
+        UserListeningEpisode::dispatch($user, $episode);
+
         return $this->respondSuccess(['updated' => true]);
     }
 
@@ -150,6 +154,7 @@ class UserEpisodesController extends ApiController
         );
 
         ContentRated::dispatch($episode);
+        UserRatedEpisode::dispatch($user, $episode, $request->rate);
 
         return $rate->wasRecentlyCreated ?
             $this->respondCreated($rate) :
