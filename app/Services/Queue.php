@@ -10,7 +10,12 @@ class Queue
 {
     public function searchNewEpisodes()
     {
-        $feeds = (new FeedRepository(new Feed))->all();
+        $feedsRepository = app(FeedRepository::class);
+
+        $feeds = $feedsRepository->model
+            ->select('id', 'url')
+            ->orderBy('listeners', 'DESC')
+            ->get();
 
         $feeds->each(function (Feed $feed) {
             FindNewEpisodesForFeed::dispatch([

@@ -6,9 +6,6 @@ use App\Models\User;
 
 class FeedRepository
 {
-    /**
-     * @var \App\Models\Feed $model
-     */
     public $model;
 
     public function __construct(Feed $feed)
