@@ -3,7 +3,6 @@ namespace App\Providers;
 
 use App\Events\ContentRated;
 use App\Events\EpisodeCreated;
-use App\Listeners\AddNewEpisodeToListeners;
 use App\Listeners\RecalculateRating;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -19,7 +18,6 @@ class EventServiceProvider extends ServiceProvider
             RecalculateRating::class,
         ],
         EpisodeCreated::class => [
-            AddNewEpisodeToListeners::class,
         ],
     ];
 }
