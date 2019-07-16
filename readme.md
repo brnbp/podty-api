@@ -1,3 +1,27 @@
+Using:
+
+cd docker/web/
+docker build -t podty/api:1.0 .
+
+- Setup
+  Start podty-api application container and install mysql php driver
+    $ docker run -v $PWD:/var/www --name podty-api -p 8080:80 -it podty/api:1.0 startup
+       - $ apt update
+       - $ apt install php7.1-mysql -y
+       - $ /etc/init.d/php7.1-fpm restart
+
+  Start mysql 5.6 container
+    $ docker run --name mysql-podty -e MYSQL_ROOT_PASSWORD=my-secret-pw -v /Users/brnbp/Code/podty/data/mysql:/var/lib/mysql -p 3306:3306 -d mysql:5.6
+
+  Link mysql container with podty-api application
+    $ docker run --name podty-api-mysql --link mysql-podty:mysql -d podty-api
+
+  Then connect via mysql-podty container IP (e.g. 172.17.0.2) on your .env
+
+- After first time:
+  $ docker start mysql-podty
+  $ docker start podty-api
+
 [![CircleCI](https://circleci.com/gh/brnbp/podty-api.svg?style=svg&circle-token=120eaa9768f28a5ae58d7c3b88e66fe628c304d0)](https://circleci.com/gh/brnbp/podty-api)
 [![StyleCI](https://styleci.io/repos/57003001/shield?branch=master)](https://styleci.io/repos/57003001)
 [![codecov](https://codecov.io/gh/brnbp/podty-api/branch/master/graph/badge.svg)](https://codecov.io/gh/brnbp/podty-api)
