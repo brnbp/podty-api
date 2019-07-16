@@ -7,8 +7,8 @@ docker build -t podty/api:1.0 .
   Start podty-api application container and install mysql php driver
     $ docker run -v $PWD:/var/www --name podty-api -p 8080:80 -it podty/api:1.0 startup
        - $ apt update
-       - $ apt install php7.1-mysql -y
-       - $ /etc/init.d/php7.1-fpm restart
+       - $ apt install php7.2-mysql -y
+       - $ /etc/init.d/php7.2-fpm restart
 
   Start mysql 5.6 container
     $ docker run --name mysql-podty -e MYSQL_ROOT_PASSWORD=my-secret-pw -v /Users/brnbp/Code/podty/data/mysql:/var/lib/mysql -p 3306:3306 -d mysql:5.6

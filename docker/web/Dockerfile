@@ -1,4 +1,4 @@
-### Set Image Ubuntu 17.10
+### Set Image Ubuntu 19.04
 FROM ubuntu:19.04
 
 EXPOSE 80
