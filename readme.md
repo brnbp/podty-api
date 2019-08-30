@@ -1,27 +1,3 @@
-Using:
-
-cd docker/web/
-docker build -t podty/api:1.0 .
-
-- Setup
-  Start podty-api application container and install mysql php driver
-    $ docker run -v $PWD:/var/www --name podty-api -p 8080:80 -it podty/api:1.0 startup
-       - $ apt update
-       - $ apt install php7.2-mysql -y
-       - $ /etc/init.d/php7.2-fpm restart
-
-  Start mysql 5.6 container
-    $ docker run --name mysql-podty -e MYSQL_ROOT_PASSWORD=my-secret-pw -v /Users/brnbp/Code/podty/data/mysql:/var/lib/mysql -p 3306:3306 -d mysql:5.6
-
-  Link mysql container with podty-api application
-    $ docker run --name podty-api-mysql --link mysql-podty:mysql -d podty-api
-
-  Then connect via mysql-podty container IP (e.g. 172.17.0.2) on your .env
-
-- After first time:
-  $ docker start mysql-podty
-  $ docker start podty-api
-
 [![CircleCI](https://circleci.com/gh/brnbp/podty-api.svg?style=svg&circle-token=120eaa9768f28a5ae58d7c3b88e66fe628c304d0)](https://circleci.com/gh/brnbp/podty-api)
 [![StyleCI](https://styleci.io/repos/57003001/shield?branch=master)](https://styleci.io/repos/57003001)
 [![codecov](https://codecov.io/gh/brnbp/podty-api/branch/master/graph/badge.svg)](https://codecov.io/gh/brnbp/podty-api)
@@ -29,19 +5,30 @@ docker build -t podty/api:1.0 .
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/651998c049474a47aabac3071cda0ad0)](https://www.codacy.com/app/bruno9pereira/podty-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=brnbp/podty-api&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/brnbp/podty-api/badge.svg?branch=master)](https://coveralls.io/github/brnbp/podty-api?branch=master)
 
-## Podcast API
+## Podty API
 
-## Requirements
-- [Composer](https://getcomposer.org)
-- PHP >= 7.0
-- MySQL >= 5.6
+Podty API is a application that its divided in basically two parts:
+  - podcast aggregator - collects all podcasts and episodes from the world inside a centralized storage
+  - user aggregator - centralize all podcasts that a user listen, tracks which episodes they're already listen to, favorites, friends, and much more
 
-## Getting Started
-##### Download and install
+
+### First Steps
+For start, we need to populate the database with podcasts, there's an endpoint for that, but its also possible to use any other kind of script that auto-populates (like a crawler for the itunes library).
+
+After we already have the xml feeds inside the database, the only thing needed is to run cron commands to periodically look for new episodes of those feeds. This command will look for new episodes and then add to the database, and to the users that follows those podcasts (to receive the fresh new episodes).
+
+To run this, just set the follow crontab config:
+
 ```bash
-$ git clone https://github.com/brnbp/brnpod-api.git .
-$ composer install
+* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1
 ```
+
+```bash
+$ php artisan queue:work --daemon --sleep 120 --tries 3 -q &
+```
+
+And there's also a queue the takes care of heavy process, as the search for new episodes and updates that don't require immediate response for the services to work.
+
 
 ##### Setup environment
 ```bash
@@ -55,156 +42,17 @@ $ vim .env
 $ php artisan migrate
 ```
 
-##### Run Server
+##### Run server locally
 ```bash
 $ php artisan serve
 ```
 
--------
-
-
-- Routes:
-
-Filters available
- - limit
- - offset
- - order
-    - DESC
-    - ASC
-
-- Feeds:
-
-###### GET:
+Besides all the background work, this application also offers an extensive API to manage podcasts and their listeners
+Its possible to see all routes registered inside the routes file:
 ```
-    api.podcast.com/v1/feeds/name/{FeedName}
-    retrieve podcast main informations
+https://github.com/brnbp/podty-api/blob/master/routes/v1/api.php
 ```
-
+but there's also a postman collection to have a more user friendly view:
 ```
-    api.podcast.com/v1/feeds/id/{FeedId}
-    retrieve podcast main informations
-```
-
-```
-    api.podcast.com/v1/feeds/latest
-    retrieve latests podcasts updated
-```
-
-```
-    api.podcast.com/v1/episodes/feedId/{FeedId}
-    retrieve episodes from given podcast
-```
-
-```
-    api.podcast.com/v1/episodes/latest
-    retrieve latests episode updated
-```
-
-- Users
-
-##### GET
-```
-    api.podcast.com/v1/users/{Username}
-    retrieve user
-```
-
-##### POST
-```
-    api.podcast.com/v1/users/
-    create user
-    payload:
-    {
-        "username": "foo",
-        "email": "bar",
-        "password": "baz"
-    }
-```
-
-###### DELETE
-```
-    api.podcast.com/v1/users/{Username}
-    delete user
-```
-
-###### POST
-```
-    api.podcast.com/v1/users/authenticate
-    test authentication for given payload user
-    payload:
-    {
-        "username": "foo",
-        "password": "bar"
-    }
-```
-
-
-- User Feeds
-
-##### GET
-```
-    api.podcast.com/v1/users/{Username}/feeds
-    retrieve all user feeds
-```
-
-##### GET
-```
-    api.podcast.com/v1/users/{Username}/feeds/{FeedId}
-    retrieve one user feeds
-```
-
-###### POST
-```
-    api.podcast.com/v1/users/{Username}/feeds
-    attach feeds on user list
-    payload:
-    {
-        "feeds": [
-            {feedId},
-            {feedId},
-            {feedId}
-        ]
-    }
-```
-
-###### DELETE
-```
-    api.podcast.com/v1/users/{Username}/feeds/{FeedId}
-    detach feed on user list
-```
-
-
-- Queue
-
-###### GET
-```
-    api.podcast.com/v1/queue
-    retrieve queued tasks
-```
-
-```
-    api.podcast.com/v1/queue/failed
-    retrieve queued task that have failed
-```
-###### DELETE
-```
-    api.podcast.com/v1/queue/{queueId}
-    delete task from queue that is not reserved
-```
-
-
-### On Production Env.
-
-##### queuing:
-```bash
-$ php artisan queue:work --daemon --sleep 120 --tries 3 -q &
-```
-
-##### run crons (put this on crontab, run every minute)
-```bash
-* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1
-```
-
-###### giving the correctly rights
-```bash
-sudo chmod 777 -R storage/
+https://github.com/brnbp/podty-api/blob/master/podcast-api.postman_collection.json
 ```
